@@ -661,13 +661,13 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 .sky-msg-bubble{background:rgba(255,255,255,.06);border-radius:12px 12px 12px 4px;padding:11px 14px;font-family:'Orbitron',sans-serif;font-size:13px;color:rgba(255,255,255,.82);line-height:1.5;text-transform:none;letter-spacing:0;}
 .sky-msg-bubble.user{background:rgba(0,200,232,.14);border-radius:12px 12px 4px 12px;color:#fff;align-self:flex-end;}
 .sky-chat-input-row{padding:10px 12px;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:8px;align-items:center;}
-.sky-chat-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;font-family:'Orbitron',sans-serif;font-size:13px;color:#fff;outline:none;text-transform:none;letter-spacing:0;}
+.sky-chat-input{flex:1;min-width:0;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;font-family:'Orbitron',sans-serif;font-size:13px;color:#fff;outline:none;text-transform:none;letter-spacing:0;}
 .sky-chat-input::placeholder{color:rgba(255,255,255,.3);}
 .sky-chat-input:focus{border-color:var(--cyan);}
 .sky-mic-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:9px 11px;color:rgba(255,255,255,.6);cursor:pointer;font-size:15px;line-height:1;transition:all .2s;flex-shrink:0;}
 .sky-mic-btn.listening{background:rgba(255,60,60,.18);border-color:rgba(255,60,60,.6);color:#ff5050;animation:micPulse 1s ease-in-out infinite;}
 @keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,60,60,.4);}50%{box-shadow:0 0 0 7px rgba(255,60,60,0);}}
-.sky-chat-send{background:var(--cyan);border:none;border-radius:8px;padding:9px 13px;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:#000;cursor:pointer;white-space:nowrap;letter-spacing:1px;}
+.sky-chat-send{flex-shrink:0;background:var(--cyan);border:none;border-radius:8px;padding:9px 13px;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:#000;cursor:pointer;white-space:nowrap;letter-spacing:1px;}
 
 /* ── SKY CHOICE SCREEN (Talk vs Text) ───────────────────────── */
 .sky-choice{width:280px;background:var(--navy2);border:1px solid rgba(0,200,232,.25);border-radius:16px;overflow:hidden;display:none;box-shadow:0 20px 60px rgba(0,0,0,.55);margin-bottom:8px;animation:tipFade .2s ease;}

@@ -4940,14 +4940,12 @@ function skyProactiveEngage(){
 
   const label = document.getElementById('sky-slide-label');
 
-  // Pulse the orb label to draw the eye
-  if(label){ label.textContent = 'SKY IS HERE ✦'; label.classList.add('show'); }
-  setTimeout(function(){ if(label) label.classList.remove('show'); }, 4000);
+  // SILENT visual nudge only — never auto-speak (no surprise audio).
+  // Pulse the orb label to draw the eye; Sky only talks once the visitor engages.
+  if(label){ label.textContent = '👋 Sky is here — tap to chat'; label.classList.add('show'); }
+  setTimeout(function(){ if(label) label.classList.remove('show'); }, 6000);
 
-  // Speak only — do NOT open the chat panel
-  skySpeak(SKY_PROACTIVE_MSG, null);
-
-  // Unlock popup exactly 7 minutes after Sky first speaks (2nd cycle)
+  // Unlock the follow-up popup 7 minutes later (2nd cycle) — still silent.
   setTimeout(function(){ popupReady = true; }, 7 * 60 * 1000);
 }
 

@@ -4479,7 +4479,8 @@ function toggleSky(){
 function closeSky(){
   document.getElementById('sky-choice').classList.remove('open');
   document.getElementById('sky-panel').classList.remove('open');
-  if(skyVoiceMode){ stopListening(); speechSynthesis && speechSynthesis.cancel(); }
+  releaseMic();  // fully release the microphone when the session ends
+  if(skyVoiceMode){ speechSynthesis && speechSynthesis.cancel(); }
   skyVoiceMode = false;
   document.getElementById('sky-hstatus').textContent = '● ONLINE — AI AGENT';
   document.getElementById('sky-voice-bar').classList.remove('active');
@@ -4528,18 +4529,26 @@ function _setMicIdleUI(){
   if(btn){btn.classList.remove('listening');btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="9" y1="22" x2="15" y2="22"/></svg>';btn.title='Voice input';}
 }
 
-// Open the mic and start recording. The browser permission prompt appears
-// here — ONLY when the user has actively chosen to speak (hybrid voice/text).
-async function startListening(){
-  if(skyIsSpeaking || isListening) return;
-  if(!navigator.mediaDevices || !window.MediaRecorder){ return; }
+// Acquire the mic ONCE per session and keep it alive across turns.
+// The browser permission prompt only appears on this first getUserMedia call.
+async function _ensureMicStream(){
+  if(_skyStream && _skyStream.active) return true;   // already have a live mic — reuse it
+  if(!navigator.mediaDevices || !window.MediaRecorder) return false;
   try{
-    _skyStream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    _skyStream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+    return true;
   }catch(e){
     const s=document.getElementById('sky-hstatus');
     if(s) s.textContent='🎙️ Mic blocked — you can type instead';
-    return;
+    return false;
   }
+}
+
+// Start recording a turn. Reuses the existing mic stream — NO re-prompt.
+async function startListening(){
+  if(skyIsSpeaking || isListening) return;
+  const ok = await _ensureMicStream();
+  if(!ok) return;
   isListening=true; _skyChunks=[]; _skyHeardSpeech=false;
   _skyMime = (window.MediaRecorder && MediaRecorder.isTypeSupported('audio/webm')) ? 'audio/webm'
            : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : '');
@@ -4598,7 +4607,8 @@ function _finishTurn(){
 }
 
 async function _skyOnRecordingStop(){
-  if(_skyStream){ _skyStream.getTracks().forEach(t=>t.stop()); _skyStream=null; }
+  // NOTE: do NOT stop the mic stream here — keep it alive across turns so the
+  // browser never re-prompts. The stream is only released in stopListening().
   const chunks=_skyChunks; _skyChunks=[];
   if(!_skyHeardSpeech || !chunks.length){
     if(skyVoiceMode && !skyIsSpeaking) startListening();
@@ -4648,14 +4658,22 @@ function toggleMic(){
   isListening ? _finishTurn() : startListening();
 }
 
-// Hard stop — abort recording WITHOUT sending (panel close / Sky starts speaking)
+// Pause recording WITHOUT sending and WITHOUT releasing the mic stream.
+// Called when Sky starts speaking. The stream stays alive so the next turn
+// never re-prompts for permission. Full release happens in releaseMic().
 function stopListening(){
   _stopVAD();
   isListening=false; _skyHeardSpeech=false;
   try{ if(_skyMR && _skyMR.state!=='inactive'){ _skyMR.onstop=null; _skyMR.stop(); } }catch(e){}
-  if(_skyStream){ try{_skyStream.getTracks().forEach(t=>t.stop());}catch(e){} _skyStream=null; }
+  _skyMR=null;
   _setMicIdleUI();
   if(skyVoiceMode){ const s=document.getElementById('sky-hstatus'); if(s) s.textContent='🎙️ VOICE MODE'; }
+}
+
+// Fully release the microphone — only when the chat session ends.
+function releaseMic(){
+  stopListening();
+  if(_skyStream){ try{_skyStream.getTracks().forEach(t=>t.stop());}catch(e){} _skyStream=null; }
 }
 
 // ── VOICE OUTPUT — ElevenLabs (Sky's real configured voice) ──

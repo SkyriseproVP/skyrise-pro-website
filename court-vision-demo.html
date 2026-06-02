@@ -716,6 +716,26 @@ textarea.ff-input{resize:none;line-height:1.6;}
       <button class="cta-sec" onclick="showCTA()">SEE HOW TO GET STARTED →</button>
     </div>
 
+    <!-- Live Sky chat (hidden until ASK SKY ANYTHING) -->
+    <div id="snap-chat" style="display:none;max-width:760px;margin:22px auto 0;background:#fff;border:2px solid rgba(0,200,232,.4);border-radius:18px;box-shadow:0 0 0 1px rgba(0,200,232,.1),0 0 22px rgba(0,200,232,.18);overflow:hidden;">
+      <div style="background:linear-gradient(90deg,#005f80,#00c8e8);padding:12px 18px;display:flex;align-items:center;gap:10px;">
+        <div style="width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#00f0ff,#00b8d4 55%,#006a8a);flex-shrink:0;"></div>
+        <div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:11px;font-weight:800;color:#fff;letter-spacing:1px;">SKY</div>
+          <div id="snap-chat-status" style="font-family:'Orbitron',sans-serif;font-size:7px;color:rgba(255,255,255,.75);letter-spacing:1px;margin-top:2px;">● ONLINE — ASK ME ANYTHING</div>
+        </div>
+      </div>
+      <div id="snap-chat-msgs" style="padding:16px 18px;max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;"></div>
+      <div style="padding:10px 14px;border-top:1px solid rgba(0,200,232,.15);display:flex;gap:8px;align-items:center;">
+        <input id="snap-chat-input" type="text" placeholder="Type or use the mic…" autocomplete="off"
+          style="flex:1;min-width:0;background:rgba(0,200,232,.05);border:1px solid rgba(0,200,232,.25);border-radius:10px;padding:11px 14px;font-family:'Inter',sans-serif;font-size:14px;color:#0a1628;outline:none;caret-color:#00c8e8;"
+          onkeydown="if(event.key==='Enter')snapChatSend()">
+        <button id="snap-chat-mic" onclick="snapMicToggle()" title="Speak to Sky"
+          style="flex-shrink:0;background:rgba(0,200,232,.08);border:1px solid rgba(0,200,232,.3);border-radius:50%;width:42px;height:42px;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;color:#0093ad;transition:all .2s;">🎤</button>
+        <button onclick="snapChatSend()" style="flex-shrink:0;background:var(--cyan);border:none;border-radius:10px;padding:11px 18px;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;color:#000;cursor:pointer;">SEND</button>
+      </div>
+    </div>
+
   </div><!-- /inner max-width -->
 </div><!-- /ph-snapshot -->
 
@@ -2077,56 +2097,138 @@ function skyChatOpen(){
 var _closingRound=0;
 var _convRunning=false;
 
+/* ════════ LIVE SKY CONVERSATION (real AI brain — listens & responds) ════════ */
+var _snapConvo=[];          // rolling chat history
+var _snapMR=null,_snapStream=null,_snapChunks=[],_snapMime='audio/webm',_snapListening=false;
+var _snapAudioCtx=null,_snapVadRAF=null,_snapSilence=null,_snapHeard=false;
+
+function snapAddMsg(text,isUser){
+  var box=document.getElementById('snap-chat-msgs');if(!box)return;
+  var b=document.createElement('div');
+  b.textContent=text;
+  b.style.cssText='max-width:82%;padding:10px 14px;border-radius:14px;font-family:system-ui,sans-serif;font-size:13.5px;line-height:1.5;'+
+    (isUser
+      ? 'align-self:flex-end;background:#00c8e8;color:#022;border-bottom-right-radius:4px;'
+      : 'align-self:flex-start;background:rgba(0,200,232,.08);color:#0a1628;border:1px solid rgba(0,200,232,.18);border-bottom-left-radius:4px;');
+  box.appendChild(b);box.scrollTop=box.scrollHeight;
+  return b;
+}
+
 window.showSnapConversation=function(){
-  if(_convRunning)return;
-  _convRunning=true;
+  /* Stop any running narration first */
+  _anRunning=false; stopSkyAudio(); orbSpeak('snap-orb',false);
+  var chat=document.getElementById('snap-chat');
+  if(chat) chat.style.display='block';
+  var box=document.getElementById('snap-chat-msgs');
+  if(box && box.children.length===0){
+    var opener="You just watched the whole lifecycle. So tell me — what's the biggest headache on your projects right now? I'll show you exactly how I'd handle it.";
+    snapAddMsg(opener,false);
+    _snapConvo=[{role:'assistant',content:opener}];
+    orbSpeak('snap-orb',true);
+    skySpeakPaced(opener,function(){ orbSpeak('snap-orb',false); });
+  }
+  setTimeout(function(){ var i=document.getElementById('snap-chat-input'); if(i)i.focus(); },200);
+  if(chat) chat.scrollIntoView({behavior:'smooth',block:'center'});
+};
 
-  /* Stop anything playing — court narration, post-game, everything */
-  _anRunning=false;
-  stopSkyAudio();
-  orbSpeak('snap-orb',false);
+/* Get Sky's real reply from the Claude brain (falls back gracefully) */
+function snapAskSky(text,cb){
+  _snapConvo.push({role:'user',content:String(text||'').slice(0,2000)});
+  if(_snapConvo.length>12)_snapConvo=_snapConvo.slice(-12);
+  fetch('/api/sky',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages:_snapConvo,mode:'public'})})
+    .then(function(r){return r.ok?r.json():null;})
+    .then(function(d){
+      var reply=(d&&d.reply)?d.reply:"I'm right here — ask me anything about how Court Vision would run your projects, pricing, or getting started.";
+      _snapConvo.push({role:'assistant',content:reply});
+      cb(reply);
+    })
+    .catch(function(){ cb("I'm right here — ask me anything about how Court Vision would run your projects, pricing, or getting started."); });
+}
 
-  var snapNarr=document.getElementById('snap-narr');
-
-  /* Q1 — Make them feel the pain of their last project */
-  var q1="Tell me something — on your last project, what caused the biggest delay? A permit that came back rejected? A subcontractor who went dark at the worst possible time? A stakeholder who did not get the update they needed until it was too late? Because whatever it was — Sky catches it before it compounds. Not in theory. You just watched it happen in real time on a twelve thousand square foot build-out. That was not a demo. That is Tuesday for an operator using this system.";
-  if(snapNarr)snapNarr.textContent=q1;
+window.snapChatSend=function(){
+  var inp=document.getElementById('snap-chat-input');
+  if(!inp)return;
+  var txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';
+  snapAddMsg(txt,true);
+  var st=document.getElementById('snap-chat-status');
+  if(st)st.textContent='● SKY IS THINKING…';
   orbSpeak('snap-orb',true);
-  skySpeakPaced(q1,function(){
-    orbSpeak('snap-orb',false);
-
-    /* Q2 — Quantify the invisible cost */
-    setTimeout(function(){
-      var q2="Here is what I want you to honestly think about. Every week you run your business without Sky, how many hours does your team spend on work that should happen automatically? Status calls nobody should be making. Follow-ups sitting in someone's head. Invoices waiting on admin. If that number is even five hours a week — that is two hundred and sixty hours a year. What does an hour of your time cost your business? Because that gap has a real number and it is not small.";
-      if(snapNarr)snapNarr.textContent=q2;
-      orbSpeak('snap-orb',true);
-      skySpeakPaced(q2,function(){
-        orbSpeak('snap-orb',false);
-
-        /* Q3 — Reframe the decision */
-        setTimeout(function(){
-          var q3="And here is the part most operators miss — this is not about adding software. Sky is not another tool your team has to learn. Sky is the system that replaces the administrative chaos your team is currently living inside. Every project tracked. Every stakeholder coordinated. Every milestone enforced. The question is not whether your business needs this. Every business running projects at this level does. The real question is — how much longer do you want to carry the weight of doing it manually?";
-          if(snapNarr)snapNarr.textContent=q3;
-          orbSpeak('snap-orb',true);
-          skySpeakPaced(q3,function(){
-            orbSpeak('snap-orb',false);
-
-            /* Close — trial offer with urgency */
-            setTimeout(function(){
-              var close="The thirty-day free trial exists because we are that confident. Run Sky on one real project — your project — and see what changes. If it does not change everything, you walk away and it costs you nothing. But nobody walks away. Hit GET STARTED and let us build your system.";
-              if(snapNarr)snapNarr.textContent=close;
-              orbSpeak('snap-orb',true);
-              skySpeakPaced(close,function(){
-                orbSpeak('snap-orb',false);
-                _convRunning=false;
-              });
-            },900);
-          });
-        },900);
-      });
-    },900);
+  snapAskSky(txt,function(reply){
+    snapAddMsg(reply,false);
+    if(st)st.textContent='● ONLINE — ASK ME ANYTHING';
+    skySpeakPaced(reply,function(){ orbSpeak('snap-orb',false); });
   });
 };
+
+/* ── Voice input for the Court Vision chat (Whisper, click-to-talk) ── */
+window.snapMicToggle=function(){
+  if(_snapListening){ _snapFinish(); } else { _snapStartMic(); }
+};
+async function _snapStartMic(){
+  if(!navigator.mediaDevices||!window.MediaRecorder)return;
+  try{
+    if(!_snapStream||!_snapStream.active)
+      _snapStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
+  }catch(e){
+    var st=document.getElementById('snap-chat-status'); if(st)st.textContent='🎙️ Mic blocked — you can type';
+    return;
+  }
+  _snapListening=true;_snapChunks=[];_snapHeard=false;
+  _snapMime=MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':(MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':'');
+  try{_snapMR=_snapMime?new MediaRecorder(_snapStream,{mimeType:_snapMime}):new MediaRecorder(_snapStream);}catch(e){_snapMR=new MediaRecorder(_snapStream);}
+  _snapMime=_snapMR.mimeType||_snapMime||'audio/webm';
+  _snapMR.ondataavailable=function(e){if(e.data&&e.data.size>0)_snapChunks.push(e.data);};
+  _snapMR.onstop=_snapOnStop;
+  _snapMR.start();
+  var mic=document.getElementById('snap-chat-mic'); if(mic){mic.textContent='🔴';mic.style.background='rgba(229,62,62,.12)';mic.style.borderColor='rgba(229,62,62,.6)';}
+  var st=document.getElementById('snap-chat-status'); if(st)st.textContent='🎙️ LISTENING — take your time…';
+  _snapVAD();
+}
+function _snapVAD(){
+  try{
+    _snapAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    var src=_snapAudioCtx.createMediaStreamSource(_snapStream);
+    var an=_snapAudioCtx.createAnalyser();an.fftSize=2048;src.connect(an);
+    var buf=new Float32Array(an.fftSize);
+    var tick=function(){
+      if(!_snapListening)return;
+      an.getFloatTimeDomainData(buf);
+      var sum=0;for(var i=0;i<buf.length;i++)sum+=buf[i]*buf[i];
+      var rms=Math.sqrt(sum/buf.length);
+      if(rms>0.012){_snapHeard=true;if(_snapSilence){clearTimeout(_snapSilence);_snapSilence=null;}}
+      else if(_snapHeard&&!_snapSilence){_snapSilence=setTimeout(_snapFinish,1400);}
+      _snapVadRAF=requestAnimationFrame(tick);
+    };
+    _snapVadRAF=requestAnimationFrame(tick);
+  }catch(e){}
+}
+function _snapFinish(){
+  if(!_snapListening)return;
+  if(_snapSilence){clearTimeout(_snapSilence);_snapSilence=null;}
+  if(_snapVadRAF){cancelAnimationFrame(_snapVadRAF);_snapVadRAF=null;}
+  if(_snapAudioCtx){try{_snapAudioCtx.close();}catch(e){}_snapAudioCtx=null;}
+  _snapListening=false;
+  var mic=document.getElementById('snap-chat-mic'); if(mic){mic.textContent='🎤';mic.style.background='rgba(0,200,232,.08)';mic.style.borderColor='rgba(0,200,232,.3)';}
+  try{if(_snapMR&&_snapMR.state!=='inactive')_snapMR.stop();}catch(e){}
+}
+async function _snapOnStop(){
+  var chunks=_snapChunks;_snapChunks=[];
+  if(!_snapHeard||!chunks.length)return;
+  var blob=new Blob(chunks,{type:_snapMime||'audio/webm'});
+  var st=document.getElementById('snap-chat-status'); if(st)st.textContent='● SKY IS THINKING…';
+  var said='';
+  try{
+    var b64=await new Promise(function(res){var fr=new FileReader();fr.onloadend=function(){var s=fr.result;res(s.slice(s.indexOf(',')+1));};fr.readAsDataURL(blob);});
+    var r=await fetch('/api/transcribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:b64,mime:_snapMime||'audio/webm'})});
+    if(r.ok){var d=await r.json();said=(d.text||'').trim();}
+  }catch(e){}
+  if(!said){ if(st)st.textContent='● ONLINE — ASK ME ANYTHING'; return; }
+  var inp=document.getElementById('snap-chat-input'); if(inp)inp.value=said;
+  snapChatSend();
+}
 
 /* ════════ INIT ════════ */
 render();

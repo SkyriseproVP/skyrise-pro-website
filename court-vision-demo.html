@@ -822,8 +822,8 @@ textarea.ff-input{resize:none;line-height:1.6;}
 var STAGES=[
   {name:'LOI Signed',player:'Leasing Agent',icon:'📝',
    detail:'The Letter of Intent is executed between Landlord and Tenant. The project officially begins and the timeline starts.',
-   sky:'The project file is automatically created, kickoff notifications are sent to all players, and every deadline is loaded into the project timeline immediately. I become the single point of communication from this moment forward.',
-   demoSky:'The Letter of Intent is signed. Deal clock started. I\'ve created the project file, notified every player, and loaded the full timeline. I\'m now the point of contact for everyone on this court.',
+   sky:'My job at this stage is to track when the leasing agent verifies the Landlord has signed the lease. The moment that confirmation comes in, I create the project file, send kickoff notifications to all players, and load every deadline into the timeline. I become the single point of communication from there forward.',
+   demoSky:'Here is what I track at this stage — I am simply confirming when the leasing agent verifies the Landlord has signed the lease. Once that lease is signed, the deal clock starts. I create the project file, notify every player, and load the full timeline. From that point, I am the point of contact for everyone on this court.',
    steal:false},
   {name:'Owner Review',player:'Landlord',icon:'🏢',
    detail:'Landlord reviews TI allowance, lease terms, and project scope. Their signature unlocks everything that follows.',
@@ -871,8 +871,8 @@ var STAGES=[
    steal:false},
   {name:'Final Inspection',player:'Inspector',icon:'🔍',
    detail:'Inspector reviews the completed project for full code compliance. One failed item can stop the deal cold.',
-   sky:'At this stage, the GC is responsible for following up with the inspector on any failed items and coordinating all corrections. I generate the pre-inspection checklist, schedule the inspection, and track every correction the GC needs to address. If anything is missed, I flag it immediately.',
-   demoSky:'Inspector has the ball. The GC owns this follow-up — they are the ones coordinating corrections and scheduling the re-inspection. I generated the checklist, briefed the GC on every open item, and I am tracking every correction to completion.',
+   sky:'Every inspection — all the rough-in electrical, mechanical, and plumbing inspections, plus the final — is the General Contractor\'s responsibility. The GC schedules them, coordinates the trades, and handles any corrections. My job is to track whether each inspection passed or failed and relay that status to every stakeholder in real time. If one fails, I flag it instantly and keep everyone informed until it clears.',
+   demoSky:'All inspections — rough-in electrical, mechanical, plumbing, and the final — are the General Contractor\'s responsibility. They schedule them and own every correction. What I track is simple: did each inspection pass or fail, and I relay that status to all the stakeholders. A fail gets flagged the moment it happens, and I keep everyone in the loop until it clears.',
    steal:true,
    stealText:'Inspector rejects the inspection — the HVAC specifications installed on-site do not match the permitted engineering drawings. This space cannot receive a Certificate of Occupancy until the discrepancy is resolved. Correction may require engineering revision, updated stamped drawings, permit resubmission, and a full re-inspection. I\'ve already identified every discrepancy, notified the engineer and GC with the exact corrections required, flagged the re-inspection window, and sent a delay impact report to the PM and Landlord.',
    stealDemoSky:'🚨 STEAL — Inspector rejected. HVAC specs do not match permitted drawings. Engineering revision required. I\'ve flagged the engineer, written the correction work order, and notified the PM and Landlord.'},
@@ -932,7 +932,7 @@ var PLAYER_INFO={
     role:'The Plan Examiner reviews submitted construction documents for code compliance. A rejection sends the play back to the Architect.',
     sky:'The architect is the one who must follow up with the permit office — correcting plans, resubmitting, and responding to review comments. I monitor the portal daily, track every deadline, and keep the architect accountable so the PM never has to chase anyone.'},
   inspector:{emoji:'🔍',name:'Inspector',phase:'Phase 7 — Final Inspection & C of O',side:'defense',accentColor:'#e53e3e',
-    role:'The Inspector performs final inspection. A failed inspection — including HVAC specification mismatches — sends the ball back to the GC for correction and engineering revision.',
+    role:'The Inspector performs all inspections — rough-in electrical, mechanical, plumbing, and the final. Every one of these is the General Contractor\'s responsibility to schedule and pass. Sky only tracks pass or fail and relays the status to stakeholders. A failed inspection sends the ball back to the GC for correction.',
     sky:'The GC is the one who must follow up with the inspector — addressing failed items, coordinating corrections, and scheduling re-inspections. I generate the pre-inspection checklist, track every correction, and make sure the GC closes out every open item before the re-inspection window closes.'}
 };
 
@@ -940,7 +940,7 @@ var PLAYER_INFO={
 var SIDEBAR=[
   {num:1,role:'Leasing Agent',emoji:'📝',side:'offense',title:'LOI Signed',
    desc:'The Letter of Intent is executed between Landlord and Tenant. The project officially begins and the timeline starts.',
-   sky:'The project file is automatically created, kickoff notifications are sent to all players, and every deadline is loaded into the project timeline immediately.',
+   sky:'I track when the leasing agent verifies the Landlord has signed the lease. Once confirmed, the project file is created, kickoff notifications go to all players, and every deadline loads into the timeline.',
    steal:false},
   {num:2,role:'Landlord',emoji:'🏢',side:'offense',title:'Owner Review',
    desc:'Landlord reviews TI allowance, lease terms, and project scope.',
@@ -978,7 +978,7 @@ var SIDEBAR=[
    steal:false},
   {num:10,role:'Inspector',emoji:'🔍',side:'defense',title:'Final Inspection',
    desc:'Inspector reviews the completed project for code compliance.',
-   sky:'The GC is responsible for following up with the inspector on any failed items and completing all required corrections. I schedule the inspection, generate the pre-inspection checklist, and track every correction the GC must close out.',
+   sky:'All inspections — rough-in electrical, mechanical, plumbing, and the final — are the General Contractor\'s responsibility. I track whether each one passed or failed and relay that status to every stakeholder. A fail gets flagged the moment it happens.',
    steal:true,stealTitle:'STEAL — INSPECTION FAILED',
    stealDesc:'If HVAC specifications or construction conditions do not match approved drawings, the inspection fails. The ball returns to the GC until all corrections are completed. Engineering revision may be required before re-inspection.'},
   {num:11,role:'PM + Tenant',emoji:'✅',side:'offense',title:'Punch List',

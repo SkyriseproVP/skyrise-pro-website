@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "skyrise-website",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3456", "--directory", "C:\\Users\\Victor Polanco\\OneDrive - duvalla.com\\Desktop\\VP Files\\AI\\sky-app\\Skyrise Pro\\Skyrise Website"],
+      "port": 3456
+    }
+  ]
+}

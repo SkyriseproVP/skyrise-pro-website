@@ -1,0 +1,46 @@
+# ── netlify.toml (Skyrise Pro Marketing Website) ─────────────
+
+# ── Tell Netlify where the serverless functions live (required for drag-and-drop) ──
+[build]
+  functions = "netlify/functions"
+
+# ── HTML pages — no caching so updates deploy instantly
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# ── Static assets — long cache with content-hash filenames
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ── Security headers — all routes
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options           = "DENY"
+    X-Content-Type-Options    = "nosniff"
+    Referrer-Policy           = "strict-origin-when-cross-origin"
+    Permissions-Policy        = "camera=(), microphone=(), geolocation=(), payment=(self)"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Content-Security-Policy   = "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://www.google.com https://www.gstatic.com https://api.elevenlabs.io https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.stripe.com https://api.elevenlabs.io https://hook.us1.make.com https://www.google-analytics.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self';"
+
+# ── Netlify Function for secure webhook proxy
+[[redirects]]
+  from   = "/api/signup"
+  to     = "/.netlify/functions/signup"
+  status = 200
+
+# ── Sky AI brain (secure Claude proxy)
+[[redirects]]
+  from   = "/api/sky"
+  to     = "/.netlify/functions/sky-chat"
+  status = 200
+
+# ── SPA fallback
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200

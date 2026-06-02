@@ -1,0 +1,11 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+.netlify/
+
+# Large unused video duplicates (kept locally, not pushed)
+FULCRUM FINAL.mp4
+video is king.mp4
+video_2026-05-24_19-59-23.mp4

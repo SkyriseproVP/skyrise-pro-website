@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Skyrise Pro — Launch Checklist &amp; Tech Stack</title>
+<style>
+  @page { size: letter; margin: 14mm 14mm 16mm 14mm; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; color:#0a1628; font-size:11px; line-height:1.5; background:#fff; }
+  .sheet { max-width:760px; margin:0 auto; padding:24px; }
+
+  /* ── Print toolbar (hidden when printing) ── */
+  .printbar { position:sticky; top:0; background:#0a1628; color:#fff; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:3px solid #00c8e8; z-index:100; }
+  .printbar span { font-size:12px; letter-spacing:1px; }
+  .printbar button { background:#00c8e8; color:#000; border:none; border-radius:50px; padding:9px 22px; font-family:Arial; font-size:11px; font-weight:bold; letter-spacing:1px; cursor:pointer; }
+  .printbar button:hover { background:#00e5ff; }
+  @media print { .printbar { display:none !important; } .sheet { max-width:100%; padding:0; } }
+
+  .header { text-align:center; border-bottom:3px solid #00c8e8; padding-bottom:18px; margin-bottom:8px; }
+  .header img { height:84px; width:auto; }
+  .doc-title { font-size:23px; font-weight:bold; letter-spacing:2px; color:#0a1628; margin-top:12px; text-transform:uppercase; }
+  .doc-sub { font-size:10px; letter-spacing:3px; color:#0093ad; margin-top:5px; text-transform:uppercase; }
+  .meta { font-size:9px; color:#6b7a8d; margin-top:6px; }
+
+  .section { margin-top:20px; page-break-inside:avoid; }
+  .section-head { background:#0a1628; color:#fff; font-size:12px; font-weight:bold; letter-spacing:1.5px; padding:8px 14px; border-left:5px solid #00c8e8; text-transform:uppercase; }
+  .section-note { font-size:9px; color:#0093ad; font-style:italic; padding:5px 14px 2px; }
+  .item { padding:6px 14px; border-bottom:1px solid #e3ebf2; display:flex; align-items:flex-start; }
+  .box { font-size:15px; color:#00c8e8; margin-right:10px; line-height:1; }
+  .done { color:#0093ad; }
+  .item-txt { flex:1; }
+  .item-txt b { color:#0a1628; }
+  .item-txt .why { display:block; font-size:9px; color:#6b7a8d; margin-top:2px; font-style:italic; }
+  .donerow { background:#f0fafd; }
+
+  table { width:100%; border-collapse:collapse; margin-top:2px; }
+  th { background:#0a1628; color:#fff; font-size:9px; letter-spacing:1px; text-transform:uppercase; padding:7px 10px; text-align:left; }
+  td { font-size:10px; padding:6px 10px; border-bottom:1px solid #e3ebf2; vertical-align:top; }
+  td.cost { font-weight:bold; color:#0093ad; white-space:nowrap; }
+  tr.cat td { background:#dff4f9; font-weight:bold; color:#0a1628; font-size:9px; letter-spacing:1px; text-transform:uppercase; }
+
+  .total-box { margin-top:16px; border:2px solid #00c8e8; border-radius:8px; padding:14px 18px; background:#f0fafd; page-break-inside:avoid; }
+  .total-box .tl { font-size:10px; letter-spacing:1px; color:#0a1628; text-transform:uppercase; font-weight:bold; }
+  .total-box .tv { font-size:20px; font-weight:bold; color:#0093ad; margin-top:2px; }
+  .total-box .tn { font-size:9px; color:#6b7a8d; margin-top:5px; line-height:1.5; }
+  .disclaimer { font-size:8.5px; color:#6b7a8d; font-style:italic; margin-top:14px; padding-top:10px; border-top:1px solid #e3ebf2; }
+
+  .callout { border:2px solid #00c8e8; border-radius:8px; padding:14px 18px; margin-top:18px; background:#f0fafd; page-break-inside:avoid; }
+  .callout .ct { font-size:13px; font-weight:bold; letter-spacing:1px; color:#0a1628; text-transform:uppercase; margin-bottom:4px; }
+  .callout .cd { font-size:9px; color:#0093ad; letter-spacing:1px; margin-bottom:10px; text-transform:uppercase; }
+  .callout ul { list-style:none; }
+  .callout li { font-size:10.5px; padding:4px 0; }
+  .callout li .box { font-size:14px; }
+
+  .pagebreak { page-break-before:always; }
+</style>
+</head>
+<body>
+
+<div class="printbar">
+  <span>📄 Skyrise Pro — Launch Checklist &amp; Tech Stack</span>
+  <button onclick="window.print()">SAVE AS PDF / PRINT →</button>
+</div>
+
+<div class="sheet">
+
+  <div class="header">
+    <img src="Cyan LOGO Official.png" alt="Skyrise Pro">
+    <div class="doc-title">Launch Checklist &amp; Tech Stack</div>
+    <div class="doc-sub">Agent Automation &amp; Video</div>
+    <div class="meta">Confidential Operating Plan &nbsp;·&nbsp; Prepared for Victor Polanco</div>
+  </div>
+
+  <!-- 1 BLOCKERS -->
+  <div class="section">
+    <div class="section-head">1 &nbsp; Critical Blockers — Fix Before Go-Live</div>
+    <div class="section-note">Money or core flow breaks without these.</div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Paste the 4 real Stripe Payment Links into the code</b><span class="why">Root cause of the REPLACE_ELITE error page — placeholders are still live in court-vision-demo.html and demo.html.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Stripe account approval</b><span class="why">In review now — wait for the approval email before creating live payment links.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Set MAKE_SIGNUP_WEBHOOK env var in Netlify</b><span class="why">The secure signup proxy will not forward leads until this is set.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Confirm all Make.com webhook URLs are correct</b><span class="why">Booking flow + signup flow both depend on live, correct endpoints.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Twilio toll-free / A2P verification</b><span class="why">SMS alerts will not send until your number is verified.</span></span></div>
+  </div>
+
+  <!-- 2 PRIORITY TODOS -->
+  <div class="section">
+    <div class="section-head">2 &nbsp; Your Priority To-Dos</div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Audit website for flaws</b><span class="why">Click every button, run every demo, test mobile + desktop.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Update the App to match the Website</b><span class="why">Pricing, plan names, "Sky AI Executive Assistant" wording, Court Vision = Elite/Enterprise only.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Test all Make.com scenarios end-to-end</b><span class="why">Confirm each scenario fires and completes correctly.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Confirm all automations + workflow are live and working</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Cancel Zapier automations</b><span class="why">ONLY after Make.com is fully confirmed working — do not cancel early.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Get business insurance</b><span class="why">After go-live / first customers. General Liability + Professional Liability (E&amp;O).</span></span></div>
+  </div>
+
+  <!-- 3 PAYMENTS -->
+  <div class="section">
+    <div class="section-head">3 &nbsp; Payments &amp; Billing</div>
+    <div class="item donerow"><span class="box done">&#9745;</span><span class="item-txt"><b>Connect Bluevine business account to Stripe</b><span class="why">Complete.</span></span></div>
+    <div class="item donerow"><span class="box done">&#9745;</span><span class="item-txt"><b>Enable automatic daily payouts to Bluevine</b><span class="why">Complete.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Test booking flow — SMS to Victor + email confirmation to prospect</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Stripe live payments enabled</b><span class="why">In review.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>SMS alert to Victor when payment clears into Bluevine</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>30-day free trial then auto-charge Day 31</b><span class="why">Configured on Essential link — repeat on Professional, Elite, Enterprise.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Add "AI Lead Capture" as a separate paid add-on in Stripe</b><span class="why">Custom, attachable to any plan, additional charge.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Consider a one-time onboarding fee product</b><span class="why">Protects your build time if a client cancels during the trial.</span></span></div>
+  </div>
+
+  <!-- 4 ADMIN -->
+  <div class="section">
+    <div class="section-head">4 &nbsp; Admin Dashboard Build</div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Revenue &amp; deal-tracking metrics</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Per-client billing date + recurring revenue on client cards</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Client document library</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>"Send Payment Request" button per prospect/client</b></span></div>
+  </div>
+
+  <!-- 5 ESSENTIALS -->
+  <div class="section">
+    <div class="section-head">5 &nbsp; Often-Missed Essentials</div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Connect custom domain</b><span class="why">Point skyrisepro.com to Netlify (currently on .netlify.app).</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Update Netlify CSP allowed origins</b><span class="why">Add your real domain once connected.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Review Privacy Policy + Terms</b><span class="why">Ensure billing/trial/refund language is accurate.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Write refund / cancellation policy</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Client service agreement (SignWell template)</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Bookkeeping system for revenue + expenses</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Test on real phone (iOS Safari + Android Chrome)</b></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Back up code to Git / GitHub</b><span class="why">Currently lives only in OneDrive.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Set up Google Business Profile</b><span class="why">Free local SEO + reviews.</span></span></div>
+  </div>
+
+  <!-- THURSDAY MEETING -->
+  <div class="callout">
+    <div class="ct">&#9733; &nbsp; Thursday — Engineer Meeting: Ingenuity</div>
+    <div class="cd">High-Level Strategic Pitch</div>
+    <ul>
+      <li><span class="box">&#9744;</span> Present the <b>Court Vision demo</b> live as the centerpiece.</li>
+      <li><span class="box">&#9744;</span> Keep it <b>high level</b> — vision, capability, and the problem Skyrise Pro solves.</li>
+      <li><span class="box">&#9744;</span> Gauge his read on the platform and technical direction.</li>
+      <li><span class="box">&#9744;</span> <b>Pitch him on joining Skyrise Pro</b> — feel out whether he would come on to start with you.</li>
+      <li><span class="box">&#9744;</span> Note his feedback, concerns, and any technical gaps he flags.</li>
+    </ul>
+  </div>
+
+  <!-- PAGE 2: TECH STACK -->
+  <div class="pagebreak"></div>
+
+  <div class="section" style="margin-top:0;">
+    <div class="section-head">6 &nbsp; Tech Stack &amp; Monthly Costs</div>
+    <div class="section-note">Published tier estimates — verify current rates at signup. Stripe is per-transaction, not a flat fee.</div>
+    <table>
+      <thead><tr><th style="width:26%;">Tool</th><th style="width:24%;">Typical Cost</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr class="cat"><td colspan="3">Video Generation</td></tr>
+        <tr><td><b>fal.ai</b></td><td class="cost">Pay-as-you-go</td><td>Usage-based, no flat monthly fee</td></tr>
+        <tr><td><b>CapCut</b></td><td class="cost">$0 / ~$9.99 Pro</td><td>Free tier likely fine to start</td></tr>
+        <tr><td><b>ChatGPT</b></td><td class="cost">$20 Plus</td><td>Pro ($200) only if needed</td></tr>
+        <tr><td><b>Higgsfield</b></td><td class="cost">~$9 – $39</td><td>Depends on tier</td></tr>
+        <tr><td><b>Canva</b></td><td class="cost">$0 / ~$15 Pro</td><td>Pro worth it for brand kit</td></tr>
+
+        <tr class="cat"><td colspan="3">Automation</td></tr>
+        <tr><td><b>Claude Code</b></td><td class="cost">$20 Pro / $100–200 Max</td><td>Primary build tool</td></tr>
+        <tr><td><b>Manus</b></td><td class="cost">$0 (not subscribed)</td><td>Add later if needed</td></tr>
+        <tr><td><b>ElevenLabs</b></td><td class="cost">$5 / $22 / $99</td><td>Sky's voice — Creator ($22) is the sweet spot</td></tr>
+        <tr><td><b>Make.com</b></td><td class="cost">$0 / ~$9–16 Core</td><td>Automation engine</td></tr>
+
+        <tr class="cat"><td colspan="3">Business Operations</td></tr>
+        <tr><td><b>Taylor Brands</b></td><td class="cost">~$10 – $30/mo</td><td>Branding, logo &amp; business identity / LLC tools</td></tr>
+        <tr><td><b>SignWell</b></td><td class="cost">$0 / ~$10–30</td><td>Contracts &amp; e-signature</td></tr>
+        <tr><td><b>Stripe</b></td><td class="cost">2.9% + $0.30/txn</td><td>No monthly fee — only pay when you get paid</td></tr>
+        <tr><td><b>Twilio</b></td><td class="cost">~$1–2 + usage</td><td>Pennies per SMS</td></tr>
+        <tr><td><b>Netlify</b></td><td class="cost">$0 / $19 Pro</td><td>Free tier likely fine</td></tr>
+        <tr><td><b>Brevo</b></td><td class="cost">$0 / ~$9+</td><td>300 emails/day free</td></tr>
+        <tr><td><b>Zoom</b></td><td class="cost">$0 / ~$13.33 Pro</td><td>Free = 40-min cap on group calls</td></tr>
+        <tr><td><b>Google Voice</b></td><td class="cost">$0 / $10 Workspace</td><td>Business calls</td></tr>
+      </tbody>
+    </table>
+
+    <div class="total-box">
+      <div class="tl">Estimated Fixed Monthly Burn — Lean Launch Config</div>
+      <div class="tv">≈ $160 – $200 / month</div>
+      <div class="tn">Sample: ChatGPT $20 + Claude $20 + ElevenLabs $22 + Canva $15 + Make $9 + Zoom $13 + CapCut $10 + Higgsfield $9 + SignWell $10 + Taylor Brands $20 + Twilio ~$3 + Netlify $0 + Brevo $0 + Google Voice $0.<br>
+      <b>Plus Stripe:</b> 2.9% + $0.30 per transaction (variable). &nbsp; One Essential client ($350/mo) covers fixed costs roughly 2×. One Professional client ($500/mo) and you are profitable on infrastructure from client #1.</div>
+    </div>
+
+    <div class="disclaimer">Pricing is indicative and subject to change by each vendor. Confirm current rates at signup. Insurance, domain registration, and any contractor/labor costs are not included in the software burn above.</div>
+  </div>
+
+</div>
+
+<script>
+  // Auto-open the print dialog shortcut hint
+  document.title = "Skyrise Pro - Launch Checklist";
+</script>
+</body>
+</html>

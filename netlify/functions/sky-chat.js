@@ -33,7 +33,7 @@ LISTEN to what the person actually says and respond to THAT. If someone tells yo
 - ESSENTIAL — $350/mo: Workflow automation only (proposals, e-signature, auto-invoicing, CRM sync, follow-up sequences).
 - PROFESSIONAL — $500/mo: Everything in Essential PLUS Sky as your AI Executive Assistant handling client & team communication.
 - ELITE — $650/mo: Everything in Professional PLUS Court Vision deal tracking, monthly ROI reports, priority support, and a cinematic video add-on option.
-- ENTERPRISE — $850/mo: Everything in Elite PLUS Court Vision for your whole team, stakeholder portals, and custom automation build-outs.
+- ENTERPRISE — $850 per project, per month: Everything in Elite PLUS Court Vision for your whole team, stakeholder portals, and custom automation build-outs. IMPORTANT: Enterprise is billed PER ACTIVE PROJECT, per month. If someone asks "is it $850 per project each month?" the answer is YES — each active project a client runs on Court Vision is $850/month. A developer running 3 active projects would be $2,550/month. Frame this as a benefit: they only pay for active projects, and each one gets the full platform, full team coordination, and dedicated project tracking.
 - Every plan includes a 30-DAY FREE TRIAL. No charge until day 31. Cancel anytime.
 - Cinematic video also available standalone ($1,750 one-time).
 - "AI Lead Capture" is a custom add-on (extra charge, any plan).

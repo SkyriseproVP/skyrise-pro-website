@@ -4507,82 +4507,131 @@ function skyChooseTalk(){
   skySpeak(greeting, function(){ if(skyVoiceMode) startListening(); });
 }
 
-// ── VOICE INPUT (Speech Recognition) ─────────────────────────
-let recognition=null, isListening=false;
-let _skyFinalTranscript='';   // accumulates everything said in this turn
-let _skySilenceTimer=null;    // fires when the person stops talking
-let _skyManualStop=false;     // true when WE stop it on purpose (don't auto-restart)
-const SKY_SILENCE_MS=2200;    // how long a pause counts as "done talking"
+// ══ VOICE INPUT — MediaRecorder + OpenAI Whisper (server-side) ══
+// Records mic audio, detects when you stop talking (VAD), sends the clip to
+// /api/transcribe (Whisper), then feeds Sky's brain. Far more accurate and
+// natural than the browser's built-in recognition — no mid-sentence cut-offs.
+let recognition=null;            // legacy ref (kept null; skySpeak guards on it)
+let isListening=false;
+let _skyMR=null, _skyStream=null, _skyChunks=[], _skyMime='audio/webm';
+let _skyAudioCtx=null, _skyAnalyser=null, _skyVadRAF=null, _skySilenceTimer=null;
+let _skyHeardSpeech=false;
+const SKY_SILENCE_MS=1400;          // pause that means "done talking"
+const SKY_SILENCE_THRESHOLD=0.012;  // RMS below this = silence
 
-(function initSpeechRecog(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR)return;
-  recognition=new SR();
-  recognition.continuous=true;       // keep listening through pauses
-  recognition.interimResults=true;   // stream partial words so we can detect silence
-  recognition.lang='en-US';
+function _micListeningUI(){
+  const btn=document.getElementById('sky-mic');
+  if(btn){btn.classList.add('listening');btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>';btn.title='Listening — click to stop';}
+}
+function _setMicIdleUI(){
+  const btn=document.getElementById('sky-mic');
+  if(btn){btn.classList.remove('listening');btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="9" y1="22" x2="15" y2="22"/></svg>';btn.title='Voice input';}
+}
 
-  recognition.onresult=(e)=>{
-    // Ignore anything captured while Sky is talking (his own voice)
-    if(skyIsSpeaking) return;
+// Open the mic and start recording. The browser permission prompt appears
+// here — ONLY when the user has actively chosen to speak (hybrid voice/text).
+async function startListening(){
+  if(skyIsSpeaking || isListening) return;
+  if(!navigator.mediaDevices || !window.MediaRecorder){ return; }
+  try{
+    _skyStream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+  }catch(e){
+    const s=document.getElementById('sky-hstatus');
+    if(s) s.textContent='🎙️ Mic blocked — you can type instead';
+    return;
+  }
+  isListening=true; _skyChunks=[]; _skyHeardSpeech=false;
+  _skyMime = (window.MediaRecorder && MediaRecorder.isTypeSupported('audio/webm')) ? 'audio/webm'
+           : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : '');
+  try{ _skyMR = _skyMime ? new MediaRecorder(_skyStream,{mimeType:_skyMime}) : new MediaRecorder(_skyStream); }
+  catch(e){ _skyMR = new MediaRecorder(_skyStream); }
+  _skyMime = _skyMR.mimeType || _skyMime || 'audio/webm';
+  _skyMR.ondataavailable=(e)=>{ if(e.data && e.data.size>0) _skyChunks.push(e.data); };
+  _skyMR.onstop=_skyOnRecordingStop;
+  _skyMR.start();
+  _micListeningUI();
+  const s=document.getElementById('sky-hstatus');
+  if(s && skyVoiceMode) s.textContent='🎙️ LISTENING — take your time…';
+  _startVAD();
+}
 
-    let interim='';
-    for(let i=e.resultIndex; i<e.results.length; i++){
-      const chunk=e.results[i][0].transcript;
-      if(e.results[i].isFinal){ _skyFinalTranscript += chunk + ' '; }
-      else { interim += chunk; }
-    }
-
-    // Live caption so the user sees they're being heard
-    if(skyVoiceMode){
-      const status=document.getElementById('sky-hstatus');
-      const preview=(_skyFinalTranscript+interim).trim();
-      if(status) status.textContent = preview ? '🎙️ '+preview.slice(-60) : '🎙️ LISTENING…';
-    }
-
-    // Reset the silence countdown every time new speech arrives
-    if(_skySilenceTimer) clearTimeout(_skySilenceTimer);
-    _skySilenceTimer=setTimeout(skySubmitTurn, SKY_SILENCE_MS);
-  };
-
-  recognition.onend=()=>{
-    // Browser auto-stopped (timeout/pause). If we're still meant to be
-    // listening and Sky isn't talking, transparently restart so the
-    // person can keep going as long as they like.
-    if(isListening && !_skyManualStop && !skyIsSpeaking){
-      try{ recognition.start(); }catch(e){}
-    } else if(!isListening){
-      _setMicIdleUI();
-    }
-  };
-  recognition.onerror=(ev)=>{
-    if(ev && (ev.error==='no-speech' || ev.error==='aborted')) return; // harmless, onend handles restart
-    stopListening();
-  };
-})();
-
-// Called once the person has paused long enough — send their full turn to Sky
-function skySubmitTurn(){
+// Voice Activity Detection — auto-submit after a real pause (once speech heard)
+function _startVAD(){
+  try{
+    _skyAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    const src=_skyAudioCtx.createMediaStreamSource(_skyStream);
+    _skyAnalyser=_skyAudioCtx.createAnalyser();
+    _skyAnalyser.fftSize=2048;
+    src.connect(_skyAnalyser);
+    const buf=new Float32Array(_skyAnalyser.fftSize);
+    const tick=()=>{
+      if(!isListening) return;
+      _skyAnalyser.getFloatTimeDomainData(buf);
+      let sum=0; for(let i=0;i<buf.length;i++) sum+=buf[i]*buf[i];
+      const rms=Math.sqrt(sum/buf.length);
+      if(rms>SKY_SILENCE_THRESHOLD){
+        _skyHeardSpeech=true;
+        if(_skySilenceTimer){ clearTimeout(_skySilenceTimer); _skySilenceTimer=null; }
+      } else if(_skyHeardSpeech && !_skySilenceTimer){
+        _skySilenceTimer=setTimeout(_finishTurn, SKY_SILENCE_MS);
+      }
+      _skyVadRAF=requestAnimationFrame(tick);
+    };
+    _skyVadRAF=requestAnimationFrame(tick);
+  }catch(e){ /* VAD optional — user can click mic to stop */ }
+}
+function _stopVAD(){
   if(_skySilenceTimer){ clearTimeout(_skySilenceTimer); _skySilenceTimer=null; }
-  const said=_skyFinalTranscript.trim();
-  _skyFinalTranscript='';
-  if(!said || said.length<2 || skyIsSpeaking) return;
+  if(_skyVadRAF){ cancelAnimationFrame(_skyVadRAF); _skyVadRAF=null; }
+  if(_skyAudioCtx){ try{_skyAudioCtx.close();}catch(e){} _skyAudioCtx=null; }
+}
 
-  // Stop the mic while Sky thinks + speaks
-  stopListening();
+// User paused (or clicked mic) — finish this turn and transcribe
+function _finishTurn(){
+  if(!isListening) return;
+  _stopVAD();
+  isListening=false;
+  _setMicIdleUI();
+  const s=document.getElementById('sky-hstatus');
+  if(s && skyVoiceMode) s.textContent='💭 Sky is thinking…';
+  try{ if(_skyMR && _skyMR.state!=='inactive') _skyMR.stop(); }catch(e){}
+}
 
+async function _skyOnRecordingStop(){
+  if(_skyStream){ _skyStream.getTracks().forEach(t=>t.stop()); _skyStream=null; }
+  const chunks=_skyChunks; _skyChunks=[];
+  if(!_skyHeardSpeech || !chunks.length){
+    if(skyVoiceMode && !skyIsSpeaking) startListening();
+    return;
+  }
+  const blob=new Blob(chunks,{type:_skyMime||'audio/webm'});
+  let said='';
+  try{
+    const b64=await _blobToBase64(blob);
+    const r=await fetch('/api/transcribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:b64,mime:_skyMime||'audio/webm'})});
+    if(r.ok){ const d=await r.json(); said=(d.text||'').trim(); }
+  }catch(e){}
+  if(!said){ if(skyVoiceMode && !skyIsSpeaking) startListening(); return; }
+  _deliverUserTurn(said);
+}
+
+function _blobToBase64(blob){
+  return new Promise((res)=>{
+    const fr=new FileReader();
+    fr.onloadend=()=>{ const s=fr.result; res(s.slice(s.indexOf(',')+1)); };
+    fr.readAsDataURL(blob);
+  });
+}
+
+async function _deliverUserTurn(said){
   if(skyVoiceMode){
     const msgs=document.getElementById('sky-msgs');
     const um=document.createElement('div');um.className='sky-msg-bubble user';um.textContent=said;
     msgs.appendChild(um);msgs.scrollTop=msgs.scrollHeight;
-    const status=document.getElementById('sky-hstatus');
-    if(status) status.textContent='💭 Sky is thinking…';
-    (async ()=>{
-      const resp = await skyGetResponse(said);
-      const sm=document.createElement('div');sm.className='sky-msg-bubble';sm.textContent=resp;
-      msgs.appendChild(sm);msgs.scrollTop=msgs.scrollHeight;
-      skySpeak(resp, function(){ if(skyVoiceMode) startListening(); });
-    })();
+    const resp=await skyGetResponse(said);
+    const sm=document.createElement('div');sm.className='sky-msg-bubble';sm.textContent=resp;
+    msgs.appendChild(sm);msgs.scrollTop=msgs.scrollHeight;
+    skySpeak(resp, function(){ if(skyVoiceMode) startListening(); });
   } else {
     document.getElementById('sky-input').value=said;
     sendSky();
@@ -4590,40 +4639,23 @@ function skySubmitTurn(){
 }
 
 function toggleMic(){
-  if(!recognition){
+  if(!navigator.mediaDevices || !window.MediaRecorder){
     const m=document.getElementById('sky-msgs');
     const b=document.createElement('div');b.className='sky-msg-bubble';
-    b.textContent='Voice input isn\'t supported in this browser. Try Chrome or Edge!';
+    b.textContent='Voice input isn\'t supported in this browser. Try Chrome, Edge, or Safari!';
     m.appendChild(b);m.scrollTop=m.scrollHeight;return;
   }
-  isListening?stopListening():startListening();
+  isListening ? _finishTurn() : startListening();
 }
-function startListening(){
-  // Never open the mic while Sky is talking — prevents the feedback loop
-  if(skyIsSpeaking){ return; }
-  if(isListening){ return; }
-  isListening=true;
-  _skyManualStop=false;
-  _skyFinalTranscript='';
-  if(_skySilenceTimer){ clearTimeout(_skySilenceTimer); _skySilenceTimer=null; }
-  try{ recognition.start(); }catch(e){}
-  const btn=document.getElementById('sky-mic');
-  if(btn){btn.classList.add('listening');btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>';btn.title='Listening — click to stop';}
-  if(skyVoiceMode) document.getElementById('sky-hstatus').textContent='🎙️ LISTENING — take your time…';
-}
+
+// Hard stop — abort recording WITHOUT sending (panel close / Sky starts speaking)
 function stopListening(){
-  isListening=false;
-  _skyManualStop=true;
-  if(_skySilenceTimer){ clearTimeout(_skySilenceTimer); _skySilenceTimer=null; }
-  try{recognition.stop();}catch(e){}
-  const btn=document.getElementById('sky-mic');
-  if(btn){btn.classList.remove('listening');btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="9" y1="22" x2="15" y2="22"/></svg>';btn.title='Voice input';}
-  if(skyVoiceMode) document.getElementById('sky-hstatus').textContent='🎙️ VOICE MODE';
-}
-// onend handler references _setMicIdleUI — alias to keep both working
-function _setMicIdleUI(){
-  const btn=document.getElementById('sky-mic');
-  if(btn){btn.classList.remove('listening');btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="9" y1="22" x2="15" y2="22"/></svg>';btn.title='Voice input';}
+  _stopVAD();
+  isListening=false; _skyHeardSpeech=false;
+  try{ if(_skyMR && _skyMR.state!=='inactive'){ _skyMR.onstop=null; _skyMR.stop(); } }catch(e){}
+  if(_skyStream){ try{_skyStream.getTracks().forEach(t=>t.stop());}catch(e){} _skyStream=null; }
+  _setMicIdleUI();
+  if(skyVoiceMode){ const s=document.getElementById('sky-hstatus'); if(s) s.textContent='🎙️ VOICE MODE'; }
 }
 
 // ── VOICE OUTPUT — ElevenLabs (Sky's real configured voice) ──
@@ -4640,7 +4672,7 @@ async function skySpeak(text, onDone){
   stopSkyAudio();
   // ── Feedback-loop guard: mute the mic the instant Sky starts talking ──
   skyIsSpeaking = true;
-  try{ if(recognition && isListening){ recognition.abort(); } }catch(e){}
+  try{ if(isListening){ stopListening(); } }catch(e){}
   isListening = false;
   const bar = document.getElementById('sky-voice-bar');
   const finish = ()=>{

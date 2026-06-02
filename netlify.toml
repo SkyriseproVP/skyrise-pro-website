@@ -39,6 +39,12 @@
   to     = "/.netlify/functions/sky-chat"
   status = 200
 
+# ── Voice transcription (secure Whisper proxy)
+[[redirects]]
+  from   = "/api/transcribe"
+  to     = "/.netlify/functions/transcribe"
+  status = 200
+
 # NOTE: No catch-all SPA rewrite — this is a multi-page static site.
 # Netlify serves index.html, demo.html, court-vision-demo.html directly.
 # A "/* -> /index.html" rule would shadow the function routes and break POSTs.

@@ -360,6 +360,8 @@ textarea.ff-input{resize:none;line-height:1.6;}
   </div>
   <div class="intro-title" style="margin-top:14px;">COURT VISION</div>
   <div class="intro-sub">PROJECT TRACKER DEMO</div>
+  <button class="begin-btn" style="margin-top:28px;" onclick="beginDemo()">▶ START THE DEMO</button>
+  <div style="font-family:'Inter',sans-serif;font-size:12px;color:rgba(10,22,40,.45);margin-top:14px;">Sky will walk you through a live project — with voice.</div>
 </div>
 
 <!-- ══════════ PHASE 2 — FORM INTAKE ══════════ -->
@@ -1280,6 +1282,8 @@ window.skipToCourtVision=function(){
 
 /* ════════ BEGIN DEMO ════════ */
 window.beginDemo=function(){
+  if(_demoFired)return;   // prevent double-start
+  _demoFired=true;
   var introMsg='Let me show you the process when we build a project.';
   orbSpeak('intro-orb',true);
   skySpeakPaced(introMsg,function(){
@@ -2233,13 +2237,8 @@ async function _snapOnStop(){
 /* ════════ INIT ════════ */
 render();
 
-/* ── Auto-fire on load — no tap required ── */
+/* ── Demo waits for the visitor to click "START THE DEMO" — no auto-play audio ── */
 var _demoFired=false;
-window.addEventListener('load',function(){
-  if(_demoFired)return;
-  _demoFired=true;
-  setTimeout(beginDemo,400);
-});
 
 })();
 </script>

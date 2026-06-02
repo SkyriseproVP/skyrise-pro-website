@@ -7,7 +7,7 @@
  * this function adds the system prompt + key and returns Sky's reply.
  */
 
-const MODEL = 'claude-3-haiku-20240307';   // universally available, fast + cheap. Upgrade later to a 3.5/newer model once enabled on the account.
+const MODEL = 'claude-haiku-4-5';   // current-gen Haiku — fast + cheap, available on this account.
 const MAX_TOKENS = 320;                     // keep replies tight + conversational
 
 const SKY_SYSTEM_PROMPT = `You are Sky — the AI Executive Assistant and brand voice of Skyrise Pro, an AI automation and cinematic video company for commercial real estate, construction, and service businesses.

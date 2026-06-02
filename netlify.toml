@@ -39,8 +39,6 @@
   to     = "/.netlify/functions/sky-chat"
   status = 200
 
-# ── SPA fallback
-[[redirects]]
-  from   = "/*"
-  to     = "/index.html"
-  status = 200
+# NOTE: No catch-all SPA rewrite — this is a multi-page static site.
+# Netlify serves index.html, demo.html, court-vision-demo.html directly.
+# A "/* -> /index.html" rule would shadow the function routes and break POSTs.

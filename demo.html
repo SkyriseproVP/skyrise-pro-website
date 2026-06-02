@@ -165,8 +165,10 @@ canvas.orb-canvas{border-radius:50%;display:block;}
 .demo-scroll::-webkit-scrollbar-thumb{background:rgba(0,200,232,.2);border-radius:4px;}
 
 /* ── PIPELINE DEMO DIAGRAM ───────────────────────────────────── */
-.demo-pipe-wrap{width:100%;max-width:1200px;margin:0 auto;padding:24px 24px 12px;display:flex;flex-direction:column;height:100%;}
-.demo-pipe-inner{position:relative;background:linear-gradient(145deg,#060c1a,#0a1420);border:1.5px solid rgba(0,200,232,.4);border-radius:16px;padding:20px 16px 14px;flex:1;box-shadow:0 0 0 1px rgba(0,200,232,.08),0 0 18px rgba(0,200,232,.2),0 0 40px rgba(0,200,232,.08);}
+.demo-pipe-wrap{width:100%;max-width:1200px;margin:0 auto;padding:24px;display:flex;flex-direction:column;height:100%;}
+/* White cyan-glow outer frame (matches homepage Court Vision aesthetic) */
+.demo-pipe-frame{background:#ffffff;border:2px solid rgba(0,200,232,.6);border-radius:22px;padding:18px;flex:1;display:flex;box-shadow:0 0 0 1px rgba(0,200,232,.12),0 0 22px rgba(0,200,232,.28),0 0 55px rgba(0,200,232,.12);}
+.demo-pipe-inner{position:relative;background:linear-gradient(145deg,#060c1a,#0a1420);border:1.5px solid rgba(0,200,232,.4);border-radius:16px;padding:20px 16px 14px;flex:1;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 0 1px rgba(0,200,232,.08),0 0 18px rgba(0,200,232,.2),0 0 40px rgba(0,200,232,.08);}
 
 /* Animated mouse cursor */
 #demo-cursor{position:absolute;pointer-events:none;z-index:50;width:26px;height:26px;transition:left .5s cubic-bezier(.25,.46,.45,.94),top .5s cubic-bezier(.25,.46,.45,.94);filter:drop-shadow(0 2px 8px rgba(0,0,0,.7));left:50%;top:50%;}
@@ -876,6 +878,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
   <!-- Pipeline diagram -->
   <div class="demo-scroll">
     <div class="demo-pipe-wrap">
+      <div class="demo-pipe-frame">
       <div class="demo-pipe-inner" id="demo-pipe-inner">
 
         <!-- Animated cursor -->
@@ -973,6 +976,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         </div>
 
       </div><!-- /demo-pipe-inner -->
+      </div><!-- /demo-pipe-frame -->
     </div><!-- /demo-pipe-wrap -->
   </div>
 

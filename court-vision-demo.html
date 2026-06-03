@@ -941,7 +941,7 @@ var PLAYER_INFO={
   architect:{emoji:'📐',name:'Architect',phase:'Phase 4 — Design & Permit Documents',side:'offense',accentColor:'#00c8e8',
     role:'The Architect translates the Tenant\'s vision into permitted construction documents. When plans are rejected, the Architect gets the ball back.',
     sky:'Sky tracks plan submission dates, review cycles, and correction deadlines. All communication with the Architect runs through Sky.'},
-  gc:{emoji:'🔨',name:'General Contractor',phase:'Phase 6 — Construction & C of O',side:'offense',accentColor:'#00c8e8',
+  gc:{emoji:'🔨',img:'hardhat-nobg.png',name:'General Contractor',phase:'Phase 6 — Construction & C of O',side:'offense',accentColor:'#00c8e8',
     role:'The GC manages every sub, every schedule, and every inspection from groundbreak to Certificate of Occupancy.',
     sky:'Sky tracks RFIs, change orders, inspections, and punch list completion. The PM and Landlord never need to call the GC for a status update.'},
   engineer:{emoji:'⚙️',name:'Engineer (MEP)',phase:'Phase 3 — Engineering & Pre-Construction',side:'offense',accentColor:'#00c8e8',
@@ -1546,7 +1546,7 @@ window.csOpenPlayerPanel=function(id){
   card.style.transform=isD?'translateY(-50%) translateX(-10px)':'translateY(-50%) translateX(10px)';
   document.getElementById('csCourtPlayerCardContent').innerHTML=
     '<div style="text-align:center;margin-bottom:12px;">'+
-      '<div style="font-size:26px;margin-bottom:6px;">'+info.emoji+'</div>'+
+      '<div style="margin-bottom:6px;">'+(info.img?'<img src="'+info.img+'" alt="'+info.name+'" style="height:46px;width:auto;object-fit:contain;filter:drop-shadow(0 2px 6px rgba(255,125,62,.5));">':'<span style="font-size:26px;">'+info.emoji+'</span>')+'</div>'+
       '<div style="font-family:\'Orbitron\',sans-serif;font-size:7px;font-weight:700;color:'+accent+';letter-spacing:2.5px;margin-bottom:5px;">'+(isD?'⚡ DEFENSE':'🏀 OFFENSE')+'</div>'+
       '<div style="font-family:\'Orbitron\',sans-serif;font-size:11px;font-weight:900;color:#ffffff;letter-spacing:1px;line-height:1.3;">'+info.name+'</div>'+
       '<div style="font-family:\'Orbitron\',sans-serif;font-size:6px;color:rgba(0,200,232,.55);letter-spacing:1.8px;margin-top:4px;">'+info.phase+'</div>'+

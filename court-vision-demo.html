@@ -2160,6 +2160,16 @@ window.showSnapConversation=function(){
   if(chat) chat.scrollIntoView({behavior:'smooth',block:'center'});
 };
 
+/* Strip ALL emojis — keep Sky professional (matches homepage; brain is also told not to use them) */
+function _snapStripEmoji(t){
+  if(!t) return t;
+  return String(t)
+    .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}]/gu,'')
+    .replace(/[️‍⃣]/g,'')
+    .replace(/\s{2,}/g,' ')
+    .trim();
+}
+
 /* Get Sky's real reply from the Claude brain (falls back gracefully) */
 function snapAskSky(text,cb){
   _snapConvo.push({role:'user',content:String(text||'').slice(0,2000)});
@@ -2168,7 +2178,7 @@ function snapAskSky(text,cb){
     body:JSON.stringify({messages:_snapConvo,mode:'public'})})
     .then(function(r){return r.ok?r.json():null;})
     .then(function(d){
-      var reply=(d&&d.reply)?d.reply:"I'm right here — ask me anything about how Court Vision would run your projects, pricing, or getting started.";
+      var reply=(d&&d.reply)?_snapStripEmoji(d.reply):"I'm right here — ask me anything about how Court Vision would run your projects, pricing, or getting started.";
       _snapConvo.push({role:'assistant',content:reply});
       cb(reply);
     })

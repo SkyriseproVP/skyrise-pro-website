@@ -683,8 +683,9 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 .sky-choice-btn:hover{background:rgba(0,200,232,.12);border-color:var(--cyan);box-shadow:0 0 16px rgba(0,200,232,.25);}
 .sky-choice-btn-icon{font-size:22px;line-height:1;}
 /* Voice mode: waveform bars shown when Sky is speaking */
-.sky-voice-bar{display:none;align-items:center;justify-content:center;gap:4px;padding:10px 0 4px;}
-.sky-voice-bar.active{display:flex;}
+/* Hidden — redundant with the main orb below the panel */
+.sky-voice-bar{display:none!important;align-items:center;justify-content:center;gap:4px;padding:10px 0 4px;}
+.sky-voice-bar.active{display:none!important;}
 .sky-vbar{width:4px;border-radius:4px;background:var(--cyan);animation:vbarAnim 1s ease-in-out infinite;}
 .sky-vbar:nth-child(1){height:8px;animation-delay:0s;}
 .sky-vbar:nth-child(2){height:16px;animation-delay:.15s;}

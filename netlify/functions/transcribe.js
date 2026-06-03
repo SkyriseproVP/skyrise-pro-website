@@ -98,7 +98,8 @@ exports.handler = async function (event) {
     if (!resp.ok) {
       const errTxt = await resp.text();
       console.error('Whisper error', resp.status, errTxt);
-      return { statusCode: 502, headers, body: JSON.stringify({ error: 'Transcription upstream error', fallback: true }) };
+      // Surface the REAL upstream reason so we can diagnose from the browser.
+      return { statusCode: 502, headers, body: JSON.stringify({ error: 'Transcription upstream error', fallback: true, upstreamStatus: resp.status, upstreamError: (errTxt || '').slice(0, 300) }) };
     }
 
     const data = await resp.json();

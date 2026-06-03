@@ -2130,6 +2130,7 @@ var _convRunning=false;
 var _snapConvo=[];          // rolling chat history
 var _snapMR=null,_snapStream=null,_snapChunks=[],_snapMime='audio/webm',_snapListening=false;
 var _snapAudioCtx=null,_snapVadRAF=null,_snapSilence=null,_snapHeard=false;
+var _snapVoiceMode=false,_snapSpeaking=false;   // hands-free state (mirrors homepage orb)
 
 function snapAddMsg(text,isUser){
   var box=document.getElementById('snap-chat-msgs');if(!box)return;
@@ -2197,21 +2198,43 @@ window.snapChatSend=function(){
   orbSpeak('snap-orb',true);
   snapAskSky(txt,function(reply){
     snapAddMsg(reply,false);
-    if(st)st.textContent='● ONLINE — ASK ME ANYTHING';
-    skySpeakPaced(reply,function(){ orbSpeak('snap-orb',false); });
+    _snapSpeaking=true;                       // mute mic while Sky talks (feedback guard)
+    skySpeakPaced(reply,function(){
+      orbSpeak('snap-orb',false);
+      // Keep the mic deaf a beat AFTER the voice ends so the speaker tail
+      // isn't picked up and transcribed back as "user" speech.
+      setTimeout(function(){
+        _snapSpeaking=false;
+        if(_snapVoiceMode){ if(st)st.textContent='🎙️ LISTENING — take your time…'; _snapStartMic(); }
+        else if(st){ st.textContent='● ONLINE — ASK ME ANYTHING'; }
+      },700);
+    });
   });
 };
 
-/* ── Voice input for the Court Vision chat (Whisper, click-to-talk) ── */
+/* ── Hands-free voice for the Court Vision chat (Whisper) — mirrors homepage orb ──
+   Tap the mic ONCE to turn voice mode ON: Sky listens continuously, auto-detects
+   when you stop talking, replies out loud, then re-opens the mic for you — no tapping
+   between turns. Tap again to turn voice mode OFF. */
 window.snapMicToggle=function(){
-  if(_snapListening){ _snapFinish(); } else { _snapStartMic(); }
+  if(_snapVoiceMode){ _snapStopVoice(); }          // tap again = turn hands-free OFF
+  else { _snapVoiceMode=true; _snapStartMic(); }
 };
+// Fully exit hands-free voice mode (stop listening, release mic, no send)
+function _snapStopVoice(){
+  _snapVoiceMode=false;
+  _snapFinishQuiet();
+  if(_snapStream){ try{_snapStream.getTracks().forEach(function(t){t.stop();});}catch(e){} _snapStream=null; }
+  var st=document.getElementById('snap-chat-status'); if(st)st.textContent='● ONLINE — ASK ME ANYTHING';
+}
 async function _snapStartMic(){
   if(!navigator.mediaDevices||!window.MediaRecorder)return;
+  if(_snapSpeaking||_snapListening)return;          // never open the mic while Sky is talking
   try{
     if(!_snapStream||!_snapStream.active)
       _snapStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true}});
   }catch(e){
+    _snapVoiceMode=false;
     var st=document.getElementById('snap-chat-status'); if(st)st.textContent='🎙️ Mic blocked — you can type';
     return;
   }
@@ -2221,14 +2244,25 @@ async function _snapStartMic(){
   _snapMime=_snapMR.mimeType||_snapMime||'audio/webm';
   _snapMR.ondataavailable=function(e){if(e.data&&e.data.size>0)_snapChunks.push(e.data);};
   _snapMR.onstop=_snapOnStop;
-  _snapMR.start();
+  _snapMR.start(250);                                // timeslice — short clips always carry data
   var mic=document.getElementById('snap-chat-mic'); if(mic){mic.textContent='🔴';mic.style.background='rgba(229,62,62,.12)';mic.style.borderColor='rgba(229,62,62,.6)';}
   var st=document.getElementById('snap-chat-status'); if(st)st.textContent='🎙️ LISTENING — take your time…';
   _snapVAD();
 }
+// Stop listening WITHOUT transcribing/sending (used when turning voice mode off)
+function _snapFinishQuiet(){
+  if(_snapSilence){clearTimeout(_snapSilence);_snapSilence=null;}
+  if(_snapVadRAF){cancelAnimationFrame(_snapVadRAF);_snapVadRAF=null;}
+  if(_snapAudioCtx){try{_snapAudioCtx.close();}catch(e){}_snapAudioCtx=null;}
+  _snapListening=false;_snapHeard=false;_snapChunks=[];
+  var mic=document.getElementById('snap-chat-mic'); if(mic){mic.textContent='🎤';mic.style.background='rgba(0,200,232,.08)';mic.style.borderColor='rgba(0,200,232,.3)';}
+  try{if(_snapMR&&_snapMR.state!=='inactive'){_snapMR.onstop=null;_snapMR.stop();}}catch(e){}
+  _snapMR=null;
+}
 function _snapVAD(){
   try{
     _snapAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    if(_snapAudioCtx.state==='suspended'){ _snapAudioCtx.resume().catch(function(){}); }
     var src=_snapAudioCtx.createMediaStreamSource(_snapStream);
     var an=_snapAudioCtx.createAnalyser();an.fftSize=2048;src.connect(an);
     var buf=new Float32Array(an.fftSize);
@@ -2237,7 +2271,7 @@ function _snapVAD(){
       an.getFloatTimeDomainData(buf);
       var sum=0;for(var i=0;i<buf.length;i++)sum+=buf[i]*buf[i];
       var rms=Math.sqrt(sum/buf.length);
-      if(rms>0.012){_snapHeard=true;if(_snapSilence){clearTimeout(_snapSilence);_snapSilence=null;}}
+      if(rms>0.008){_snapHeard=true;if(_snapSilence){clearTimeout(_snapSilence);_snapSilence=null;}}
       else if(_snapHeard&&!_snapSilence){_snapSilence=setTimeout(_snapFinish,1400);}
       _snapVadRAF=requestAnimationFrame(tick);
     };
@@ -2255,7 +2289,8 @@ function _snapFinish(){
 }
 async function _snapOnStop(){
   var chunks=_snapChunks;_snapChunks=[];
-  if(!_snapHeard||!chunks.length)return;
+  // Nothing heard — if hands-free is on, quietly re-open the mic and keep waiting.
+  if(!_snapHeard||!chunks.length){ if(_snapVoiceMode&&!_snapSpeaking)_snapStartMic(); return; }
   var blob=new Blob(chunks,{type:_snapMime||'audio/webm'});
   var st=document.getElementById('snap-chat-status'); if(st)st.textContent='● SKY IS THINKING…';
   var said='';
@@ -2264,7 +2299,7 @@ async function _snapOnStop(){
     var r=await fetch('/api/transcribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:b64,mime:_snapMime||'audio/webm'})});
     if(r.ok){var d=await r.json();said=(d.text||'').trim();}
   }catch(e){}
-  if(!said){ if(st)st.textContent='● ONLINE — ASK ME ANYTHING'; return; }
+  if(!said){ if(st)st.textContent='● ONLINE — ASK ME ANYTHING'; if(_snapVoiceMode&&!_snapSpeaking)setTimeout(_snapStartMic,400); return; }
   var inp=document.getElementById('snap-chat-input'); if(inp)inp.value=said;
   snapChatSend();
 }

@@ -4559,7 +4559,7 @@ async function startListening(){
   _skyMime = _skyMR.mimeType || _skyMime || 'audio/webm';
   _skyMR.ondataavailable=(e)=>{ if(e.data && e.data.size>0) _skyChunks.push(e.data); };
   _skyMR.onstop=_skyOnRecordingStop;
-  _skyMR.start();
+  _skyMR.start(250);  // timeslice: emit a chunk every 250ms so short clips always have data
   _micListeningUI();
   const s=document.getElementById('sky-hstatus');
   if(s && skyVoiceMode) s.textContent='🎙️ LISTENING — take your time…';
@@ -4617,20 +4617,25 @@ async function _skyOnRecordingStop(){
   // browser never re-prompts. The stream is only released in stopListening().
   const manual=_skyManualSubmit; _skyManualSubmit=false;
   const chunks=_skyChunks; _skyChunks=[];
+  var totalBytes=chunks.reduce(function(a,c){return a+(c.size||0);},0);
+  console.log('[SKY] recordingStop — heardSpeech:',_skyHeardSpeech,'manual:',manual,'chunks:',chunks.length,'bytes:',totalBytes,'mime:',_skyMime);
   // Send if we heard speech OR the user manually tapped to send (don't lose their audio)
   if((!_skyHeardSpeech && !manual) || !chunks.length){
+    console.log('[SKY] discarded (no speech detected / no chunks) — reopening mic');
     if(skyVoiceMode && !skyIsSpeaking) startListening();
     return;
   }
   const blob=new Blob(chunks,{type:_skyMime||'audio/webm'});
+  console.log('[SKY] sending to /api/transcribe — blob bytes:',blob.size);
   const s=document.getElementById('sky-hstatus');
   let said='';
   try{
     const b64=await _blobToBase64(blob);
     const r=await fetch('/api/transcribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:b64,mime:_skyMime||'audio/webm'})});
-    if(r.ok){ const d=await r.json(); said=(d.text||'').trim(); }
-    else { if(s&&skyVoiceMode) s.textContent='⚠️ Didn\'t catch that — tap mic & try again'; }
-  }catch(e){ if(s&&skyVoiceMode) s.textContent='⚠️ Connection issue — tap mic & try again'; }
+    console.log('[SKY] transcribe HTTP:',r.status);
+    if(r.ok){ const d=await r.json(); said=(d.text||'').trim(); console.log('[SKY] transcript:',JSON.stringify(said)); }
+    else { const errTxt=await r.text(); console.log('[SKY] transcribe error body:',errTxt); if(s&&skyVoiceMode) s.textContent='⚠️ Didn\'t catch that — tap mic & try again'; }
+  }catch(e){ console.log('[SKY] transcribe fetch threw:',e&&e.message); if(s&&skyVoiceMode) s.textContent='⚠️ Connection issue — tap mic & try again'; }
   if(!said){ if(skyVoiceMode && !skyIsSpeaking) setTimeout(startListening,500); return; }
   _deliverUserTurn(said);
 }

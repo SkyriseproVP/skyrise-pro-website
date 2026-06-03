@@ -361,12 +361,7 @@ textarea.ff-input{resize:none;line-height:1.6;}
 </head>
 <body>
 
-<!-- Landscape recommendation (phones in portrait only) -->
-<div id="cv-rotate-tip">
-  <span class="cv-tip-icon">📱</span>
-  <span>For the best view, rotate your phone to landscape.</span>
-  <button class="cv-tip-close" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">✕</button>
-</div>
+<!-- Landscape recommendation removed on website (app-only feature) -->
 
 <!-- NAV -->
 <nav id="cv-nav">
@@ -1309,7 +1304,7 @@ window.skipToCourtVision=function(){
 window.beginDemo=function(){
   if(_demoFired)return;   // prevent double-start
   _demoFired=true;
-  var introMsg='Quick tip — if you are on your phone, turn it sideways to landscape for the best view. Alright, let me show you the process when we build a project.';
+  var introMsg='Alright, let me show you the process when we build a project.';
   orbSpeak('intro-orb',true);
   skySpeakPaced(introMsg,function(){
     orbSpeak('intro-orb',false);

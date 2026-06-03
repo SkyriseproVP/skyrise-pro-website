@@ -70,7 +70,7 @@ exports.handler = async function (event) {
     `whisper-1${CRLF}` +
     `--${boundary}${CRLF}` +
     `Content-Disposition: form-data; name="response_format"${CRLF}${CRLF}` +
-    `json${CRLF}` +
+    `verbose_json${CRLF}` +
     `--${boundary}${CRLF}` +
     `Content-Disposition: form-data; name="language"${CRLF}${CRLF}` +
     `en${CRLF}` +
@@ -103,7 +103,42 @@ exports.handler = async function (event) {
     }
 
     const data = await resp.json();
-    return { statusCode: 200, headers, body: JSON.stringify({ text: (data.text || '').trim() }) };
+    let text = (data.text || '').trim();
+
+    // ── Anti-hallucination filter ──────────────────────────────────────
+    // Whisper invents filler phrases ("Thank you.", "Bye bye bye", "you")
+    // on silent / near-silent audio. Use the segment confidence data from
+    // verbose_json to drop those so Sky never reacts to phantom speech.
+    const segs = Array.isArray(data.segments) ? data.segments : [];
+    if (segs.length) {
+      const maxNoSpeech = Math.max(...segs.map(s => (typeof s.no_speech_prob === 'number' ? s.no_speech_prob : 0)));
+      const avgLogprob  = segs.reduce((a, s) => a + (typeof s.avg_logprob === 'number' ? s.avg_logprob : 0), 0) / segs.length;
+      // High probability of no speech, or very low confidence => treat as silence.
+      if (maxNoSpeech > 0.6 || avgLogprob < -1.0) {
+        console.log('Dropped likely-silence transcript:', JSON.stringify(text), 'no_speech:', maxNoSpeech, 'logprob:', avgLogprob);
+        text = '';
+      }
+    }
+
+    if (text) {
+      const norm = text.toLowerCase().replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim();
+      // Known Whisper junk phrases (silence hallucinations).
+      const JUNK = new Set([
+        '', 'you', 'thank you', 'thanks', 'thank you very much', 'thank you so much',
+        'thanks for watching', 'thank you for watching', 'bye', 'bye bye', 'goodbye',
+        'okay', 'ok', 'so', 'yeah', 'uh', 'um', 'hmm', 'the', 'i', 'a',
+        'please subscribe', 'subscribe', 'see you next time', 'see you',
+      ]);
+      // Repeated single token (e.g. "bye bye bye bye bye") => hallucination.
+      const words = norm.split(' ').filter(Boolean);
+      const allSame = words.length >= 3 && words.every(w => w === words[0]);
+      if (JUNK.has(norm) || allSame) {
+        console.log('Dropped junk/hallucination transcript:', JSON.stringify(text));
+        text = '';
+      }
+    }
+
+    return { statusCode: 200, headers, body: JSON.stringify({ text }) };
   } catch (err) {
     console.error('Transcribe failed:', err.message);
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server error', fallback: true }) };

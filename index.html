@@ -653,7 +653,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 .sky-chat-panel.open{display:flex;flex-direction:column;}
 .sky-chat-header{background:linear-gradient(90deg,#005f80,#00c8e8);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
 .sky-chat-hinfo{display:flex;align-items:center;gap:10px;}
-.sky-chat-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.sky-chat-avatar{display:none!important;}
 .sky-chat-htitle{font-size:13px;font-weight:800;color:#fff;letter-spacing:1px;}
 .sky-chat-hstatus{font-size:9px;font-weight:700;color:rgba(255,255,255,.65);letter-spacing:1px;}
 .sky-chat-hclose{background:none;border:none;color:rgba(255,255,255,.65);font-size:22px;cursor:pointer;line-height:1;}
@@ -4772,6 +4772,16 @@ let skyConversation = [];
 // Primary: ask the real Claude AI via our secure /api/sky proxy.
 // If it fails for ANY reason, fall back to the offline keyword engine
 // so Sky is never silent.
+// Strip ALL emojis/emoticons — Sky stays professional (safety net; brain is also told not to use them)
+function _skyStripEmoji(t){
+  if(!t) return t;
+  return String(t)
+    .replace(/[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}]/gu,'')  // emoji + regional flags
+    .replace(/[️‍⃣]/g,'')                            // variation selectors / ZWJ / keycap
+    .replace(/\s{2,}/g,' ')
+    .trim();
+}
+
 async function skyGetResponse(input){
   // Record the user's turn
   skyConversation.push({ role:'user', content:String(input||'').slice(0,2000) });
@@ -4786,8 +4796,9 @@ async function skyGetResponse(input){
     if(res.ok){
       const data = await res.json();
       if(data && data.reply){
-        skyConversation.push({ role:'assistant', content:data.reply });
-        return data.reply;
+        const reply=_skyStripEmoji(data.reply);
+        skyConversation.push({ role:'assistant', content:reply });
+        return reply;
       }
     }
     // non-OK or empty -> fall through to offline engine
@@ -4796,7 +4807,7 @@ async function skyGetResponse(input){
   }
 
   // ── Fallback: offline keyword engine ──
-  const fb = skyGetResponseFallback(input);
+  const fb = _skyStripEmoji(skyGetResponseFallback(input));
   skyConversation.push({ role:'assistant', content:fb });
   return fb;
 }

@@ -4519,7 +4519,8 @@ let _skyMR=null, _skyStream=null, _skyChunks=[], _skyMime='audio/webm';
 let _skyAudioCtx=null, _skyAnalyser=null, _skyVadRAF=null, _skySilenceTimer=null;
 let _skyHeardSpeech=false;
 const SKY_SILENCE_MS=1400;          // pause that means "done talking"
-const SKY_SILENCE_THRESHOLD=0.012;  // RMS below this = silence
+const SKY_SILENCE_THRESHOLD=0.008;  // RMS below this = silence (lowered for quieter mics)
+let _skyManualSubmit=false;         // true when user taps mic to send — always transcribe then
 
 function _micListeningUI(){
   const btn=document.getElementById('sky-mic');
@@ -4550,7 +4551,7 @@ async function startListening(){
   if(skyIsSpeaking || isListening) return;
   const ok = await _ensureMicStream();
   if(!ok) return;
-  isListening=true; _skyChunks=[]; _skyHeardSpeech=false;
+  isListening=true; _skyChunks=[]; _skyHeardSpeech=false; _skyManualSubmit=false;
   _skyMime = (window.MediaRecorder && MediaRecorder.isTypeSupported('audio/webm')) ? 'audio/webm'
            : (MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : '');
   try{ _skyMR = _skyMime ? new MediaRecorder(_skyStream,{mimeType:_skyMime}) : new MediaRecorder(_skyStream); }
@@ -4569,6 +4570,8 @@ async function startListening(){
 function _startVAD(){
   try{
     _skyAudioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    // Resume if the browser created it suspended (common on Chrome/Safari)
+    if(_skyAudioCtx.state==='suspended'){ _skyAudioCtx.resume().catch(()=>{}); }
     const src=_skyAudioCtx.createMediaStreamSource(_skyStream);
     _skyAnalyser=_skyAudioCtx.createAnalyser();
     _skyAnalyser.fftSize=2048;
@@ -4588,7 +4591,7 @@ function _startVAD(){
       _skyVadRAF=requestAnimationFrame(tick);
     };
     _skyVadRAF=requestAnimationFrame(tick);
-  }catch(e){ /* VAD optional — user can click mic to stop */ }
+  }catch(e){ /* VAD optional — user can click mic to stop; we'll send audio anyway */ }
 }
 function _stopVAD(){
   if(_skySilenceTimer){ clearTimeout(_skySilenceTimer); _skySilenceTimer=null; }
@@ -4597,8 +4600,10 @@ function _stopVAD(){
 }
 
 // User paused (or clicked mic) — finish this turn and transcribe
-function _finishTurn(){
+// manual=true when the USER tapped the mic to send — always transcribe regardless of VAD
+function _finishTurn(manual){
   if(!isListening) return;
+  if(manual===true) _skyManualSubmit=true;
   _stopVAD();
   isListening=false;
   _setMicIdleUI();
@@ -4610,19 +4615,23 @@ function _finishTurn(){
 async function _skyOnRecordingStop(){
   // NOTE: do NOT stop the mic stream here — keep it alive across turns so the
   // browser never re-prompts. The stream is only released in stopListening().
+  const manual=_skyManualSubmit; _skyManualSubmit=false;
   const chunks=_skyChunks; _skyChunks=[];
-  if(!_skyHeardSpeech || !chunks.length){
+  // Send if we heard speech OR the user manually tapped to send (don't lose their audio)
+  if((!_skyHeardSpeech && !manual) || !chunks.length){
     if(skyVoiceMode && !skyIsSpeaking) startListening();
     return;
   }
   const blob=new Blob(chunks,{type:_skyMime||'audio/webm'});
+  const s=document.getElementById('sky-hstatus');
   let said='';
   try{
     const b64=await _blobToBase64(blob);
     const r=await fetch('/api/transcribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({audio:b64,mime:_skyMime||'audio/webm'})});
     if(r.ok){ const d=await r.json(); said=(d.text||'').trim(); }
-  }catch(e){}
-  if(!said){ if(skyVoiceMode && !skyIsSpeaking) startListening(); return; }
+    else { if(s&&skyVoiceMode) s.textContent='⚠️ Didn\'t catch that — tap mic & try again'; }
+  }catch(e){ if(s&&skyVoiceMode) s.textContent='⚠️ Connection issue — tap mic & try again'; }
+  if(!said){ if(skyVoiceMode && !skyIsSpeaking) setTimeout(startListening,500); return; }
   _deliverUserTurn(said);
 }
 
@@ -4656,7 +4665,7 @@ function toggleMic(){
     b.textContent='Voice input isn\'t supported in this browser. Try Chrome, Edge, or Safari!';
     m.appendChild(b);m.scrollTop=m.scrollHeight;return;
   }
-  isListening ? _finishTurn() : startListening();
+  isListening ? _finishTurn(true) : startListening();
 }
 
 // Pause recording WITHOUT sending and WITHOUT releasing the mic stream.

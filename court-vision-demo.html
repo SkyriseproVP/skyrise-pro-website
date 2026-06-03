@@ -273,6 +273,19 @@ textarea.ff-input{resize:none;line-height:1.6;}
   .cv-back-btn{font-size:7px;padding:6px 12px;}
   #cv-page{padding-top:78px;}
 }
+/* Landscape recommendation banner — phones in PORTRAIT only */
+#cv-rotate-tip{display:none;}
+@media(max-width:900px) and (orientation:portrait){
+  #cv-rotate-tip{display:flex;align-items:center;gap:10px;justify-content:center;
+    position:fixed;left:10px;right:10px;bottom:14px;z-index:9999;
+    background:linear-gradient(145deg,#071828,#0c1c30);border:1.5px solid rgba(0,200,232,.6);
+    border-radius:14px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.5),0 0 18px rgba(0,200,232,.3);
+    font-family:'Inter',sans-serif;font-size:12.5px;color:#e8f8ff;animation:cvTipIn .4s ease;}
+  #cv-rotate-tip .cv-tip-icon{font-size:20px;animation:cvRotateSpin 2.4s ease-in-out infinite;}
+  #cv-rotate-tip .cv-tip-close{margin-left:6px;background:transparent;border:none;color:rgba(255,255,255,.45);font-size:16px;cursor:pointer;line-height:1;padding:2px 4px;}
+}
+@keyframes cvTipIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes cvRotateSpin{0%,100%{transform:rotate(0);}50%{transform:rotate(90deg);}}
 
 /* ── KEYFRAMES ── */
 @keyframes orbPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
@@ -347,6 +360,13 @@ textarea.ff-input{resize:none;line-height:1.6;}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
+
+<!-- Landscape recommendation (phones in portrait only) -->
+<div id="cv-rotate-tip">
+  <span class="cv-tip-icon">📱</span>
+  <span>For the best view, rotate your phone to landscape.</span>
+  <button class="cv-tip-close" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">✕</button>
+</div>
 
 <!-- NAV -->
 <nav id="cv-nav">
@@ -1289,7 +1309,7 @@ window.skipToCourtVision=function(){
 window.beginDemo=function(){
   if(_demoFired)return;   // prevent double-start
   _demoFired=true;
-  var introMsg='Let me show you the process when we build a project.';
+  var introMsg='Quick tip — if you are on your phone, turn it sideways to landscape for the best view. Alright, let me show you the process when we build a project.';
   orbSpeak('intro-orb',true);
   skySpeakPaced(introMsg,function(){
     orbSpeak('intro-orb',false);

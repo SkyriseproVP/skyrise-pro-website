@@ -45,6 +45,12 @@
   to     = "/.netlify/functions/transcribe"
   status = 200
 
+# ── Jarvis live brief (reads Attio brain so admin Jarvis advises on real data)
+[[redirects]]
+  from   = "/api/jarvis-brief"
+  to     = "/.netlify/functions/jarvis-brief"
+  status = 200
+
 # NOTE: No catch-all SPA rewrite — this is a multi-page static site.
 # Netlify serves index.html, demo.html, court-vision-demo.html directly.
 # A "/* -> /index.html" rule would shadow the function routes and break POSTs.

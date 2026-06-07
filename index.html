@@ -5780,8 +5780,7 @@ async function startJarvis() {
         agent: {
           prompt: { prompt: JARVIS_PERSONA + (_jarvisBrief ? '\n\n' + _jarvisBrief : '') },
           firstMessage: JARVIS_FIRST_MESSAGE
-        },
-        tts: { voiceId: 'onwK4e9ZLuTAKqWW03F9' }
+        }
       },
       onConnect: () => {
         orbMode = 'listening';

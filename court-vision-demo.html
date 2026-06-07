@@ -1356,14 +1356,21 @@ function startCourtPhase(){
 /* ════════ PROJECT SNAPSHOT ════════ */
 var _snapChartsBuilt=false;
 window.showSnapshot=function(){
-  csStopAutoPass();if(_demoRunning)csStopDemo();
+  /* Skip to results: stop the Court Vision narration COMPLETELY first — the same hard stop
+     "Ask Sky Anything" uses — so Sky never talks over himself. */
+  _anRunning=false; _convoLock=true;
+  try{ csStopAutoNarrate(); }catch(e){}
+  try{ csStopAutoPass(); }catch(e){}
+  try{ if(_demoRunning)csStopDemo(); }catch(e){}
+  stopSkyAudio(); orbSpeak('snap-orb',false);
   showTrackerIsland(false);
   revealPhase('ph-snapshot');
   window.scrollTo({top:0,behavior:'smooth'});
 
-  // Sky narrates the intro
-  var msg='That\'s the full lifecycle — from LOI to Rent Commencement. Before we talk next steps, let me show you how this project actually performed. Cost per square foot after change orders, whether we hit the lease deadline, every red flag we caught, and three things we\'d lock in tighter on the next project.';
+  // Sky acknowledges the skip in ONE line, then we jump straight to the results.
+  var msg='I see that you understood Court Vision and wanted to skip directly to the results. Your instincts are right. You want to know what happens when someone drops the ball, or if your overall job saved you funds. Let\'s jump to it.';
   orbSpeak('snap-orb',true);
+  _allowSpeak=true;
   skySpeakPaced(msg,function(){orbSpeak('snap-orb',false);});
 
   // Build charts once

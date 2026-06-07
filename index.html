@@ -566,6 +566,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .cal-service-btn:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8);}
 .cal-service-btn.auto-pick{border-color:rgba(0,200,232,0.6);color:var(--cyan);background:rgba(0,200,232,0.1);}
 .cal-service-btn.video-pick{border-color:rgba(255,125,62,0.6);color:#ff7d3e;background:rgba(255,125,62,0.1);}
+.cal-service-btn.court-pick{border-color:rgba(77,141,255,0.7);color:#5d9bff;background:rgba(77,141,255,0.12);}
 .cal-service-sub{display:block;font-family:'Inter',sans-serif;font-size:10px;font-weight:400;letter-spacing:0;opacity:0.6;margin-top:3px;}
 .cal-divider{height:1px;background:rgba(255,255,255,0.07);margin:20px 0 0;}
 @media(max-width:480px){.cal-inputs-row{grid-template-columns:1fr;}.booking-modal-box{padding:28px 20px;}}
@@ -1352,6 +1353,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
                 onclick="calSelectService('Cinematic Video',this,'video')">
           🎬 CINEMATIC VIDEO
           <span class="cal-service-sub">Production, editing, delivery</span>
+        </button>        <button type="button" class="cal-service-btn" id="svc-court" style="grid-column:1 / -1;"
+                onclick="calSelectService('Court Vision - Project Tracker',this,'court')">
+          🏀 COURT VISION — PROJECT TRACKER
+          <span class="cal-service-sub">Live deal tracker coordinating every stakeholder</span>
         </button>
       </div>
 
@@ -3961,7 +3966,7 @@ function resetCal(){
     document.getElementById('cal-form-wrap').style.display='';
     document.getElementById('cal-success-wrap').style.display='none';
     document.querySelectorAll('.cal-time-pill').forEach(p=>p.classList.remove('cal-time-selected'));
-    document.querySelectorAll('.cal-service-btn').forEach(b=>b.classList.remove('auto-pick','video-pick'));
+    document.querySelectorAll('.cal-service-btn').forEach(b=>b.classList.remove('auto-pick','video-pick','court-pick'));
     document.getElementById('cal-name').value='';
     document.getElementById('cal-email').value='';
     document.getElementById('cal-phone').value='';
@@ -4053,7 +4058,7 @@ function calSelectTime(time,el){
 
 function calSelectService(service,el,type){
   calSelectedService=service;
-  document.querySelectorAll('.cal-service-btn').forEach(b=>b.classList.remove('auto-pick','video-pick'));
+  document.querySelectorAll('.cal-service-btn').forEach(b=>b.classList.remove('auto-pick','video-pick','court-pick'));
   el.classList.add(type+'-pick');
 }
 
@@ -5797,7 +5802,7 @@ async function startJarvis() {
         if (statusEl) statusEl.textContent = mode === 'speaking' ? 'JARVIS SPEAKING' : 'LISTENING';
         if (ring) ring.style.borderColor = mode === 'speaking' ? 'rgba(0,222,255,0.8)' : 'rgba(0,200,232,0.5)';
       },
-      onError: (e) => { console.error('Jarvis session error:', e); var _m=(e&&(e.message||e.reason||e)); if(statusEl) statusEl.textContent=('ERR: '+String(_m)).slice(0,70); }
+      onError: (e) => { console.error('Jarvis session error:', e); }
     });
   } catch(err) {
     console.error('startJarvis failed:', err.name, err.message);
@@ -5807,7 +5812,7 @@ async function startJarvis() {
     } else if (err.message && err.message.includes('quota')) {
       if (statusEl) statusEl.textContent = 'OUT OF CREDITS';
     } else {
-      if (statusEl) statusEl.textContent = ('ERR: ' + String((err && (err.message || err.name)) || 'unknown')).slice(0,70);
+      if (statusEl) statusEl.textContent = 'CLICK TO RETRY';
     }
   }
 }

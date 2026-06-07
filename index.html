@@ -5794,7 +5794,9 @@ async function startJarvis() {
       },
       onDisconnect: (d) => {
         orbMode = 'idle'; jarvisConv = null; _jarvisConnecting = false;
-        if (statusEl) statusEl.textContent = 'CLICK TO TALK';
+        var _dr = window._jvLastErr || (d && (d.reason || d.message)) || (d ? JSON.stringify(d).slice(0,60) : '');
+        console.error('JV_DISCONNECT', d);
+        if (statusEl) statusEl.textContent = _dr ? ('DROP: ' + String(_dr)).slice(0,80) : 'CLICK TO TALK';
         if (ring) ring.style.borderColor = 'rgba(0,200,232,0.25)';
       },
       onModeChange: ({ mode }) => {
@@ -5802,7 +5804,7 @@ async function startJarvis() {
         if (statusEl) statusEl.textContent = mode === 'speaking' ? 'JARVIS SPEAKING' : 'LISTENING';
         if (ring) ring.style.borderColor = mode === 'speaking' ? 'rgba(0,222,255,0.8)' : 'rgba(0,200,232,0.5)';
       },
-      onError: (e) => { console.error('Jarvis session error:', e); var _m=(e&&(e.message||e.reason||e)); if(statusEl) statusEl.textContent=('ERR: '+String(_m)).slice(0,75); }
+      onError: (e) => { console.error('Jarvis session error:', e); var _m=(e&&(e.message||e.reason||e)); window._jvLastErr=String(_m); console.error('JV_ERR',_m); if(statusEl) statusEl.textContent=('ERR: '+String(_m)).slice(0,75); }
     });
   } catch(err) {
     console.error('startJarvis failed:', err.name, err.message);

@@ -5802,7 +5802,7 @@ async function startJarvis() {
         if (statusEl) statusEl.textContent = mode === 'speaking' ? 'JARVIS SPEAKING' : 'LISTENING';
         if (ring) ring.style.borderColor = mode === 'speaking' ? 'rgba(0,222,255,0.8)' : 'rgba(0,200,232,0.5)';
       },
-      onError: (e) => { console.error('Jarvis session error:', e); }
+      onError: (e) => { console.error('Jarvis session error:', e); var _m=(e&&(e.message||e.reason||e)); if(statusEl) statusEl.textContent=('ERR: '+String(_m)).slice(0,75); }
     });
   } catch(err) {
     console.error('startJarvis failed:', err.name, err.message);
@@ -5812,7 +5812,7 @@ async function startJarvis() {
     } else if (err.message && err.message.includes('quota')) {
       if (statusEl) statusEl.textContent = 'OUT OF CREDITS';
     } else {
-      if (statusEl) statusEl.textContent = 'CLICK TO RETRY';
+      if (statusEl) statusEl.textContent = ('ERR: ' + String((err && (err.message || err.name)) || 'unknown')).slice(0,75);
     }
   }
 }

@@ -74,7 +74,9 @@ After any buying signal, your job is to MOVE THEM FORWARD: confirm the choice â†
 - Only discuss Skyrise Pro, the prospect's business, and how you can help. Politely redirect off-topic questions.
 - Never make up features, integrations, case studies, or numbers beyond what's above.
 - If asked something you genuinely don't know, say you'll have a specialist confirm on the strategy call.
-- Keep it real, keep it human, keep it moving toward the close.`;
+- Keep it real, keep it human, keep it moving toward the close.
+
+ALWAYS CLOSE TO A BOOKED CALL (non-negotiable): Never end with a vague "someone will get back to you." Always drive them to book â€” say "Let's get you booked on a call so someone on the team can get back to you," and guide them to schedule it right then. Booking the call is how we capture their details and follow up, so make it the natural next step every single time, whether they're ready to buy or just exploring.`;
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {

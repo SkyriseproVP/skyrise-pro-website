@@ -5779,8 +5779,9 @@ async function startJarvis() {
       overrides: {
         agent: {
           prompt: { prompt: JARVIS_PERSONA + (_jarvisBrief ? '\n\n' + _jarvisBrief : '') },
-          first_message: JARVIS_FIRST_MESSAGE
-        }
+          firstMessage: JARVIS_FIRST_MESSAGE
+        },
+        tts: { voiceId: 'onwK4e9ZLuTAKqWW03F9' }
       },
       onConnect: () => {
         orbMode = 'listening';
@@ -5948,7 +5949,7 @@ async function startClientSky() {
       overrides: {
         agent: {
           prompt: { prompt: persona },
-          first_message: firstMsg
+          firstMessage: firstMsg
         }
       },
       onConnect: () => {

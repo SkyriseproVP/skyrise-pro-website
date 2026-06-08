@@ -1309,32 +1309,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <img src="Cyan LOGO Official.png" alt="Skyrise Pro" style="height:96px;width:auto;filter:drop-shadow(0 0 10px rgba(0,200,232,0.75)) drop-shadow(0 0 3px rgba(0,200,232,0.5));">
     </div>
     <div class="modal-title">BOOK A CALL</div>
-    <div class="modal-sub">PICK A DATE AND TIME — WE'LL REACH OUT TO CONFIRM.</div>
+    <div class="modal-sub">TELL US ABOUT YOU — THEN PICK YOUR EXACT TIME ON THE NEXT STEP.</div>
 
     <!-- ── Calendar form ── -->
     <div id="cal-form-wrap">
-      <div class="cal-header-row">
-        <button class="cal-nav-btn" onclick="calPrevMonth()">&#8249;</button>
-        <div class="cal-month-label" id="cal-month-label">MAY 2026</div>
-        <button class="cal-nav-btn" onclick="calNextMonth()">&#8250;</button>
-      </div>
-      <div class="cal-weekdays">
-        <div class="cal-weekday">SUN</div>
-        <div class="cal-weekday">MON</div>
-        <div class="cal-weekday">TUE</div>
-        <div class="cal-weekday">WED</div>
-        <div class="cal-weekday">THU</div>
-        <div class="cal-weekday">FRI</div>
-        <div class="cal-weekday">SAT</div>
-      </div>
-      <div class="cal-days-grid" id="cal-days-grid"></div>
-
-      <div class="cal-section-lbl">SELECT A TIME (EST)</div>
-      <div class="cal-times-grid" id="cal-times-grid">
-        <div style="font-size:10px;color:rgba(255,255,255,0.3);font-family:'Orbitron',sans-serif;letter-spacing:1px;">SELECT A DATE FIRST</div>
-      </div>
-
-      <div class="cal-divider"></div>
       <div class="cal-section-lbl">YOUR DETAILS</div>
       <div class="cal-inputs-row">
         <input class="modal-input" type="text" id="cal-name" placeholder="Your Full Name">
@@ -3993,6 +3971,7 @@ const AVAIL_SLOTS={
 };
 
 function renderCal(){
+  if(!document.getElementById('cal-days-grid'))return; // calendar removed — booking forwards to Zoom for the exact time
   document.getElementById('cal-month-label').textContent=CAL_MONTHS[calMonth]+' '+calYear;
   const today=new Date();
   const todayY=today.getFullYear(),todayM=today.getMonth(),todayD=today.getDate();
@@ -4063,8 +4042,6 @@ function calSelectService(service,el,type){
 }
 
 async function confirmBooking(){
-  if(!calSelectedDay){alert('Please select a date.');return;}
-  if(!calSelectedTime){alert('Please select a time slot.');return;}
   const name=document.getElementById('cal-name').value.trim();
   const email=document.getElementById('cal-email').value.trim();
   const phone=(document.getElementById('cal-phone').value||'').trim();
@@ -4079,66 +4056,27 @@ async function confirmBooking(){
   if(!bottleneckRaw){alert('Please select your biggest bottleneck.');return;}
   if(bottleneckRaw==='other'&&!bottleneckOther){alert('Please describe your bottleneck.');return;}
 
-  // ── Build date/time strings ──────────────────────────────────
-  const mm=(calMonth+1).toString().padStart(2,'0');
-  const dd=calSelectedDay.toString().padStart(2,'0');
-  const dateISO=`${calYear}-${mm}-${dd}`;
-  const dateStr=`${CAL_MONTHS_SHORT[calMonth]} ${calSelectedDay}, ${calYear}`;
-
-  // Convert "2:00 PM" → 24h for Zoom API
-  const[tpart,ampm]=calSelectedTime.split(' ');
-  let[th,tm]=tpart.split(':').map(Number);
-  if(ampm==='PM'&&th!==12)th+=12;
-  if(ampm==='AM'&&th===12)th=0;
-  const timeISO=`${th.toString().padStart(2,'0')}:${tm.toString().padStart(2,'0')}`;
-
-  // ── Microsoft Outlook Calendar link (30-min block) ───────────
-  let eH=th,eM=tm+30;if(eM>=60){eH+=1;eM-=60;}
-  const startDT=`${calYear}-${mm}-${dd}T${th.toString().padStart(2,'0')}:${tm.toString().padStart(2,'0')}:00`;
-  const endDT=`${calYear}-${mm}-${dd}T${eH.toString().padStart(2,'0')}:${eM.toString().padStart(2,'0')}:00`;
-  const msBody=encodeURIComponent(
-    `Interest: ${calSelectedService} | Business: ${business}\nBottleneck: ${bottleneck}\n\nCheck your email for the Zoom link.`
-  );
-  const msURL=`https://outlook.live.com/calendar/0/deeplink/compose`
-    +`?subject=Strategy+Call+%E2%80%94+Skyrise+Pro`
-    +`&startdt=${startDT}`
-    +`&enddt=${endDT}`
-    +`&body=${msBody}`
-    +`&location=Zoom+Call+(see+confirmation+email)`;
-
-  // Wire up the Add to Calendar button
-  const gcBtn=document.getElementById('cal-gcal-btn');
-  if(gcBtn)gcBtn.href=msURL;
-
-  // ── POST to Make webhook (fire-and-forget, CORS-safe) ────────
-  // ⚠ Replace the URL below once you have your Make webhook URL
+  // ── POST to Make booking pipeline (fire-and-forget, CORS-safe) ──
+  // Qualifying questions only — Zoom handles the actual date/time (no redundancy).
   const MAKE_WEBHOOK='https://hook.us2.make.com/mhn5jws4b44t7qli3tqp5oe07dmjlfk3';
   try{
     fetch(MAKE_WEBHOOK,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        // Prospect details
         name,
         email,
         phone: phone || 'Not provided',
-        // Booking details
-        date: dateStr,
-        date_iso: dateISO,
-        time: calSelectedTime,
-        time_iso: timeISO,
         service: calSelectedService,
         business,
         bottleneck,
-        // Formatted summary for SMS/email body
-        summary: `New booking from ${name} — ${calSelectedService} — ${dateStr} at ${calSelectedTime} EST`,
-        // Victor's notification phone (hardcoded — update if number changes)
-        victor_phone: '+13059601247'
+        summary: `New strategy-call request from ${name} — ${calSelectedService} — ${business}`,
+        victor_phone: '+16895009602'
       })
     });
   }catch(e){console.warn('Booking webhook error:',e);}
 
-  // ── Lead captured — now send them to Zoom to lock the real time ──
+  // ── Lead captured — send them to Zoom to pick the exact time ──
   // Fired synchronously inside the click handler so it isn't popup-blocked.
   window.open('https://scheduler.zoom.us/victor-polanco/skyrise-pro-free-strategy-call','_blank','noopener');
 
@@ -4146,7 +4084,7 @@ async function confirmBooking(){
   document.getElementById('cal-form-wrap').style.display='none';
   document.getElementById('cal-success-wrap').style.display='';
   document.getElementById('cal-success-date').textContent=
-    `Your preferred time: ${CAL_MONTHS_SHORT[calMonth]} ${calSelectedDay}, ${calYear} — ${calSelectedTime} EST`;
+    `Thanks, ${name}! Your details are in — pick your exact time on Zoom below.`;
 }
 function switchModal(from,to){closeModal(from);openModal(to);}
 document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',function(e){if(e.target===this){this.classList.remove('open');document.body.style.overflow='';}}));

@@ -1112,7 +1112,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <div class="vplan-card featured-plan" id="vp-standalone">
           <div class="vplan-tier">STANDALONE</div>
           <div class="vplan-price">$1,750<span> one-time</span></div>
-          <div class="vplan-desc">One complete cinematic production — your brand, your story, fully delivered.</div>
+          <div class="vplan-desc">One complete cinematic production — your brand, your story, fully delivered. <strong style="color:var(--cyan);">50% deposit ($875) to begin, balance on delivery.</strong></div>
           <a href="index.html#pricing" target="_blank" class="vplan-btn">GET STARTED</a>
         </div>
       </div>
@@ -2325,15 +2325,15 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="ssu-price-row">
         <div>
           <div class="ssu-price-label" id="ssu-plan-name">SELECTED PLAN</div>
-          <div class="ssu-price-note">Billed monthly after 30-day free trial</div>
+          <div class="ssu-price-note" id="ssu-price-sub">Billed monthly after 30-day free trial</div>
         </div>
         <div style="text-align:right;">
           <div class="ssu-price-amount" id="ssu-plan-price">—</div>
-          <div class="ssu-price-note">/month</div>
+          <div class="ssu-price-note" id="ssu-price-per">/month</div>
         </div>
       </div>
 
-      <div class="ssu-trial-note">🔒 30-DAY FREE TRIAL — NO CHARGE TODAY</div>
+      <div class="ssu-trial-note" id="ssu-trial-note">🔒 30-DAY FREE TRIAL — NO CHARGE TODAY</div>
 
       <button type="submit" class="ssu-submit" id="ssu-submit-btn">
         START FREE TRIAL → ENTER PAYMENT INFO
@@ -2385,7 +2385,7 @@ const STRIPE_LINKS = {
   // Video plans
   cinematic:     'https://buy.stripe.com/REPLACE_CINEMATIC_LINK',
   enterprise_vid:'https://buy.stripe.com/REPLACE_ENTERPRISE_VID_LINK',
-  standalone:    'https://buy.stripe.com/REPLACE_STANDALONE_LINK',
+  standalone:    'https://buy.stripe.com/4gMdRb1KafL9dlM7Ns4Vy04',
 };
 
 // Secure proxy — real webhook URL lives in Netlify env var, never in browser source
@@ -2401,13 +2401,31 @@ window.openSignup = function(planKey, planName, planPrice) {
     link:  STRIPE_LINKS[planKey] || STRIPE_LINKS.professional
   };
   document.getElementById('ssu-plan-badge').textContent  = 'SKYRISE PRO — ' + _signupPlan.name;
-  document.getElementById('ssu-plan-name').textContent   = _signupPlan.name + ' PLAN';
-  document.getElementById('ssu-plan-price').textContent  = _signupPlan.price;
+  // Video production is a ONE-TIME 50% deposit, not a monthly subscription — adapt the form copy.
+  var _isVideo = (planKey === 'standalone' || planKey === 'cinematic' || planKey === 'enterprise_vid');
+  var _sub   = document.getElementById('ssu-price-sub');
+  var _per   = document.getElementById('ssu-price-per');
+  var _trial = document.getElementById('ssu-trial-note');
+  var _btn   = document.getElementById('ssu-submit-btn');
+  if (_isVideo) {
+    document.getElementById('ssu-plan-name').textContent  = _signupPlan.name;
+    document.getElementById('ssu-plan-price').textContent = '$875';
+    if (_sub)   _sub.textContent   = '50% deposit · $1,750 total';
+    if (_per)   _per.textContent   = 'due today';
+    if (_trial) _trial.textContent = '🔒 SECURE 50% DEPOSIT — BALANCE DUE ON DELIVERY';
+    _btn.textContent = 'PAY $875 DEPOSIT → SECURE CHECKOUT';
+  } else {
+    document.getElementById('ssu-plan-name').textContent  = _signupPlan.name + ' PLAN';
+    document.getElementById('ssu-plan-price').textContent = _signupPlan.price;
+    if (_sub)   _sub.textContent   = 'Billed monthly after 30-day free trial';
+    if (_per)   _per.textContent   = '/month';
+    if (_trial) _trial.textContent = '🔒 30-DAY FREE TRIAL — NO CHARGE TODAY';
+    _btn.textContent = 'START FREE TRIAL → ENTER PAYMENT INFO';
+  }
   document.getElementById('ssu-form').reset();
   document.getElementById('ssu-form').style.display = '';
   var _cf = document.getElementById('ssu-confirm'); if (_cf) _cf.style.display = 'none';
   document.getElementById('ssu-submit-btn').disabled = false;
-  document.getElementById('ssu-submit-btn').textContent = 'START FREE TRIAL → ENTER PAYMENT INFO';
   document.getElementById('sky-signup-modal').classList.add('open');
   setTimeout(function(){ document.getElementById('ssu-fname').focus(); }, 200);
 };

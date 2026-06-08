@@ -2338,11 +2338,30 @@ window.addEventListener('DOMContentLoaded', () => {
       <button type="submit" class="ssu-submit" id="ssu-submit-btn">
         START FREE TRIAL → ENTER PAYMENT INFO
       </button>
+
+      <!-- Trust / security signals -->
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px 14px;margin-top:14px;">
+        <span style="font-size:10px;color:rgba(255,255,255,.6);">🔒 Secured by Stripe</span>
+        <span style="font-size:10px;color:rgba(255,255,255,.6);">🛡️ 256-bit SSL encryption</span>
+        <span style="font-size:10px;color:rgba(255,255,255,.6);">✓ PCI-DSS Level 1</span>
+        <span style="font-size:10px;color:rgba(255,255,255,.6);">💳 Card &amp; bank (ACH) accepted</span>
+      </div>
       <div class="ssu-legal">
-        By continuing you agree to Skyrise Pro's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.<br>
-        Your card is saved securely via Stripe. You will not be charged until Day 31.
+        Payments are processed by <strong>Stripe</strong> — a PCI-DSS Level 1 certified processor trusted by millions of businesses. Skyrise Pro never sees or stores your card or bank details. Pay securely by credit/debit card or US bank account (ACH).<br>
+        By continuing you agree to Skyrise Pro's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. You won't be charged until Day 31 — cancel anytime.
       </div>
     </form>
+
+    <!-- Graceful confirmation (shown when checkout link isn't live yet) -->
+    <div id="ssu-confirm" style="display:none;text-align:center;padding:8px 4px 4px;">
+      <div style="font-size:42px;line-height:1;margin-bottom:10px;">✓</div>
+      <div class="ssu-title" id="ssu-confirm-title" style="margin-bottom:8px;">You're all set!</div>
+      <p id="ssu-confirm-msg" style="font-size:13px;color:rgba(255,255,255,.72);line-height:1.6;margin:0 0 18px;">
+        Your 30-day free trial is reserved — no charge today. Our team will email your secure activation link to finish setup. Want to fast-track it? Book your strategy call below.
+      </p>
+      <a href="#" id="ssu-confirm-book" target="_blank" rel="noopener" style="display:inline-block;background:var(--cyan);color:#001016;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;text-decoration:none;border-radius:50px;padding:13px 26px;">📅 BOOK YOUR STRATEGY CALL</a>
+      <div style="margin-top:16px;"><button type="button" onclick="closeSignup()" style="background:none;border:none;color:rgba(255,255,255,.45);font-size:11px;cursor:pointer;text-decoration:underline;">Close</button></div>
+    </div>
   </div>
 </div>
 
@@ -2385,6 +2404,8 @@ window.openSignup = function(planKey, planName, planPrice) {
   document.getElementById('ssu-plan-name').textContent   = _signupPlan.name + ' PLAN';
   document.getElementById('ssu-plan-price').textContent  = _signupPlan.price;
   document.getElementById('ssu-form').reset();
+  document.getElementById('ssu-form').style.display = '';
+  var _cf = document.getElementById('ssu-confirm'); if (_cf) _cf.style.display = 'none';
   document.getElementById('ssu-submit-btn').disabled = false;
   document.getElementById('ssu-submit-btn').textContent = 'START FREE TRIAL → ENTER PAYMENT INFO';
   document.getElementById('sky-signup-modal').classList.add('open');
@@ -2420,12 +2441,23 @@ window.submitSignup = function(e) {
     source:     'demo-signup-modal'
   };
 
-  // Fire to Make.com webhook (non-blocking)
+  // Fire to Make.com webhook (non-blocking) — captures the lead regardless
   fetch(SIGNUP_WEBHOOK, {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
     body: JSON.stringify(payload)
   }).catch(function(){/* webhook fail is non-blocking */});
+
+  // GUARD: if the Stripe checkout link isn't configured yet, confirm gracefully
+  // instead of redirecting to a dead "AccessDenied" page.
+  if (!_signupPlan.link || _signupPlan.link.indexOf('REPLACE') !== -1) {
+    var ct = document.getElementById('ssu-confirm-title');
+    if (ct) ct.textContent = "You're all set" + (payload.first_name ? ', ' + payload.first_name : '') + '!';
+    var bk = document.getElementById('ssu-confirm-book'); if (bk) bk.href = ZOOM_BOOKING_LINK;
+    document.getElementById('ssu-form').style.display = 'none';
+    var cf = document.getElementById('ssu-confirm'); if (cf) cf.style.display = 'block';
+    return;
+  }
 
   // Build Stripe Payment Link with prefilled customer data
   var stripeUrl = _signupPlan.link

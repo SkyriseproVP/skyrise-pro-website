@@ -605,7 +605,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
 .vplan-desc{font-size:11.5px;color:rgba(255,255,255,.55);line-height:1.55;margin-bottom:14px;}
 .vplan-btn{
   display:block;padding:10px 18px;border-radius:50px;
-  background:var(--orange);color:#000;font-family:'Orbitron',sans-serif;
+  background:var(--cyan);color:#000;font-family:'Orbitron',sans-serif;
   font-size:9px;font-weight:800;letter-spacing:1px;text-decoration:none;
   transition:opacity .2s;cursor:pointer;border:none;width:100%;
 }
@@ -1008,6 +1008,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <div class="fpc-price" style="font-size:26px;">$350<span style="font-size:12px;font-weight:600;">/mo</span></div>
         <div class="fpc-desc" style="margin-bottom:8px;font-size:9.5px;">Automated proposals · Auto-invoicing · CRM sync · Follow-up sequences</div>
         <div class="fpc-desc" style="color:rgba(255,255,255,.25);font-size:8.5px;line-height:1.45;">Core automation stack. Custom builds scoped on your strategy call.</div>
+        <button onclick="event.stopPropagation();openSignup('essential','ESSENTIAL','$350')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:50px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
       </div>
 
       <!-- Card 2: Full Platform (featured) -->
@@ -1019,6 +1020,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <div class="fpc-price">$500<span style="font-size:13px;font-weight:600;">/mo</span></div>
         <div class="fpc-desc" style="margin-bottom:8px;">Full automation suite · Sky AI Executive Assistant · Client &amp; team communication · Smart routing</div>
         <div class="fpc-desc" style="color:rgba(255,255,255,.3);font-size:8.5px;line-height:1.45;">Court Vision available on Elite &amp; Enterprise. Discussed on your strategy call.</div>
+        <button onclick="event.stopPropagation();openSignup('professional','PROFESSIONAL','$500')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:50px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
       </div>
 
       <!-- Card 3: Court Vision -->
@@ -1029,6 +1031,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <div class="fpc-price" style="font-size:26px;">$850<span style="font-size:12px;font-weight:600;">/mo</span></div>
         <div class="fpc-desc" style="margin-bottom:8px;font-size:9.5px;">Every stage tracked · Sky coordinates every stakeholder · Real-time alerts · LOI to completion</div>
         <div class="fpc-desc" style="color:rgba(255,255,255,.25);font-size:8.5px;line-height:1.45;">Priced per active project. Each project gets its own tracker — add-ons discussed on your strategy call.</div>
+        <button onclick="event.stopPropagation();openSignup('enterprise','ENTERPRISE','$850')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:50px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
       </div>
 
     </div>
@@ -1098,7 +1101,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
           <p style="font-family:system-ui,sans-serif;font-size:10px;color:rgba(255,255,255,.38);margin:8px 0 0;text-align:center;line-height:1.4;">* Full 4 month membership required</p>
         </div>
         <!-- Enterprise -->
-        <div class="vplan-card" id="vp-enterprise">
+        <div class="vplan-card featured-plan" id="vp-enterprise">
           <div class="vplan-pop">⭐ PROJECT ADD-ON</div>
           <div class="vplan-tier">ENTERPRISE</div>
           <div class="vplan-price">$850<span> one-time</span></div>
@@ -1106,7 +1109,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
           <a href="index.html#pricing" target="_blank" class="vplan-btn">GET STARTED</a>
         </div>
         <!-- Standalone -->
-        <div class="vplan-card" id="vp-standalone">
+        <div class="vplan-card featured-plan" id="vp-standalone">
           <div class="vplan-tier">STANDALONE</div>
           <div class="vplan-price">$1,750<span> one-time</span></div>
           <div class="vplan-desc">One complete cinematic production — your brand, your story, fully delivered.</div>
@@ -2445,7 +2448,7 @@ document.getElementById('demo-plan-cv')?.addEventListener('click', function(){
   openSignup('professional','PROFESSIONAL','$500');
 });
 document.getElementById('demo-plan-court')?.addEventListener('click', function(){
-  openSignup('professional','PROFESSIONAL + COURT VISION','$500');
+  openSignup('enterprise','ENTERPRISE','$850');
 });
 
 // DEPLOY SKY NOW

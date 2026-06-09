@@ -138,7 +138,7 @@ exports.handler = async function (event) {
       const name = flatten(v.name) || '(unnamed deal)';
       const dealNotes = notesByRecord[recId(d)] || [];
       const docNote = dealNotes.find(n => /document/i.test(n.title));
-      const docsOutstanding = docNote && /outstanding/i.test(docNote.body);
+      const docsOutstanding = !!docNote && !/all (docs|documents) received|complete/i.test(docNote.body);
       const contact = refIds(v.associated_people).map(id => personById[id] && personById[id].name).filter(Boolean)[0] || '';
       if (docsOutstanding) {
         actionItems.push(`• ${name} (${stageRaw || stage}) — documents OUTSTANDING. Chase ${contact || 'the contact'} for the required docs (see its Documents Needed note). This is blocking progress.`);

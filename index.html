@@ -33,6 +33,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-demo-btn:hover{background:var(--cyan);color:#000;}
 .nav-demo-btn .play{width:14px;height:14px;border:1.5px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:6px;}
 .nav-cta-group{display:flex;align-items:center;gap:14px;padding:0 24px;}
+/* ── View on Mobile button + phone-frame preview (additive; desktop layout unchanged) ── */
+.nav-mobile-view{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;color:var(--cyan);background:rgba(0,200,232,0.08);border:1.5px solid var(--cyan);border-radius:6px;padding:7px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.nav-mobile-view:hover{background:var(--cyan);color:#fff;}
+.mvp-overlay{position:fixed;inset:0;background:rgba(6,18,31,0.88);backdrop-filter:blur(6px);z-index:100000;display:none;align-items:center;justify-content:center;flex-direction:column;}
+.mvp-overlay.open{display:flex;}
+.mvp-frame{position:relative;width:390px;max-width:92vw;height:min(844px,88vh);background:#0d1526;border:14px solid #0d1526;border-radius:46px;box-shadow:0 0 0 2px rgba(0,200,232,0.55),0 30px 90px rgba(0,0,0,0.65);overflow:hidden;}
+.mvp-frame iframe{width:100%;height:100%;border:none;background:#fff;border-radius:32px;display:block;}
+.mvp-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:130px;height:24px;background:#0d1526;border-radius:0 0 16px 16px;z-index:3;}
+.mvp-close{position:absolute;top:24px;right:28px;background:transparent;border:1.5px solid rgba(255,255,255,0.5);color:#fff;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:1px;border-radius:6px;padding:8px 16px;cursor:pointer;z-index:100001;}
+.mvp-close:hover{background:rgba(255,255,255,0.12);}
+.mvp-label{color:rgba(255,255,255,0.6);font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;margin-top:18px;text-align:center;max-width:90vw;}
 .nav-link-inline{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:600;letter-spacing:1.5px;color:#0d1526;text-decoration:none;transition:color .2s;white-space:nowrap;}
 .nav-link-inline:hover{color:var(--cyan);}
 .nav-sep{width:1px;height:18px;background:rgba(0,0,0,0.1);flex-shrink:0;}
@@ -960,11 +971,23 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <button class="nav-signup" onclick="openModal('signup')">SIGN UP</button>
     <a href="demo.html" class="nav-demo-btn"><span class="play">▶</span> DEMO</a>
     <a href="#" onclick="openModal('intake');return false;" class="nav-get-started">GET STARTED</a>
+    <button class="nav-mobile-view" onclick="openMobilePreview()" title="Preview this site on a phone">📱 VIEW ON MOBILE</button>
   </div>
   <button class="nav-hamburger" onclick="toggleMobile()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<!-- ── MOBILE PREVIEW OVERLAY (additive — invisible until the button is clicked; does not affect desktop) ── -->
+<div class="mvp-overlay" id="mvp-overlay" onclick="if(event.target===this)closeMobilePreview()">
+  <button class="mvp-close" onclick="closeMobilePreview()" aria-label="Close">✕ CLOSE</button>
+  <div class="mvp-frame">
+    <div class="mvp-notch"></div>
+    <iframe id="mvp-iframe" title="Mobile preview of Skyrise Pro"></iframe>
+  </div>
+  <div class="mvp-label">📱 MOBILE PREVIEW — how the site looks on a phone (all features live)</div>
+</div>
+
 <div class="mobile-menu" id="mobile-menu">
   <a href="#services" onclick="closeMobile()">SERVICES</a>
   <a href="#" onclick="openModal('signin');closeMobile();return false;">CLIENT PORTAL</a>
@@ -4091,6 +4114,12 @@ document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click
 
 // Mobile nav
 function toggleMobile(){document.getElementById('mobile-menu').classList.toggle('open');}
+// ── Mobile preview (phone frame) ──
+function openMobilePreview(){var f=document.getElementById('mvp-iframe');if(f&&!f.getAttribute('src')){f.setAttribute('src',(window.location.pathname||'index.html')+(window.location.search||''));}document.getElementById('mvp-overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeMobilePreview(){document.getElementById('mvp-overlay').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMobilePreview();});
+/* When this page is shown INSIDE the preview iframe, hide the View-on-Mobile button so the preview stays clean */
+try{if(window.self!==window.top){document.addEventListener('DOMContentLoaded',function(){var b=document.querySelector('.nav-mobile-view');if(b)b.style.display='none';});}}catch(e){}
 function closeMobile(){document.getElementById('mobile-menu').classList.remove('open');}
 
 // Pipeline filter pills

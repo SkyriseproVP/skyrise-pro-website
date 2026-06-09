@@ -109,11 +109,48 @@ exports.handler = async function (event) {
       }, null, 2) };
     }
 
+    // ── Read notes to surface "Documents Needed" / outstanding items ──
+    let notes = [];
+    try { notes = (await aGet('/notes?limit=100')).data || []; } catch (e) { /* notes optional */ }
+    const notesByRecord = {};
+    notes.forEach(n => {
+      const pid = n.parent_record_id || (n.parent && n.parent.record_id);
+      if (!pid) return;
+      const body = n.content_plaintext || n.content_markdown || (n.content && (n.content.plaintext || n.content.markdown)) || '';
+      (notesByRecord[pid] = notesByRecord[pid] || []).push({ title: n.title || '', body: String(body) });
+    });
+
     // Build deals-centric brief
     const lines = [];
+    lines.push('JARVIS DIRECTIVE: When you greet Victor, OPEN by briefing him — concisely and proactively — on the ACTION ITEMS below (what needs him today). Lead with the most urgent. Then ask how you can help. You are his executive assistant watching his back, not a passive chatbot.');
+    lines.push('');
     lines.push('LIVE PIPELINE FROM ATTIO (authoritative — use this over any earlier/hardcoded snapshot).');
     lines.push(`Pulled: ${new Date().toISOString()}`);
     lines.push('');
+
+    // ── ACTION ITEMS (computed from deals + Documents Needed notes) ──
+    const actionItems = [];
+    dealRecs.forEach(d => {
+      const v = d.values;
+      const stageRaw = flatten(v.stage) || flatten(v.status) || '';
+      const stage = stageRaw.toLowerCase();
+      if (/won|active|paying|closed.?won|client/.test(stage)) return; // already a client
+      const name = flatten(v.name) || '(unnamed deal)';
+      const dealNotes = notesByRecord[recId(d)] || [];
+      const docNote = dealNotes.find(n => /document/i.test(n.title));
+      const docsOutstanding = docNote && /outstanding/i.test(docNote.body);
+      const contact = refIds(v.associated_people).map(id => personById[id] && personById[id].name).filter(Boolean)[0] || '';
+      if (docsOutstanding) {
+        actionItems.push(`• ${name} (${stageRaw || stage}) — documents OUTSTANDING. Chase ${contact || 'the contact'} for the required docs (see its Documents Needed note). This is blocking progress.`);
+      } else {
+        actionItems.push(`• ${name} (${stageRaw || stage}) — follow up to advance${contact ? ' with ' + contact : ''}.`);
+      }
+    });
+    if (actionItems.length) {
+      lines.push('⚡ ACTION ITEMS — NEEDS YOUR ATTENTION TODAY:');
+      actionItems.forEach(a => lines.push(a));
+      lines.push('');
+    }
 
     if (dealRecs.length) {
       lines.push(`DEALS / PIPELINE (${dealRecs.length}):`);

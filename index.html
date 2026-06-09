@@ -170,6 +170,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .srv-box-title{font-family:'Orbitron',sans-serif;font-size:8.5px;font-weight:800;letter-spacing:2px;color:var(--cyan);margin-bottom:4px;display:flex;align-items:center;gap:7px;}
 .srv-box-title::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--cyan);flex-shrink:0;}
 .srv-box-body{font-family:'Orbitron',sans-serif;font-size:11.5px;color:#0d1526;line-height:1.45;letter-spacing:0;text-transform:none;}
+/* Mobile (phones): stack the "OUR SERVICES" header box — label on top, description full-width left-to-right */
+@media(max-width:600px){
+  .srv-header-box{flex-direction:column !important;align-items:flex-start !important;gap:8px !important;}
+  .srv-header-box > div:nth-child(2){display:none !important;} /* hide the vertical divider when stacked */
+}
 .services-img-col{display:flex;align-items:stretch;align-self:stretch;}
 .services-visual-img{width:100%;height:100%;object-fit:cover;border-radius:20px;border:1.5px solid var(--cyan);box-shadow:0 0 18px rgba(0,200,232,0.18),0 2px 12px rgba(10,22,40,0.07);display:block;}
 

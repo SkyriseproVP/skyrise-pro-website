@@ -187,6 +187,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   .pipeline-diagram-box .pipe-arrow{display:none !important;}
   .pipe-nodes{flex-direction:row !important;flex-wrap:wrap !important;justify-content:center !important;gap:10px !important;}
   .pipeline-filter-pills{flex-wrap:wrap !important;justify-content:center !important;}
+  /* Court Vision (phone): hide the individual stage list — let Sky narrate, viewers tap stakeholders */
+  #court-stages{display:none !important;}
+  .court-stage-caption{display:none !important;}
+  .court-stakeholder-caption{display:block !important;}
+  /* Court Vision (phone): make the bouncing ball slightly smaller */
+  #csBall{font-size:11px !important;}
 }
 .services-img-col{display:flex;align-items:stretch;align-self:stretch;}
 .services-visual-img{width:100%;height:100%;object-fit:cover;border-radius:20px;border:1.5px solid var(--cyan);box-shadow:0 0 18px rgba(0,200,232,0.18),0 2px 12px rgba(10,22,40,0.07);display:block;}
@@ -1870,7 +1876,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   <div class="home-stages-box">
     <div style="font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:#ffffff;letter-spacing:2.5px;margin-bottom:12px;text-align:center;">TENANT BUILD OUT</div>
     <div id="court-stages" style="display:block;"></div>
-    <p style="font-family:'Orbitron',sans-serif;font-size:7px;color:#ffffff!important;letter-spacing:1.5px;margin:10px 0 0;text-align:center;opacity:1;">TAP ANY STAGE TO SEE WHAT HAPPENS &nbsp;·&nbsp; ⚡ = STEAL / BLOCK RISK</p>
+    <p class="court-stage-caption" style="font-family:'Orbitron',sans-serif;font-size:7px;color:#ffffff!important;letter-spacing:1.5px;margin:10px 0 0;text-align:center;opacity:1;">TAP ANY STAGE TO SEE WHAT HAPPENS &nbsp;·&nbsp; ⚡ = STEAL / BLOCK RISK</p>
+    <p class="court-stakeholder-caption" style="display:none;font-family:'Orbitron',sans-serif;font-size:8px;color:#ffffff!important;letter-spacing:1.5px;margin:4px 0 0;text-align:center;line-height:1.7;opacity:1;">TAP ANY STAKEHOLDER TO SEE WHAT HAPPENS<br>AND THE ROLE THEY HAVE</p>
   </div>
 
   <!-- COURT — matching demo exactly -->

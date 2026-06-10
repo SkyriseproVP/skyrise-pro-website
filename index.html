@@ -177,6 +177,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   /* Hero heading: shrink + allow wrap so it never gets cut off on phones */
   .hero-headline{font-size:22px !important;letter-spacing:1px !important;}
   .hero-headline .hl-line{white-space:normal !important;}
+  .hero-sub-2{display:block !important;} /* sub-hero: "THE BALL IS ON." drops to its own line on phones */
   /* Keep all page content from spilling past the phone's right edge */
   html,body{overflow-x:hidden !important;}
   /* CLR / client automation workflow: stack the columns VERTICALLY on phones (no sideways scroll) */
@@ -1566,7 +1567,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <span class="hl-line" style="white-space:nowrap;display:block;">AUTOMATE. ELEVATE.</span>
       <span class="hl-line">DOMINATE.</span>
     </h1>
-    <p class="hero-sub" style="margin-bottom:10px;">ALWAYS KNOW WHOSE COURT THE BALL IS ON.</p>
+    <p class="hero-sub" style="margin-bottom:10px;">ALWAYS KNOW WHOSE COURT <span class="hero-sub-2">THE BALL IS ON.</span></p>
     <p class="hero-body-line">The only platform that → Automates the handoff. Elevates the team.</p>
     <p class="hero-dominate-line">Dominate the deal.</p>
     <div class="hero-btns">

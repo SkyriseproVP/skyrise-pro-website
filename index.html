@@ -179,6 +179,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   .hero-headline .hl-line{white-space:normal !important;}
   /* Keep all page content from spilling past the phone's right edge */
   html,body{overflow-x:hidden !important;}
+  /* CLR / client automation workflow: stack the columns VERTICALLY on phones (no sideways scroll) */
+  .pipe-grid, .clr-grid, .debusk-grid{display:flex !important;flex-direction:column !important;min-width:0 !important;width:100% !important;gap:18px !important;align-items:stretch !important;}
+  .pipeline-diagram-box{min-width:0 !important;}
+  .pipeline-diagram-wrap{overflow-x:hidden !important;}
+  .pipeline-diagram-box .pipe-arrow{display:none !important;}
+  .pipe-nodes{flex-direction:row !important;flex-wrap:wrap !important;justify-content:center !important;gap:10px !important;}
+  .pipeline-filter-pills{flex-wrap:wrap !important;justify-content:center !important;}
 }
 .services-img-col{display:flex;align-items:stretch;align-self:stretch;}
 .services-visual-img{width:100%;height:100%;object-fit:cover;border-radius:20px;border:1.5px solid var(--cyan);box-shadow:0 0 18px rgba(0,200,232,0.18),0 2px 12px rgba(10,22,40,0.07);display:block;}

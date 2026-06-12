@@ -184,7 +184,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   .pipe-grid, .clr-grid, .debusk-grid{display:flex !important;flex-direction:column !important;min-width:0 !important;width:100% !important;gap:18px !important;align-items:stretch !important;}
   .pipeline-diagram-box{min-width:0 !important;}
   .pipeline-diagram-wrap{overflow-x:hidden !important;}
-  .pipeline-diagram-box .pipe-arrow{display:none !important;}
+  /* Workflow connectors: render VERTICAL on phones — a line + downward-flowing dot between each stacked section (mirrors the app demo) */
+  .pipe-grid .pipe-arrow, .clr-grid .pipe-arrow, .debusk-grid .pipe-arrow{display:flex !important;min-height:34px !important;width:100% !important;align-self:center !important;overflow:visible !important;}
+  .pipe-grid .pipe-arrow::before, .clr-grid .pipe-arrow::before, .debusk-grid .pipe-arrow::before{left:50% !important;right:auto !important;top:0 !important;bottom:0 !important;width:2px !important;height:auto !important;transform:translateX(-50%) !important;}
+  .pipe-grid .pipe-dot, .clr-grid .pipe-dot, .debusk-grid .pipe-dot{left:50% !important;top:0 !important;transform:translateX(-50%) !important;animation-name:dotTravelDown !important;}
+  /* Hide the desktop-only internal tool trunks/stubs that render as stray fragments once stacked */
+  .pipe-nodes-tools::before, .pipe-nodes-tools::after, .pipe-nodes-tools .pipe-node::before, .pipe-nodes-tools .pipe-node::after{display:none !important;}
+  .pipe-stub-dot{display:none !important;}
   .pipe-nodes{flex-direction:row !important;flex-wrap:wrap !important;justify-content:center !important;gap:10px !important;}
   .pipeline-filter-pills{flex-wrap:wrap !important;justify-content:center !important;}
   /* Court Vision (phone): hide the individual stage list — let Sky narrate, viewers tap stakeholders */
@@ -370,6 +376,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @keyframes stubRight{0%{left:calc(50% + 24px);opacity:0;}12%{opacity:.85;}88%{opacity:.85;}100%{left:100%;opacity:0;}}
 /* stubLeft: right/tools nodes — dot travels left trunk → icon-edge (rightward) */
 @keyframes stubLeft{0%{left:0;opacity:0;}12%{opacity:.85;}88%{opacity:.85;}100%{left:calc(50% - 24px);opacity:0;}}
+@keyframes dotTravelDown{0%{top:0;opacity:0;}10%{opacity:.9;}90%{opacity:.9;}100%{top:calc(100% - 7px);opacity:0;}}
 /* trunkDown / trunkUp: vertical dots travel along bounded trunk lines */
 @keyframes trunkDown{0%{top:41px;opacity:0;}8%{opacity:.8;}92%{opacity:.8;}100%{top:calc(100% - 48px);opacity:0;}}
 @keyframes trunkUp{0%{top:calc(100% - 48px);opacity:0;}8%{opacity:.8;}92%{opacity:.8;}100%{top:41px;opacity:0;}}

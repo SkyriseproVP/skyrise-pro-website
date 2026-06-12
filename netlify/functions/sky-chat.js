@@ -96,12 +96,10 @@ The moment they show ANY buying signal ("let's get started", "sounds good", they
 ONE STEP AT A TIME: ask a single question, then STOP and wait for their answer before the next step. NEVER assume or announce which plan they picked — if you ask "Professional or Elite?", wait for their actual choice; never answer for them or stack two replies into one message.`;
 
 exports.handler = async function (event) {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
-  }
-
   const origin = event.headers.origin || '';
   const allowed = [
+    'https://skyrisepro.ai',
+    'https://www.skyrisepro.ai',
     'https://skyrisepro.netlify.app',
     'https://www.skyrisepro.com',
     'https://skyrisepro.com',
@@ -113,8 +111,17 @@ exports.handler = async function (event) {
   const headers = {
     'Access-Control-Allow-Origin': corsOrigin,
     'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Content-Type': 'application/json',
   };
+
+  // CORS preflight (lets local demo pages / file:// origin call Sky's brain)
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers, body: '' };
+  }
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
+  }
 
   let body;
   try { body = JSON.parse(event.body || '{}'); }

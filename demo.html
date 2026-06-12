@@ -1405,7 +1405,7 @@ function demoAutoNext() {
                                       // Witty closing — makes them feel the cost of NOT signing up
                                       setTimeout(() => {
                                         skySpeak(
-                                          "One honest question before you go — tonight, after this, how many hours are going into work this system would have handled automatically? Every proposal drafted by hand, every follow-up you have to remember to send, every invoice that sits until someone chases it — that is not a workflow problem. That is a revenue leak. And it has a number. So I will ask you directly — which plan do we put your business on today?",
+                                          "So here is the real question — are you ready to sign up? Let's get you started today. And if anything is holding you back, tell me right now and I will answer it straight — or if you would rather talk it through with a person, I will set up a quick call with Victor. So which plan do we put your business on today?",
                                           'demo-orb-wrap', () => {
                                             orbMode = 'idle';
                                             if (statusEl) statusEl.classList.remove('speaking');
@@ -1466,11 +1466,14 @@ window.selectDemoNode = (nodeId) => {
 };
 
 window.demoSkip = () => {
-  demoRunning = false; stopSkyAudio(); orbMode = 'idle';
+  stopSkyAudio(); orbMode = 'idle';
   hideNodePopup(); // dismiss any open node card immediately on skip
   document.querySelectorAll('.demo-pipe-node, .demo-pipe-hub, .demo-skybot-node').forEach(el => el.classList.add('active'));
   document.getElementById('demo-progress').style.width = '100%';
-  showDemoEnd();
+  // Jump to the end of the pipeline and run the final branch so Sky still narrates the plans + closing ask
+  demoRunning = true;
+  demoNodeIdx = PIPE_NODES.length;
+  demoAutoNext();
 };
 
 function showDemoEnd() {

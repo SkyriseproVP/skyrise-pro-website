@@ -1041,7 +1041,7 @@ var SIDEBAR=[
 ];
 
 /* ════════ STATE ════════ */
-var _s=0,_delayed=false,_demoTimer=null,_demoRunning=false;
+var _s=0,_delayed=false,_demoTimer=null,_demoRunning=false,_convoLock=false;
 var _apTimer=null,_apRunning=false,_apIdx=0;
 var _fStep=0;
 
@@ -1344,10 +1344,12 @@ function showTrackerIsland(show){
 }
 window.addEventListener('resize',positionTrackerIsland);
 function startCourtPhase(){
+  _convoLock=false;
   showTrackerIsland(true);
   var msg='This is Court Vision — your live project tracker. Every player on this court is a key stakeholder in your deal. Here is what I want you to know: throughout this entire process, I am the one communicating with every single one of them. The PM, the GC, the architect, the permit office, the inspector, every subcontractor. You never have to follow up unless I tell you it is necessary. The only two stages where human follow-up is required are permitting and final inspection — and at those stages, the architect and the GC are the ones responsible for responding and pushing things forward. I track every deadline, send every reminder, and make sure they do not miss a beat. Watch the ball move from stage to stage — and tap any player or stage to go deeper.';
   orbSpeak('court-orb',true);
   skySpeakPaced(msg,function(){
+    if(_convoLock)return;
     orbSpeak('court-orb',false);
     render();
     updateStageSidebar(0);
@@ -1525,7 +1527,7 @@ window.courtBlock=function(){
 window.courtReset=function(){
   csStopAutoNarrate();csStopAutoPass();if(_demoRunning)csStopDemo();
   showTrackerIsland(true);
-  _s=0;_delayed=false;showBall(false);
+  _s=0;_delayed=false;_convoLock=false;showBall(false);
   var n=document.getElementById('csNarrator');if(n)n.style.display='none';
   var badge=document.getElementById('court-active-badge');if(badge)badge.style.opacity='0';
   var qaw=document.getElementById('court-qa-wrap');if(qaw)qaw.style.display='none';
@@ -1741,7 +1743,7 @@ function csMoveNarrateBall(idx,isSteal){
 }
 
 function csNarrateStage(idx){
-  if(!_anRunning||idx>=STAGES.length)return;
+  if(_convoLock||!_anRunning||idx>=STAGES.length)return;
   _s=idx;
   var stage=STAGES[idx];
   render();
@@ -1818,6 +1820,7 @@ function csNarrateStage(idx){
 }
 
 function csStartAutoNarrate(){
+  if(_convoLock)return;
   csStopAutoPass();
   _anRunning=true;_s=0;
   var ball=document.getElementById('csBall'),lbl=document.getElementById('csPlayerLabel');

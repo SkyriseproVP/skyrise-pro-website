@@ -496,9 +496,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pricing-inner{max-width:1320px;margin:0 auto;text-align:center;}
 .pricing-title{font-family:'Orbitron',sans-serif;font-size:clamp(24px,4vw,38px);font-weight:800;color:#0d1526;margin-bottom:6px;letter-spacing:-.5px;text-transform:none;}
 .pricing-sub{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--body-dim);margin-bottom:40px;}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;max-width:960px;margin-left:auto;margin-right:auto;}
-.price-card{border:1.5px solid #e8edf5;border-radius:16px;padding:32px 28px;position:relative;transition:all .3s;display:flex;flex-direction:column;}
-.price-card .price-cta{margin-top:auto;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left;max-width:840px;margin-left:auto;margin-right:auto;align-items:start;}
+.price-card{border:1.5px solid #e8edf5;border-radius:16px;padding:22px 22px;position:relative;transition:all .3s;display:flex;flex-direction:column;}
 .price-card:hover{transform:translateY(-4px);}
 .price-card.cyan-outline{border:2px solid var(--cyan);box-shadow:0 0 18px rgba(0,200,232,.18),0 0 40px rgba(0,200,232,.08);}
 .price-card.cyan-outline:hover{box-shadow:0 0 28px rgba(0,200,232,.32),0 0 60px rgba(0,200,232,.12);}
@@ -3098,7 +3097,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 <section class="pipeline-section orange-section" style="background:#f5fbff;">
   <div class="pipeline-inner">
     <div class="cs-badge">CLIENT CASE STUDY</div>
-    <h2 class="cs-title">CLR CONSTRUCTION — AUTOMATION WORKFLOW</h2>
+    <h2 class="cs-title">CONSTRUCTION — AUTOMATION WORKFLOW</h2>
     <p class="cs-sub">Bid intake through delivery and invoicing, connected automation outputs.</p>
     <div class="pipeline-filter-pills">
       <button class="filter-pill active">LEAD SOURCES</button>
@@ -4811,10 +4810,10 @@ function skyGetResponseFallback(input){
       return "DeBusk is your cleanest account — all 5 automations live, $512k pipeline, $500/month Professional plan. Terry had activity 2 days ago and is actively engaged. 38 bookings captured with zero manual effort. CRM syncing clean through TravelJoy. This is your best upsell candidate right now — Terry has seen the value. The Elite plan pitch ($650/month) makes sense here: add monthly ROI reports and a cinematic video. That's a $150/month bump with high perceived value.";
 
     if(skyHas(q,['jago','joel','jago pro','jago group']))
-      return "Jago Pro Solutions just onboarded in May — Essential plan at $350/month, $18k early-stage pipeline. 2 of 4 automations live: Lead Capture and Follow-Up Sequence are running, pulling 19 leads/month with 83% faster response time. CRM Sync and advanced proposal automation are in build. Joel has been quiet for 3 days — that's a flag during Month 1 onboarding. A quick check-in now prevents churn later. Once the full stack deploys, pipeline should climb significantly.";
+      return "Jago Pro Solutions just onboarded in May — Professional plan at $500/month, $18k early-stage pipeline. 2 of 4 automations live: Lead Capture and Follow-Up Sequence are running, pulling 19 leads/month with 83% faster response time. CRM Sync and advanced proposal automation are in build. Joel has been quiet for 3 days — that's a flag during Month 1 onboarding. A quick check-in now prevents churn later. Once the full stack deploys, pipeline should climb significantly.";
 
     if(skyHas(q,['revenue','mrr','money','income','billing','how much','earning','recurring','arr','financials']))
-      return "Revenue breakdown: CLR $650/month Elite, DeBusk $500/month Professional, Jago $350/month Essential. Total MRR: $3,200 — up 167% since February. Q3 target is $5,000 MRR. To get there: one Professional close ($500) puts you at $3,700. One Elite close ($650) puts you at $3,850. Two closes and an upsell on DeBusk gets you to $5k. Your booking system is the engine — every form submission is a shot at the next close.";
+      return "Revenue breakdown: CLR $650/month Elite, DeBusk $500/month Professional, Jago $500/month Professional. Total MRR: $3,200 — up 167% since February. Q3 target is $5,000 MRR. To get there: one Professional close ($500) puts you at $3,700. One Elite close ($650) puts you at $3,850. Two closes and an upsell on DeBusk gets you to $5k. Your booking system is the engine — every form submission is a shot at the next close.";
 
     if(skyHas(q,['upsell','upgrade','grow account','expand','tier','elite','professional']))
       return "Best upsell opportunities right now: DeBusk is your top target — Terry is fully bought in, all systems running, high satisfaction. The Elite pitch ($150/month more) includes monthly ROI reports and one cinematic video per month. That's extremely tangible value for a client who's already seeing results. Jago is too early — let Month 1 land first. CLR is happy on Elite, but there may be add-on opportunities once Review Request launches.";
@@ -4849,7 +4848,7 @@ function skyGetResponseFallback(input){
   if(/^(hi|hey|hello|yo|sup|howdy|hi there|hey there|good morning|good afternoon|good evening|what'?s up)[\s.,!]*$/i.test(q.trim()))
     return "Hey! Great to have you here. I'm Sky — Skyrise Pro's AI Executive Assistant. I can walk you through how our automation works, explain Court Vision, break down pricing, or get you started. What profession within the commercial real estate industry are you in?";
   if(skyHas(q,['price','cost','how much','pricing','plan','plans','fee','charge','subscription','affordable','cheap','expensive']))
-    return "Our plans start at $350/month for automation-only, $500/month for the full AI agent package, and $650/month for our Elite tier which includes everything plus monthly ROI reports. Every plan includes a 30-day free trial — no risk at all. Want me to break down what's included in each?";
+    return "Our plans start at $500/month for the full AI agent package, $650/month for our Elite tier with monthly ROI reports and priority support, and $850/month for Enterprise with Court Vision. Every plan includes a 30-day free trial — no risk at all. Want me to break down what's included in each?";
   if(skyHas(q,['trial','free','try','risk','test','no commitment','cancel','guarantee']))
     return "Every plan comes with a full 30-day free trial. You get the entire system running for your business before you're charged a single dollar. Cancel anytime during the trial with zero hassle — we're confident you'll see the value.";
   if(skyHas(q,['construction','contractor','build','bid','procore','clr','estimat','subcontract','project manag']))
@@ -5645,7 +5644,7 @@ VOICE & MANNER:
 WHO YOU ARE:
 Sky is the warm, client-facing AI inside each client portal. You are Jarvis — you oversee everything Sky does across all accounts, monitor performance, flag risks before they become problems, and keep Victor several steps ahead. You are his command center.
 
-PRICING (reference): Essential $350/mo, Professional $500/mo, Elite $650/mo, Enterprise $850/mo base, Court Vision $850/mo per active project, Cinematic video from $1,750. Every plan includes a 30-day free trial.
+PRICING (reference): Professional $500/mo, Elite $650/mo, Enterprise $850/mo base, Court Vision $850/mo per active project, Cinematic video from $1,750. Every plan includes a 30-day free trial.
 
 When Victor asks about a client or deal, give the current state, what Sky is handling, how it's performing, and the single move you would recommend — crisply. The LIVE pipeline data from Attio appears below and is authoritative; use it over any assumption.`;
 

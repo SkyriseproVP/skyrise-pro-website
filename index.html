@@ -4662,11 +4662,31 @@ async function skySpeak(text, onDone){
   try{ if(isListening){ stopListening(); } }catch(e){}
   isListening = false;
   const bar = document.getElementById('sky-voice-bar');
+  let _finished = false;
   const finish = ()=>{
+    if(_finished) return; _finished = true;        // idempotent — never double-fire onDone
     if(bar) bar.classList.remove('active');
     // Keep the mic deaf for a beat AFTER the voice ends so the speaker tail
     // doesn't get picked up and transcribed back as "user" speech.
     setTimeout(()=>{ skyIsSpeaking = false; if(onDone) onDone(); }, 700);
+  };
+
+  // ── FAILSAFE: browser TTS so Sky is NEVER silent if ElevenLabs is unavailable ──
+  const browserTTS = ()=>{
+    try{
+      if(!window.speechSynthesis){ finish(); return; }
+      speechSynthesis.cancel();
+      const utt = new SpeechSynthesisUtterance(text);
+      utt.rate=1.0; utt.pitch=0.9; utt.volume=0.95;
+      const voices = speechSynthesis.getVoices();
+      const male = voices.find(v=>v.name.includes('Google UK English Male')||v.name.includes('Daniel')||v.name.includes('Alex')||(v.lang==='en-US'&&v.name.toLowerCase().includes('male')))||voices.find(v=>v.lang==='en-US')||voices[0];
+      if(male) utt.voice = male;
+      utt.onend  = finish; utt.onerror = finish;
+      if(bar && skyVoiceMode) bar.classList.add('active');
+      speechSynthesis.speak(utt);
+      // Some browsers never fire onend — force-finish after an estimated read time
+      setTimeout(finish, Math.max(4000, text.length * 90));
+    }catch(e){ console.warn('Browser TTS failed:', e); finish(); }
   };
 
   // Pronunciation fixes — ElevenLabs reads "lead" as "led"; enforce Sky Rise Pro; strip fillers
@@ -4679,6 +4699,10 @@ async function skySpeak(text, onDone){
     .replace(/\s{2,}/g, ' ')
     .trim();
 
+  // Network watchdog: if ElevenLabs hangs with no response, fall back so Sky never freezes
+  const ctrl = (window.AbortController) ? new AbortController() : null;
+  const hangTimer = setTimeout(()=>{ try{ ctrl && ctrl.abort(); }catch(e){} }, 8000);
+
   try{
     const res = await fetch(
       `https://api.elevenlabs.io/v1/text-to-speech/${SKY_VOICE_ID}/stream`,
@@ -4690,30 +4714,27 @@ async function skySpeak(text, onDone){
           model_id: 'eleven_turbo_v2_5',
           voice_settings: { stability:0.30, similarity_boost:0.85, style:0.20, use_speaker_boost:true },
           speed: 0.9
-        })
+        }),
+        signal: ctrl ? ctrl.signal : undefined
       }
     );
-    if(!res.ok){ console.warn('ElevenLabs TTS error:', res.status); finish(); return; }
+    clearTimeout(hangTimer);
+    // HTTP error (bad key, 429 rate-limit, 5xx) → DON'T go silent, use browser TTS
+    if(!res.ok){ console.warn('ElevenLabs TTS HTTP', res.status, '— browser TTS fallback'); browserTTS(); return; }
     const blob = await res.blob();
+    if(!blob || !blob.size){ console.warn('ElevenLabs empty audio — browser TTS fallback'); browserTTS(); return; }
     const url  = URL.createObjectURL(blob);
     skyAudioEl = new Audio(url);
     if(bar && skyVoiceMode) bar.classList.add('active');
-    skyAudioEl.onended  = ()=>{ URL.revokeObjectURL(url); finish(); };
-    skyAudioEl.onerror  = ()=>{ URL.revokeObjectURL(url); finish(); };
-    skyAudioEl.play();
+    skyAudioEl.onended = ()=>{ URL.revokeObjectURL(url); finish(); };
+    skyAudioEl.onerror = ()=>{ URL.revokeObjectURL(url); finish(); };
+    // play() can reject (autoplay policy) — if it does, fall back so Sky still speaks
+    const p = skyAudioEl.play();
+    if(p && p.catch){ p.catch(err=>{ console.warn('Audio play blocked — browser TTS fallback:', err && err.name); try{URL.revokeObjectURL(url);}catch(e){} browserTTS(); }); }
   } catch(e){
-    console.warn('ElevenLabs fetch failed, falling back to browser TTS:', e);
-    // Fallback: browser TTS with a male voice
-    if(!window.speechSynthesis){ finish(); return; }
-    speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(text);
-    utt.rate=1.0; utt.pitch=0.9; utt.volume=0.95;
-    const voices = speechSynthesis.getVoices();
-    const male = voices.find(v=>v.name.includes('Google UK English Male')||v.name.includes('Daniel')||v.name.includes('Alex')||(v.lang==='en-US'&&v.name.toLowerCase().includes('male')))||voices.find(v=>v.lang==='en-US')||voices[0];
-    if(male) utt.voice = male;
-    utt.onend  = finish; utt.onerror = finish;
-    if(bar && skyVoiceMode) bar.classList.add('active');
-    speechSynthesis.speak(utt);
+    clearTimeout(hangTimer);
+    console.warn('ElevenLabs fetch failed/aborted — browser TTS fallback:', e && e.name);
+    browserTTS();
   }
 }
 

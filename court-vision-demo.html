@@ -1111,13 +1111,14 @@ function estimateDuration(text){
   var words=text.trim().split(/\s+/).length;
   return Math.max(2200,Math.round(words/155*60*1000));
 }
-function skySpeakPaced(text,onEnd){
+function skySpeakPaced(text,onEnd,maxMs){
   var minMs=estimateDuration(text);
+  if(maxMs)minMs=Math.min(minMs,maxMs); // cap pacing so the ball moves briskly (voice keeps playing under it)
   var t0=Date.now();
   var _fired=false;
   var advance=function(){if(!_fired){_fired=true;if(onEnd)onEnd();}};
-  // Hard cap: always advance after minMs + 5s if ElevenLabs hangs
-  var hardTimer=setTimeout(advance, minMs+5000);
+  // Hard cap: always advance after minMs + buffer if ElevenLabs hangs
+  var hardTimer=setTimeout(advance, minMs+(maxMs?1500:5000));
   skySpeak(text,function(){
     clearTimeout(hardTimer);
     var elapsed=Date.now()-t0;
@@ -1354,7 +1355,7 @@ function startCourtPhase(){
     render();
     updateStageSidebar(0);
     setTimeout(function(){csStartAutoNarrate();},500);
-  });
+  },9000);
   /* QA button reveals automatically after final stage narration */
 }
 
@@ -1809,14 +1810,14 @@ function csNarrateStage(idx){
           if(!_anRunning)return;
           if(badge)badge.style.opacity='0';
           csNarrateStage(idx+1);
-        });
+        },6000);
       },900);
 
     } else {
       /* ── Normal advance ── */
-      setTimeout(function(){csNarrateStage(idx+1);},2500);
+      setTimeout(function(){csNarrateStage(idx+1);},900);
     }
-  });
+  },6000);
 }
 
 function csStartAutoNarrate(){

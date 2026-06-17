@@ -9,3 +9,9 @@ node_modules/
 FULCRUM FINAL.mp4
 video is king.mp4
 video_2026-05-24_19-59-23.mp4
+
+# internal video build files — never deploy
+New Video Is King/
+*.bak
+*.bak2
+~$*

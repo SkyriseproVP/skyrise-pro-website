@@ -22,25 +22,25 @@ body{font-family:'Orbitron',sans-serif;background:#f0f8ff;color:#0d1526;overflow
 }
 
 /* ── NAV ─────────────────────────────────────────────────────── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;background:#fff;border-bottom:2px solid rgba(0,200,232,0.15);height:120px;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;background:#fff;border-bottom:2px solid rgba(0,200,232,0.15);height:114px;}
 .nav-logo-box{padding:0 32px;border-right:1px solid rgba(0,0,0,0.08);height:100%;display:flex;align-items:center;}
-.nav-logo-box img{height:140px;width:auto;transition:filter .3s;}
+.nav-logo-box img{height:110px;width:auto;transition:filter .3s;}
 .nav-logo-box img:hover{filter:none;}
 .nav-links{display:none;}/* moved to right */
 .nav-links a{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:600;letter-spacing:1.5px;color:#0d1526;text-decoration:none;padding:0 16px;transition:color .2s;}
 .nav-links a:hover{color:var(--cyan);}
-.nav-demo-btn{display:flex;align-items:center;gap:6px;border:1.5px solid var(--cyan);border-radius:10px;padding:9px 22px;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:var(--cyan);text-decoration:none;transition:all .2s;}
+.nav-demo-btn{display:flex;align-items:center;gap:6px;border:1.5px solid var(--cyan);border-radius:8px;padding:6px 14px;font-family:'Orbitron',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1px;color:var(--cyan);text-decoration:none;transition:all .2s;}
 .nav-demo-btn:hover{background:var(--cyan);color:#000;}
 .nav-demo-btn .play{width:14px;height:14px;border:1.5px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:6px;}
-.nav-cta-group{display:flex;align-items:center;gap:14px;padding:0 24px;}
-.nav-link-inline{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:600;letter-spacing:1.5px;color:#0d1526;text-decoration:none;transition:color .2s;white-space:nowrap;}
+.nav-cta-group{display:flex;align-items:center;gap:9px;padding:0 16px;}
+.nav-link-inline{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.2px;color:#0d1526;text-decoration:none;transition:color .2s;white-space:nowrap;}
 .nav-link-inline:hover{color:var(--cyan);}
 .nav-sep{width:1px;height:18px;background:rgba(0,0,0,0.1);flex-shrink:0;}
 .nav-signin{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;color:#0d1526;text-decoration:none;cursor:pointer;background:none;border:none;transition:color .2s;}
 .nav-signin:hover{color:var(--cyan);}
 .nav-signup{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;color:#0d1526;text-decoration:none;cursor:pointer;background:none;border:none;transition:color .2s;}
 .nav-signup:hover{color:var(--cyan);}
-.nav-get-started{background:var(--navy2);color:#fff;border:none;border-radius:10px;padding:12px 26px;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap;}
+.nav-get-started{background:var(--navy2);color:#fff;border:1.5px solid var(--navy2);border-radius:8px;padding:6px 14px;font-family:'Orbitron',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1px;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap;}
 .nav-get-started:hover{background:var(--cyan);color:#000;}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px 20px;background:none;border:none;}
 .nav-hamburger span{display:block;width:22px;height:2px;background:#0d1526;border-radius:2px;}
@@ -129,7 +129,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .portal-oauth-btn:last-child{margin-bottom:0;}
 
 /* ── HERO ────────────────────────────────────────────────────── */
-#hero{min-height:auto;padding-top:164px;padding-bottom:52px;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(to right,#c5e8f5 0%,#c5e8f5 20%,#dff2fb 32%,#eef8fd 46%,#ffffff 60%,#ffffff 100%);}
+#hero{min-height:auto;padding-top:146px;padding-bottom:48px;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(to right,#c5e8f5 0%,#c5e8f5 20%,#dff2fb 32%,#eef8fd 46%,#ffffff 60%,#ffffff 100%);}
 .hero-circuit{display:none;}
 .hero-circuit-svg{position:absolute;left:0;top:120px;height:100%;width:200px;z-index:0;pointer-events:none;opacity:.18;}
 .hero-content{position:relative;z-index:2;width:100%;max-width:680px;margin:0 auto;padding:16px 40px;display:flex;flex-direction:column;align-items:center;text-align:center;}
@@ -142,8 +142,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-autopilot{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:36px;width:100%;}
 .hero-autopilot-svg{flex:0 0 70px;width:70px;height:3px;overflow:visible;}
 .hero-autopilot-text{font-family:'Orbitron',sans-serif;font-size:clamp(14px,1.6vw,22px);font-weight:700;letter-spacing:1px;color:var(--cyan);white-space:nowrap;text-transform:uppercase;}
-.hero-btns{display:flex;flex-direction:column;gap:8px;width:clamp(220px,48%,320px);align-items:stretch;}
-.hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:auto;box-sizing:border-box;width:100%;border-radius:10px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;text-decoration:none;-webkit-appearance:none;appearance:none;margin:0;padding:14px 32px;line-height:1;border:2px solid transparent;}
+.hero-btns{display:flex;flex-direction:column;gap:7px;width:clamp(180px,38%,250px);align-items:stretch;}
+.hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:38px;box-sizing:border-box;width:100%;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;text-decoration:none;-webkit-appearance:none;appearance:none;margin:0;padding:0 16px;line-height:1.15;border:1.5px solid transparent;text-align:center;}
 .hero-btn-dark{background:var(--navy2);color:#fff;border-color:var(--navy2);}
 .hero-btn-dark:hover{background:#1a2540;border-color:#1a2540;}
 .hero-btn-cyan{background:var(--cyan);color:#000;border-color:var(--navy2);font-weight:800;box-shadow:0 4px 20px rgba(0,200,232,.35);}
@@ -496,7 +496,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pricing-inner{max-width:1320px;margin:0 auto;text-align:center;}
 .pricing-title{font-family:'Orbitron',sans-serif;font-size:clamp(24px,4vw,38px);font-weight:800;color:#0d1526;margin-bottom:6px;letter-spacing:-.5px;text-transform:none;}
 .pricing-sub{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--body-dim);margin-bottom:40px;}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left;max-width:840px;margin-left:auto;margin-right:auto;align-items:start;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left;max-width:840px;margin-left:auto;margin-right:auto;align-items:stretch;}
 .price-card{border:1.5px solid #e8edf5;border-radius:16px;padding:22px 22px;position:relative;transition:all .3s;display:flex;flex-direction:column;}
 .price-card:hover{transform:translateY(-4px);}
 .price-card.cyan-outline{border:2px solid var(--cyan);box-shadow:0 0 18px rgba(0,200,232,.18),0 0 40px rgba(0,200,232,.08);}
@@ -520,17 +520,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .price-gold-feature-body{font-family:system-ui,sans-serif;font-size:12px;color:rgba(255,245,210,.72);line-height:1.55;}
 .price-pop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--cyan);color:#000;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:5px 18px;border-radius:20px;white-space:nowrap;}
 .price-tier{font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--cyan);margin-bottom:6px;}
-.price-amount{font-size:42px;font-weight:900;color:#0d1526;line-height:1;margin-bottom:2px;}
+.price-amount{font-size:32px;font-weight:900;color:#0d1526;line-height:1;margin-bottom:2px;white-space:nowrap;}
 .price-card.featured .price-amount{color:#fff;}
 .price-amount span{font-size:14px;font-weight:500;color:var(--body-dim);}
 .price-card.featured .price-amount span{color:var(--text-dim);}
 .price-plan-name{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--body-dim);margin-bottom:24px;}
 .price-card.featured .price-plan-name{color:var(--text-dim);}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1 0 auto;}
 .price-feature{display:flex;align-items:flex-start;gap:10px;font-family:'Orbitron',sans-serif;font-size:12px;color:var(--body-dim);line-height:1.4;text-transform:none;letter-spacing:0;}
 .price-card.featured .price-feature{color:rgba(255,255,255,.75);}
 .price-check{color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px;}
-.price-cta{display:block;width:100%;padding:13px;border-radius:10px;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-align:center;cursor:pointer;transition:all .2s;border:none;text-decoration:none;}
+.price-cta{display:block;width:100%;padding:10px;border-radius:10px;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.6px;text-align:center;cursor:pointer;transition:all .2s;border:none;text-decoration:none;}
 .price-cta.outline{background:transparent;border:1.5px solid #d1dae8;color:#0d1526;}
 .price-cta.outline:hover{border-color:var(--cyan);color:var(--cyan);}
 .price-cta.solid{background:var(--cyan);color:#000;}
@@ -547,7 +547,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .modal-book-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:9px;border:1.5px solid var(--cyan);border-radius:10px;padding:14px 20px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--cyan);background:transparent;cursor:pointer;text-decoration:none;transition:all .2s;margin-top:2px;}
 .modal-book-btn:hover{background:rgba(0,200,232,0.08);box-shadow:0 0 14px rgba(0,200,232,.2);}
 /* Pricing Book a Call — sits below GET STARTED, light bg card */
-.price-book{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:10px;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-align:center;cursor:pointer;transition:all .2s;border:1.5px solid var(--cyan);background:transparent;color:var(--cyan);text-decoration:none;margin-top:8px;}
+.price-book{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:9px;border-radius:10px;font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.6px;text-align:center;cursor:pointer;transition:all .2s;border:1.5px solid var(--cyan);background:transparent;color:var(--cyan);text-decoration:none;margin-top:8px;}
 .price-book:hover{background:var(--cyan-dim);}
 /* Featured pricing card — override for readability on dark bg */
 .price-card.featured .price-book{border-color:var(--cyan2);color:var(--cyan2);}
@@ -918,18 +918,18 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 /* ── LAPTOPS 1025–1599px ─────────────────────────────────────── */
 /* Mid-desktop: keep hero centered and full size — just tuck the image */
 @media(max-width:1599px) and (min-width:1025px){
-  nav{height:120px;}
-  .nav-logo-box img{height:140px;}
+  nav{height:114px;}
+  .nav-logo-box img{height:110px;}
   .mobile-menu{top:120px;}
   /* No padding-right — hero stays fully centered at full font size */
-  #hero{padding-top:164px;padding-bottom:52px;padding-right:0;}
+  #hero{padding-top:146px;padding-bottom:48px;padding-right:0;}
   .hero-circuit-svg{top:120px;}
   .hero-headline{font-size:clamp(26px,3vw,44px);letter-spacing:3px;}
   .hero-sub{font-size:clamp(10px,1vw,14px);}
   .hero-body-line{font-size:clamp(13px,1.1vw,17px);}
   .hero-dominate-line{font-size:clamp(15px,1.3vw,20px);}
   .hero-btns{gap:8px;width:clamp(220px,48%,320px);}
-  .hero-btn-dark,.hero-btn-cyan,.hero-btn-book{padding:14px 32px;font-size:11px;}
+  .hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:38px;padding:0 16px;font-size:9.5px;}
   /* Image fades in from the right without disturbing the centered text */
   .hero-image{width:clamp(260px,34%,480px);top:130px;opacity:.85;}
 }
@@ -941,7 +941,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   nav{height:90px;}
   .nav-logo-box img{height:100px;}
   .mobile-menu{top:90px;}
-  #hero{padding-top:106px;min-height:auto;padding-left:24px;padding-right:24px;}
+  #hero{padding-top:128px;min-height:auto;padding-left:24px;padding-right:24px;}
   .hero-content{width:100%;max-width:100%;padding:40px 24px;min-height:auto;}
   .hero-image{display:none;}
   .services-inner{grid-template-columns:1fr;}
@@ -1293,7 +1293,9 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 
       <label class="modal-label" style="margin-bottom:8px;">PLAN INTEREST (NOT A COMMITMENT — WE'LL CONFIRM ON THE CALL)</label>
       <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-pro" value="Full Platform starting at $850/mo"><label for="p-pro">FULL PLATFORM — Starting at $850/mo — All Features Included</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-pro" value="Professional $749.99/mo"><label for="p-pro">PROFESSIONAL — $749.99/mo — Full AI Agent + Automation</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-elite" value="Elite $949.99/mo"><label for="p-elite">ELITE — $949.99/mo — Full AI Agency (includes Sky)</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-cv" value="Court Vision $1849.89/mo"><label for="p-cv">COURT VISION — $1,849.89/mo — Full Platform + Court Vision Team</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-video" value="Cinematic Video Only $1750"><label for="p-video">CINEMATIC VIDEO ONLY — $1,750 one-time</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-unsure" value="Not sure yet"><label for="p-unsure">NOT SURE YET — recommend the right fit on the call</label></div>
       </div>
@@ -3353,13 +3355,13 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <!-- ── PROFESSIONAL — navy blue ── -->
       <div class="price-card featured">
         <div class="price-tier">PROFESSIONAL</div>
-        <div class="price-amount">$500<span>/mo</span></div>
-        <div class="price-plan-name">FULL AI AGENT + AUTOMATION</div>
+        <div class="price-amount">$749.99<span>/mo</span></div>
+        <div class="price-plan-name">FULL WORKFLOW AUTOMATION</div>
         <ul class="price-features">
           <li class="price-feature"><span class="price-check">✓</span>Full workflow automation suite</li>
-          <li class="price-feature"><span class="price-check">✓</span>Sky AI Executive Assistant</li>
-          <li class="price-feature"><span class="price-check">✓</span>Sky handles client & team communication</li>
+          <li class="price-feature"><span class="price-check">✓</span>Proposals, invoices &amp; scheduling automated</li>
           <li class="price-feature"><span class="price-check">✓</span>Smart routing & instant responses</li>
+          <li class="price-feature"><span class="price-check">✓</span>Dashboard monitoring & status</li>
           <li class="price-feature"><span class="price-check">✓</span>30-day free trial included</li>
         </ul>
         <button class="price-cta solid" onclick="openModal('intake')" style="margin-bottom:10px;">GET STARTED</button>
@@ -3372,7 +3374,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <!-- ── ELITE — white + slight cyan glow, full agency ── -->
       <div class="price-card cyan-outline">
         <div class="price-tier">ELITE</div>
-        <div class="price-amount">$650<span>/mo</span></div>
+        <div class="price-amount">$949.99<span>/mo</span></div>
         <div class="price-plan-name">FULL AI AGENCY</div>
         <ul class="price-features">
           <li class="price-feature"><span class="price-check">✓</span>Everything in Professional</li>
@@ -3390,8 +3392,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 
       <!-- ── ENTERPRISE — navy blue + slight cyan glow, no badge ── -->
       <div class="price-card featured" style="box-shadow:0 0 14px rgba(0,200,232,.14),0 0 32px rgba(0,200,232,.06);border-color:rgba(0,200,232,.4);">
-        <div class="price-tier">ENTERPRISE</div>
-        <div class="price-amount">$850<span>/mo</span></div>
+        <div class="price-tier">COURT VISION</div>
+        <div class="price-amount">$1,849.89<span>/mo</span></div>
         <div class="price-plan-name">FULL PLATFORM + COURT VISION TEAM</div>
         <ul class="price-features">
           <li class="price-feature"><span class="price-check">✓</span>Everything in Elite</li>
@@ -4178,7 +4180,7 @@ function calcROI(){
   // SkyRise Pro automates ~70% of manual hours
   const savedHrs      = Math.round(h * 0.7);
   const savedMonthly  = Math.round(savedHrs * r * teamMult * 4.33);
-  const planCost      = 500; // Professional plan
+  const planCost      = 749.99; // Professional plan
   const netGain       = Math.max(0, savedMonthly - planCost);
   const roi1          = Math.round((savedMonthly - planCost) / planCost * 100);
 
@@ -4416,15 +4418,16 @@ function toggleSky(){
   if(choice.classList.contains('open') || panel.classList.contains('open')){
     closeSky(); return;
   }
-  // Skip the choice screen — go straight to text chat with greeting
+  // Open the panel and have Sky GREET OUT LOUD on first open
   skyVoiceMode = false;
   panel.classList.add('open');
   const msgs = document.getElementById('sky-msgs');
+  const greeting = "Hi, I'm Sky — your AI Executive Assistant from Skyrise Pro. I help businesses automate lead capture, follow-ups, and client communication so nothing falls through the cracks. What profession within the commercial real estate industry are you in? I'll show you exactly what this looks like for your business.";
   if(msgs.children.length === 0){
-    const greeting = "Hi, I'm Sky — your AI Executive Assistant from Skyrise Pro. I help businesses automate lead capture, follow-ups, and client communication so nothing falls through the cracks. What profession within the commercial real estate industry are you in? I'll show you exactly what this looks like for your business.";
     const b = document.createElement('div');
     b.className = 'sky-msg-bubble'; b.textContent = greeting;
     msgs.appendChild(b); msgs.scrollTop = msgs.scrollHeight;
+    try{ skySpeak(greeting, null); }catch(e){}   // speak it aloud (ElevenLabs → browser-voice fallback)
   }
   setTimeout(()=>document.getElementById('sky-input').focus(), 120);
 }
@@ -4867,7 +4870,7 @@ function skyGetResponseFallback(input){
   if(/^(hi|hey|hello|yo|sup|howdy|hi there|hey there|good morning|good afternoon|good evening|what'?s up)[\s.,!]*$/i.test(q.trim()))
     return "Hey! Great to have you here. I'm Sky — Skyrise Pro's AI Executive Assistant. I can walk you through how our automation works, explain Court Vision, break down pricing, or get you started. What profession within the commercial real estate industry are you in?";
   if(skyHas(q,['price','cost','how much','pricing','plan','plans','fee','charge','subscription','affordable','cheap','expensive']))
-    return "Our plans start at $500/month for the full AI agent package, $650/month for our Elite tier with monthly ROI reports and priority support, and $850/month for Enterprise with Court Vision. Every plan includes a 30-day free trial — no risk at all. Want me to break down what's included in each?";
+    return "Our plans are $749.99/month for Professional — the full AI agent and automation package — $949.99/month for Elite, our most popular tier with Sky, monthly ROI reports and priority support, and $1,849.89/month for Court Vision, our full-platform flagship for whole project teams. Every plan includes a 30-day free trial — no risk at all. Want me to break down what's included in each?";
   if(skyHas(q,['trial','free','try','risk','test','no commitment','cancel','guarantee']))
     return "Every plan comes with a full 30-day free trial. You get the entire system running for your business before you're charged a single dollar. Cancel anytime during the trial with zero hassle — we're confident you'll see the value.";
   if(skyHas(q,['construction','contractor','build','bid','procore','clr','estimat','subcontract','project manag']))

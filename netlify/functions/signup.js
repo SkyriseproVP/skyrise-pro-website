@@ -39,8 +39,8 @@ exports.handler = async function (event) {
   const origin = event.headers.origin || '';
   const allowed = [
     'https://skyrisepro.netlify.app',
-    'https://www.skyrisepro.com',
-    'https://skyrisepro.com',
+    'https://www.skyrisepro.ai',
+    'https://skyrisepro.ai',
     'http://localhost',          // local dev
     'null',                      // file:// local dev
   ];

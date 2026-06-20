@@ -10,6 +10,13 @@
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
 
+# ── Root path "/" (what visitors actually load) — also no-cache.
+# Without this, "/" is NOT matched by "/*.html" and the homepage gets cached stale.
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
 # ── Static assets — long cache with content-hash filenames
 [[headers]]
   for = "/assets/*"

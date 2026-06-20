@@ -717,10 +717,10 @@ textarea.ff-input{resize:none;line-height:1.6;}
 
     <!-- Enterprise Package -->
     <div class="snap-enterprise">
-      <div class="snap-ent-badge">ENTERPRISE PACKAGE</div>
+      <div class="snap-ent-badge">🏀 COURT VISION</div>
       <div class="snap-ent-title">WANT THIS REPORTING ON EVERY PROJECT?</div>
-      <p class="snap-ent-sub">Everything you just saw — the Court Vision dashboard, Sky coordinating every player in real time, red flag alerts, change order tracking, and this post-project analytics report — is your Enterprise package. Built for operators managing multiple active projects simultaneously.</p>
-      <div class="snap-ent-price">Starting at <span>$850</span><span style="font-size:16px;color:rgba(200,230,240,.5);font-weight:400;">/month</span></div>
+      <p class="snap-ent-sub">Everything you just saw — the Court Vision dashboard, Sky coordinating every player in real time, red flag alerts, change order tracking, and this post-project analytics report — is your Court Vision plan, priced per active project and billed monthly until each project's deadline.</p>
+      <div class="snap-ent-price">$<span>1,649.89</span><span style="font-size:16px;color:rgba(200,230,240,.5);font-weight:400;">/mo per active project</span></div>
       <p class="snap-ent-note">Fully customizable — built around your portfolio, your players, and your process.</p>
       <div class="snap-ent-features">
         <div>✓&nbsp; Court Vision dashboard on every active project</div>
@@ -2211,6 +2211,19 @@ window.snapChatSend=function(){
   inp.value='';
   snapAddMsg(txt,true);
   var st=document.getElementById('snap-chat-status');
+  // ── Get-started intent → direct them into the sign-up flow (questionnaire → start the job) ──
+  if(/\b(get started|getting started|sign me up|sign up|signup|let'?s start|let'?s go|start now|ready to (start|go|sign ?up|begin)|how do i (start|sign ?up|get started|begin)|i'?m in|let'?s do it|deploy sky|i want to (start|begin|sign ?up|get started)|where do i sign)\b/i.test(txt)){
+    var go="Let's do it. I'm opening the sign-up for you right now — pick your plan, fill in a few quick details, and the moment your project contacts are in, I start building. Just hit Get Started.";
+    snapAddMsg(go,false);
+    _snapConvo.push({role:'assistant',content:go});
+    _snapSpeaking=true; orbSpeak('snap-orb',true);
+    if(st)st.textContent='● OPENING SIGN-UP…';
+    skySpeakPaced(go,function(){
+      orbSpeak('snap-orb',false);
+      setTimeout(function(){ _snapSpeaking=false; if(typeof openCVSignup==='function') openCVSignup(); if(st)st.textContent='● ONLINE — ASK ME ANYTHING'; },400);
+    });
+    return;
+  }
   if(st)st.textContent='● SKY IS THINKING…';
   orbSpeak('snap-orb',true);
   snapAskSky(txt,function(reply){
@@ -2500,30 +2513,24 @@ var _demoFired=false;
       <div class="cvs-heading">Choose your plan.</div>
       <div class="cvs-sub">Your first 30 days are completely free. No charge until your trial ends.</div>
 
-      <div class="cvs-plans" style="grid-template-columns:repeat(4,1fr);">
-        <div class="cvs-plan-card" id="cvs-plan-essential" onclick="selectCVSPlan('essential','ESSENTIAL','$350')">
-          <div class="cvs-plan-name">ESSENTIAL</div>
-          <div class="cvs-plan-price">$350</div>
-          <div class="cvs-plan-mo">/month</div>
-          <div class="cvs-plan-desc">Core automation — proposals, invoicing, CRM sync</div>
-        </div>
-        <div class="cvs-plan-card selected" id="cvs-plan-professional" onclick="selectCVSPlan('professional','PROFESSIONAL','$500')">
+      <div class="cvs-plans" style="grid-template-columns:repeat(3,1fr);">
+        <div class="cvs-plan-card selected" id="cvs-plan-professional" onclick="selectCVSPlan('professional','PROFESSIONAL','$749.99')">
           <div class="cvs-plan-name" style="color:var(--cyan);">★ PROFESSIONAL</div>
-          <div class="cvs-plan-price">$500</div>
+          <div class="cvs-plan-price">$749.99</div>
           <div class="cvs-plan-mo">/month</div>
-          <div class="cvs-plan-desc">Full Sky AI + Court Vision deal tracking</div>
+          <div class="cvs-plan-desc">Full automation suite + Sky AI Executive Assistant</div>
         </div>
-        <div class="cvs-plan-card" id="cvs-plan-elite" onclick="selectCVSPlan('elite','ELITE','$650')">
+        <div class="cvs-plan-card" id="cvs-plan-elite" onclick="selectCVSPlan('elite','ELITE','$949.99')">
           <div class="cvs-plan-name">ELITE</div>
-          <div class="cvs-plan-price">$650</div>
+          <div class="cvs-plan-price">$949.99</div>
           <div class="cvs-plan-mo">/month</div>
           <div class="cvs-plan-desc">Full agency — ROI reports, priority support, strategy calls</div>
         </div>
-        <div class="cvs-plan-card" id="cvs-plan-enterprise" onclick="selectCVSPlan('enterprise','ENTERPRISE','$850')">
-          <div class="cvs-plan-name">ENTERPRISE</div>
-          <div class="cvs-plan-price">$850</div>
-          <div class="cvs-plan-mo">/month</div>
-          <div class="cvs-plan-desc">Full team Court Vision — stakeholder portals, custom build</div>
+        <div class="cvs-plan-card" id="cvs-plan-enterprise" onclick="selectCVSPlan('enterprise','COURT VISION','$1,649.89')">
+          <div class="cvs-plan-name" style="color:#00c8e8;">🏀 COURT VISION</div>
+          <div class="cvs-plan-price">$1,649.89</div>
+          <div class="cvs-plan-mo">/mo per project</div>
+          <div class="cvs-plan-desc">Per active project, billed until deadline — full team, stakeholder portals</div>
         </div>
       </div>
 
@@ -2581,7 +2588,7 @@ var _demoFired=false;
           <div style="font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;color:rgba(0,200,232,.6);" id="cvs-confirm-plan-name">PROFESSIONAL PLAN</div>
           <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;">Free for 30 days, then billed monthly</div>
         </div>
-        <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--cyan);" id="cvs-confirm-plan-price">$500<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span></div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--cyan);" id="cvs-confirm-plan-price">$749.99<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span></div>
       </div>
 
       <!-- CTAs -->
@@ -2617,7 +2624,7 @@ var CV_STRIPE_LINKS={
 // Secure proxy — webhook URL lives in Netlify env, never in browser source
 var CV_WEBHOOK='/api/signup';
 
-var _cvsSelectedPlan={key:'professional',name:'PROFESSIONAL',price:'$500'};
+var _cvsSelectedPlan={key:'professional',name:'PROFESSIONAL',price:'$749.99'};
 
 window.openCVSignup=function(){
   // Reset to step 1
@@ -2687,7 +2694,7 @@ window.cvsBack=function(step){
 
 window.selectCVSPlan=function(key,name,price){
   _cvsSelectedPlan={key:key,name:name,price:price};
-  ['essential','professional','elite','enterprise'].forEach(function(k){
+  ['professional','elite','enterprise'].forEach(function(k){
     var el=document.getElementById('cvs-plan-'+k);
     if(el)el.classList.toggle('selected',k===key);
   });

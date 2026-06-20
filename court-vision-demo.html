@@ -1274,7 +1274,15 @@ function runField(idx){
 }
 function startFormPhase(){
   _ffRunning=true;
-  setTimeout(function(){runField(0);},400);
+  // Before building the project file, Sky emphasizes the two prerequisites:
+  // (1) every project contact must sign up, (2) ~10 days to set up the team automations.
+  var introMsg='Before I build your project file, two important things. First — every project contact you add here, your PM, GC, architect, landlord, and tenant, has to sign up so I can coordinate the whole court and keep everyone in sync. Second — give us about ten days to set up the team automations for Court Vision. Once those are live, I run the entire project for you, end to end. Alright, let\'s build the file.';
+  orbSpeak('form-orb',true);
+  formSkyTypewriter(introMsg, estimateDuration(introMsg));
+  skySpeakPaced(introMsg,function(){
+    orbSpeak('form-orb',false);
+    setTimeout(function(){runField(0);},500);
+  });
 }
 window.submitForm=function(){
   var msg='Project submitted. I\'ve created the project file, notified your PM, GC, and architect, and loaded the full timeline. I am now the single point of communication for every player on this project. Watch what happens in real time.';

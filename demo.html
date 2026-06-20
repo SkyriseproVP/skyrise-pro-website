@@ -1006,26 +1006,26 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <div class="fpc-name" style="font-size:12px;margin-bottom:2px;">PROFESSIONAL</div>
         <div style="font-size:8px;letter-spacing:1.5px;color:rgba(255,255,255,.55);margin-bottom:8px;">SKY AI + AUTOMATION</div>
         <div style="font-family:'Orbitron',sans-serif;font-size:9px;font-weight:600;color:rgba(0,200,232,.6);letter-spacing:2px;margin-bottom:3px;">STARTING AT</div>
-        <div class="fpc-price">$500<span style="font-size:13px;font-weight:600;">/mo</span></div>
+        <div class="fpc-price">$749.99<span style="font-size:13px;font-weight:600;">/mo</span></div>
         <div class="fpc-desc" style="margin-bottom:8px;">Full automation suite · Sky AI Executive Assistant · Client &amp; team communication · Smart routing</div>
         <div class="fpc-desc" style="color:rgba(255,255,255,.3);font-size:8.5px;line-height:1.45;">🎬 Complimentary cinematic brand video after 4 months on plan.</div>
-        <button onclick="event.stopPropagation();openSignup('professional','PROFESSIONAL','$500')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
+        <button onclick="event.stopPropagation();openSignup('professional','PROFESSIONAL','$749.99')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
       </div>
 
       <!-- Card 3: Court Vision -->
       <div class="final-plan-card" id="demo-plan-court" style="min-width:200px;max-width:260px;padding:18px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;">
-        <div class="fpc-name" style="font-size:12px;margin-bottom:2px;color:rgba(0,200,232,.75);">ENTERPRISE</div>
+        <div class="fpc-name" style="font-size:12px;margin-bottom:2px;color:rgba(0,200,232,.75);">FLAGSHIP</div>
         <div style="font-size:8px;letter-spacing:1.5px;color:rgba(255,255,255,.45);margin-bottom:8px;">🏀 COURT VISION</div>
         <div style="font-family:'Orbitron',sans-serif;font-size:9px;font-weight:600;color:rgba(0,200,232,.45);letter-spacing:2px;margin-bottom:3px;">STARTING AT</div>
-        <div class="fpc-price" style="font-size:26px;">$850<span style="font-size:12px;font-weight:600;">/mo</span></div>
+        <div class="fpc-price" style="font-size:21px;">$1,649.89<span style="font-size:12px;font-weight:600;">/mo</span></div>
         <div class="fpc-desc" style="margin-bottom:8px;font-size:9.5px;">Every stage tracked · Sky coordinates every stakeholder · Real-time alerts · LOI to completion</div>
-        <div class="fpc-desc" style="color:rgba(255,255,255,.25);font-size:8.5px;line-height:1.45;">Priced per active project. Each project gets its own tracker — add-ons discussed on your strategy call.</div>
-        <button onclick="event.stopPropagation();openSignup('enterprise','ENTERPRISE','$850')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
+        <div class="fpc-desc" style="color:rgba(255,255,255,.25);font-size:8.5px;line-height:1.45;">Priced per active project, billed monthly until your deadline. Each project gets its own tracker — add-ons discussed on your strategy call.</div>
+        <button onclick="event.stopPropagation();openSignup('enterprise','COURT VISION','$1,649.89')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
       </div>
 
     </div>
     <div class="final-trial">First 30 days free</div>
-    <button class="final-btn-primary" onclick="openSignup('professional','PROFESSIONAL','$500')">DEPLOY SKY NOW →</button>
+    <button class="final-btn-primary" onclick="openSignup('professional','PROFESSIONAL','$749.99')">DEPLOY SKY NOW →</button>
     <button onclick="showChooser()" class="final-btn-sec" style="margin-top:4px;">← CHOOSE ANOTHER DEMO</button>
   </div>
 </div>
@@ -1092,7 +1092,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <!-- Enterprise -->
         <div class="vplan-card featured-plan" id="vp-enterprise">
           <div class="vplan-pop">⭐ PROJECT ADD-ON</div>
-          <div class="vplan-tier">ENTERPRISE</div>
+          <div class="vplan-tier">COURT VISION TEAM</div>
           <div class="vplan-price">$850<span> one-time</span></div>
           <div class="vplan-desc">Court Vision access passes for your full team and stakeholders, plus the cinematic video at a significant discount. Built to showcase your win.</div>
           <a href="index.html#pricing" target="_blank" class="vplan-btn">GET STARTED</a>
@@ -1387,11 +1387,11 @@ function demoAutoNext() {
               "This is the automation at work. Every handoff you just saw — captured, routed, executed, and documented — without a single manual step. And here are the plans to help escalate your business.",
               'demo-orb-wrap', () => {
               setTimeout(() => {
-                // Card 1 — Full Platform ($500)
+                // Card 1 — Full Platform ($749.99)
                 moveCursorTo('demo-plan-cv', () => {
                   document.getElementById('demo-plan-cv')?.classList.add('plan-cursor-active');
                   skySpeak(
-                    "The Professional plan is five hundred a month and adds Sky as your personal AI executive assistant. Sky qualifies every opportunity, coordinates your team, fires alerts the moment something goes off script, and keeps every stakeholder informed — in real time.",
+                    "The Professional plan is seven hundred forty nine ninety nine a month and adds Sky as your personal AI executive assistant. Sky qualifies every opportunity, coordinates your team, fires alerts the moment something goes off script, and keeps every stakeholder informed — in real time.",
                     'demo-orb-wrap', () => {
                       document.getElementById('demo-plan-cv')?.classList.remove('plan-cursor-active');
                       setTimeout(() => {
@@ -1399,7 +1399,7 @@ function demoAutoNext() {
                                 moveCursorTo('demo-plan-court', () => {
                                   document.getElementById('demo-plan-court')?.classList.add('plan-cursor-active');
                                   skySpeak(
-                                    "And Court Vision is where your projects live — eight fifty a month per project. Every stage from the letter of intent to certificate of occupancy, tracked in real time on a live dashboard. Sky coordinates every player on your court — the GC, architect, permit agent, inspector, landlord. No missed handoffs, no surprises at final inspection. It is priced per active project, so you only pay for the deals you are actually running.",
+                                    "And Court Vision is where your projects live — sixteen forty nine a month per active project, billed until the project deadline. Every stage from the letter of intent to certificate of occupancy, tracked in real time on a live dashboard. Sky coordinates every player on your court — the GC, architect, permit agent, inspector, landlord. No missed handoffs, no surprises at final inspection. It is priced per active project, so you only pay for the deals you are actually running.",
                                     'demo-orb-wrap', () => {
                                       document.getElementById('demo-plan-court')?.classList.remove('plan-cursor-active');
                                       // Witty closing — makes them feel the cost of NOT signing up
@@ -1827,7 +1827,7 @@ function showVdemoEnd() {
 // ── VIDEO PLANS OVERLAY ───────────────────────────────────────
 const VP_SCRIPTS = [
   { id:'vp-elite',      text:"Let's start with Elite, at six fifty a month. This is the full AI agency. You get everything in Essential and Professional, your monthly ROI reports, and priority support and strategy calls included. And here is what makes this even more powerful. Active Elite clients can add a cinematic production video as a one-time add-on at a significantly reduced rate. This is not a monthly video charge. It is a one-time investment to showcase your completed project, and because you are already an Elite client, you get it at a price nobody else can access. The most powerful automation platform on the market, and the ability to showcase your work cinematically. That is Elite." },
-  { id:'vp-enterprise', text:"The Enterprise package is eight fifty one-time, and this one is built for your whole team. It includes Court Vision access passes for every professional on your court. Your architect, GC, landlord, project manager, and every stakeholder. They each get their own portal to see exactly where the deal stands. And it bundles in the cinematic video at a significant discount, so you can showcase the completed project to everyone who made it happen." },
+  { id:'vp-enterprise', text:"The Court Vision Team package is eight fifty one-time, and this one is built for your whole team. It includes Court Vision access passes for every professional on your court. Your architect, GC, landlord, project manager, and every stakeholder. They each get their own portal to see exactly where the deal stands. And it bundles in the cinematic video at a significant discount, so you can showcase the completed project to everyone who made it happen." },
   { id:'vp-standalone', text:"And the Standalone package is a one-time investment of seventeen fifty. One complete cinematic production from vision to final delivery. Your brand, your story, your win, fully produced and ready to deploy. No subscription required." }
 ];
 
@@ -1868,7 +1868,7 @@ window.hideVPlans = function() {
 
 // ── ALL AUTOMATION PLANS OVERLAY ──────────────────────────────
 const AP_SCRIPTS = [
-  { id:'ap-enterprise', text:"Sky Rise Pro starts at eight fifty a month — and that is the full platform. Full automation suite, Sky as your personal AI assistant, Court Vision deal tracking, team portals, and ROI reporting. Everything is included from day one. If your operation requires custom automations beyond the standard build, we discuss that on your strategy call and scope it together. Your first thirty days are completely free." }
+  { id:'ap-enterprise', text:"Sky Rise Pro starts at seven forty nine ninety nine a month for Professional — and that is the full platform. Full automation suite, Sky as your personal AI assistant, Court Vision deal tracking, team portals, and ROI reporting. Everything is included from day one. If your operation requires custom automations beyond the standard build, we discuss that on your strategy call and scope it together. Your first thirty days are completely free." }
 ];
 
 window.showAllPlansOverlay = function() {
@@ -2211,13 +2211,13 @@ window.addEventListener('DOMContentLoaded', () => {
   <div class="all-plans-box">
     <button class="all-plans-close" onclick="hideAllPlansOverlay()">✕</button>
     <div class="all-plans-badge">⚡ SKYRISE PRO</div>
-    <div class="all-plans-headline">FULL PLATFORM. ONE PRICE.</div>
+    <div class="all-plans-headline">AUTOMATION + SKY AI.</div>
     <div class="all-plans-grid" style="justify-content:center;">
       <!-- Unified pricing card -->
       <div class="aplan-card featured-aplan" id="ap-enterprise" style="max-width:380px;padding:24px 28px;text-align:center;">
         <div class="aplan-pop" style="font-size:8px;letter-spacing:2px;margin-bottom:12px;">⭐ ALL FEATURES INCLUDED</div>
         <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:rgba(0,200,232,.55);letter-spacing:2.5px;margin-bottom:6px;">STARTING AT</div>
-        <div class="aplan-price" style="font-size:42px;margin-bottom:6px;">$850<span style="font-size:14px;">/mo</span></div>
+        <div class="aplan-price" style="font-size:34px;margin-bottom:6px;">$749.99<span style="font-size:14px;">/mo</span></div>
         <div class="aplan-desc" style="font-size:12px;margin-bottom:6px;">Full automation suite · Sky AI assistant · Court Vision deal tracking · Team portals · ROI reporting</div>
         <div class="aplan-desc" style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:18px;">Larger projects may require custom automations — discussed on your strategy call.</div>
         <div style="font-family:'Orbitron',sans-serif;font-size:9px;color:rgba(0,200,232,.5);letter-spacing:1.5px;margin-bottom:14px;">FIRST 30 DAYS FREE</div>
@@ -2371,13 +2371,13 @@ const STRIPE_LINKS = {
 // Secure proxy — real webhook URL lives in Netlify env var, never in browser source
 const SIGNUP_WEBHOOK = '/api/signup';
 
-var _signupPlan = { key:'professional', name:'PROFESSIONAL', price:'$500', link: STRIPE_LINKS.professional };
+var _signupPlan = { key:'professional', name:'PROFESSIONAL', price:'$749.99', link: STRIPE_LINKS.professional };
 
 window.openSignup = function(planKey, planName, planPrice) {
   _signupPlan = {
     key:   planKey  || 'professional',
     name:  planName  || 'PROFESSIONAL',
-    price: planPrice || '$500',
+    price: planPrice || '$749.99',
     link:  STRIPE_LINKS[planKey] || STRIPE_LINKS.professional
   };
   document.getElementById('ssu-plan-badge').textContent  = 'SKYRISE PRO — ' + _signupPlan.name;
@@ -2475,17 +2475,17 @@ document.getElementById('demo-plan-auto')?.addEventListener('click', function(){
   openSignup('essential','ESSENTIAL','$350');
 });
 document.getElementById('demo-plan-cv')?.addEventListener('click', function(){
-  openSignup('professional','PROFESSIONAL','$500');
+  openSignup('professional','PROFESSIONAL','$749.99');
 });
 document.getElementById('demo-plan-court')?.addEventListener('click', function(){
-  openSignup('enterprise','ENTERPRISE','$850');
+  openSignup('enterprise','COURT VISION','$1,649.89');
 });
 
 // DEPLOY SKY NOW
 document.querySelectorAll('.final-btn-primary').forEach(function(btn){
   btn.addEventListener('click', function(e){
     e.preventDefault();
-    openSignup('professional','PROFESSIONAL','$500');
+    openSignup('professional','PROFESSIONAL','$749.99');
   });
 });
 
@@ -2494,7 +2494,7 @@ document.getElementById('vp-elite')?.querySelector('.vplan-btn')?.addEventListen
   e.preventDefault(); openSignup('elite','ELITE','$650');
 });
 document.getElementById('vp-enterprise')?.querySelector('.vplan-btn')?.addEventListener('click', function(e){
-  e.preventDefault(); openSignup('enterprise','ENTERPRISE','$850');
+  e.preventDefault(); openSignup('enterprise','COURT VISION','$1,649.89');
 });
 document.getElementById('vp-standalone')?.querySelector('.vplan-btn')?.addEventListener('click', function(e){
   e.preventDefault(); openSignup('standalone','STANDALONE VIDEO','$1,750');

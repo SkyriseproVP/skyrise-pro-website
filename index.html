@@ -1295,7 +1295,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-pro" value="Professional $749.99/mo"><label for="p-pro">PROFESSIONAL — $749.99/mo — Full AI Agent + Automation</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-elite" value="Elite $949.99/mo"><label for="p-elite">ELITE — $949.99/mo — Full AI Agency (includes Sky)</label></div>
-        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-cv" value="Court Vision $1849.89/mo"><label for="p-cv">COURT VISION — $1,849.89/mo — Full Platform + Court Vision Team</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-cv" value="Court Vision $1649.89/mo per project"><label for="p-cv">COURT VISION — $1,649.89/mo per project (until deadline) — Full Platform + Court Vision Team</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-video" value="Cinematic Video Only $1750"><label for="p-video">CINEMATIC VIDEO ONLY — $1,750 one-time</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-unsure" value="Not sure yet"><label for="p-unsure">NOT SURE YET — recommend the right fit on the call</label></div>
       </div>
@@ -1326,8 +1326,9 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <img src="Cyan LOGO Official.png" alt="Skyrise Pro" style="height:96px;width:auto;filter:drop-shadow(0 0 10px rgba(0,200,232,0.75)) drop-shadow(0 0 3px rgba(0,200,232,0.5));">
         </div>
         <div class="intake-success-title">YOU'RE ALL SET, <span id="cre-iq-fname"></span>!</div>
-        <div class="intake-success-sub">Your intake has been received and sent to info@skyrisepro.ai. We'll review within 2 business days and reach out to schedule your discovery call. Welcome to the platform.</div>
-        <button class="intake-success-btn" onclick="creIqBookCall()">BOOK MY FREE STRATEGY CALL →</button>
+        <div class="intake-success-sub">Your intake has been received and sent to info@skyrisepro.ai. Ready to start now? Sign up online below — or book a call and we'll walk you through it.</div>
+        <button class="intake-success-btn" onclick="creIqSignup()" style="background:#22d3a0;color:#06241c;margin-bottom:10px;">▶ SIGN UP &amp; START — PROFESSIONAL $749.99/mo</button>
+        <button class="intake-success-btn" onclick="creIqBookCall()" style="background:transparent;border:1px solid rgba(0,200,232,.5);">BOOK MY FREE STRATEGY CALL →</button>
       </div>
     </div>
 
@@ -3393,8 +3394,9 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <!-- ── ENTERPRISE — navy blue + slight cyan glow, no badge ── -->
       <div class="price-card featured" style="box-shadow:0 0 14px rgba(0,200,232,.14),0 0 32px rgba(0,200,232,.06);border-color:rgba(0,200,232,.4);">
         <div class="price-tier">COURT VISION</div>
-        <div class="price-amount">$1,849.89<span>/mo</span></div>
+        <div class="price-amount">$1,649.89<span>/mo</span></div>
         <div class="price-plan-name">FULL PLATFORM + COURT VISION TEAM</div>
+        <div class="price-plan-name" style="font-size:9px;color:rgba(0,200,232,.7);margin-top:3px;letter-spacing:1px;">PER PROJECT — BILLED MONTHLY UNTIL YOUR DEADLINE</div>
         <ul class="price-features">
           <li class="price-feature"><span class="price-check">✓</span>Everything in Elite</li>
           <li class="price-feature"><span class="price-check">✓</span>Court Vision for your full team</li>
@@ -4289,6 +4291,17 @@ function submitSignup(){
 var _creIqStep = 1;
 var _creIqTotal = 4;
 
+// ── Online sign-up (Stripe). Set SKYRISE_SIGNUP_URL to your Professional
+// Payment Link / Checkout URL and the button goes live instantly. ──
+var SKYRISE_SIGNUP_URL = '';   // e.g. 'https://buy.stripe.com/xxxxxxxx'
+function creIqSignup(){
+  if(!SKYRISE_SIGNUP_URL){
+    alert('Online sign-up is being finalized right now. For today, tap "Book My Free Strategy Call" and we\'ll get you set up.');
+    return;
+  }
+  window.open(SKYRISE_SIGNUP_URL, '_blank', 'noopener');
+}
+
 function creIqReset(){
   _creIqStep = 1;
   document.querySelectorAll('#modal-cre-iq .intake-step').forEach(function(s){ s.classList.remove('active'); });
@@ -4308,12 +4321,9 @@ function _creIqUpdateProgress(step){
 }
 
 function creIqNext(fromStep){
-  // Basic validation per step
-  if(fromStep === 2){
-    if(!document.getElementById('cre-pain').value){
-      alert('Please select your biggest challenge to continue.'); return;
-    }
-  }
+  // All intake fields are optional ("leave it blank — we'll cover it on the
+  // discovery call"), so no field blocks advancing. (Previously this referenced
+  // a non-existent #cre-pain, which threw and froze the form on Step 2.)
   var current = document.getElementById('cre-step-' + fromStep);
   var next    = document.getElementById('cre-step-' + (fromStep+1));
   if(!next) return;
@@ -4625,7 +4635,26 @@ function toggleMic(){
     b.textContent='Voice input isn\'t supported in this browser. Try Chrome, Edge, or Safari!';
     m.appendChild(b);m.scrollTop=m.scrollHeight;return;
   }
-  isListening ? _finishTurn(true) : startListening();
+  // Hands-free conversation, like ChatGPT voice / Siri: tap the mic ONCE to start
+  // a continuous back-and-forth (Sky listens → answers → listens again on its own),
+  // tap again to end it. No re-tapping per turn.
+  if(skyVoiceMode){
+    // currently conversing → tap to STOP the conversation
+    skyVoiceMode = false;
+    try{ stopSkyAudio(); }catch(e){}
+    skyIsSpeaking = false;
+    try{ stopListening(); }catch(e){}
+    _setMicIdleUI();
+    const s=document.getElementById('sky-hstatus'); if(s) s.textContent='● ONLINE — AI AGENT';
+    const bar=document.getElementById('sky-voice-bar'); if(bar) bar.classList.remove('active');
+    return;
+  }
+  // not conversing → START a hands-free conversation
+  skyVoiceMode = true;
+  const s=document.getElementById('sky-hstatus'); if(s) s.textContent='🎙️ VOICE MODE — LISTENING';
+  try{ stopSkyAudio(); }catch(e){}   // interrupt any greeting still playing
+  skyIsSpeaking = false;
+  startListening();                  // begin; the loop re-listens after each of Sky's replies
 }
 
 // Pause recording WITHOUT sending and WITHOUT releasing the mic stream.
@@ -4865,12 +4894,12 @@ function skyGetResponseFallback(input){
   // ── PUBLIC / VISITOR MODE ──────────────────────────────────
   // Court Vision — answer FIRST so it never gets swallowed by a greeting match
   if(skyHas(q,['court vision','court-vision','deal tracker','project tracker','track my deal','track the deal','track projects','stage tracker']))
-    return "Court Vision is your live deal and project tracker. It follows every job from first contact all the way to completion — and coordinates every player on the court: the GC, architect, project manager, landlord, and inspector. Sky flags delays before they cost you, fires alerts the moment something goes off-script, and keeps one clean thread of communication across everyone. No dropped balls, no surprises at final inspection. It's included with our Elite and Enterprise plans. Want me to show you how it'd run on one of your projects?";
+    return "Court Vision is your live deal and project tracker. It follows every job from first contact all the way to completion — and coordinates every player on the court: the GC, architect, project manager, landlord, and inspector. Sky flags delays before they cost you, fires alerts the moment something goes off-script, and keeps one clean thread of communication across everyone. No dropped balls, no surprises at final inspection. It's our Court Vision plan — $1,649.89 a month per active project, billed monthly until that project's deadline. Want me to show you how it'd run on one of your projects?";
   // Pure greeting ONLY — must be the entire short message, so it never hijacks a real question
   if(/^(hi|hey|hello|yo|sup|howdy|hi there|hey there|good morning|good afternoon|good evening|what'?s up)[\s.,!]*$/i.test(q.trim()))
     return "Hey! Great to have you here. I'm Sky — Skyrise Pro's AI Executive Assistant. I can walk you through how our automation works, explain Court Vision, break down pricing, or get you started. What profession within the commercial real estate industry are you in?";
   if(skyHas(q,['price','cost','how much','pricing','plan','plans','fee','charge','subscription','affordable','cheap','expensive']))
-    return "Our plans are $749.99/month for Professional — the full AI agent and automation package — $949.99/month for Elite, our most popular tier with Sky, monthly ROI reports and priority support, and $1,849.89/month for Court Vision, our full-platform flagship for whole project teams. Every plan includes a 30-day free trial — no risk at all. Want me to break down what's included in each?";
+    return "Our plans are $749.99/month for Professional — the full AI agent and automation package — $949.99/month for Elite, our most popular tier with Sky, monthly ROI reports and priority support, and $1,649.89/month per active project for Court Vision, our full-platform flagship for whole project teams — billed monthly until that project's deadline. Professional and Elite include a 30-day free trial — no risk at all. Want me to break down what's included in each?";
   if(skyHas(q,['trial','free','try','risk','test','no commitment','cancel','guarantee']))
     return "Every plan comes with a full 30-day free trial. You get the entire system running for your business before you're charged a single dollar. Cancel anytime during the trial with zero hassle — we're confident you'll see the value.";
   if(skyHas(q,['construction','contractor','build','bid','procore','clr','estimat','subcontract','project manag']))
@@ -5666,7 +5695,7 @@ VOICE & MANNER:
 WHO YOU ARE:
 Sky is the warm, client-facing AI inside each client portal. You are Jarvis — you oversee everything Sky does across all accounts, monitor performance, flag risks before they become problems, and keep Victor several steps ahead. You are his command center.
 
-PRICING (reference): Professional $749.99/mo, Elite $949.99/mo, Court Vision $1,849.89/mo, Cinematic video from $1,750. Every plan includes a 30-day free trial.
+PRICING (reference): Professional $749.99/mo, Elite $949.99/mo, Court Vision $1,649.89/mo per active project (recurring until project deadline), Cinematic video from $1,750. Every plan includes a 30-day free trial.
 
 When Victor asks about a client or deal, give the current state, what Sky is handling, how it's performing, and the single move you would recommend — crisply. The LIVE pipeline data from Attio appears below and is authoritative; use it over any assumption.`;
 

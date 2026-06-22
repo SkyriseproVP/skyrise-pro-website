@@ -1326,8 +1326,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <img src="Cyan LOGO Official.png" alt="Skyrise Pro" style="height:96px;width:auto;filter:drop-shadow(0 0 10px rgba(0,200,232,0.75)) drop-shadow(0 0 3px rgba(0,200,232,0.5));">
         </div>
         <div class="intake-success-title">YOU'RE ALL SET, <span id="cre-iq-fname"></span>!</div>
-        <div class="intake-success-sub">Your intake has been received and sent to info@skyrisepro.ai. Ready to start now? Sign up online below — or book a call and we'll walk you through it.</div>
-        <button class="intake-success-btn" onclick="creIqSignup()" style="background:#22d3a0;color:#06241c;margin-bottom:10px;">▶ SIGN UP &amp; START — PROFESSIONAL $749.99/mo</button>
+        <div class="intake-success-sub">Your intake has been received. Lock in your build with the one-time $500 setup fee below — your 30-day free trial starts once your system is live. Or book a call and we'll walk you through it first.</div>
+        <button class="intake-success-btn" onclick="creIqSignup()" style="background:#22d3a0;color:#06241c;margin-bottom:10px;">▶ GET STARTED — $500 SETUP FEE</button>
         <button class="intake-success-btn" onclick="creIqBookCall()" style="background:transparent;border:1px solid rgba(0,200,232,.5);">BOOK MY FREE STRATEGY CALL →</button>
       </div>
     </div>
@@ -4293,7 +4293,7 @@ var _creIqTotal = 4;
 
 // ── Online sign-up (Stripe). Set SKYRISE_SIGNUP_URL to your Professional
 // Payment Link / Checkout URL and the button goes live instantly. ──
-var SKYRISE_SIGNUP_URL = '';   // e.g. 'https://buy.stripe.com/xxxxxxxx'
+var SKYRISE_SIGNUP_URL = 'https://buy.stripe.com/9B600l2OeaqP6Xo5Fk4Vy06';   // $500 one-time setup fee
 function creIqSignup(){
   if(!SKYRISE_SIGNUP_URL){
     alert('Online sign-up is being finalized right now. For today, tap "Book My Free Strategy Call" and we\'ll get you set up.');

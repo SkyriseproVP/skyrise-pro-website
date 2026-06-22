@@ -2514,15 +2514,15 @@ var _demoFired=false;
       <div class="cvs-sub">Your first 30 days are completely free. No charge until your trial ends.</div>
 
       <div class="cvs-plans" style="grid-template-columns:repeat(3,1fr);">
-        <div class="cvs-plan-card selected" id="cvs-plan-professional" onclick="selectCVSPlan('professional','PROFESSIONAL','$749.99')">
+        <div class="cvs-plan-card selected" id="cvs-plan-professional" onclick="selectCVSPlan('professional','PROFESSIONAL','$749.89')">
           <div class="cvs-plan-name" style="color:var(--cyan);">★ PROFESSIONAL</div>
-          <div class="cvs-plan-price">$749.99</div>
+          <div class="cvs-plan-price">$749.89</div>
           <div class="cvs-plan-mo">/month</div>
           <div class="cvs-plan-desc">Full automation suite + Sky AI Executive Assistant</div>
         </div>
-        <div class="cvs-plan-card" id="cvs-plan-elite" onclick="selectCVSPlan('elite','ELITE','$949.99')">
+        <div class="cvs-plan-card" id="cvs-plan-elite" onclick="selectCVSPlan('elite','ELITE','$849.99')">
           <div class="cvs-plan-name">ELITE</div>
-          <div class="cvs-plan-price">$949.99</div>
+          <div class="cvs-plan-price">$849.99</div>
           <div class="cvs-plan-mo">/month</div>
           <div class="cvs-plan-desc">Full agency — ROI reports, priority support, strategy calls</div>
         </div>
@@ -2588,7 +2588,7 @@ var _demoFired=false;
           <div style="font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;color:rgba(0,200,232,.6);" id="cvs-confirm-plan-name">PROFESSIONAL PLAN</div>
           <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;">Free for 30 days, then billed monthly</div>
         </div>
-        <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--cyan);" id="cvs-confirm-plan-price">$749.99<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span></div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--cyan);" id="cvs-confirm-plan-price">$749.89<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span></div>
       </div>
 
       <!-- CTAs -->
@@ -2624,7 +2624,7 @@ var CV_STRIPE_LINKS={
 // Secure proxy — webhook URL lives in Netlify env, never in browser source
 var CV_WEBHOOK='/api/signup';
 
-var _cvsSelectedPlan={key:'professional',name:'PROFESSIONAL',price:'$749.99'};
+var _cvsSelectedPlan={key:'professional',name:'PROFESSIONAL',price:'$749.89'};
 
 window.openCVSignup=function(){
   // Reset to step 1

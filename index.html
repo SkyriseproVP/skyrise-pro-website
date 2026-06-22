@@ -1294,7 +1294,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <label class="modal-label" style="margin-bottom:8px;">PLAN INTEREST (NOT A COMMITMENT — WE'LL CONFIRM ON THE CALL)</label>
       <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-pro" value="Professional $749.89/mo"><label for="p-pro">PROFESSIONAL — $749.89/mo — Full AI Agent + Automation</label></div>
-        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-elite" value="Elite $849.99/mo"><label for="p-elite">ELITE — $849.99/mo — Full AI Agency (includes Sky)</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-elite" value="Elite $849.89/mo"><label for="p-elite">ELITE — $849.89/mo — Full AI Agency (includes Sky)</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-cv" value="Court Vision $1649.89/mo per project"><label for="p-cv">COURT VISION — $1,649.89/mo per project (until deadline) — Full Platform + Court Vision Team</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-video" value="Cinematic Video Only $1750"><label for="p-video">CINEMATIC VIDEO ONLY — $1,750 one-time</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-unsure" value="Not sure yet"><label for="p-unsure">NOT SURE YET — recommend the right fit on the call</label></div>
@@ -3375,7 +3375,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <!-- ── ELITE — white + slight cyan glow, full agency ── -->
       <div class="price-card cyan-outline">
         <div class="price-tier">ELITE</div>
-        <div class="price-amount">$849.99<span>/mo</span></div>
+        <div class="price-amount">$849.89<span>/mo</span></div>
         <div class="price-plan-name">FULL AI AGENCY</div>
         <ul class="price-features">
           <li class="price-feature"><span class="price-check">✓</span>Everything in Professional</li>
@@ -4899,7 +4899,7 @@ function skyGetResponseFallback(input){
   if(/^(hi|hey|hello|yo|sup|howdy|hi there|hey there|good morning|good afternoon|good evening|what'?s up)[\s.,!]*$/i.test(q.trim()))
     return "Hey! Great to have you here. I'm Sky — Skyrise Pro's AI Executive Assistant. I can walk you through how our automation works, explain Court Vision, break down pricing, or get you started. What profession within the commercial real estate industry are you in?";
   if(skyHas(q,['price','cost','how much','pricing','plan','plans','fee','charge','subscription','affordable','cheap','expensive']))
-    return "Our plans are $749.89/month for Professional — the full AI agent and automation package — $849.99/month for Elite, our most popular tier with Sky, monthly ROI reports and priority support, and $1,649.89/month per active project for Court Vision, our full-platform flagship for whole project teams — billed monthly until that project's deadline. Professional and Elite include a 30-day free trial — no risk at all. Want me to break down what's included in each?";
+    return "Our plans are $749.89/month for Professional — the full AI agent and automation package — $849.89/month for Elite, our most popular tier with Sky, monthly ROI reports and priority support, and $1,649.89/month per active project for Court Vision, our full-platform flagship for whole project teams — billed monthly until that project's deadline. Professional and Elite include a 30-day free trial — no risk at all. Want me to break down what's included in each?";
   if(skyHas(q,['trial','free','try','risk','test','no commitment','cancel','guarantee']))
     return "Every plan comes with a full 30-day free trial. You get the entire system running for your business before you're charged a single dollar. Cancel anytime during the trial with zero hassle — we're confident you'll see the value.";
   if(skyHas(q,['construction','contractor','build','bid','procore','clr','estimat','subcontract','project manag']))
@@ -5695,7 +5695,7 @@ VOICE & MANNER:
 WHO YOU ARE:
 Sky is the warm, client-facing AI inside each client portal. You are Jarvis — you oversee everything Sky does across all accounts, monitor performance, flag risks before they become problems, and keep Victor several steps ahead. You are his command center.
 
-PRICING (reference): Professional $749.89/mo, Elite $849.99/mo, Court Vision $1,649.89/mo per active project (recurring until project deadline), Cinematic video from $1,750. Every plan includes a 30-day free trial.
+PRICING (reference): Professional $749.89/mo, Elite $849.89/mo, Court Vision $1,649.89/mo per active project (recurring until project deadline), Cinematic video from $1,750. Every plan includes a 30-day free trial.
 
 When Victor asks about a client or deal, give the current state, what Sky is handling, how it's performing, and the single move you would recommend — crisply. The LIVE pipeline data from Attio appears below and is authoritative; use it over any assumption.`;
 

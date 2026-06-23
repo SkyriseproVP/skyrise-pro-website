@@ -136,14 +136,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-headline{font-family:'Orbitron',sans-serif;font-size:clamp(26px,3vw,44px);font-weight:900;letter-spacing:3px;line-height:1.15;color:#0a1628;font-style:normal;margin-bottom:12px;text-align:center;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;width:100%;gap:0;}
 .hero-headline .sep{color:#0a1628;}
 .hl-line{display:block;text-align:center;width:100%;}
-.hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(10px,1vw,14px);font-weight:700;letter-spacing:2px;color:var(--cyan);margin-bottom:0;line-height:1.5;text-align:center;text-transform:uppercase;width:100%;}
-.hero-body-line{font-family:system-ui,sans-serif;font-size:clamp(13px,1.1vw,17px);font-weight:400;letter-spacing:0;color:rgba(10,22,40,0.65);text-align:center;text-transform:none;width:100%;margin-bottom:10px;}
-.hero-dominate-line{font-family:'Orbitron',sans-serif;font-size:clamp(15px,1.3vw,20px);font-weight:900;letter-spacing:2px;color:#0a1628;text-align:center;width:100%;margin-bottom:24px;}
+.hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(11px,1.15vw,15px);font-weight:700;letter-spacing:2px;color:var(--cyan);margin-bottom:0;line-height:1.5;text-align:center;text-transform:uppercase;width:100%;}
+.hero-body-line{font-family:system-ui,sans-serif;font-size:clamp(14px,1.25vw,19px);font-weight:400;letter-spacing:0;color:rgba(10,22,40,0.65);text-align:center;text-transform:none;width:100%;margin-bottom:10px;}
+.hero-dominate-line{font-family:'Orbitron',sans-serif;font-size:clamp(16px,1.45vw,22px);font-weight:900;letter-spacing:2px;color:#0a1628;text-align:center;width:100%;margin-bottom:24px;}
 .hero-autopilot{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:36px;width:100%;}
 .hero-autopilot-svg{flex:0 0 70px;width:70px;height:3px;overflow:visible;}
 .hero-autopilot-text{font-family:'Orbitron',sans-serif;font-size:clamp(14px,1.6vw,22px);font-weight:700;letter-spacing:1px;color:var(--cyan);white-space:nowrap;text-transform:uppercase;}
 .hero-btns{display:flex;flex-direction:column;gap:7px;width:clamp(180px,38%,250px);align-items:stretch;}
-.hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:38px;box-sizing:border-box;width:100%;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;text-decoration:none;-webkit-appearance:none;appearance:none;margin:0;padding:0 16px;line-height:1.15;border:1.5px solid transparent;text-align:center;}
+.hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:40px;box-sizing:border-box;width:100%;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;text-decoration:none;-webkit-appearance:none;appearance:none;margin:0;padding:0 16px;line-height:1.15;border:1.5px solid transparent;text-align:center;}
 .hero-btn-dark{background:var(--navy2);color:#fff;border-color:var(--navy2);}
 .hero-btn-dark:hover{background:#1a2540;border-color:#1a2540;}
 .hero-btn-cyan{background:var(--cyan);color:#000;border-color:var(--navy2);font-weight:800;box-shadow:0 4px 20px rgba(0,200,232,.35);}
@@ -929,7 +929,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   .hero-body-line{font-size:clamp(13px,1.1vw,17px);}
   .hero-dominate-line{font-size:clamp(15px,1.3vw,20px);}
   .hero-btns{gap:8px;width:clamp(220px,48%,320px);}
-  .hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:38px;padding:0 16px;font-size:9.5px;}
+  .hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:40px;padding:0 16px;font-size:10.5px;}
   /* Image fades in from the right without disturbing the centered text */
   .hero-image{width:clamp(260px,34%,480px);top:130px;opacity:.85;}
 }
@@ -1326,7 +1326,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <img src="Cyan LOGO Official.png" alt="Skyrise Pro" style="height:96px;width:auto;filter:drop-shadow(0 0 10px rgba(0,200,232,0.75)) drop-shadow(0 0 3px rgba(0,200,232,0.5));">
         </div>
         <div class="intake-success-title">YOU'RE ALL SET, <span id="cre-iq-fname"></span>!</div>
-        <div class="intake-success-sub">Your intake has been received. Lock in your build with the one-time $500 setup fee below — your 30-day free trial starts once your system is live. Or book a call and we'll walk you through it first.</div>
+        <div class="intake-success-sub">Your intake has been received. A Skyrise Pro rep will email you to request the documents we need to launch. After we receive everything, your build takes about two weeks, then about a one-week test run — and your 30-day free trial begins after that. Lock in your spot with the one-time $500 setup fee below, or book a call and we'll walk you through it first.</div>
         <button class="intake-success-btn" onclick="creIqSignup()" style="background:#22d3a0;color:#06241c;margin-bottom:10px;">▶ GET STARTED — $500 SETUP FEE</button>
         <button class="intake-success-btn" onclick="creIqBookCall()" style="background:transparent;border:1px solid rgba(0,200,232,.5);">BOOK MY FREE STRATEGY CALL →</button>
       </div>

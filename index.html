@@ -1067,6 +1067,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <div class="modal-brand">JOIN SKYRISE PRO</div>
     <div class="modal-title">CREATE ACCOUNT</div>
     <div class="modal-sub">START YOUR 30-DAY FREE TRIAL — NO CREDIT CARD REQUIRED.</div>
+    <button class="cre-lang-btn" onclick="creAcctToggleLang()" style="display:block;margin:0 auto 14px;background:#22d3a0;color:#06241c;border:none;border-radius:8px;padding:6px 16px;font-family:'Orbitron',sans-serif;font-weight:800;font-size:10px;letter-spacing:.5px;cursor:pointer;">🌐 ESPAÑOL</button>
     <label class="modal-label">FULL NAME</label>
     <input class="modal-input" id="signup-name" type="text" placeholder="Your full name">
     <label class="modal-label">EMAIL</label>
@@ -1104,6 +1105,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div style="font-size:9px;font-weight:700;letter-spacing:3px;color:var(--cyan);">SKYRISE PRO · AGENT AUTOMATION &amp; VIDEO</div>
       <div style="font-size:9px;color:rgba(255,255,255,.4);font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-top:2px;">COMMERCIAL REAL ESTATE &amp; CONSTRUCTION</div>
     </div>
+    <button class="cre-lang-btn" onclick="creAcctToggleLang()" style="display:block;margin:0 auto 10px;background:#22d3a0;color:#06241c;border:none;border-radius:8px;padding:5px 14px;font-family:'Orbitron',sans-serif;font-weight:800;font-size:10px;letter-spacing:.5px;cursor:pointer;">🌐 ESPAÑOL</button>
 
     <!-- Progress — 4 steps -->
     <div class="intake-progress" id="cre-iq-progress">
@@ -4299,7 +4301,8 @@ function creIqSignup(){
     alert('Online sign-up is being finalized right now. For today, tap "Book My Free Strategy Call" and we\'ll get you set up.');
     return;
   }
-  window.open(SKYRISE_SIGNUP_URL, '_blank', 'noopener');
+  var _u=SKYRISE_SIGNUP_URL; if(typeof CRE_LANG!=='undefined' && CRE_LANG==='es'){ _u += (_u.indexOf('?')>=0?'&':'?')+'locale=es'; }
+  window.open(_u, '_blank', 'noopener');
 }
 
 function creIqReset(){
@@ -6004,5 +6007,166 @@ window._clientSkyToggle = () => {
 window._stopClientSky = stopClientSky;
 </script>
 
+<script>
+/* ===== SIGN-UP / CREATE-ACCOUNT SPANISH TOGGLE (website) ===== */
+var CRE_LANG='en';
+var CRE_ES={
+ /* signup modal */
+ "JOIN SKYRISE PRO":"ÚNETE A SKYRISE PRO",
+ "CREATE ACCOUNT":"CREAR CUENTA",
+ "CREATE ACCOUNT →":"CREAR CUENTA →",
+ "START YOUR 30-DAY FREE TRIAL — NO CREDIT CARD REQUIRED.":"COMIENZA TU PRUEBA GRATIS DE 30 DÍAS — SIN TARJETA DE CRÉDITO.",
+ "FULL NAME":"NOMBRE COMPLETO",
+ "EMAIL":"CORREO ELECTRÓNICO",
+ "PASSWORD":"CONTRASEÑA",
+ "YOUR ROLE":"TU ROL",
+ "Select your role in commercial real estate":"Selecciona tu rol en bienes raíces comerciales",
+ "Leasing Agent":"Agente de Arrendamiento",
+ "Landlord / Owner":"Propietario / Dueño",
+ "Construction":"Construcción",
+ "Architect / Engineer":"Arquitecto / Ingeniero",
+ "Property Manager":"Administrador de Propiedades",
+ "Developer / Investor":"Desarrollador / Inversionista",
+ "Other — please fill in below":"Otro — completa abajo",
+ "— OR —":"— O —",
+ "BOOK A CALL INSTEAD":"MEJOR AGENDA UNA LLAMADA",
+ /* cre-iq header */
+ "COMMERCIAL REAL ESTATE & CONSTRUCTION":"BIENES RAÍCES COMERCIALES Y CONSTRUCCIÓN",
+ /* step 1 */
+ "STEP 1 OF 4 — CONTACT & BUSINESS":"PASO 1 DE 4 — CONTACTO Y NEGOCIO",
+ "LET'S GET TO KNOW YOU":"CONOZCÁMONOS",
+ "This is pre-filled where possible. Fill in what's missing — we'll use this to personalize your system before the call.":"Esto viene pre-llenado cuando es posible. Completa lo que falte — lo usaremos para personalizar tu sistema antes de la llamada.",
+ "TITLE / ROLE":"TÍTULO / ROL",
+ "COMPANY NAME":"NOMBRE DE LA EMPRESA",
+ "COMPANY TYPE":"TIPO DE EMPRESA",
+ "Select company type...":"Selecciona el tipo de empresa...",
+ "General Contractor (GC)":"Contratista General (GC)",
+ "Subcontractor":"Subcontratista",
+ "Architect":"Arquitecto",
+ "Engineer":"Ingeniero",
+ "Developer":"Desarrollador",
+ "Owner-Rep":"Representante del Propietario",
+ "Other":"Otro",
+ "YEARS IN BUSINESS":"AÑOS EN EL NEGOCIO",
+ "NUMBER OF EMPLOYEES":"NÚMERO DE EMPLEADOS",
+ "PHONE":"TELÉFONO",
+ "WEBSITE":"SITIO WEB",
+ "BEST TIME TO REACH YOU":"MEJOR HORA PARA CONTACTARTE",
+ "NEXT — YOUR OPERATION →":"SIGUIENTE — TU OPERACIÓN →",
+ /* step 2 */
+ "STEP 2 OF 4 — YOUR OPERATION & PAIN POINTS":"PASO 2 DE 4 — TU OPERACIÓN Y PUNTOS DE DOLOR",
+ "TELL US ABOUT YOUR BUSINESS":"CUÉNTANOS SOBRE TU NEGOCIO",
+ "Be specific where you can. If you're not sure, leave it blank — we'll cover it on the discovery call.":"Sé específico donde puedas. Si no estás seguro, déjalo en blanco — lo cubriremos en la llamada de descubrimiento.",
+ "TELL US ABOUT YOUR OPERATION. WHAT DO YOU HANDLE DAY TO DAY?":"CUÉNTANOS SOBRE TU OPERACIÓN. ¿QUÉ MANEJAS DÍA A DÍA?",
+ "WHO ARE YOUR TYPICAL CLIENTS?":"¿QUIÉNES SON TUS CLIENTES TÍPICOS?",
+ "ACTIVE PROJECTS AT ONCE":"PROYECTOS ACTIVOS A LA VEZ",
+ "AVERAGE PROJECT VALUE":"VALOR PROMEDIO DEL PROYECTO",
+ "APPROXIMATE ANNUAL REVENUE":"INGRESOS ANUALES APROXIMADOS",
+ "Select range...":"Selecciona un rango...",
+ "Under $500K":"Menos de $500K",
+ "Prefer not to share":"Prefiero no compartir",
+ "WHAT IS THE ONE THING YOU MOST WISH YOU COULD STOP DOING MANUALLY?":"¿CUÁL ES LO ÚNICO QUE MÁS DESEARÍAS DEJAR DE HACER MANUALMENTE?",
+ "WHERE DO LEADS OR OPPORTUNITIES SLIP THROUGH TODAY?":"¿DÓNDE SE PIERDEN CLIENTES U OPORTUNIDADES HOY?",
+ "HOW ARE YOU CURRENTLY HANDLING CLIENT UPDATES?":"¿CÓMO MANEJAS LAS ACTUALIZACIONES A CLIENTES ACTUALMENTE?",
+ "WHERE DO YOU LOSE THE MOST TIME IN A TYPICAL WEEK?":"¿DÓNDE PIERDES MÁS TIEMPO EN UNA SEMANA TÍPICA?",
+ "NEXT — TOOLS & AUTOMATIONS →":"SIGUIENTE — HERRAMIENTAS Y AUTOMATIZACIONES →",
+ /* step 3 */
+ "STEP 3 OF 4 — TOOLS & AUTOMATIONS":"PASO 3 DE 4 — HERRAMIENTAS Y AUTOMATIZACIONES",
+ "WHAT YOU USE. WHAT WE BUILD.":"LO QUE USAS. LO QUE CONSTRUIMOS.",
+ "Skyrise Pro plugs into what you already have — we don't replace working systems. Check everything your team uses today.":"Skyrise Pro se integra con lo que ya tienes — no reemplazamos sistemas que funcionan. Marca todo lo que tu equipo usa hoy.",
+ "CRM / PIPELINE":"CRM / EMBUDO",
+ "SPREADSHEETS":"HOJAS DE CÁLCULO",
+ "NONE":"NINGUNO",
+ "EMAIL / CALENDAR":"CORREO / CALENDARIO",
+ "PROJECT MANAGEMENT":"GESTIÓN DE PROYECTOS",
+ "CONTRACTS & E-SIGNATURE":"CONTRATOS Y FIRMA ELECTRÓNICA",
+ "NONE YET":"AÚN NINGUNO",
+ "INVOICING & PAYMENTS":"FACTURACIÓN Y PAGOS",
+ "THE 6 AUTOMATIONS WE MOST OFTEN BUILD — CHECK ALL YOU WANT":"LAS 6 AUTOMATIZACIONES QUE MÁS CONSTRUIMOS — MARCA LAS QUE QUIERAS",
+ "LEAD CAPTURE & CRM AUTO-ENTRY":"CAPTURA DE CLIENTES Y REGISTRO AUTOMÁTICO EN CRM",
+ "AUTOMATED FOLLOW-UP SEQUENCE":"SECUENCIA DE SEGUIMIENTO AUTOMÁTICA",
+ "WEEKLY CLIENT UPDATE EMAILS":"CORREOS SEMANALES DE ACTUALIZACIÓN A CLIENTES",
+ "CREW / SUB JOB NOTIFICATIONS":"NOTIFICACIONES DE TRABAJO A EQUIPO / SUBCONTRATISTAS",
+ "PROPOSAL & QUOTE GENERATION":"GENERACIÓN DE PROPUESTAS Y COTIZACIONES",
+ "INVOICE ON JOB COMPLETION":"FACTURA AL COMPLETAR EL TRABAJO",
+ "OTHER AUTOMATION IDEA (OPTIONAL)":"OTRA IDEA DE AUTOMATIZACIÓN (OPCIONAL)",
+ "NEXT — GOALS & PLAN →":"SIGUIENTE — METAS Y PLAN →",
+ /* step 4 */
+ "STEP 4 OF 4 — GOALS & PLAN":"PASO 4 DE 4 — METAS Y PLAN",
+ "WHAT DOES SUCCESS LOOK LIKE?":"¿CÓMO SE VE EL ÉXITO?",
+ "We'll review your responses within 2 business days and reach out to schedule your discovery call.":"Revisaremos tus respuestas en un plazo de 2 días hábiles y te contactaremos para agendar tu llamada de descubrimiento.",
+ "IF EVERYTHING WENT RIGHT, WHAT DOES SKYRISE PRO FREE YOU UP TO DO IN THE NEXT 90 DAYS?":"SI TODO SALIERA BIEN, ¿QUÉ TE PERMITIRÍA HACER SKYRISE PRO EN LOS PRÓXIMOS 90 DÍAS?",
+ "HOW WILL YOU KNOW THIS WAS WORTH THE INVESTMENT?":"¿CÓMO SABRÁS QUE VALIÓ LA INVERSIÓN?",
+ "ANY SPECIFIC OUTCOME TO TARGET IN THE FIRST 30-DAY TRIAL?":"¿ALGÚN RESULTADO ESPECÍFICO A LOGRAR EN LA PRUEBA DE 30 DÍAS?",
+ "PLAN INTEREST (NOT A COMMITMENT — WE'LL CONFIRM ON THE CALL)":"PLAN DE INTERÉS (NO ES UN COMPROMISO — LO CONFIRMAMOS EN LA LLAMADA)",
+ "PROFESSIONAL — $749.89/mo — Full AI Agent + Automation":"PROFESSIONAL — $749.89/mes — Agente IA Completo + Automatización",
+ "ELITE — $849.89/mo — Full AI Agency (includes Sky)":"ELITE — $849.89/mes — Agencia IA Completa (incluye Sky)",
+ "COURT VISION — $1,649.89/mo per project (until deadline) — Full Platform + Court Vision Team":"COURT VISION — $1,649.89/mes por proyecto (hasta la fecha límite) — Plataforma Completa + Equipo Court Vision",
+ "CINEMATIC VIDEO ONLY — $1,750 one-time":"SOLO VIDEO CINEMATOGRÁFICO — $1,750 pago único",
+ "NOT SURE YET — recommend the right fit on the call":"AÚN NO ESTOY SEGURO — recomienden la mejor opción en la llamada",
+ "DOCUMENTS YOU CAN SHARE NOW (SPEEDS UP THE BUILD — OPTIONAL)":"DOCUMENTOS QUE PUEDES COMPARTIR AHORA (ACELERA LA CONSTRUCCIÓN — OPCIONAL)",
+ "LEAD INTAKE FORM":"FORMULARIO DE CAPTURA DE CLIENTES",
+ "EMAIL TEMPLATES":"PLANTILLAS DE CORREO",
+ "SAMPLE INVOICE / PROPOSAL":"FACTURA / PROPUESTA DE MUESTRA",
+ "LOGO & BRAND ASSETS":"LOGO Y RECURSOS DE MARCA",
+ "SUB / VENDOR LIST":"LISTA DE SUBCONTRATISTAS / PROVEEDORES",
+ "PIPELINE STAGE DEFINITIONS":"DEFINICIONES DE ETAPAS DEL EMBUDO",
+ "ANYTHING ELSE WE SHOULD KNOW? (OPTIONAL)":"¿ALGO MÁS QUE DEBAMOS SABER? (OPCIONAL)",
+ "SUBMIT & BOOK MY CALL →":"ENVIAR Y AGENDAR MI LLAMADA →",
+ /* success */
+ "YOU'RE ALL SET,":"¡TODO LISTO,",
+ "Your intake has been received. A Skyrise Pro rep will email you to request the documents we need to launch. After we receive everything, your build takes about two weeks, then about a one-week test run — and your 30-day free trial begins after that. Lock in your spot with the one-time $500 setup fee below, or book a call and we'll walk you through it first.":"Hemos recibido tu información. Un representante de Skyrise Pro te enviará un correo para solicitar los documentos que necesitamos para lanzar. Una vez que recibamos todo, tu construcción toma alrededor de dos semanas, luego una prueba de aproximadamente una semana — y tu prueba gratis de 30 días comienza después de eso. Asegura tu lugar con la tarifa única de configuración de $500 abajo, o agenda una llamada y te lo explicamos primero.",
+ "▶ GET STARTED — $500 SETUP FEE":"▶ COMENZAR — TARIFA DE CONFIGURACIÓN $500",
+ "BOOK MY FREE STRATEGY CALL →":"AGENDA MI LLAMADA ESTRATÉGICA GRATIS →",
+ /* placeholders */
+ "Your full name":"Tu nombre completo",
+ "Create a strong password":"Crea una contraseña segura",
+ "Please describe your role or industry":"Describe tu rol o industria",
+ "e.g. Owner, Project Manager":"ej. Dueño, Gerente de Proyecto",
+ "Your company name":"El nombre de tu empresa",
+ "e.g. 8 years":"ej. 8 años",
+ "e.g. 12":"ej. 12",
+ "e.g. Weekday mornings, after 3pm":"ej. Mañanas entre semana, después de las 3pm",
+ "Describe your day-to-day work, project types, how you manage clients, etc.":"Describe tu trabajo diario, tipos de proyectos, cómo manejas clientes, etc.",
+ "e.g. Commercial owners, developers, GCs, public sector":"ej. Dueños comerciales, desarrolladores, GCs, sector público",
+ "e.g. 8–12":"ej. 8–12",
+ "Be as specific as possible — this shapes your entire automation build.":"Sé lo más específico posible — esto define toda tu construcción de automatización.",
+ "e.g. 'We get inquiries but nobody follows up consistently after day 2'":"ej. 'Recibimos consultas pero nadie da seguimiento después del día 2'",
+ "e.g. Email, texts, phone calls, weekly meetings — or nothing formal":"ej. Correo, mensajes, llamadas, reuniones semanales — o nada formal",
+ "e.g. Chasing subs, re-sending the same emails, updating spreadsheets manually...":"ej. Persiguiendo subcontratistas, reenviando los mismos correos, actualizando hojas de cálculo manualmente...",
+ "Describe any automation not listed above":"Describe cualquier automatización no listada arriba",
+ "e.g. 'Focus on sales instead of admin', 'Take on 4 more projects without hiring'":"ej. 'Enfocarme en ventas en vez de administración', 'Tomar 4 proyectos más sin contratar'",
+ "e.g. 'I get back 10 hrs/week', 'I close 2 more projects per quarter', 'I stop missing leads'":"ej. 'Recupero 10 hrs/semana', 'Cierro 2 proyectos más por trimestre', 'Dejo de perder clientes'",
+ "e.g. 'Get the follow-up sequence live and capture 10 more leads'":"ej. 'Poner en marcha la secuencia de seguimiento y captar 10 clientes más'",
+ "Questions, concerns, specific workflows, anything at all...":"Preguntas, inquietudes, flujos de trabajo específicos, lo que sea..."
+};
+function _creTextNodes(root){
+ var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null,false);
+ var nodes=[],n; while(n=w.nextNode()){ var p=n.parentNode; if(!p)continue; var t=p.nodeName; if(t==='SCRIPT'||t==='STYLE')continue; if(n.nodeValue&&n.nodeValue.trim())nodes.push(n); }
+ return nodes;
+}
+function _creApplyTo(root,toEs){
+ if(!root)return;
+ _creTextNodes(root).forEach(function(node){
+   if(toEs){ if(node._cen===undefined)node._cen=node.nodeValue; var k=node._cen.trim(); var es=CRE_ES[k]; if(es!==undefined)node.nodeValue=node._cen.replace(k,es); }
+   else { if(node._cen!==undefined)node.nodeValue=node._cen; }
+ });
+ [].slice.call(root.querySelectorAll('[placeholder]')).forEach(function(el){
+   if(toEs){ if(el._cph===undefined)el._cph=el.getAttribute('placeholder'); var es=CRE_ES[(el._cph||'').trim()]; if(es!==undefined)el.setAttribute('placeholder',es); }
+   else { if(el._cph!==undefined)el.setAttribute('placeholder',el._cph); }
+ });
+}
+function creAcctApplyLang(){
+ var es=(CRE_LANG==='es');
+ _creApplyTo(document.getElementById('modal-signup'),es);
+ _creApplyTo(document.getElementById('modal-cre-iq'),es);
+ [].slice.call(document.querySelectorAll('.cre-lang-btn')).forEach(function(b){ b.textContent=es?'🌐 ENGLISH':'🌐 ESPAÑOL'; });
+}
+function creAcctToggleLang(){ CRE_LANG=(CRE_LANG==='es')?'en':'es'; creAcctApplyLang(); }
+window.creAcctToggleLang=creAcctToggleLang;
+/* re-apply Spanish whenever a signup/account modal opens (persists signup -> questionnaire) */
+(function(){ if(typeof window.openModal==='function'){ var _o=window.openModal; window.openModal=function(id){ _o.apply(this,arguments); if(CRE_LANG==='es'){ try{ creAcctApplyLang(); }catch(e){} } }; } })();
+
+</script>
 </body>
 </html>

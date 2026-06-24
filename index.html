@@ -1317,7 +1317,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 
       <div class="intake-nav">
         <button class="intake-back-btn" onclick="creIqBack(4)">←</button>
-        <button class="intake-next-btn" onclick="creIqSubmit()">SUBMIT &amp; BOOK MY CALL →</button>
+        <button class="intake-next-btn" onclick="creIqSubmit()">SUBMIT →</button>
       </div>
     </div>
 
@@ -1522,7 +1522,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       </select>
       <div class="intake-nav">
         <button class="intake-back-btn" onclick="intakeBack(3)">←</button>
-        <button class="intake-next-btn" onclick="intakeSubmit()">SUBMIT &amp; BOOK MY CALL →</button>
+        <button class="intake-next-btn" onclick="intakeSubmit()">SUBMIT →</button>
       </div>
     </div>
 
@@ -4302,7 +4302,7 @@ function creIqSignup(){
     return;
   }
   var _u=SKYRISE_SIGNUP_URL; if(typeof CRE_LANG!=='undefined' && CRE_LANG==='es'){ _u += (_u.indexOf('?')>=0?'&':'?')+'locale=es'; }
-  window.open(_u, '_blank', 'noopener');
+  var _w=window.open(_u, '_blank', 'noopener'); if(!_w){ window.location.href=_u; }
 }
 
 function creIqReset(){

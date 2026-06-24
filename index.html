@@ -4347,6 +4347,40 @@ function creIqBack(fromStep){
 }
 
 function creIqSubmit(){
+  // ── Send the full questionnaire to Victor via the Make webhook ──
+  try{
+    var _v=function(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';};
+    var _checks=function(sel){return [].slice.call(document.querySelectorAll(sel)).filter(function(c){return c.checked;}).map(function(c){var l=document.querySelector('label[for="'+c.id+'"]');return l?l.textContent.trim():c.id;});};
+    var planEl=document.querySelector('input[name="cre-plan"]:checked');
+    var q={
+      type:'questionnaire',
+      name:_v('cre-fname'), email:_v('cre-email'), phone:_v('cre-phone'),
+      company:_v('cre-company'), title:_v('cre-title'), companyType:_v('cre-co-type'),
+      years:_v('cre-years'), employees:_v('cre-employees'), website:_v('cre-website'), bestTime:_v('cre-reach'),
+      operation:_v('cre-operation'), typicalClients:_v('cre-clients'), activeProjects:_v('cre-projects'), avgValue:_v('cre-proj-value'), revenue:_v('cre-revenue'),
+      stopManual:_v('cre-stop-manual'), leaks:_v('cre-leaks'), clientUpdates:_v('cre-updates'), timeLoss:_v('cre-time-loss'),
+      tools:_checks('#cre-step-3 input[type="checkbox"][id^="t-"]'),
+      automations:_checks('#cre-step-3 input[type="checkbox"][id^="a-"]'), otherAutomation:_v('a-other'),
+      vision:_v('cre-vision'), successMetric:_v('cre-success'), trialGoal:_v('cre-trial-goal'),
+      planInterest: planEl?planEl.value:'(none selected)',
+      documents:_checks('#cre-step-4 input[type="checkbox"][id^="d-"]'),
+      notes:_v('cre-notes'), victor_phone:'+16895009602'
+    };
+    q.summary='NEW QUESTIONNAIRE — '+(q.name||'(no name)')+' / '+q.company+
+      '\nEmail: '+q.email+'  Phone: '+q.phone+'  Best time: '+q.bestTime+
+      '\nCompany type: '+q.companyType+'  Years: '+q.years+'  Employees: '+q.employees+'  Website: '+q.website+
+      '\n\nOPERATION: '+q.operation+
+      '\nTypical clients: '+q.typicalClients+'  | Active projects: '+q.activeProjects+'  | Avg value: '+q.avgValue+'  | Revenue: '+q.revenue+
+      '\nStop doing manually: '+q.stopManual+
+      '\nLeads slip through: '+q.leaks+'\nClient updates today: '+q.clientUpdates+'\nTime lost: '+q.timeLoss+
+      '\n\nTOOLS: '+q.tools.join(', ')+
+      '\nAUTOMATIONS WANTED: '+q.automations.join(', ')+(q.otherAutomation?(' | Other: '+q.otherAutomation):'')+
+      '\n\nGOALS (90 days): '+q.vision+'\nWorth it when: '+q.successMetric+'\nTrial target: '+q.trialGoal+
+      '\nPLAN INTEREST: '+q.planInterest+
+      '\nDocuments ready: '+q.documents.join(', ')+'\nNotes: '+q.notes;
+    fetch('https://hook.us2.make.com/mhn5jws4b44t7qli3tqp5oe07dmjlfk3',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(q)});
+  }catch(e){ console.warn('Questionnaire send error:',e); }
+
   // Show success screen
   document.querySelectorAll('#modal-cre-iq .intake-step').forEach(function(s){ s.classList.remove('active'); });
   var success = document.getElementById('cre-iq-success');

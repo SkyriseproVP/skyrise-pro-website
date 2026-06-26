@@ -4301,7 +4301,22 @@ function creIqSignup(){
     alert('Online sign-up is being finalized right now. For today, tap "Book My Free Strategy Call" and we\'ll get you set up.');
     return;
   }
-  var _u=SKYRISE_SIGNUP_URL; if(typeof CRE_LANG!=='undefined' && CRE_LANG==='es'){ _u += (_u.indexOf('?')>=0?'&':'?')+'locale=es'; }
+  var _u=SKYRISE_SIGNUP_URL;
+  // Attach the selected plan to the Stripe link so the post-payment automation
+  // knows which tier (and which priced contract) to send. Stripe passes
+  // client_reference_id straight through to checkout.session.completed.
+  try{
+    var _p=document.querySelector('input[name="cre-plan"]:checked');
+    var _slug='';
+    if(_p){
+      var _pv=_p.value||'';
+      if(_pv.indexOf('Professional')===0) _slug='professional';
+      else if(_pv.indexOf('Elite')===0) _slug='elite';
+      else if(_pv.indexOf('Court Vision')===0) _slug='courtvision';
+    }
+    if(_slug) _u += (_u.indexOf('?')>=0?'&':'?')+'client_reference_id='+_slug;
+  }catch(e){}
+  if(typeof CRE_LANG!=='undefined' && CRE_LANG==='es'){ _u += (_u.indexOf('?')>=0?'&':'?')+'locale=es'; }
   var _w=window.open(_u, '_blank', 'noopener'); if(!_w){ window.location.href=_u; }
 }
 

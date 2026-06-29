@@ -3182,6 +3182,90 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div class="pipe-hint">HOVER NODES TO EXPLORE CONNECTIONS</div>
     </div>
     </div><!-- end pipeline-diagram-wrap -->
+
+    <!-- ── MOBILE FLOW (mirrors the app's Automation Walkthrough) ── -->
+    <style>
+    .afl-flow{display:none;}
+    @media(max-width:1024px){
+      .orange-section .pipeline-diagram-wrap,
+      .orange-section .pipeline-filter-pills{display:none !important;}
+      .afl-flow{display:block;background:linear-gradient(160deg,#0a1628,#0d1b30);border:2px solid rgba(255,107,53,.5);border-radius:22px;padding:26px 12px 30px;box-shadow:0 0 0 1px rgba(255,107,53,.12),0 0 24px rgba(255,107,53,.1);}
+    }
+    .afl-inner{position:relative;max-width:340px;margin:0 auto;}
+    .afl-seclabel{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,107,53,.78);text-align:center;margin-bottom:12px;font-weight:700;font-family:'Orbitron',sans-serif;}
+    .afl-row{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:36px;position:relative;z-index:2;}
+    .afl-node{display:flex;flex-direction:column;align-items:center;gap:5px;width:58px;}
+    .afl-circle{width:50px;height:50px;border-radius:50%;border:1.5px solid rgba(255,107,53,.55);background:#0a1628;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#ffae84;font-family:'Orbitron',sans-serif;box-shadow:0 0 10px rgba(255,107,53,.18);position:relative;z-index:2;}
+    .afl-hub-circle{width:66px;height:66px;font-size:28px;border:2px solid #ff7d3e;box-shadow:0 0 22px rgba(255,107,53,.45);}
+    .afl-label{font-size:8px;font-weight:700;color:rgba(255,255,255,.6);text-align:center;text-transform:uppercase;line-height:1.2;font-family:'Orbitron',sans-serif;}
+    .afl-cols{display:flex;gap:14px;position:relative;z-index:2;}
+    .afl-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:26px;}
+    .afl-collabel{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);text-align:center;font-weight:700;font-family:'Orbitron',sans-serif;margin-bottom:2px;}
+    .afl-svg{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:0;}
+    </style>
+    <div class="afl-flow">
+      <div class="afl-inner" id="afl-inner">
+        <div class="afl-seclabel">Lead Sources</div>
+        <div class="afl-row" id="afl-sources">
+          <div class="afl-node" id="afl-0-0"><div class="afl-circle">BID</div><div class="afl-label">Bid Requests</div></div>
+          <div class="afl-node" id="afl-0-1"><div class="afl-circle">ADS</div><div class="afl-label">Google Ads</div></div>
+          <div class="afl-node" id="afl-0-2"><div class="afl-circle">IN</div><div class="afl-label">LinkedIn</div></div>
+          <div class="afl-node" id="afl-0-3"><div class="afl-circle">REF</div><div class="afl-label">Partner Refs</div></div>
+          <div class="afl-node" id="afl-0-4"><div class="afl-circle">WEB</div><div class="afl-label">Website Form</div></div>
+        </div>
+        <div class="afl-row">
+          <div class="afl-node" id="afl-hub"><div class="afl-circle afl-hub-circle">🏗️</div><div class="afl-label">Project Hub</div></div>
+        </div>
+        <div class="afl-cols">
+          <div class="afl-col">
+            <div class="afl-collabel">Automation Tools</div>
+            <div class="afl-node" id="afl-2-0"><div class="afl-circle">MK</div><div class="afl-label">Make</div></div>
+            <div class="afl-node" id="afl-2-1"><div class="afl-circle">HS</div><div class="afl-label">HubSpot</div></div>
+            <div class="afl-node" id="afl-2-2"><div class="afl-circle">AI</div><div class="afl-label">OpenAI</div></div>
+            <div class="afl-node" id="afl-2-3"><div class="afl-circle">PC</div><div class="afl-label">Procore</div></div>
+            <div class="afl-node" id="afl-2-4"><div class="afl-circle">DS</div><div class="afl-label">DocuSign</div></div>
+          </div>
+          <div class="afl-col">
+            <div class="afl-collabel">Outputs</div>
+            <div class="afl-node" id="afl-3-0"><div class="afl-circle">PDF</div><div class="afl-label">Proposal PDF</div></div>
+            <div class="afl-node" id="afl-3-1"><div class="afl-circle">TL</div><div class="afl-label">Project Timeline</div></div>
+            <div class="afl-node" id="afl-3-2"><div class="afl-circle">&#10003;</div><div class="afl-label">Client Confirm</div></div>
+            <div class="afl-node" id="afl-3-3"><div class="afl-circle">INV</div><div class="afl-label">Auto Invoice</div></div>
+            <div class="afl-node" id="afl-3-4"><div class="afl-circle">RPT</div><div class="afl-label">Safety Reports</div></div>
+          </div>
+        </div>
+        <svg id="afl-svg" class="afl-svg" width="0" height="0"></svg>
+      </div>
+    </div>
+    <script>
+    (function(){
+      function center(cont,id){var el=document.getElementById(id);if(!el)return null;var c=el.querySelector('.afl-circle')||el;var r=c.getBoundingClientRect();var cr=cont.getBoundingClientRect();return{x:r.left+r.width/2-cr.left,y:r.top+r.height/2-cr.top};}
+      function draw(){
+        var flow=document.querySelector('.afl-flow'),svg=document.getElementById('afl-svg'),cont=document.getElementById('afl-inner');
+        if(!flow||!svg||!cont)return;
+        if(getComputedStyle(flow).display==='none')return;
+        var cr=cont.getBoundingClientRect();svg.setAttribute('width',cr.width);svg.setAttribute('height',cr.height);
+        var hub=center(cont,'afl-hub');if(!hub)return;
+        var defs='<defs>',lines='',dots='',pid=0;
+        function addLine(from,to,spd){
+          var id='afp'+(pid++),my=(from.y+to.y)/2;
+          var p='M'+from.x.toFixed(1)+','+from.y.toFixed(1)+' L'+from.x.toFixed(1)+','+my.toFixed(1)+' L'+to.x.toFixed(1)+','+my.toFixed(1)+' L'+to.x.toFixed(1)+','+to.y.toFixed(1);
+          defs+='<path id="'+id+'" d="'+p+'"/>';
+          lines+='<path d="'+p+'" stroke="rgba(255,107,53,0.45)" stroke-width="1.4" fill="none" stroke-dasharray="4,5"/>';
+          dots+='<circle r="3" fill="#ff7d3e"><animateMotion dur="'+spd+'s" repeatCount="indefinite"><mpath href="#'+id+'"/></animateMotion></circle>';
+        }
+        ['afl-0-0','afl-0-1','afl-0-2','afl-0-3','afl-0-4'].forEach(function(id,i){var s=center(cont,id);if(s)addLine(s,hub,6+i*0.6);});
+        ['afl-2-0','afl-2-1','afl-2-2','afl-2-3','afl-2-4'].forEach(function(id,i){var t=center(cont,id);if(t)addLine(hub,t,5.5+i*0.5);});
+        ['afl-3-0','afl-3-1','afl-3-2','afl-3-3','afl-3-4'].forEach(function(id,i){var t=center(cont,id);if(t)addLine(hub,t,5+i*0.6);});
+        svg.innerHTML=defs+'</defs>'+lines+dots;
+      }
+      window.addEventListener('load',function(){setTimeout(draw,150);setTimeout(draw,650);});
+      window.addEventListener('resize',function(){clearTimeout(window._aflT);window._aflT=setTimeout(draw,150);});
+      document.addEventListener('DOMContentLoaded',function(){setTimeout(draw,350);});
+      window.drawAflConnections=draw;
+    })();
+    </script>
+
     <div class="pipe-demo-btn">
       <button class="pipe-demo-link" onclick="openModal('cre-iq')">▶ GET STARTED</button>
     </div>

@@ -3975,6 +3975,13 @@ function closeModal(id){
   if(id==='booking'){resetCal();}
   if(id==='intake'){resetIntake();}
 }
+// After Stripe payment, customers are redirected back with ?intake=1 — auto-open the questionnaire so they fill it out right away
+document.addEventListener('DOMContentLoaded',function(){
+  try{
+    var p=new URLSearchParams(location.search);
+    if(p.get('intake')==='1'){ setTimeout(function(){ openModal('cre-iq'); }, 600); }
+  }catch(e){}
+});
 
 /* ── INTAKE QUESTIONNAIRE ────────────────────────────────────── */
 function intakeNext(step){

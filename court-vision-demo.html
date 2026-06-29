@@ -1261,14 +1261,10 @@ function runField(idx){
   var field=FORM_FIELDS[idx];
   updateFFProgress(idx);
   activateGroup(field.id);
-  orbSpeak('form-orb',true);
-  formSkyTypewriter(field.narr, estimateDuration(field.narr));
+  // Streamlined: Sky gave ONE summary up front — fields now auto-fill visually with no per-field narration
   moveCursor(field.id,function(){
-    skySpeakPaced(field.narr,function(){
-      orbSpeak('form-orb',false);
-      autoType(field.id,field.val,function(){
-        setTimeout(function(){runField(idx+1);},900);
-      });
+    autoType(field.id,field.val,function(){
+      setTimeout(function(){runField(idx+1);},350);
     });
   });
 }
@@ -1276,7 +1272,7 @@ function startFormPhase(){
   _ffRunning=true;
   // Before building the project file, Sky emphasizes the two prerequisites:
   // (1) every project contact must sign up, (2) ~10 days to set up the team automations.
-  var introMsg='Before I build your project file, two important things. First — every project contact you add here, your PM, GC, architect, landlord, and tenant, has to sign up so I can coordinate the whole court and keep everyone in sync. Second — give us about ten days to set up the team automations for Court Vision. Once those are live, I run the entire project for you, end to end. Alright, let\'s build the file.';
+  var introMsg='Here\'s everything I need to build your project file: the entity, project name, square footage, job cost, all your stakeholders, the city inspection agency and an email to track, and a short description of the work. Add those, make sure each contact signs up so I can coordinate the whole court, and I\'ll run the project for you end to end.';
   orbSpeak('form-orb',true);
   formSkyTypewriter(introMsg, estimateDuration(introMsg));
   skySpeakPaced(introMsg,function(){

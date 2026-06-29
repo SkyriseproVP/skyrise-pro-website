@@ -154,10 +154,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* ── TICKER ──────────────────────────────────────────────────── */
 .ticker-wrap{background:linear-gradient(90deg,#dff2fb,#f5fcff,#ffffff);border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light);overflow:hidden;padding:12px 0;}
-.ticker-inner{display:flex;gap:40px;animation:tickerScroll 30s linear infinite;white-space:nowrap;}
+.ticker-inner{display:flex;gap:40px;animation:tickerScroll 30s linear infinite;white-space:nowrap;will-change:transform;backface-visibility:hidden;transform:translateZ(0);}
 .ticker-item{font-size:10px;font-weight:700;letter-spacing:2.5px;color:#0d1526;flex-shrink:0;display:flex;align-items:center;gap:14px;}
 .ticker-item .sep{color:var(--cyan);font-size:14px;}
-@keyframes tickerScroll{0%{transform:translateX(0);}100%{transform:translateX(-25%);}}
+@keyframes tickerScroll{0%{transform:translate3d(0,0,0);}100%{transform:translate3d(-25%,0,0);}}
 
 /* ── SERVICES ───────────────────────────────────────────────── */
 #services{padding:50px 60px 70px;background:linear-gradient(135deg,#e8f4fb 0%,#f5fbff 50%,#ffffff 100%);scroll-margin-top:160px;}
@@ -939,7 +939,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   .nav-links{display:none;}
   .nav-hamburger{display:flex;}
   nav{height:108px;}
-  .nav-logo-box img{height:116px;}
+  .nav-logo-box img{height:116px;}.nav-cta-group{display:none;}
   .mobile-menu{top:108px;}
   #hero{padding-top:146px;min-height:auto;padding-left:24px;padding-right:24px;}
   .hero-content{width:100%;max-width:100%;padding:40px 24px;min-height:auto;}

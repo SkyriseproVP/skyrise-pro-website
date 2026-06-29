@@ -192,7 +192,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   .pipe-nodes-tools::before, .pipe-nodes-tools::after, .pipe-nodes-tools .pipe-node::before, .pipe-nodes-tools .pipe-node::after,
   .pipe-nodes-left::after, .pipe-nodes-right::before, .pipe-nodes-left .pipe-node::after, .pipe-nodes-right .pipe-node::before{display:none !important;}
   .pipe-stub-dot, .pipe-trunk-dot{display:none !important;}
-  .pipe-nodes{flex-direction:row !important;flex-wrap:wrap !important;justify-content:center !important;gap:10px !important;}
+  .pipe-nodes{flex-direction:column !important;flex-wrap:nowrap !important;align-items:center !important;gap:22px !important;}
+  /* opaque node icons so the spine passes BEHIND them (each node = a connection point on the line, never drawn over a logo) */
+  .pipe-node .pipe-node-icon{background:#0a1628 !important;}
   .pipeline-filter-pills{flex-wrap:wrap !important;justify-content:center !important;}
   /* ── Connected flowing spine (mirrors the app demo): one continuous vertical line down the stacked diagram + a dot that travels its full length ── */
   .pipe-grid, .clr-grid, .debusk-grid{position:relative !important;}

@@ -746,7 +746,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 .client-topbar-brand{display:flex;align-items:center;gap:20px;border-right:1px solid rgba(0,0,0,.08);height:100%;padding-right:36px;}
 .client-topbar-logo{height:138px;width:auto;}
 .client-badge{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:800;letter-spacing:2.5px;border-radius:5px;padding:5px 14px;background:transparent;border:1.5px solid currentColor;transition:color .3s,border-color .3s;}
-.client-co-logo{height:64px;width:auto;max-width:140px;object-fit:contain;margin-left:24px;border-left:1px solid rgba(0,0,0,.08);padding-left:24px;}
+.client-co-logo{height:64px;width:64px;border-radius:50%;object-fit:cover;margin-left:24px;}
 .client-body{flex:1;padding:32px 40px 60px;}
 .client-greeting-card{background:linear-gradient(135deg,#0d1728 0%,#0a2040 100%);border:1px solid rgba(0,200,232,.2);border-radius:14px;padding:24px 30px;margin-bottom:24px;display:flex;align-items:center;gap:20px;}
 .client-greeting-orb{width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#00f0ff,#00b8d4 55%,#006a8a);flex-shrink:0;box-shadow:0 0 18px rgba(0,200,232,.4);}
@@ -3214,7 +3214,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <div class="afl-node" id="afl-0-4"><div class="afl-circle">WEB</div><div class="afl-label">Website Form</div></div>
         </div>
         <div class="afl-row">
-          <div class="afl-node" id="afl-hub"><div class="afl-circle afl-hub-circle">🏗️</div><div class="afl-label">Project Hub</div></div>
+          <div class="afl-node" id="afl-hub"><div class="afl-circle afl-hub-circle"><img src="hardhat-nobg.png" alt="Project Hub" style="width:80%;height:80%;object-fit:contain;"></div><div class="afl-label">Project Hub</div></div>
         </div>
         <div class="afl-cols">
           <div class="afl-col">
@@ -3254,9 +3254,9 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           lines+='<path d="'+p+'" stroke="rgba(255,107,53,0.45)" stroke-width="1.4" fill="none" stroke-dasharray="4,5"/>';
           dots+='<circle r="3" fill="#ff7d3e"><animateMotion dur="'+spd+'s" repeatCount="indefinite"><mpath href="#'+id+'"/></animateMotion></circle>';
         }
-        ['afl-0-0','afl-0-1','afl-0-2','afl-0-3','afl-0-4'].forEach(function(id,i){var s=center(cont,id);if(s)addLine(s,hub,6+i*0.6);});
-        ['afl-2-0','afl-2-1','afl-2-2','afl-2-3','afl-2-4'].forEach(function(id,i){var t=center(cont,id);if(t)addLine(hub,t,5.5+i*0.5);});
-        ['afl-3-0','afl-3-1','afl-3-2','afl-3-3','afl-3-4'].forEach(function(id,i){var t=center(cont,id);if(t)addLine(hub,t,5+i*0.6);});
+        ['afl-0-0','afl-0-1','afl-0-2','afl-0-3','afl-0-4'].forEach(function(id,i){var s=center(cont,id);if(s)addLine(s,hub,11+i*0.8);});
+        ['afl-2-0','afl-2-1','afl-2-2','afl-2-3','afl-2-4'].forEach(function(id,i){var t=center(cont,id);if(t)addLine(hub,t,10+i*0.7);});
+        ['afl-3-0','afl-3-1','afl-3-2','afl-3-3','afl-3-4'].forEach(function(id,i){var t=center(cont,id);if(t)addLine(hub,t,10.5+i*0.8);});
         svg.innerHTML=defs+'</defs>'+lines+dots;
       }
       window.addEventListener('load',function(){setTimeout(draw,150);setTimeout(draw,650);});

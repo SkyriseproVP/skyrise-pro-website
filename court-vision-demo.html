@@ -1109,7 +1109,7 @@ function orbSpeak(id,on){
    the demo waits the natural speaking time before advancing.    */
 function estimateDuration(text){
   var words=text.trim().split(/\s+/).length;
-  return Math.max(2200,Math.round(words/155*60*1000));
+  return Math.max(2600,Math.round(words/135*60*1000));
 }
 function skySpeakPaced(text,onEnd,maxMs){
   var minMs=estimateDuration(text);
@@ -1814,14 +1814,14 @@ function csNarrateStage(idx){
           if(!_anRunning)return;
           if(badge)badge.style.opacity='0';
           csNarrateStage(idx+1);
-        },6000);
+        });
       },900);
 
     } else {
       /* ── Normal advance ── */
       setTimeout(function(){csNarrateStage(idx+1);},900);
     }
-  },6000);
+  });
 }
 
 function csStartAutoNarrate(){

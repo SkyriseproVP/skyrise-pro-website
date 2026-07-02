@@ -4577,6 +4577,7 @@ function submitSupport(){
 })();
 
 function toggleSky(){
+  unlockSkyAudio();   // bless audio inside this tap so Sky is audible on iOS
   const choice = document.getElementById('sky-choice');
   const panel  = document.getElementById('sky-panel');
   document.getElementById('sky-slide-label').classList.remove('show');
@@ -4616,6 +4617,7 @@ function skyChooseText(){
 }
 
 function skyChooseTalk(){
+  unlockSkyAudio();   // bless audio inside this tap so Sky is audible on iOS
   document.getElementById('sky-choice').classList.remove('open');
   skyVoiceMode = true;
   document.getElementById('sky-hstatus').textContent = '🎙️ VOICE MODE — LISTENING';
@@ -4836,6 +4838,23 @@ const SKY_XI_KEY   = 'sk_6184874a8a4aca7364f8bf09f374e739352389a6fed2b906';
 const SKY_VOICE_ID = 'ePn9OncKq8KyJvrTRqTi';
 let   skyAudioEl   = null;   // reused audio element
 let   skyIsSpeaking = false; // TRUE while Sky's voice is playing — blocks the mic so he can't hear himself
+let   _skyAudioUnlocked = false;
+
+// iOS/Safari block audio that isn't started inside a user tap. Sky's ElevenLabs
+// audio plays AFTER an async fetch (outside the tap), so it gets muted on phones.
+// Fix: on the first tap, "bless" a reusable audio element (and browser TTS) with a
+// silent clip — then every later skySpeak() reuses that unlocked element and plays.
+function unlockSkyAudio(){
+  if(_skyAudioUnlocked) return;
+  try{
+    if(!skyAudioEl) skyAudioEl = new Audio();
+    skyAudioEl.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAgD4AAAB9AAACABAAZGF0YQAAAAA=';
+    const pr = skyAudioEl.play();
+    if(pr && pr.then){ pr.then(()=>{ try{ skyAudioEl.pause(); skyAudioEl.currentTime=0; }catch(e){} }).catch(()=>{}); }
+    if(window.speechSynthesis){ try{ const u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){} }
+    _skyAudioUnlocked = true;
+  }catch(e){}
+}
 
 function stopSkyAudio(){
   if(skyAudioEl){ try{ skyAudioEl.pause(); skyAudioEl.src=''; }catch(e){} }
@@ -4910,7 +4929,8 @@ async function skySpeak(text, onDone){
     const blob = await res.blob();
     if(!blob || !blob.size){ console.warn('ElevenLabs empty audio — browser TTS fallback'); browserTTS(); return; }
     const url  = URL.createObjectURL(blob);
-    skyAudioEl = new Audio(url);
+    if(!skyAudioEl) skyAudioEl = new Audio();   // reuse the tap-unlocked element so iOS lets it play
+    skyAudioEl.src = url;
     if(bar && skyVoiceMode) bar.classList.add('active');
     skyAudioEl.onended = ()=>{ URL.revokeObjectURL(url); finish(); };
     skyAudioEl.onerror = ()=>{ URL.revokeObjectURL(url); finish(); };

@@ -4833,8 +4833,7 @@ function releaseMic(){
   if(_skyStream){ try{_skyStream.getTracks().forEach(t=>t.stop());}catch(e){} _skyStream=null; }
 }
 
-// ── VOICE OUTPUT — ElevenLabs (Sky's real configured voice) ──
-const SKY_XI_KEY   = 'sk_6184874a8a4aca7364f8bf09f374e739352389a6fed2b906';
+// ── VOICE OUTPUT — ElevenLabs via secure /api/tts proxy (key lives in Netlify env, never in client source) ──
 const SKY_VOICE_ID = 'ePn9OncKq8KyJvrTRqTi';
 let   skyAudioEl   = null;   // reused audio element
 let   skyIsSpeaking = false; // TRUE while Sky's voice is playing — blocks the mic so he can't hear himself
@@ -4909,20 +4908,18 @@ async function skySpeak(text, onDone){
   const hangTimer = setTimeout(()=>{ try{ ctrl && ctrl.abort(); }catch(e){} }, 8000);
 
   try{
-    const res = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${SKY_VOICE_ID}/stream`,
-      {
+    const res = await fetch('/api/tts', {
         method: 'POST',
-        headers: { 'xi-api-key': SKY_XI_KEY, 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           text: ttsText,
+          voice_id: SKY_VOICE_ID,
           model_id: 'eleven_turbo_v2_5',
           voice_settings: { stability:0.30, similarity_boost:0.85, style:0.20, use_speaker_boost:true },
           speed: 0.9
         }),
         signal: ctrl ? ctrl.signal : undefined
-      }
-    );
+      });
     clearTimeout(hangTimer);
     // HTTP error (bad key, 429 rate-limit, 5xx) → DON'T go silent, use browser TTS
     if(!res.ok){ console.warn('ElevenLabs TTS HTTP', res.status, '— browser TTS fallback'); browserTTS(); return; }

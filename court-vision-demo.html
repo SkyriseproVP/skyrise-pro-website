@@ -1046,8 +1046,7 @@ var _apTimer=null,_apRunning=false,_apIdx=0;
 var _fStep=0;
 
 /* ════════ SKY VOICE — ElevenLabs ════════ */
-var SKY_XI_KEY   = 'sk_6184874a8a4aca7364f8bf09f374e739352389a6fed2b906';
-var SKY_VOICE_ID = 'ePn9OncKq8KyJvrTRqTi';
+var SKY_VOICE_ID = 'ePn9OncKq8KyJvrTRqTi';   // ElevenLabs key moved server-side (/api/tts, Netlify env)
 var _skyAudioEl  = null;
 
 function stopSkyAudio(){
@@ -1070,11 +1069,23 @@ function skySpeak(text, onEnd){
   var controller=window.AbortController?new AbortController():null;
   var fetchTimer=controller?setTimeout(function(){controller.abort();},8000):null;
 
-  fetch('https://api.elevenlabs.io/v1/text-to-speech/'+SKY_VOICE_ID+'/stream',{
+  // Browser-voice failsafe — Sky is NEVER silent even if the proxy/network fails
+  var _bTTS=function(){
+    try{
+      if(!window.speechSynthesis){finish();return;}
+      speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(ttsText);
+      u.rate=1.0;u.pitch=0.9;u.onend=finish;u.onerror=finish;
+      speechSynthesis.speak(u);
+      setTimeout(finish,Math.max(4000,ttsText.length*90));
+    }catch(e){finish();}
+  };
+  fetch('/api/tts',{
     method:'POST',
-    headers:{'xi-api-key':SKY_XI_KEY,'Content-Type':'application/json'},
+    headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
       text:ttsText,
+      voice_id:SKY_VOICE_ID,
       model_id:'eleven_turbo_v2',
       language_code:'en',
       voice_settings:{stability:0.30,similarity_boost:0.85,style:0.20,use_speaker_boost:true},
@@ -1083,7 +1094,7 @@ function skySpeak(text, onEnd){
     signal:controller?controller.signal:undefined
   }).then(function(res){
     if(fetchTimer)clearTimeout(fetchTimer);
-    if(!res.ok){console.warn('ElevenLabs HTTP '+res.status);finish();return;}
+    if(!res.ok){console.warn('TTS HTTP '+res.status);_bTTS();return;}
     return res.blob();
   }).then(function(blob){
     if(!blob||_done)return;
@@ -1092,11 +1103,11 @@ function skySpeak(text, onEnd){
     _skyAudioEl.onended=function(){URL.revokeObjectURL(url);finish();};
     _skyAudioEl.onerror=function(){URL.revokeObjectURL(url);finish();};
     var pp=_skyAudioEl.play();
-    if(pp!==undefined){pp.catch(function(e){console.warn('Autoplay blocked:',e);URL.revokeObjectURL(url);finish();});}
+    if(pp!==undefined){pp.catch(function(e){console.warn('Autoplay blocked:',e);URL.revokeObjectURL(url);_bTTS();});}
   }).catch(function(e){
     if(fetchTimer)clearTimeout(fetchTimer);
-    if(e.name!=='AbortError')console.warn('ElevenLabs fetch failed:',e.name);
-    finish();
+    if(e.name!=='AbortError')console.warn('TTS fetch failed:',e.name);
+    _bTTS();
   });
 }
 function orbSpeak(id,on){

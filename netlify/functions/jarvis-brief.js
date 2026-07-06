@@ -128,9 +128,13 @@ exports.handler = async function (event) {
     lines.push(`Pulled: ${new Date().toISOString()}`);
     lines.push('');
 
+    // ── Live pipeline only — drop Lost/dead deals so Jarvis never briefs on them ──
+    const isDead = d => /lost|dead|dropped|closed.?lost/.test((flatten(d.values.stage) || flatten(d.values.status) || '').toLowerCase());
+    const liveDeals = dealRecs.filter(d => !isDead(d));
+
     // ── ACTION ITEMS (computed from deals + Documents Needed notes) ──
     const actionItems = [];
-    dealRecs.forEach(d => {
+    liveDeals.forEach(d => {
       const v = d.values;
       const stageRaw = flatten(v.stage) || flatten(v.status) || '';
       const stage = stageRaw.toLowerCase();
@@ -152,9 +156,9 @@ exports.handler = async function (event) {
       lines.push('');
     }
 
-    if (dealRecs.length) {
-      lines.push(`DEALS / PIPELINE (${dealRecs.length}):`);
-      dealRecs.forEach(d => {
+    if (liveDeals.length) {
+      lines.push(`DEALS / PIPELINE (${liveDeals.length}):`);
+      liveDeals.forEach(d => {
         const v = d.values;
         const name = flatten(v.name) || '(unnamed deal)';
         const stage = flatten(v.stage) || flatten(v.status) || 'unknown';

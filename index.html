@@ -318,6 +318,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pipe-node:hover .sky-bot-hub-circle{box-shadow:0 0 0 6px rgba(0,200,232,.25),0 0 36px rgba(0,200,232,.9),0 0 64px rgba(0,200,232,.35);}
 .sky-bot-hub-name{font-size:6.5px;font-weight:700;letter-spacing:.8px;color:var(--cyan);text-align:center;margin-top:5px;text-transform:uppercase;}
 .sky-bot-hub-sub{font-size:5.5px;font-weight:700;letter-spacing:.5px;color:rgba(0,200,232,.5);text-align:center;margin-top:1px;text-transform:uppercase;}
+/* ── SKY ORB — canonical Sky avatar (hard-coded 2026-07-14) ── */
+.sky-orb{position:relative;width:var(--sky-orb-size,54px);height:var(--sky-orb-size,54px);flex:none;}
+.sky-orb .so-body{position:absolute;inset:4.5%;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 55%,rgba(0,70,120,.55),rgba(4,12,28,.92) 75%);}
+.sky-orb .so-lobe{position:absolute;mix-blend-mode:screen;filter:blur(1px);}
+.sky-orb .so-l1{inset:9% 8% 14% 10%;background:radial-gradient(closest-side at 42% 42%,rgba(150,240,255,.85),rgba(45,185,240,.6) 55%,rgba(0,130,205,.32) 80%,transparent 96%);border-radius:60% 40% 54% 46% / 50% 58% 42% 50%;animation:soDrift1 14s ease-in-out infinite alternate;}
+.sky-orb .so-l2{inset:16% 10% 8% 14%;background:radial-gradient(closest-side at 58% 55%,rgba(90,210,255,.7),rgba(20,150,225,.5) 58%,rgba(0,105,185,.28) 82%,transparent 96%);border-radius:46% 54% 40% 60% / 56% 44% 58% 42%;animation:soDrift2 18s ease-in-out infinite alternate;}
+.sky-orb .so-core{position:absolute;left:34%;top:30%;width:30%;height:30%;border-radius:50%;background:radial-gradient(circle,#fff 0%,rgba(215,252,255,.95) 26%,rgba(110,228,255,.55) 58%,transparent 76%);animation:soBreathe 5s ease-in-out infinite alternate;}
+.sky-orb .so-core::before,.sky-orb .so-core::after{content:'';position:absolute;left:50%;top:50%;border-radius:50%;mix-blend-mode:screen;filter:blur(1px);}
+.sky-orb .so-core::before{width:210%;height:9%;transform:translate(-50%,-50%);background:linear-gradient(90deg,transparent,rgba(255,255,255,.95) 48%,rgba(255,255,255,.95) 52%,transparent);}
+.sky-orb .so-core::after{width:9%;height:170%;transform:translate(-50%,-50%);background:linear-gradient(180deg,transparent,rgba(255,255,255,.85) 48%,rgba(255,255,255,.85) 52%,transparent);}
+.sky-orb .so-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(190,248,255,.95);box-shadow:0 0 0 2px rgba(0,200,232,.14),0 0 10px rgba(0,200,232,.7),0 0 22px rgba(0,200,232,.3),inset 0 0 8px rgba(0,200,232,.4);transition:box-shadow .3s;}
+.pipe-node:hover .sky-orb .so-ring{box-shadow:0 0 0 5px rgba(0,200,232,.25),0 0 28px rgba(0,200,232,.9),0 0 52px rgba(0,200,232,.4);}
+@keyframes soDrift1{from{transform:rotate(0deg) scale(1);}to{transform:rotate(45deg) scale(1.12);}}
+@keyframes soDrift2{from{transform:rotate(0deg) scale(1.05);}to{transform:rotate(-55deg) scale(.94);}}
+@keyframes soBreathe{from{transform:scale(1);opacity:.85;}to{transform:scale(1.22);opacity:1;}}
+@media (prefers-reduced-motion:reduce){.sky-orb .so-lobe,.sky-orb .so-core{animation:none;}}
 
 /* ── Vertical trunks: pseudo-elements bounded to first↔last node center ── */
 /* 44px = half of a node's rendered height (~88px), so trunk starts/ends   */
@@ -3162,7 +3178,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         <div class="sky-bot-hub-col">
           <div class="pipe-col-label">SKY BOT</div>
           <div class="pipe-node sky-bot-hub" data-tip="Sky is CLR's personal AI assistant — always running in the background. Sky drafts proposals, builds project timelines, sends client confirmations, generates invoices, and flags issues before they become problems. Your pipeline never stops moving.">
-            <div class="sky-bot-hub-circle" style="background:#0a1020!important;overflow:hidden;padding:2px;"><img src="sky-robot.jpg" alt="Sky Bot" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none';this.parentElement.innerHTML='SKY'"></div>
+            <div class="sky-orb" style="--sky-orb-size:54px;" role="img" aria-label="Sky"><div class="so-body"><div class="so-lobe so-l1"></div><div class="so-lobe so-l2"></div><div class="so-core"></div></div><div class="so-ring"></div></div>
             <div class="sky-bot-hub-name">PERSONAL AI</div>
             <div class="sky-bot-hub-sub">ASSISTANT</div>
           </div>

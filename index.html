@@ -5623,30 +5623,57 @@ function _buildClientDash(c){
   }, 50);
 }
 
-// Simple idle orb animation for client Sky
+// Idle Sky Orb animation for client Sky — canonical Sky Orb (hard-coded 2026-07-14)
 function _startClientSkyOrb(){
   const canvas = document.getElementById('client-sky-canvas');
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
   let t = 0;
   function draw(){
+    t += 0.015;
+    const cx=22, cy=22, R=20;
     ctx.clearRect(0,0,44,44);
-    const grd = ctx.createRadialGradient(16,14,2,22,22,22);
-    grd.addColorStop(0,'#00f0ff');
-    grd.addColorStop(0.55,'#00b8d4');
-    grd.addColorStop(1,'#006a8a');
-    ctx.beginPath();
-    ctx.arc(22,22,20,0,Math.PI*2);
-    ctx.fillStyle = grd;
-    ctx.fill();
-    // pulse ring
-    const r = 18 + Math.sin(t*0.05)*2;
-    ctx.beginPath();
-    ctx.arc(22,22,r,0,Math.PI*2);
-    ctx.strokeStyle = 'rgba(0,200,232,'+(0.18+Math.sin(t*0.05)*0.1)+')';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    t++;
+    // navy body
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx,cy,R*0.92,0,Math.PI*2); ctx.clip();
+    const bg = ctx.createRadialGradient(cx,cy+2,0,cx,cy,R);
+    bg.addColorStop(0,'rgba(0,80,135,0.95)');
+    bg.addColorStop(0.78,'#060e1c');
+    bg.addColorStop(1,'#060e1c');
+    ctx.fillStyle = bg; ctx.fillRect(0,0,44,44);
+    // two drifting lobes
+    ctx.globalCompositeOperation = 'screen';
+    const l1 = ctx.createRadialGradient(cx+Math.sin(t*0.5)*3, cy+Math.cos(t*0.4)*3, 0, cx, cy, R*0.8);
+    l1.addColorStop(0,'rgba(80,200,250,0.5)'); l1.addColorStop(1,'rgba(0,0,20,0)');
+    ctx.fillStyle = l1; ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.fill();
+    const l2 = ctx.createRadialGradient(cx-Math.cos(t*0.34)*3, cy-Math.sin(t*0.46)*3, 0, cx, cy, R*0.65);
+    l2.addColorStop(0,'rgba(150,240,255,0.4)'); l2.addColorStop(1,'rgba(0,0,20,0)');
+    ctx.fillStyle = l2; ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.fill();
+    // nova core + star flares
+    const nx = cx-3+Math.sin(t*0.6), ny = cy-4+Math.cos(t*0.5);
+    const core = ctx.createRadialGradient(nx,ny,0,nx,ny,R*0.5);
+    core.addColorStop(0,'rgba(255,255,255,0.98)');
+    core.addColorStop(0.3,'rgba(215,252,255,0.9)');
+    core.addColorStop(0.6,'rgba(110,228,255,0.5)');
+    core.addColorStop(1,'rgba(0,0,20,0)');
+    ctx.fillStyle = core; ctx.beginPath(); ctx.arc(nx,ny,R*0.5,0,Math.PI*2); ctx.fill();
+    ctx.save(); ctx.translate(nx,ny); ctx.scale(1,0.08);
+    const f1 = ctx.createRadialGradient(0,0,0,0,0,R*0.9);
+    f1.addColorStop(0,'rgba(255,255,255,0.9)'); f1.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle = f1; ctx.beginPath(); ctx.arc(0,0,R*0.9,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+    ctx.save(); ctx.translate(nx,ny); ctx.scale(0.08,1);
+    const f2 = ctx.createRadialGradient(0,0,0,0,0,R*0.7);
+    f2.addColorStop(0,'rgba(255,255,255,0.85)'); f2.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle = f2; ctx.beginPath(); ctx.arc(0,0,R*0.7,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.restore();
+    // neon ring, gentle breath
+    ctx.beginPath(); ctx.arc(cx,cy,R*0.92,0,Math.PI*2);
+    ctx.strokeStyle = 'rgba(190,248,255,0.95)'; ctx.lineWidth = 1.4;
+    ctx.shadowColor = 'rgba(0,220,255,0.7)'; ctx.shadowBlur = 4+Math.sin(t*0.8)*2;
+    ctx.stroke(); ctx.shadowBlur = 0;
     requestAnimationFrame(draw);
   }
   draw();

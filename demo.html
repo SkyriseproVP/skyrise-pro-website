@@ -1239,32 +1239,58 @@ function drawOrb(canvas, ctx, t, mode, vol) {
   const spd   = speaking ? 1.8 + vol*2.2 : listening ? 0.85 : 0.35;
   const scale = speaking ? 1 + vol*0.18 : 1;
 
-  ctx.fillStyle = '#0090b8'; ctx.fillRect(0,0,w,h);
-  ctx.filter = 'blur(22px)';
+  // Deep navy body (matches .so-body)
+  const body = ctx.createRadialGradient(cx, cy+r*0.05, r*0.08, cx, cy, r);
+  body.addColorStop(0,'rgba(0,70,120,0.55)');
+  body.addColorStop(0.75,'rgba(4,12,28,0.94)');
+  body.addColorStop(1,'rgba(2,7,18,1)');
+  ctx.fillStyle = body; ctx.fillRect(0,0,w,h);
 
-  const blobs = [
-    { x: cx + Math.sin(t*spd*0.7)*r*0.32*scale, y: cy + Math.cos(t*spd*0.5)*r*0.25*scale, rad: r*0.8*scale,
-      c0: speaking ? 'rgba(0,230,255,1)' : listening ? 'rgba(0,210,240,0.95)' : 'rgba(0,200,232,0.88)' },
-    { x: cx - Math.cos(t*spd*0.9)*r*0.26*scale, y: cy - Math.sin(t*spd*0.6)*r*0.3*scale,  rad: r*0.65*scale,
-      c0: speaking ? 'rgba(100,240,255,0.9)' : listening ? 'rgba(80,220,248,0.8)' : 'rgba(60,200,235,0.7)' },
-    { x: cx + Math.cos(t*spd*0.55)*r*0.2*scale, y: cy + Math.sin(t*spd*0.8)*r*0.22*scale, rad: r*0.5*scale,
-      c0: speaking ? 'rgba(180,248,255,0.85)' : listening ? 'rgba(160,238,255,0.7)' : 'rgba(140,228,252,0.55)' },
-  ];
-  blobs.forEach(b => {
-    const g = ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.rad);
-    g.addColorStop(0,b.c0); g.addColorStop(1,'rgba(0,0,20,0)');
-    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(b.x,b.y,b.rad,0,Math.PI*2); ctx.fill();
-  });
+  // Two drifting cyan lobes (matches .so-l1 / .so-l2)
+  ctx.globalCompositeOperation = 'screen';
+  ctx.filter = 'blur(' + (r*0.13).toFixed(1) + 'px)';
+  const lobe = (x,y,rad,c0,c1) => {
+    const g = ctx.createRadialGradient(x,y,0,x,y,rad);
+    g.addColorStop(0,c0); g.addColorStop(0.55,c1); g.addColorStop(1,'rgba(0,40,80,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,rad,0,Math.PI*2); ctx.fill();
+  };
+  lobe(cx - r*0.14 + Math.sin(t*spd*0.7)*r*0.12*scale, cy - r*0.10 + Math.cos(t*spd*0.5)*r*0.10*scale,
+       r*0.60*scale, 'rgba(150,240,255,0.85)', 'rgba(45,185,240,0.55)');
+  lobe(cx + r*0.16 + Math.cos(t*spd*0.6)*r*0.12*scale, cy + r*0.13 + Math.sin(t*spd*0.8)*r*0.10*scale,
+       r*0.56*scale, 'rgba(90,210,255,0.70)', 'rgba(20,150,225,0.45)');
   ctx.filter = 'none';
 
-  const rim = ctx.createRadialGradient(cx,cy,r*0.55,cx,cy,r);
-  rim.addColorStop(0,'rgba(0,0,0,0)');
-  rim.addColorStop(1, speaking ? 'rgba(0,200,232,0.28)' : listening ? 'rgba(0,180,215,0.18)' : 'rgba(0,150,190,0.1)');
-  ctx.fillStyle = rim; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+  // White nova core (matches .so-core) — slightly up-left, breathing, brightens when speaking
+  const glow    = speaking ? 0.85 + vol*0.7 : listening ? 0.7 : 0.55;
+  const breathe = 1 + Math.sin(t*(speaking?4:2))*0.06;
+  const coreR   = r*0.30*breathe*(0.92 + glow*0.2);
+  const coreX   = cx - r*0.05, coreY = cy - r*0.09;
+  const core = ctx.createRadialGradient(coreX,coreY,0,coreX,coreY,coreR);
+  core.addColorStop(0,'rgba(255,255,255,'+Math.min(1,glow+0.3).toFixed(2)+')');
+  core.addColorStop(0.26,'rgba(215,252,255,0.95)');
+  core.addColorStop(0.58,'rgba(110,228,255,0.55)');
+  core.addColorStop(1,'rgba(110,228,255,0)');
+  ctx.fillStyle = core; ctx.beginPath(); ctx.arc(coreX,coreY,coreR,0,Math.PI*2); ctx.fill();
 
-  const hl = ctx.createRadialGradient(cx-r*0.28,cy-r*0.32,0,cx-r*0.28,cy-r*0.32,r*0.55);
-  hl.addColorStop(0,'rgba(255,255,255,0.28)'); hl.addColorStop(1,'rgba(255,255,255,0)');
-  ctx.fillStyle = hl; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fill();
+  // Cross glint through the core (matches .so-core::before / ::after)
+  ctx.globalCompositeOperation = 'screen';
+  const gh = ctx.createLinearGradient(coreX-coreR*2, coreY, coreX+coreR*2, coreY);
+  gh.addColorStop(0,'rgba(255,255,255,0)'); gh.addColorStop(0.5,'rgba(255,255,255,0.9)'); gh.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle = gh; ctx.fillRect(coreX-coreR*2, coreY-coreR*0.08, coreR*4, coreR*0.16);
+  const gv = ctx.createLinearGradient(coreX, coreY-coreR*1.6, coreX, coreY+coreR*1.6);
+  gv.addColorStop(0,'rgba(255,255,255,0)'); gv.addColorStop(0.5,'rgba(255,255,255,0.8)'); gv.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle = gv; ctx.fillRect(coreX-coreR*0.08, coreY-coreR*1.6, coreR*0.16, coreR*3.2);
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.restore();
+
+  // Neon cyan ring (matches .so-ring)
+  ctx.save();
+  const lw = Math.max(1.5, r*0.035);
+  ctx.strokeStyle = 'rgba(190,248,255,0.95)';
+  ctx.lineWidth = lw;
+  ctx.shadowColor = 'rgba(0,200,232,'+(speaking?0.9:0.65)+')';
+  ctx.shadowBlur = r*(speaking?0.28:0.18);
+  ctx.beginPath(); ctx.arc(cx, cy, r-lw, 0, Math.PI*2); ctx.stroke();
   ctx.restore();
 }
 

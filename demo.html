@@ -2197,6 +2197,18 @@ window.addEventListener('DOMContentLoaded', () => {
   const card3    = document.getElementById('card-video');
   const statusEl = document.getElementById('chooser-status');
 
+  // Reveal the options regardless of whether Sky's voice loads — voice is a bonus, never a gate.
+  let _chooserRevealed = false;
+  const revealChooser = () => {
+    if (_chooserRevealed) return; _chooserRevealed = true;
+    if (headline) headline.classList.add('visible');
+    if (card1) card1.classList.add('visible');
+    setTimeout(() => { if (card2) card2.classList.add('visible'); }, 150);
+    setTimeout(() => { if (card3) card3.classList.add('visible'); }, 300);
+    if (statusEl) statusEl.textContent = 'Tap the orb and say your choice — or pick a card below';
+  };
+  setTimeout(revealChooser, 1400);
+
   setTimeout(() => {
     skySpeak(
       "Hi, I'm Sky. I run all the background for all Skyrise Pro clients. Every lead captured, every follow-up sent, every proposal delivered — automatically, so nothing falls through the cracks. What I'm about to show you is the real thing. Which demo would you like to see — the automation workflow, the Court Vision deal tracker, or the cinematic video production?",

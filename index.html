@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4WP0XX2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X4WP0XX2KK');
+</script>
 <meta name="description" content="Skyrise Pro — AI Agent Automation & Cinematic Video. Capture more leads, close more deals — on autopilot.">
 <title>Skyrise Pro — Agent Automation & Video</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -181,13 +189,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   /* Keep all page content from spilling past the phone's right edge */
   html,body{overflow-x:hidden !important;}
   /* CLR / client automation workflow: stack the columns VERTICALLY on phones (no sideways scroll) */
-  .pipe-grid, .clr-grid, .debusk-grid{display:flex !important;flex-direction:column !important;min-width:0 !important;width:100% !important;gap:18px !important;align-items:stretch !important;}
+  .pipe-grid, .clr-grid{display:flex !important;flex-direction:column !important;min-width:0 !important;width:100% !important;gap:18px !important;align-items:stretch !important;}
   .pipeline-diagram-box{min-width:0 !important;}
   .pipeline-diagram-wrap{overflow-x:hidden !important;}
   /* Workflow connectors: render VERTICAL on phones — a line + downward-flowing dot between each stacked section (mirrors the app demo) */
-  .pipe-grid .pipe-arrow, .clr-grid .pipe-arrow, .debusk-grid .pipe-arrow{display:flex !important;min-height:34px !important;width:100% !important;align-self:center !important;overflow:visible !important;}
-  .pipe-grid .pipe-arrow::before, .clr-grid .pipe-arrow::before, .debusk-grid .pipe-arrow::before{left:50% !important;right:auto !important;top:0 !important;bottom:0 !important;width:2px !important;height:auto !important;transform:translateX(-50%) !important;}
-  .pipe-grid .pipe-dot, .clr-grid .pipe-dot, .debusk-grid .pipe-dot{left:50% !important;top:0 !important;transform:translateX(-50%) !important;animation-name:dotTravelDown !important;}
+  .pipe-grid .pipe-arrow, .clr-grid .pipe-arrow{display:flex !important;min-height:34px !important;width:100% !important;align-self:center !important;overflow:visible !important;}
+  .pipe-grid .pipe-arrow::before, .clr-grid .pipe-arrow::before{left:50% !important;right:auto !important;top:0 !important;bottom:0 !important;width:2px !important;height:auto !important;transform:translateX(-50%) !important;}
+  .pipe-grid .pipe-dot, .clr-grid .pipe-dot{left:50% !important;top:0 !important;transform:translateX(-50%) !important;animation-name:dotTravelDown !important;}
   /* Hide the desktop-only internal tool trunks/stubs that render as stray fragments once stacked */
   .pipe-nodes-tools::before, .pipe-nodes-tools::after, .pipe-nodes-tools .pipe-node::before, .pipe-nodes-tools .pipe-node::after,
   .pipe-nodes-left::after, .pipe-nodes-right::before, .pipe-nodes-left .pipe-node::after, .pipe-nodes-right .pipe-node::before{display:none !important;}
@@ -197,11 +205,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   .pipe-node .pipe-node-icon{background:#0a1628 !important;}
   .pipeline-filter-pills{flex-wrap:wrap !important;justify-content:center !important;}
   /* ── Connected flowing spine (mirrors the app demo): one continuous vertical line down the stacked diagram + a dot that travels its full length ── */
-  .pipe-grid, .clr-grid, .debusk-grid{position:relative !important;}
-  .pipe-grid::before, .clr-grid::before, .debusk-grid::before{content:'' !important;display:block !important;position:absolute !important;top:40px !important;bottom:40px !important;left:50% !important;width:2px !important;transform:translateX(-50%) !important;background:rgba(0,200,232,.5) !important;z-index:0 !important;}
-  .orange-theme .pipe-grid::before, .orange-theme .clr-grid::before, .orange-theme .debusk-grid::before{background:rgba(255,107,53,.55) !important;}
-  .pipe-grid::after, .clr-grid::after, .debusk-grid::after{content:'' !important;display:block !important;position:absolute !important;left:50% !important;width:9px !important;height:9px !important;border-radius:50% !important;transform:translateX(-50%) !important;background:var(--cyan) !important;box-shadow:0 0 10px rgba(0,200,232,.9) !important;z-index:1 !important;animation:spineFlow 3.8s linear infinite !important;}
-  .orange-theme .pipe-grid::after, .orange-theme .clr-grid::after, .orange-theme .debusk-grid::after{background:var(--orange) !important;box-shadow:0 0 10px rgba(255,107,53,.9) !important;}
+  .pipe-grid, .clr-grid{position:relative !important;}
+  .pipe-grid::before, .clr-grid::before{content:'' !important;display:block !important;position:absolute !important;top:40px !important;bottom:40px !important;left:50% !important;width:2px !important;transform:translateX(-50%) !important;background:rgba(0,200,232,.5) !important;z-index:0 !important;}
+  .orange-theme .pipe-grid::before, .orange-theme .clr-grid::before{background:rgba(255,107,53,.55) !important;}
+  .pipe-grid::after, .clr-grid::after{content:'' !important;display:block !important;position:absolute !important;left:50% !important;width:9px !important;height:9px !important;border-radius:50% !important;transform:translateX(-50%) !important;background:var(--cyan) !important;box-shadow:0 0 10px rgba(0,200,232,.9) !important;z-index:1 !important;animation:spineFlow 3.8s linear infinite !important;}
+  .orange-theme .pipe-grid::after, .orange-theme .clr-grid::after{background:var(--orange) !important;box-shadow:0 0 10px rgba(255,107,53,.9) !important;}
   .pipe-col-wrap, .pipe-hub-col, .sky-bot-hub-col, .pipe-nodes, .pipe-node, .pipe-hub{position:relative;z-index:2;}
   @keyframes spineFlow{0%{top:40px;opacity:0;}8%{opacity:1;}92%{opacity:1;}100%{top:calc(100% - 40px);opacity:0;}}
   /* Court Vision (phone): hide the individual stage list — let Sky narrate, viewers tap stakeholders */
@@ -309,8 +317,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .sky-bot-icon{background:radial-gradient(circle at 41% 37%,rgba(255,255,255,.98),rgba(215,252,255,.9) 8%,rgba(110,228,255,.4) 18%,transparent 26%),radial-gradient(60% 7% at 41% 37%,rgba(255,255,255,.9),transparent 70%),radial-gradient(7% 48% at 41% 37%,rgba(255,255,255,.85),transparent 70%),radial-gradient(closest-side at 42% 44%,rgba(150,240,255,.5),rgba(45,185,240,.35) 55%,transparent 85%),radial-gradient(closest-side at 62% 60%,rgba(90,210,255,.42),rgba(20,150,225,.28) 58%,transparent 88%),radial-gradient(circle at 50% 55%,rgba(0,80,135,.95),#060e1c 78%)!important;border-color:rgba(0,240,255,.6)!important;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:900;color:#eafcff;letter-spacing:.5px;box-shadow:0 0 14px rgba(0,200,232,.6);}
 /* Make.com node icon */
 .make-icon{background:rgba(110,0,255,.15)!important;border-color:rgba(140,60,255,.7)!important;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:#c084fc;letter-spacing:0;}
-/* Both Debusk + CLR: 9-column grid — adds Sky Bot hub between Tools and Outputs */
-.clr-grid,.debusk-grid{grid-template-columns:1fr 50px 110px 50px 1fr 50px 72px 50px 1fr;}
+/* CLR: 9-column grid — adds Sky Bot hub between Tools and Outputs */
+.clr-grid{grid-template-columns:1fr 50px 110px 50px 1fr 50px 72px 50px 1fr;}
 /* Sky Bot mini-hub column */
 .sky-bot-hub-col{display:flex;flex-direction:column;align-items:center;justify-content:center;}
 /* Sky Bot circle — reuses Sky orb gradient */
@@ -852,7 +860,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 .admin-jarvis-status{font-family:'Orbitron',sans-serif;font-size:8px;color:rgba(13,21,38,.4);letter-spacing:1px;}
 .admin-body{padding:36px 40px;flex:1;}
 .admin-section-title{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;color:rgba(255,255,255,.35);margin-bottom:24px;}
-.admin-clients-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;}
+.admin-clients-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:1200px;}
 .admin-card{background:#0d1728;border:1px solid rgba(0,200,232,.15);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;}
 .admin-card-header{padding:20px 22px 14px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;gap:10px;}
 .admin-card-logo{height:32px;width:auto;max-width:90px;object-fit:contain;}
@@ -1013,6 +1021,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   <div style="flex:1;"></div>
   <div class="nav-cta-group">
     <a href="#services" class="nav-link-inline">SERVICES</a>
+    <a href="readiness-score.html" class="nav-link-inline">AI SCORE</a>
     <div class="nav-sep"></div>
     <button class="nav-signin" onclick="openModal('signin')">SIGN IN</button>
     <button class="nav-signup" onclick="openModal('signup')">SIGN UP</button>
@@ -1025,6 +1034,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 </nav>
 <div class="mobile-menu" id="mobile-menu">
   <a href="#services" onclick="closeMobile()">SERVICES</a>
+  <a href="readiness-score.html" onclick="closeMobile()">AI READINESS SCORE</a>
   <a href="#" onclick="openModal('signin');closeMobile();return false;">CLIENT PORTAL</a>
   <a href="#pricing" onclick="closeMobile()">PRICING</a>
   <a href="demo.html" onclick="closeMobile()">▶ DEMO</a>
@@ -3115,10 +3125,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   })();
   </script>
 
-  <div style="display:none"><!-- old DeBusk pipeline preserved below -->
-    <div class="pipeline-diagram-box"><div class="pipe-grid debusk-grid"><div class="pipe-col-wrap"><div class="pipe-col-label">LEAD SOURCES</div><div class="pipe-nodes pipe-nodes-left"><div class="pipe-node"><div class="pipe-node-icon">🌐</div><div class="pipe-node-name">WEBSITE</div></div><div class="pipe-node"><div class="pipe-node-icon">📱</div><div class="pipe-node-name">FACEBOOK / IG</div></div><div class="pipe-node"><div class="pipe-node-icon">🤝</div><div class="pipe-node-name">REFERRALS</div></div></div></div></div></div>
-  </div>
-
 </div><!-- /pipeline-inner -->
 </section>
 
@@ -3592,6 +3598,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <div style="padding-top:52px;">
       <div class="footer-heading">QUICK LINKS</div>
       <ul class="footer-links">
+        <li><a href="readiness-score.html">AI READINESS SCORE</a></li>
         <li><a href="#dashboard">CASE STUDIES</a></li>
         <li><a href="#demo-section">BOOK A DEMO</a></li>
         <li><a href="#" onclick="openSupport();return false;">CONTACT SUPPORT</a></li>
@@ -3717,20 +3724,12 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <span class="admin-alert-icon">🎯</span>
           <span><strong>Jago Digital</strong> — Has not viewed the demo yet. Needs a tighter, more compelling pitch before the window closes.</span>
         </div>
-        <div class="admin-alert-item action">
-          <span class="admin-alert-icon">📞</span>
-          <span><strong>DeBusk Electric (Terry)</strong> — Demo viewed, very interested. Strike while hot — pitch Sky as personal AI assistant. Close this week.</span>
-        </div>
       </div>
       <div class="admin-dash-alerts-card">
         <div class="admin-dash-alerts-title" style="color:#22c55e;">✅ PIPELINE HIGHLIGHTS</div>
         <div class="admin-alert-item win">
-          <span class="admin-alert-icon">🔥</span>
-          <span><strong>DeBusk Electric</strong> — Highest close probability. Terry engaged after demo. Best candidate for $500/mo Professional plan.</span>
-        </div>
-        <div class="admin-alert-item win">
           <span class="admin-alert-icon">💰</span>
-          <span>All 3 leads at $500/mo = <strong>$1,500 MRR</strong> if closed. That's <strong>$18,000/year</strong>. One close this week changes everything.</span>
+          <span>Both leads at $500/mo = <strong>$1,000 MRR</strong> if closed. That's <strong>$12,000/year</strong>. One close this week changes everything.</span>
         </div>
         <div class="admin-alert-item win">
           <span class="admin-alert-icon">🚀</span>
@@ -3742,35 +3741,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <div class="admin-divider"></div>
     <div class="admin-section-title">HOT LEADS — PIPELINE IN PROGRESS</div>
     <div class="admin-clients-grid">
-
-      <!-- DEBUSK ELECTRIC -->
-      <div class="admin-card" style="border-color:rgba(34,197,94,.25);">
-        <div class="admin-card-header" style="border-color:rgba(34,197,94,.1);">
-          <img src="logo-debusk.png" alt="Debusk" class="admin-card-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span style="display:none;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#fff;">DEBUSK</span>
-          <span class="admin-status-pill" style="background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3);">🔥 HOT LEAD</span>
-        </div>
-        <div class="admin-card-body">
-          <div class="admin-client-name">Terry DeBusk</div>
-          <div class="admin-client-co" style="color:#22c55e;">DEBUSK ELECTRIC</div>
-          <div class="admin-plan-row">
-            <span class="admin-plan-tag" style="background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.3);">TARGET: $500/MO</span>
-            <span class="admin-join-date">Demo viewed ✅</span>
-          </div>
-          <div class="admin-kpis">
-            <div class="admin-kpi"><div class="admin-kpi-num" style="color:#22c55e;">HIGH</div><div class="admin-kpi-label">CLOSE PROBABILITY</div></div>
-            <div class="admin-kpi"><div class="admin-kpi-num">$500</div><div class="admin-kpi-label">MRR POTENTIAL</div></div>
-            <div class="admin-kpi admin-revenue-kpi"><div class="admin-kpi-num" style="color:#22c55e;">$6,000</div><div class="admin-kpi-label">ANNUAL PER CLIENT</div></div>
-          </div>
-          <div class="admin-section-sub">STATUS</div>
-          <div class="admin-notes">Terry viewed the demo and is very interested. Best fit: Sky as a personal AI assistant. Highest probability close in the pipeline right now.</div>
-          <div class="admin-notes" style="margin-top:6px;color:#22c55e;">📌 NEXT: Reach out today. Pitch the Professional plan. Offer a 30-day trial to close. Do not let this go cold.</div>
-        </div>
-        <div class="admin-card-footer" style="border-color:rgba(34,197,94,.1);">
-          <span class="admin-last-activity">Status: Demo Complete</span>
-          <button class="admin-view-btn" style="border-color:rgba(34,197,94,.3);color:#22c55e;">CLOSE NOW →</button>
-        </div>
-      </div>
 
       <!-- CLR SERVICES -->
       <div class="admin-card" style="border-color:rgba(255,107,53,.2);">
@@ -3845,11 +3815,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         </div>
       </div>
       <div class="admin-cal-events">
-        <div class="admin-cal-event hot">
-          <div class="admin-cal-event-date">MAY 22 · THU · 10:00 AM</div>
-          <div class="admin-cal-event-title">Strategy Call — Terry DeBusk</div>
-          <div class="admin-cal-event-note">🔥 Close opportunity — pitch Professional plan + 30-day trial</div>
-        </div>
         <div class="admin-cal-event warn">
           <div class="admin-cal-event-date">MAY 24 · SAT · 2:00 PM</div>
           <div class="admin-cal-event-title">Follow-Up Call — Winston (CLR Services)</div>
@@ -5023,16 +4988,16 @@ function skyGetResponseFallback(input){
   // ── VICTOR / OWNER MODE ────────────────────────────────────
   if(window.__adminMode){
     if(skyHas(q,['hello','hi','hey','morning','afternoon','what\'s up','sup','yo','howdy','good to see']))
-      return "Hey Victor — I've got the full picture. 3 active clients, $3,200 MRR, $430k combined pipeline, 13 automations running. One paused at CLR — Review Request is waiting on Winston's copy approval. Jago onboarding is the priority to protect Month 1 retention. One new close gets you to $3,700. What do you want to dig into first?";
+      return "Hey Victor — I've got the full picture. 2 active clients, $3,200 MRR, $430k combined pipeline, 13 automations running. One paused at CLR — Review Request is waiting on Winston's copy approval. Jago onboarding is the priority to protect Month 1 retention. One new close gets you to $3,700. What do you want to dig into first?";
 
     if(skyHas(q,['status','update','overview','summary','briefing','report','where are we','how are we doing','snapshot','big picture']))
-      return "Here's your full snapshot, Victor. MRR: $3,200 — up 167% since February. CLR is your top performer: $284k pipeline, 35% close rate, Elite plan. DeBusk is cleanest: all 5 automations live, 38 bookings automated, $512k pipeline. Jago is in onboarding: 2 of 4 automations live, CRM Sync in build. System-side: email confirmations working, SMS still being tuned, Netlify deployment and Supabase auth pending. No critical client fires. Your biggest lever is one new close.";
+      return "Here's your full snapshot, Victor. MRR: $3,200 — up 167% since February. CLR is your top performer: $284k pipeline, 35% close rate, Elite plan. Jago is in onboarding: 2 of 4 automations live, CRM Sync in build. System-side: email confirmations working, SMS still being tuned, Netlify deployment and Supabase auth pending. No critical client fires. Your biggest lever is one new close.";
 
     if(skyHas(q,['hot lead','hot prospect','who\'s close','close to closing','near close','warm lead','best prospect','ready to close','convert']))
-      return "Your hottest leads are anyone who submitted the booking form. Those are people who saw your ROI calculator, felt the pain, and raised their hand. Every submission is a qualified prospect. On existing clients — DeBusk is your best upsell: Terry's seeing massive value and the conversation for Elite ($650/mo) makes sense now. Jago isn't upsell-ready yet — they need to see Month 1 wins first.";
+      return "Your hottest leads are anyone who submitted the booking form. Those are people who saw your ROI calculator, felt the pain, and raised their hand. Every submission is a qualified prospect. Jago isn't upsell-ready yet — they need to see Month 1 wins first.";
 
     if(skyHas(q,['follow up','follow-up','who to call','reach out','check in','contact','touchpoint']))
-      return "Three follow-ups needed right now, Victor. One — Winston at CLR: Review Request automation is paused waiting on his copy approval. That's your only broken automation across all accounts. Two — Joel at Jago: he's 3 days quiet during active onboarding. First 30 days are critical — don't let momentum die. Three — Terry at DeBusk: activity was 2 days ago, keep that energy going. A quick win-share message works well here.";
+      return "Two follow-ups needed right now, Victor. One — Winston at CLR: Review Request automation is paused waiting on his copy approval. That's your only broken automation across all accounts. Two — Joel at Jago: he's 3 days quiet during active onboarding. First 30 days are critical — don't let momentum die.";
 
     if(skyHas(q,['gap','missing','what\'s missing','what\'s broken','not working','fix','behind','behind schedule','problem','issue','hiccup','stuck','delay','slow']))
       return "Honest gap report, Victor. Client-side: CLR's Review Request is paused (Winston's approval needed). Jago's CRM Sync and advanced automation are still in build — that's the retention risk. Tech-side: SMS to your phone isn't confirmed working yet. Calendar .ics invites aren't in the confirmation email yet. Supabase auth migration is pending — clients are still on access codes. Netlify production deployment hasn't been pushed. Attio CRM integration was removed from the pipeline and needs a clean reconnect. Those are your open loops.";
@@ -5041,43 +5006,40 @@ function skyGetResponseFallback(input){
       return "System status: Your Make booking pipeline is live — email confirmations are firing. SMS to your phone is in progress. Netlify has the site deployed but latest code hasn't been pushed yet. Supabase auth is planned but not configured — clients use access codes for now. The booking calendar shows your availability rules (no Sunday, no 4–7pm weekdays, Tue/Wed mornings blocked, Saturday 10am+). Sky voice is live via ElevenLabs in the app. What needs your attention most right now?";
 
     if(skyHas(q,['win','success','good news','highlight','best','top','performing','strong','working','nailing','crushing']))
-      return "Here's what's winning, Victor. CLR went from 12% to 35% close rate on a fully automated pipeline — that's a direct result of your system. DeBusk automated 38 bookings with zero manual work from Terry's team. Your MRR is 167% higher than it was in February. The booking system is live. Sky is deployed and talking to prospects 24/7. The infrastructure is working — now it's about stacking more clients on top of it.";
+      return "Here's what's winning, Victor. CLR went from 12% to 35% close rate on a fully automated pipeline — that's a direct result of your system. Your MRR is 167% higher than it was in February. The booking system is live. Sky is deployed and talking to prospects 24/7. The infrastructure is working — now it's about stacking more clients on top of it.";
 
     if(skyHas(q,['clr','winston','construction','clr construction']))
       return "CLR is your highest-value account — $284k pipeline, 35% close rate, Elite plan at $650/month. 6 of 7 automations are live: Bid Intake, Proposal Gen (under 12 minutes), DocuSign, HubSpot Sync, Crew Notifications, and Invoice on Completion. The one paused: Review Request — waiting on Winston's copy approval. That's been sitting. Ball is in the client's court on that one. GC confirmation on crew workflow and sub onboarding to bid routing are also open. Strong account overall — just needs that one push.";
-
-    if(skyHas(q,['debusk','terry','travel','dsg']))
-      return "DeBusk is your cleanest account — all 5 automations live, $512k pipeline, $500/month Professional plan. Terry had activity 2 days ago and is actively engaged. 38 bookings captured with zero manual effort. CRM syncing clean through TravelJoy. This is your best upsell candidate right now — Terry has seen the value. The Elite plan pitch ($650/month) makes sense here: add monthly ROI reports and a cinematic video. That's a $150/month bump with high perceived value.";
 
     if(skyHas(q,['jago','joel','jago pro','jago group']))
       return "Jago Pro Solutions just onboarded in May — Professional plan at $500/month, $18k early-stage pipeline. 2 of 4 automations live: Lead Capture and Follow-Up Sequence are running, pulling 19 leads/month with 83% faster response time. CRM Sync and advanced proposal automation are in build. Joel has been quiet for 3 days — that's a flag during Month 1 onboarding. A quick check-in now prevents churn later. Once the full stack deploys, pipeline should climb significantly.";
 
     if(skyHas(q,['revenue','mrr','money','income','billing','how much','earning','recurring','arr','financials']))
-      return "Revenue breakdown: CLR $650/month Elite, DeBusk $500/month Professional, Jago $500/month Professional. Total MRR: $3,200 — up 167% since February. Q3 target is $5,000 MRR. To get there: one Professional close ($500) puts you at $3,700. One Elite close ($650) puts you at $3,850. Two closes and an upsell on DeBusk gets you to $5k. Your booking system is the engine — every form submission is a shot at the next close.";
+      return "Revenue breakdown: CLR $650/month Elite, Jago $500/month Professional. Total MRR: $3,200 — up 167% since February. Q3 target is $5,000 MRR. To get there: one Professional close ($500) puts you at $3,700. One Elite close ($650) puts you at $3,850. Your booking system is the engine — every form submission is a shot at the next close.";
 
     if(skyHas(q,['upsell','upgrade','grow account','expand','tier','elite','professional']))
-      return "Best upsell opportunities right now: DeBusk is your top target — Terry is fully bought in, all systems running, high satisfaction. The Elite pitch ($150/month more) includes monthly ROI reports and one cinematic video per month. That's extremely tangible value for a client who's already seeing results. Jago is too early — let Month 1 land first. CLR is happy on Elite, but there may be add-on opportunities once Review Request launches.";
+      return "Best upsell opportunity right now: CLR is happy on Elite, but there may be add-on opportunities once Review Request launches. Jago is too early — let Month 1 land first.";
 
     if(skyHas(q,['new client','prospect','acquire','close new','next client','who to target','lead gen']))
-      return "For new clients: your booking form is live and qualified prospects are submitting. Every ROI calculator session where someone sees their monthly loss number is a warm lead. Your strongest verticals right now are construction (CLR proof), travel/services (DeBusk proof), and real estate/property management (Jago proof). Ideal profile: 5+ person company, high lead volume, manual follow-up process, no CRM or broken CRM. One new Professional plan client fills the biggest gap in your Q3 target.";
+      return "For new clients: your booking form is live and qualified prospects are submitting. Every ROI calculator session where someone sees their monthly loss number is a warm lead. Your strongest verticals right now are construction (CLR proof) and real estate/property management (Jago proof). Ideal profile: 5+ person company, high lead volume, manual follow-up process, no CRM or broken CRM. One new Professional plan client fills the biggest gap in your Q3 target.";
 
     if(skyHas(q,['calendar','booking','schedule','availability','book a call','sms','text','email','notification']))
       return "Booking system status: the form is live and collecting submissions. Email confirmations to you and prospects are firing via Make. SMS to your phone is still being set up — T-Mobile gateway is configured but delivery isn't confirmed yet. Calendar .ics attachment in the confirmation email is being built. Availability rules are live in the booking calendar: no Sundays, no weekday 4–7pm, Tuesday and Wednesday mornings blocked, Saturdays 10am and later only.";
 
     if(skyHas(q,['what should i do','priority','focus','next','action','today','plan','order','where to start']))
-      return "Priority order right now, Victor: One — call Winston on CLR Review Request copy approval. That's been sitting and it's the only paused automation in your stack. Two — check in with Joel at Jago. Three days quiet during onboarding is a yellow flag. Three — send Terry a win update at DeBusk and open the Elite upsell conversation. Four — review your latest booking form submissions. Five — push the updated code to Netlify so the live site has all the new features. That's your list.";
+      return "Priority order right now, Victor: One — call Winston on CLR Review Request copy approval. That's been sitting and it's the only paused automation in your stack. Two — check in with Joel at Jago. Three days quiet during onboarding is a yellow flag. Three — review your latest booking form submissions. Four — push the updated code to Netlify so the live site has all the new features. That's your list.";
 
     if(skyHas(q,['graph','chart','number','metric','kpi','data','stats','analytics','performance']))
-      return "Key metrics across the board: MRR $3,200 (+167% since February). CLR: 35% close rate, $284k pipeline, 25+ hours saved/week. DeBusk: 38 bookings automated, $512k pipeline, all 5 automations live. Jago: 19 leads/month, 83% faster response time, 16 hours saved/week. Combined pipeline: $430,200. Active automations: 13 live, 1 paused (CLR Review Request), 2 in build (Jago CRM Sync + proposal). Q3 target: $5,000 MRR.";
+      return "Key metrics across the board: MRR $3,200 (+167% since February). CLR: 35% close rate, $284k pipeline, 25+ hours saved/week. Jago: 19 leads/month, 83% faster response time, 16 hours saved/week. Combined pipeline: $430,200. Active automations: 13 live, 1 paused (CLR Review Request), 2 in build (Jago CRM Sync + proposal). Q3 target: $5,000 MRR.";
 
     if(skyHas(q,['risk','churn','lose','losing','danger','warning','red flag','concern']))
       return "Two risk flags right now. First: Jago onboarding — Joel is quiet at Day 30 and the CRM Sync build deadline could slip. If Jago doesn't see clear results in Month 1, retention risk goes up. Second: CLR Review Request has been paused too long. Winston isn't going to bring it up — you need to. Those are your two pressure points. Everything else is stable.";
 
     if(skyHas(q,['video','production','cinematic','content','social media','film']))
-      return "Video side: the standalone cinematic package is $1,750 (or $650/month on Elite which includes one video per month). Your best immediate opportunity is pitching video to DeBusk — Terry has seen the automation value and the next natural conversation is brand presence and content. CLR would also benefit from project showcase videos for bid presentations. That's a real differentiator in construction.";
+      return "Video side: the standalone cinematic package is $1,750 (or $650/month on Elite which includes one video per month). CLR would benefit from project showcase videos for bid presentations. That's a real differentiator in construction.";
 
     // Default admin fallback
-    return "I've got full visibility across all three accounts and your systems, Victor. Ask me about any client — CLR, DeBusk, or Jago. Or ask about revenue, gaps, hot leads, system status, follow-ups, upsell opportunities, or your priority list. I'm here.";
+    return "I've got full visibility across both accounts and your systems, Victor. Ask me about any client — CLR or Jago. Or ask about revenue, gaps, hot leads, system status, follow-ups, upsell opportunities, or your priority list. I'm here.";
   }
 
   // ── PUBLIC / VISITOR MODE ──────────────────────────────────
@@ -5093,8 +5055,8 @@ function skyGetResponseFallback(input){
     return "Every plan comes with a full 30-day free trial. You get the entire system running for your business before you're charged a single dollar. Cancel anytime during the trial with zero hassle — we're confident you'll see the value.";
   if(skyHas(q,['construction','contractor','build','bid','procore','clr','estimat','subcontract','project manag']))
     return "Construction is one of our strongest verticals. We automate bid intake, proposal generation, DocuSign contract sending, Procore sync, crew notifications, and invoicing — all triggered the moment a bid comes in. Our CLR Construction client cut their admin time by over 25 hours a week. Want to see their full pipeline?";
-  if(skyHas(q,['travel','cruise','vacation','hospitality','debusk','booking','itinerary','resort','hotel']))
-    return "For travel businesses, we automate lead follow-up, booking confirmations, itinerary delivery, payment reminders, and post-trip review requests. Our Debusk Travel client went from manually sending every confirmation to a fully hands-free system. Every client feels like a VIP without extra staff hours.";
+  if(skyHas(q,['travel','cruise','vacation','hospitality','booking','itinerary','resort','hotel']))
+    return "For travel businesses, we automate lead follow-up, booking confirmations, itinerary delivery, payment reminders, and post-trip review requests. Every client feels like a VIP without extra staff hours.";
   if(skyHas(q,['real estate','realtor','property','listing','agent','zillow','mls','closing','buyer','seller']))
     return "For real estate, we capture leads from Zillow, Realtor.com, and your website, follow up in under 60 seconds, automate showing scheduling, track offers in your CRM, and trigger post-close review requests. Your team only talks to leads that are ready to move. What's your biggest pain point right now?";
   if(skyHas(q,['lead','inquiry','prospect','capture','follow up','follow-up','response time','missed calls']))
@@ -5310,11 +5272,11 @@ function initAdminCharts(){
   adminPipelineChart = new Chart(pipeCtx,{
     type:'bar',
     data:{
-      labels:['DEBUSK','CLR','JAGO'],
+      labels:['CLR','JAGO'],
       datasets:[{
-        data:[127400,284600,18200],
-        backgroundColor:['rgba(0,200,232,.7)','rgba(255,107,53,.7)','rgba(0,200,232,.4)'],
-        borderColor:['rgba(0,200,232,1)','rgba(255,107,53,1)','rgba(0,200,232,.7)'],
+        data:[284600,18200],
+        backgroundColor:['rgba(255,107,53,.7)','rgba(0,200,232,.4)'],
+        borderColor:['rgba(255,107,53,1)','rgba(0,200,232,.7)'],
         borderWidth:1.5, borderRadius:5
       }]
     },
@@ -5327,10 +5289,10 @@ function initAdminCharts(){
 
 // ── ADMIN SKY BRIEF ────────────────────────────────────────────
 const ADMIN_BRIEFS = [
-  `<strong>Pipeline needs action.</strong> CLR Services — Winston still hasn't submitted onboarding docs. That deal is at risk. DeBusk Electric — Terry viewed the demo and is hot. This is your highest-probability close right now. Jago Digital hasn't seen the demo yet. Tighten the pitch and book it this week. <strong>$1,500 MRR is on the table. Go close it.</strong>`,
-  `<strong>Here's what matters right now.</strong> You have zero paying clients and three hot leads sitting in the pipeline. DeBusk is the easiest win — Terry is engaged, the demo is done, pitch the Professional plan today and offer a 30-day trial. CLR is stalled on docs — call Winston, make it simple, send a checklist. Jago needs urgency — no demo means no deal. <strong>One close this week changes everything.</strong>`,
-  `<strong>Revenue is at $0. Potential is $6,000.</strong> The gap between those two numbers is three conversations you haven't closed yet. DeBusk Electric is your fastest path — Terry is interested and the window is open. CLR Services is blocked by missing documentation — that's a follow-up call, not a lost deal. Jago Digital needs to see what Sky can do for their specific business. <strong>Stop preparing. Start closing.</strong>`,
-  `<strong>Three leads. $6k on the line. No time to waste.</strong> DeBusk — highest close probability. Demo complete. Reach out today. CLR — stalled on onboarding docs. One call to Winston unblocks this. Jago — demo not scheduled. Every day that passes is a colder lead. Your booking system is live, Sky is ready, the website is deployed. <strong>The only thing missing is a signed client. Go get one.</strong>`
+  `<strong>Pipeline needs action.</strong> CLR Services — Winston still hasn't submitted onboarding docs. That deal is at risk. Jago Digital hasn't seen the demo yet. Tighten the pitch and book it this week. <strong>$1,000 MRR is on the table. Go close it.</strong>`,
+  `<strong>Here's what matters right now.</strong> You have zero paying clients and two hot leads sitting in the pipeline. CLR is stalled on docs — call Winston, make it simple, send a checklist. Jago needs urgency — no demo means no deal. <strong>One close this week changes everything.</strong>`,
+  `<strong>Revenue is at $0. Potential is $6,000.</strong> The gap between those two numbers is two conversations you haven't closed yet. CLR Services is blocked by missing documentation — that's a follow-up call, not a lost deal. Jago Digital needs to see what Sky can do for their specific business. <strong>Stop preparing. Start closing.</strong>`,
+  `<strong>Two leads. $6k on the line. No time to waste.</strong> CLR — stalled on onboarding docs. One call to Winston unblocks this. Jago — demo not scheduled. Every day that passes is a colder lead. Your booking system is live, Sky is ready, the website is deployed. <strong>The only thing missing is a signed client. Go get one.</strong>`
 ];
 let adminBriefIdx = 0;
 function refreshAdminBrief(){
@@ -5365,21 +5327,6 @@ const WEBSITE_CLIENTS = {
     automations:[{name:'Lead Capture & Routing',stat:'ON',note:'Capturing leads 24/7'},{name:'Follow-Up Sequences',stat:'ON',note:'5-touch automated'},{name:'Estimate Follow-Ups',stat:'ON',note:'Sent at 24, 48, 72 hrs'},{name:'Review Requests',stat:'ON',note:'Post-project auto-send'}],
     activity:[{text:'New lead captured from Google Ads — Downtown Remodel',time:'2 min ago'},{text:'Follow-up sent to Martinez estimate (Day 3)',time:'14 min ago'},{text:'Review request delivered — Hernandez project complete',time:'1 hr ago'}],
     jobs:[{status:'active',label:'IN PROGRESS',title:'Downtown Office Remodel',tech:'J. Rivera',date:'Est. Jun 12',workOrder:'WO-2241'},{status:'pending',label:'PENDING APPROVAL',title:'Westside Residential Addition',tech:'M. Torres',date:'Est. Jul 3',workOrder:'WO-2242'},{status:'complete',label:'COMPLETE',title:'Hernandez Kitchen Renovation',tech:'J. Rivera',date:'Completed May 9',workOrder:'WO-2238'}]
-  },
-  'terry.debusk@cruiseplanners.com': {
-    company:'DeBusk Services Group', short:'DEBUSK', logo:'logo-debusk.png', firstName:'Terry', brandColor:'#1B5EA0',
-    greeting:"Sky here. Welcome back, Terry. Your pipeline is the strongest it's been. Let me give you a quick rundown of where things stand.",
-    kpi:[
-      {num:'31',label:'Active Accounts',compare:'+4 this month'},
-      {num:'$512K',label:'Pipeline Value',compare:'+22% vs last month'},
-      {num:'94%',label:'Response Rate',compare:'Up from 78%'},
-      {num:'1.8 hrs',label:'Avg Response Time',compare:'Down from 9 hrs'}
-    ],
-    chart1:{title:'NEW ACCOUNTS PER MONTH',sub:'Accounts closed — before vs. after Skyrise Pro',labels:['Jan','Feb','Mar','Apr','May','Jun'],before:[3,4,5,4,4,5],after:[7,8,9,9,9,9],beforeLabel:'Before',afterLabel:'After Skyrise Pro'},
-    chart2:{title:'TIME SAVED PER TASK (HRS)',sub:'Manual effort vs. automated — per task type',labels:['Proposals','Client Updates','Scheduling','Onboarding','Reporting'],before:[6,5,3,4,2],after:[0.4,0.2,0.3,0.5,0.2],beforeLabel:'Manual (hrs)',afterLabel:'Automated (hrs)'},
-    automations:[{name:'Inbound Lead Routing',stat:'ON',note:'All sources captured'},{name:'Client Onboarding Flow',stat:'ON',note:'7-step sequence active'},{name:'Contract Follow-Ups',stat:'ON',note:'Automated reminders'},{name:'Satisfaction Surveys',stat:'ON',note:'Post-service delivery'}],
-    activity:[{text:'New inquiry from LinkedIn — Industrial Services RFP',time:'5 min ago'},{text:'Onboarding step 3 sent to new client Blackwell Co.',time:'32 min ago'},{text:'Contract signed — Greenfield account activated',time:'2 hrs ago'}],
-    jobs:[{status:'active',label:'IN PROGRESS',title:'Blackwell Industrial Account Setup',tech:'S. Davis',date:'Est. Jun 20',workOrder:'WO-5512'},{status:'pending',label:'AWAITING SIGNATURE',title:'Coastal Facilities Management',tech:'T. Baker',date:'Est. Jul 15',workOrder:'WO-5513'},{status:'complete',label:'COMPLETE',title:'Greenfield Services Onboarding',tech:'S. Davis',date:'Completed May 14',workOrder:'WO-5508'}]
   },
   'jguzman@jagosolutions.com': {
     company:'Jago Group', short:'JAGO', logo:'logo-jago.png', firstName:'Joel', brandColor:'#2D7D9A',
@@ -5497,8 +5444,8 @@ function _buildClientDash(c){
     </div>`).join('');
 
   const statusClass = {active:'active',pending:'pending',complete:'complete'};
-  const techLabel = c.short==='DEBUSK'?'Account Mgr':c.short==='JAGO'?'Agent':'Tech';
-  const sectionLabel = c.short==='JAGO'?'PROPERTIES':c.short==='DEBUSK'?'ACCOUNTS':'JOBS';
+  const techLabel = c.short==='JAGO'?'Agent':'Tech';
+  const sectionLabel = c.short==='JAGO'?'PROPERTIES':'JOBS';
   const jobHtml = c.jobs.map(j=>`
     <div class="client-job-row">
       <span class="client-job-status ${statusClass[j.status]||'pending'}">${j.label}</span>
@@ -5550,52 +5497,6 @@ function _buildClientDash(c){
       <div class="client-jobs-title">📋 ACTIVE ${sectionLabel} &amp; STATUS</div>
       ${jobHtml}
     </div>
-    ${c.short==='DEBUSK' ? `
-    <div style="margin-top:28px;background:rgba(255,255,255,.03);border:1px solid rgba(0,200,232,.15);border-radius:16px;padding:28px 24px;">
-      <div class="client-panel-title" style="margin-bottom:4px;">🔗 DEBUSK TRAVELS — AUTOMATION WORKFLOW</div>
-      <p style="font-family:'Orbitron',sans-serif;font-size:9px;color:rgba(0,200,232,.45);letter-spacing:1px;margin:0 0 22px;">Live automation stack powering your Cruise Planners pipeline.</p>
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr 28px 56px 28px 1fr;gap:0;align-items:center;overflow-x:auto;">
-
-        <!-- Lead Sources -->
-        <div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:8px;color:rgba(0,200,232,.5);letter-spacing:1.5px;text-align:center;margin-bottom:10px;">LEAD SOURCES</div>
-          <div style="display:flex;flex-direction:column;gap:7px;">
-            ${['🌐 WEBSITE','📘 FACEBOOK / IG','🔍 GOOGLE ADS','📱 QR CODE','🤝 REFERRALS'].map(n=>`<div style="background:rgba(0,200,232,.07);border:1px solid rgba(0,200,232,.2);border-radius:8px;padding:7px 10px;font-family:'Orbitron',sans-serif;font-size:8px;color:#a0d8ef;text-align:center;">${n}</div>`).join('')}
-          </div>
-        </div>
-
-        <!-- Arrow -->
-        <div style="text-align:center;color:rgba(0,200,232,.4);font-size:16px;">→</div>
-
-        <!-- Cruise Hub -->
-        <div style="text-align:center;">
-          <div style="font-family:'Orbitron',sans-serif;font-size:8px;color:rgba(0,200,232,.5);letter-spacing:1.5px;margin-bottom:10px;">CRUISE HUB</div>
-          <div style="width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#00c8e8,#006a8a);margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 0 20px rgba(0,200,232,.35);">🛳️</div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:8px;color:#00c8e8;margin-top:8px;">CRUISE HUB</div>
-        </div>
-
-        <!-- Arrow -->
-        <div style="text-align:center;color:rgba(0,200,232,.4);font-size:16px;">→</div>
-
-        <!-- Automation Tools -->
-        <div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:8px;color:rgba(0,200,232,.5);letter-spacing:1.5px;text-align:center;margin-bottom:10px;">TOOLS</div>
-          <div style="display:flex;flex-direction:column;gap:7px;">
-            ${['M MAKE','📊 HUBSPOT','🧠 OPENAI','💬 TWILIO','📧 MAILCHIMP'].map(n=>`<div style="background:rgba(0,200,232,.07);border:1px solid rgba(0,200,232,.2);border-radius:8px;padding:7px 10px;font-family:'Orbitron',sans-serif;font-size:8px;color:#a0d8ef;text-align:center;">${n}</div>`).join('')}
-          </div>
-        </div>
-
-        <!-- Arrow -->
-        <div style="text-align:center;color:rgba(0,200,232,.4);font-size:16px;">→</div>
-
-        <!-- Sky Bot + Outputs -->
-        <div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:8px;color:rgba(0,200,232,.5);letter-spacing:1.5px;text-align:center;margin-bottom:10px;">SKY + OUTPUTS</div>
-          <div style="background:radial-gradient(circle at 41% 37%,rgba(255,255,255,.98),rgba(215,252,255,.9) 8%,rgba(110,228,255,.4) 18%,transparent 26%),radial-gradient(60% 7% at 41% 37%,rgba(255,255,255,.9),transparent 70%),radial-gradient(7% 48% at 41% 37%,rgba(255,255,255,.85),transparent 70%),radial-gradient(closest-side at 42% 44%,rgba(150,240,255,.5),rgba(45,185,240,.35) 55%,transparent 85%),radial-gradient(closest-side at 62% 60%,rgba(90,210,255,.42),rgba(20,150,225,.28) 58%,transparent 88%),radial-gradient(circle at 50% 55%,rgba(0,80,135,.95),#060e1c 78%);border-radius:8px;padding:8px;text-align:center;font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;color:#eafcff;margin-bottom:7px;box-shadow:0 0 14px rgba(0,200,232,.4);">SKY — AI ASSISTANT</div>
-          ${['📄 PROPOSAL PDF','📅 ADD TO CALENDAR','✅ BOOKING CONFIRM','⭐ POST-TRIP REVIEW'].map(n=>`<div style="background:rgba(0,200,232,.07);border:1px solid rgba(0,200,232,.2);border-radius:8px;padding:7px 10px;font-family:'Orbitron',sans-serif;font-size:8px;color:#a0d8ef;text-align:center;margin-bottom:7px;">${n}</div>`).join('')}
-        </div>
-      </div>
-    </div>` : ''}
   `;
 
   setTimeout(()=>{
@@ -6122,7 +6023,7 @@ ${kpiLines}
 AUTOMATIONS RUNNING:
 ${autoLines}
 
-ACTIVE ${c.short === 'JAGO' ? 'PROPERTIES' : c.short === 'DEBUSK' ? 'ACCOUNTS' : 'JOBS'} & STATUS:
+ACTIVE ${c.short === 'JAGO' ? 'PROPERTIES' : 'JOBS'} & STATUS:
 ${jobLines}
 
 RECENT ACTIVITY:

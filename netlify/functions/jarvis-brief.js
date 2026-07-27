@@ -21,9 +21,21 @@
 
 const ATTIO = 'https://api.attio.com/v2';
 
+const ALLOWED_ORIGINS = [
+  'https://app.skyrisepro.ai',
+  'https://skyrisepro.ai',
+  'https://www.skyrisepro.ai',
+  'https://skyrisepro.netlify.app',
+];
+
 exports.handler = async function (event) {
+  const origin = (event.headers || {}).origin || '';
   const headers = {
-    'Access-Control-Allow-Origin': '*',
+    // Pinned off '*'. NOTE: CORS only constrains browsers — it does NOT authenticate
+    // this endpoint. This function still returns the full Attio pipeline (deals +
+    // contact PII) to any direct (curl/server) caller. A real admin-identity gate is
+    // required and tracked in the security migration; this is harm-reduction only.
+    'Access-Control-Allow-Origin': ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
     'Content-Type': 'application/json',
     'Cache-Control': 'no-store',
   };
@@ -33,7 +45,11 @@ exports.handler = async function (event) {
     return { statusCode: 503, headers, body: JSON.stringify({ error: 'Brain not configured', detail: 'ATTIO_API_KEY missing' }) };
   }
   const auth = { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' };
-  const debug = (event.queryStringParameters || {}).debug || '';
+  // Debug modes (?debug=schema / ?debug=raw) dumped raw CRM structure + records.
+  // Disabled outside explicit local dev to shrink the exposure surface.
+  const debug = process.env.JARVIS_BRIEF_DEBUG === '1'
+    ? ((event.queryStringParameters || {}).debug || '')
+    : '';
 
   async function aGet(path) {
     const r = await fetch(`${ATTIO}${path}`, { headers: auth });

@@ -1244,7 +1244,9 @@ function updateFFProgress(idx){
   var lbl=document.getElementById('ff-progress-label');
   var pct=((idx+1)/FORM_FIELDS.length*100).toFixed(1);
   if(fill)fill.style.width=pct+'%';
-  if(lbl)lbl.textContent=(idx+1)+' OF '+FORM_FIELDS.length;
+  var sn=idx<5?1:idx<13?2:3;
+  var nm=idx<5?'PROJECT':idx<13?'YOUR TEAM':'SCOPE & TIMELINE';
+  if(lbl)lbl.textContent='SECTION '+sn+' OF 3 · '+nm;
 }
 
 /* ── Highlight active group ── */
@@ -1279,18 +1281,32 @@ function runField(idx){
   var field=FORM_FIELDS[idx];
   updateFFProgress(idx);
   activateGroup(field.id);
-  // Streamlined: Sky gave ONE summary up front — fields now auto-fill visually with no per-field narration
-  moveCursor(field.id,function(){
-    autoType(field.id,field.val,function(){
-      setTimeout(function(){runField(idx+1);},350);
+  var fillIt=function(){
+    moveCursor(field.id,function(){
+      autoType(field.id,field.val,function(){
+        setTimeout(function(){runField(idx+1);},220);
+      });
     });
-  });
+  };
+  // Sky narrates each of the three sections as it begins, then the fields fill quickly
+  if(_ffSections[idx]){
+    orbSpeak('form-orb',true);
+    formSkyTypewriter(_ffSections[idx], estimateDuration(_ffSections[idx]));
+    skySpeakPaced(_ffSections[idx],function(){ orbSpeak('form-orb',false); fillIt(); });
+  } else {
+    fillIt();
+  }
 }
+var _ffSections={
+  0:'First — the project itself. The entity, the space, the budget, and the scope of work.',
+  5:'Now every player on the court — your GC, architect, MEP engineer, PM, landlord, the city, and your subs. Make sure each one signs up so I can coordinate the whole court.',
+  13:'And the finish line — the scope, the completion date, and your rent commencement date. Everything I do from here protects that date.'
+};
 function startFormPhase(){
   _ffRunning=true;
   // Before building the project file, Sky emphasizes the two prerequisites:
   // (1) every project contact must sign up, (2) ~10 days to set up the team automations.
-  var introMsg='Here\'s everything I need to build your project file: the entity, project name, square footage, job cost, all your stakeholders, the city inspection agency and an email to track, and a short description of the work. Add those, make sure each contact signs up so I can coordinate the whole court, and I\'ll run the project for you end to end.';
+  var introMsg='Let me build your project file — I\'ll take it in three quick sections.';
   orbSpeak('form-orb',true);
   formSkyTypewriter(introMsg, estimateDuration(introMsg));
   skySpeakPaced(introMsg,function(){

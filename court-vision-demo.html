@@ -1411,7 +1411,13 @@ window.showSnapshot=function(){
 function buildSnapCharts(){
   var costEl=document.getElementById('snapCostChart');
   var timeEl=document.getElementById('snapTimelineChart');
-  if(!costEl||!timeEl||typeof Chart==='undefined')return;
+  if(!costEl||!timeEl)return;
+  // Wait until Chart.js (CDN) has loaded AND the canvas is actually visible/sized; retry otherwise.
+  if(typeof Chart==='undefined'||costEl.offsetParent===null||costEl.clientWidth===0){
+    if((buildSnapCharts._t=(buildSnapCharts._t||0)+1)<60){setTimeout(buildSnapCharts,150);}
+    return;
+  }
+  if(Chart.getChart&&Chart.getChart(costEl))return; // already built — don't double-init
 
   // Cost Breakdown — horizontal bar
   new Chart(costEl,{

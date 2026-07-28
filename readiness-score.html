@@ -130,7 +130,6 @@ footer a{color:var(--cyan);text-decoration:none;}
       <div class="band-tag" id="band-tag">—</div>
       <div class="diagnosis" id="diagnosis-text"></div>
       <a class="primary-btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;" href="https://scheduler.zoom.us/victor-polanco/skyrise-pro-free-strategy-call" target="_blank" rel="noopener">BOOK A FREE STRATEGY CALL →</a>
-      <button class="ghost-btn" onclick="rsRestart()">RETAKE THE ASSESSMENT</button>
     </div>
 
   </div>
@@ -317,17 +316,6 @@ function rsShowResults(){
   document.getElementById('step-results').classList.add('active');
 
   rsSubmitLead(score, band);
-}
-
-function rsRestart(){
-  rsAnswers = new Array(RS_QUESTIONS.length).fill(null);
-  rsCurrent = 0;
-  document.getElementById('step-results').classList.remove('active');
-  document.getElementById('quiz-questions').style.display='block';
-  document.getElementById('rs-name').value='';
-  document.getElementById('rs-email').value='';
-  document.getElementById('rs-company').value='';
-  rsBuildSteps();
 }
 
 rsBuildSteps();

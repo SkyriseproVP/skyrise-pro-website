@@ -3572,7 +3572,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <label class="support-label">HOW CAN WE HELP?</label>
       <textarea class="support-textarea" id="sup-message" placeholder="Describe your issue with as much detail as possible. It helps us help you!"></textarea>
 
-      <button class="support-submit" onclick="submitSupport()">SUBMIT REQUEST →</button>
+      <button class="support-submit" id="sup-submit-btn" onclick="submitSupport()">SUBMIT REQUEST →</button>
 
       <div class="support-divider"></div>
       <div class="support-alt">Prefer to talk? Call us at <a href="tel:+13526040928">(352) 604-0928</a></div>
@@ -4536,18 +4536,40 @@ function openSupport(){
 function closeSupport(){
   document.getElementById('support-overlay').classList.remove('open');
 }
-function submitSupport(){
+async function submitSupport(){
   const name    = (document.getElementById('sup-name').value||'').trim();
   const email   = (document.getElementById('sup-email').value||'').trim();
   const subject = (document.getElementById('sup-subject').value||'').trim();
   const message = (document.getElementById('sup-message').value||'').trim();
+  const type    = document.getElementById('sup-type').value;
   if(!name||!email||!subject||!message){
     alert('Please fill in all fields before submitting.');
     return;
   }
-  // Fire mailto as a fallback (replace with your backend/form endpoint later)
-  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nType: ${document.getElementById('sup-type').value}\n\n${message}`);
-  window.location.href = `mailto:info@skyrisepro.ai?subject=${encodeURIComponent(subject)}&body=${body}`;
+  const btn = document.getElementById('sup-submit-btn');
+  if(btn){ btn.disabled = true; btn.textContent = 'SENDING...'; }
+
+  // Primary path: same Lead Capture Webhook already proven to work (readiness score uses it too).
+  // Falls back to mailto (opens the visitor's own mail client) only if the webhook attempt fails —
+  // never rely on a single silent channel again.
+  let delivered = false;
+  try{
+    const res = await fetch('https://hook.us2.make.com/4qm0ixlmg7puirg8li4ct7n8tzwcln4f',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({source:'support_request',first_name:name,email:email,company:'',message:`[${type}] ${subject}\n\n${message}`})
+    });
+    delivered = !!(res && res.ok);
+  }catch(e){
+    console.warn('Support webhook error, falling back to mailto:', e);
+  }
+
+  if(!delivered){
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nType: ${type}\n\n${message}`);
+    window.location.href = `mailto:info@skyrisepro.ai?subject=${encodeURIComponent(subject)}&body=${body}`;
+  }
+
+  if(btn){ btn.disabled = false; btn.textContent = 'SUBMIT REQUEST →'; }
   document.getElementById('support-form').style.display = 'none';
   document.getElementById('support-success').style.display = 'block';
 }

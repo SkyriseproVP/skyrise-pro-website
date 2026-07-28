@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X4WP0XX2KK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-X4WP0XX2KK');
+</script>
+<title>AI Readiness Score — Skyrise Pro</title>
+<meta name="description" content="Score your operation in 90 seconds. Six questions, one honest readout of where AI automation would save you the most time and money right now.">
+<meta property="og:title" content="AI Readiness Score — Skyrise Pro">
+<meta property="og:description" content="Score your operation in 90 seconds. Six questions, one honest readout.">
+<meta property="og:image" content="https://skyrisepro.ai/skyrise-cyan-transparent.png">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+:root{
+  --cyan:#00c8e8;--cyan2:#00deff;--cyan-dim:rgba(0,200,232,0.12);
+  --navy:#0a0f1e;--navy2:#0d1526;
+  --amber:#ff6b35;
+  --body-dim:rgba(13,21,38,0.62);
+}
+body{font-family:'Inter',sans-serif;background:#f0f8ff;color:#0d1526;line-height:1.5;min-height:100vh;}
+
+nav{background:#fff;border-bottom:2px solid rgba(0,200,232,.15);height:120px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;}
+nav img{height:140px;width:auto;}
+.back{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--cyan);text-decoration:none;border:1px solid var(--cyan);border-radius:8px;padding:8px 16px;transition:all .2s;}
+.back:hover{background:var(--cyan);color:#000;}
+
+.wrap{max-width:640px;margin:0 auto;padding:56px 24px 80px;}
+.eyebrow{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--cyan);text-align:center;margin-bottom:14px;}
+h1{font-family:'Orbitron',sans-serif;font-size:clamp(26px,5vw,40px);font-weight:900;text-align:center;letter-spacing:-.5px;margin-bottom:10px;}
+.lede{text-align:center;color:var(--body-dim);font-size:15px;max-width:460px;margin:0 auto 40px;}
+
+.card{background:#fff;border:1px solid rgba(0,200,232,.25);border-radius:16px;padding:36px 32px;box-shadow:0 20px 60px rgba(13,21,38,.08);}
+
+/* progress */
+.progress-row{display:flex;gap:6px;margin-bottom:28px;}
+.progress-seg{flex:1;height:4px;border-radius:2px;background:rgba(0,200,232,.15);overflow:hidden;}
+.progress-seg.done{background:var(--cyan);}
+.progress-label{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--body-dim);margin-bottom:18px;}
+
+.q-step{display:none;}
+.q-step.active{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.q-title{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;line-height:1.4;margin-bottom:22px;}
+
+.opt-btn{display:block;width:100%;text-align:left;background:#f7fbfd;border:1.5px solid rgba(0,200,232,.2);border-radius:8px;padding:16px 18px;margin-bottom:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#0d1526;cursor:pointer;transition:all .18s;}
+.opt-btn:hover{border-color:var(--cyan);background:var(--cyan-dim);}
+.opt-btn.selected{border-color:var(--cyan);background:var(--cyan-dim);box-shadow:0 0 0 1px var(--cyan) inset;}
+
+.modal-input,.modal-select{width:100%;background:#f7fbfd;border:1.5px solid rgba(0,200,232,.2);border-radius:8px;padding:13px 16px;font-family:'Inter',sans-serif;font-size:14px;color:#0d1526;margin-bottom:12px;}
+.modal-input:focus,.modal-select:focus{outline:none;border-color:var(--cyan);}
+.modal-label{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--body-dim);display:block;margin-bottom:6px;}
+
+.primary-btn{width:100%;background:var(--cyan);border:none;border-radius:8px;padding:15px;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:800;letter-spacing:1.5px;color:#000;cursor:pointer;transition:all .2s;margin-top:6px;}
+.primary-btn:hover{background:var(--cyan2);}
+.primary-btn:disabled{opacity:.4;cursor:not-allowed;}
+.ghost-btn{width:100%;background:none;border:1.5px solid rgba(13,21,38,.15);border-radius:8px;padding:13px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--body-dim);cursor:pointer;margin-top:10px;}
+.ghost-btn:hover{border-color:var(--cyan);color:var(--cyan);}
+
+.fine-print{font-size:10px;color:#9aa5b8;line-height:1.5;margin-top:10px;text-align:center;}
+
+/* results */
+#step-results{display:none;text-align:center;}
+#step-results.active{display:block;animation:fadeIn .4s ease;}
+.score-ring{width:140px;height:140px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;position:relative;background:conic-gradient(var(--cyan) calc(var(--pct,50) * 1%), rgba(0,200,232,.12) 0);}
+.score-ring::before{content:'';position:absolute;inset:10px;border-radius:50%;background:#fff;}
+.score-num{position:relative;font-family:'Orbitron',sans-serif;font-size:34px;font-weight:900;z-index:1;}
+.score-num span{display:block;font-size:9px;font-weight:700;letter-spacing:1.5px;color:var(--body-dim);margin-top:2px;}
+.band-tag{display:inline-block;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:800;letter-spacing:2px;padding:6px 18px;border-radius:8px;margin-bottom:18px;}
+.band-foundational{background:rgba(0,200,232,.12);color:#0891b2;}
+.band-ready{background:rgba(255,107,53,.14);color:#c2410c;}
+.band-urgent{background:rgba(220,38,38,.12);color:#dc2626;}
+.diagnosis{font-size:15px;color:#2a3550;line-height:1.6;max-width:460px;margin:0 auto 26px;text-align:left;background:#f7fbfd;border-left:3px solid var(--cyan);border-radius:8px;padding:16px 20px;}
+.diagnosis b{color:#0d1526;}
+
+footer{text-align:center;margin-top:32px;font-family:'Orbitron',sans-serif;font-size:9px;color:#9aa5b8;letter-spacing:1px;}
+footer a{color:var(--cyan);text-decoration:none;}
+
+@media(max-width:480px){.card{padding:26px 20px;}nav{padding:0 20px;height:96px;}nav img{height:110px;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img src="skyrise-cyan-transparent.png" alt="Skyrise Pro"></a>
+  <a class="back" href="index.html">← BACK TO SITE</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">FREE · 90-SECOND ASSESSMENT</div>
+  <h1>AI READINESS SCORE</h1>
+  <p class="lede">Six quick questions about how your operation actually runs today — no fluff, no sales pitch. Just an honest read on where automation would save you the most, starting this week.</p>
+
+  <div class="card">
+
+    <!-- Questions -->
+    <div id="quiz-questions">
+      <div class="progress-row" id="progress-row"></div>
+      <div class="progress-label" id="progress-label">QUESTION 1 OF 6</div>
+      <div id="q-steps"></div>
+    </div>
+
+    <!-- Capture -->
+    <div class="q-step" id="step-capture">
+      <div class="q-title">Almost there — where should we send your Score?</div>
+      <label class="modal-label">FIRST NAME</label>
+      <input class="modal-input" id="rs-name" type="text" placeholder="Your First Name">
+      <label class="modal-label">EMAIL ADDRESS</label>
+      <input class="modal-input" id="rs-email" type="email" placeholder="you@yourcompany.com">
+      <label class="modal-label">COMPANY NAME</label>
+      <input class="modal-input" id="rs-company" type="text" placeholder="Your Company">
+      <button class="primary-btn" id="rs-submit-btn" onclick="rsShowResults()">SEE MY SCORE →</button>
+      <p class="fine-print">We'll email your results. No spam, unsubscribe anytime. See our <a href="privacy.html" style="color:var(--cyan);">Privacy Policy</a>.</p>
+    </div>
+
+    <!-- Results -->
+    <div id="step-results">
+      <div class="score-ring" id="score-ring">
+        <div class="score-num" id="score-num">–<span>OUT OF 18</span></div>
+      </div>
+      <div class="band-tag" id="band-tag">—</div>
+      <div class="diagnosis" id="diagnosis-text"></div>
+      <a class="primary-btn" style="display:block;text-decoration:none;text-align:center;box-sizing:border-box;" href="https://scheduler.zoom.us/victor-polanco/skyrise-pro-free-strategy-call" target="_blank" rel="noopener">BOOK A FREE STRATEGY CALL →</a>
+      <button class="ghost-btn" onclick="rsRestart()">RETAKE THE ASSESSMENT</button>
+    </div>
+
+  </div>
+
+  <footer>SKYRISE PRO · <a href="index.html">skyrisepro.ai</a></footer>
+</div>
+
+<script>
+// ── Question bank — mirrors Scout's live-conversation ICP scorecard (icp-lead-scoring.md), reworded self-serve ──
+const RS_QUESTIONS = [
+  {
+    title:"How do leads and calls come in today?",
+    opts:[
+      {label:"We have a CRM that mostly runs itself",val:1,tag:"crm"},
+      {label:"Spreadsheet, or a partial system",val:2,tag:"crm"},
+      {label:"Phone and memory — that's really it",val:3,tag:"crm"}
+    ]
+  },
+  {
+    title:"When things get busy, does anything actually slip through the cracks?",
+    opts:[
+      {label:"Rarely — we have backup systems",val:1,tag:"leaks"},
+      {label:"Sometimes",val:2,tag:"leaks"},
+      {label:"Regularly — it's a visible, ongoing problem",val:3,tag:"leaks"}
+    ]
+  },
+  {
+    title:"How many active projects or clients are you juggling right now?",
+    opts:[
+      {label:"Under 10",val:1,tag:"scale"},
+      {label:"10–50",val:2,tag:"scale"},
+      {label:"50+",val:3,tag:"scale"}
+    ]
+  },
+  {
+    title:"How many other people typically touch a deal — GC, architects, subs, PMs?",
+    opts:[
+      {label:"Just me",val:1,tag:"coordination"},
+      {label:"2–3 other parties",val:2,tag:"coordination"},
+      {label:"Multi-party coordination on nearly every job",val:3,tag:"coordination"}
+    ]
+  },
+  {
+    title:"How long does it usually take you to get a proposal or quote out after a call?",
+    opts:[
+      {label:"Same day",val:1,tag:"proposals"},
+      {label:"A few days",val:2,tag:"proposals"},
+      {label:"A week or more — whenever I get to it",val:3,tag:"proposals"}
+    ]
+  },
+  {
+    title:"If you found the right fix for this today, would you actually move on it?",
+    opts:[
+      {label:"Curious, but no real timeline",val:1,tag:"urgency"},
+      {label:"Interested — actively exploring options",val:2,tag:"urgency"},
+      {label:"Ready to act, budget isn't the blocker",val:3,tag:"urgency"}
+    ]
+  }
+];
+
+const RS_DIAGNOSIS = {
+  crm:"Your <b>lead intake</b> is the leak. Every call or inquiry that isn't captured automatically is a deal someone else is closing instead. A basic CRM + auto-capture fixes this in the first two weeks.",
+  leaks:"Things are <b>falling through the cracks</b> when volume spikes — the exact moments you can least afford it. Automated follow-up removes the human memory requirement entirely.",
+  scale:"You're running enough volume that <b>manual coordination is the ceiling</b> on your growth, not demand. Automation is what lets you take on more without hiring ahead of revenue.",
+  coordination:"With this many parties touching each deal, <b>miscommunication is the tax you're paying</b> on every project. A shared system that keeps everyone updated automatically removes that tax.",
+  proposals:"Your <b>proposal turnaround</b> is costing you deals to whoever responds first. Same-day, automated proposals are one of the fastest ROI wins available to you right now.",
+  urgency:"You already know what needs to change — the only real question left is <b>how soon you start</b>."
+};
+
+let rsCurrent = 0;
+let rsAnswers = new Array(RS_QUESTIONS.length).fill(null);
+
+function rsBuildSteps(){
+  const wrap = document.getElementById('q-steps');
+  wrap.innerHTML = RS_QUESTIONS.map((q,i)=>`
+    <div class="q-step${i===0?' active':''}" data-step="${i}">
+      <div class="q-title">${q.title}</div>
+      ${q.opts.map((o,oi)=>`<button type="button" class="opt-btn" onclick="rsAnswer(${i},${oi})">${o.label}</button>`).join('')}
+    </div>
+  `).join('');
+  rsBuildProgress();
+}
+
+function rsBuildProgress(){
+  const row = document.getElementById('progress-row');
+  row.innerHTML = RS_QUESTIONS.map((_,i)=>`<div class="progress-seg${i<rsCurrent?' done':''}" id="seg-${i}"></div>`).join('');
+}
+
+function rsAnswer(qIndex, optIndex){
+  rsAnswers[qIndex] = RS_QUESTIONS[qIndex].opts[optIndex];
+  const stepEl = document.querySelector(`.q-step[data-step="${qIndex}"]`);
+  stepEl.querySelectorAll('.opt-btn').forEach((b,i)=>b.classList.toggle('selected', i===optIndex));
+  setTimeout(()=>rsGoTo(qIndex+1), 220);
+}
+
+function rsGoTo(next){
+  rsCurrent = next;
+  document.querySelectorAll('#q-steps .q-step').forEach(el=>el.classList.remove('active'));
+  if(next < RS_QUESTIONS.length){
+    document.querySelector(`.q-step[data-step="${next}"]`).classList.add('active');
+    document.getElementById('progress-label').textContent = `QUESTION ${next+1} OF ${RS_QUESTIONS.length}`;
+    rsBuildProgress();
+  } else {
+    document.getElementById('quiz-questions').style.display='none';
+    document.getElementById('step-capture').classList.add('active');
+  }
+}
+
+function rsScore(){
+  return rsAnswers.reduce((sum,a)=>sum+(a?a.val:0),0);
+}
+
+function rsTopTag(){
+  let best=null;
+  rsAnswers.forEach(a=>{ if(a && (!best || a.val>best.val)) best=a; });
+  return best ? best.tag : 'crm';
+}
+
+async function rsPostLead(payload){
+  const res = await fetch('https://hook.us2.make.com/4qm0ixlmg7puirg8li4ct7n8tzwcln4f',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  if(!res || !res.ok) throw new Error('Lead webhook responded with ' + (res && res.status));
+}
+
+// Never let a completed quiz silently vanish: retry once, and if that also fails,
+// keep it on-device so it isn't lost outright (nothing auto-flushes this yet — it's
+// a safety net, not a delivery guarantee — see the client-portal ticket-system build for the real fix).
+async function rsSubmitLead(score, band){
+  const payload = {
+    source:"ai_readiness_score",
+    first_name: document.getElementById('rs-name').value.trim(),
+    email: document.getElementById('rs-email').value.trim(),
+    company: document.getElementById('rs-company').value.trim(),
+    score: score,
+    band: band,
+    ts: new Date().toISOString()
+  };
+  try{
+    await rsPostLead(payload);
+  }catch(e1){
+    console.warn('Readiness score webhook failed, retrying once:', e1);
+    await new Promise(r=>setTimeout(r,1500));
+    try{
+      await rsPostLead(payload);
+    }catch(e2){
+      console.warn('Readiness score webhook failed twice — saving locally:', e2);
+      try{
+        const key='skyrise_failed_leads';
+        const queue = JSON.parse(localStorage.getItem(key) || '[]');
+        queue.push(payload);
+        localStorage.setItem(key, JSON.stringify(queue));
+      }catch(e3){ /* localStorage unavailable — nothing further we can do client-side */ }
+    }
+  }
+  if(typeof gtag === 'function'){
+    gtag('event','ai_readiness_score_completed',{score:score,band:band});
+  }
+}
+
+function rsShowResults(){
+  const email = document.getElementById('rs-email').value.trim();
+  if(!email || !email.includes('@')){
+    document.getElementById('rs-email').style.borderColor = '#dc2626';
+    return;
+  }
+  const score = rsScore();
+  const pct = Math.round((score/18)*100);
+  let band, bandClass;
+  if(score <= 9){ band='FOUNDATIONAL'; bandClass='band-foundational'; }
+  else if(score <= 13){ band='READY'; bandClass='band-ready'; }
+  else { band='URGENT'; bandClass='band-urgent'; }
+
+  document.getElementById('score-ring').style.setProperty('--pct', pct);
+  document.getElementById('score-num').innerHTML = `${score}<span>OUT OF 18</span>`;
+  const tagEl = document.getElementById('band-tag');
+  tagEl.textContent = band;
+  tagEl.className = 'band-tag ' + bandClass;
+  document.getElementById('diagnosis-text').innerHTML = RS_DIAGNOSIS[rsTopTag()];
+
+  document.getElementById('step-capture').classList.remove('active');
+  document.getElementById('step-results').classList.add('active');
+
+  rsSubmitLead(score, band);
+}
+
+function rsRestart(){
+  rsAnswers = new Array(RS_QUESTIONS.length).fill(null);
+  rsCurrent = 0;
+  document.getElementById('step-results').classList.remove('active');
+  document.getElementById('quiz-questions').style.display='block';
+  document.getElementById('rs-name').value='';
+  document.getElementById('rs-email').value='';
+  document.getElementById('rs-company').value='';
+  rsBuildSteps();
+}
+
+rsBuildSteps();
+</script>
+
+</body>
+</html>

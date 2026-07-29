@@ -4549,19 +4549,36 @@ async function submitSupport(){
   const btn = document.getElementById('sup-submit-btn');
   if(btn){ btn.disabled = true; btn.textContent = 'SENDING...'; }
 
-  // Primary path: same Lead Capture Webhook already proven to work (readiness score uses it too).
-  // Falls back to mailto (opens the visitor's own mail client) only if the webhook attempt fails —
-  // never rely on a single silent channel again.
+  // Three layers, because a support request must never vanish silently:
+  //  1. /api/support-request on the app — records a real ticket in the SAME
+  //     tickets table the client portal uses, so website and in-portal requests
+  //     land in one list. It 502s only if BOTH the DB write and the alert failed.
+  //  2. Lead Capture webhook — interim net while the app's Supabase/alert env
+  //     vars are still being wired up; proven working today.
+  //  3. mailto — last resort, opens the visitor's own mail client.
   let delivered = false;
   try{
-    const res = await fetch('https://hook.us2.make.com/4qm0ixlmg7puirg8li4ct7n8tzwcln4f',{
+    const res = await fetch('https://app.skyrisepro.ai/api/support-request',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({source:'support_request',first_name:name,email:email,company:'',message:`[${type}] ${subject}\n\n${message}`})
+      body:JSON.stringify({name, email, type, subject, message})
     });
     delivered = !!(res && res.ok);
   }catch(e){
-    console.warn('Support webhook error, falling back to mailto:', e);
+    console.warn('Support request endpoint error, trying fallback:', e);
+  }
+
+  if(!delivered){
+    try{
+      const res = await fetch('https://hook.us2.make.com/4qm0ixlmg7puirg8li4ct7n8tzwcln4f',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({source:'support_request',first_name:name,email:email,company:'',message:`[${type}] ${subject}\n\n${message}`})
+      });
+      delivered = !!(res && res.ok);
+    }catch(e){
+      console.warn('Support webhook error, falling back to mailto:', e);
+    }
   }
 
   if(!delivered){

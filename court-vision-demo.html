@@ -2562,9 +2562,9 @@ var _demoFired=false;
           <div class="cvs-plan-mo">/month</div>
           <div class="cvs-plan-desc">Full agency — ROI reports, priority support, strategy calls</div>
         </div>
-        <div class="cvs-plan-card" id="cvs-plan-enterprise" onclick="selectCVSPlan('enterprise','COURT VISION','$1,649.89')">
+        <div class="cvs-plan-card" id="cvs-plan-enterprise" onclick="selectCVSPlan('enterprise','COURT VISION','Priced per project')">
           <div class="cvs-plan-name" style="color:#00c8e8;">🏀 COURT VISION</div>
-          <div class="cvs-plan-price">$1,649.89</div>
+          <div class="cvs-plan-price" style="font-size:15px;">Priced per project</div>
           <div class="cvs-plan-mo">/mo per project</div>
           <div class="cvs-plan-desc">Per active project, billed until deadline — full team, stakeholder portals</div>
         </div>
@@ -2654,7 +2654,9 @@ var CV_STRIPE_LINKS={
   essential:    'https://buy.stripe.com/28EcN7agG56va9A2t84Vy01',
   professional: 'https://buy.stripe.com/cNi9AVcoObuT1D4ebQ4Vy0a',
   elite:        'https://buy.stripe.com/4gM28t4Wm8iH1D46Jo4Vy0c',
-  enterprise:   'https://buy.stripe.com/bJedRbcoOcyX95wd7M4Vy09'
+  // Court Vision is QUOTED PER PROJECT — no public checkout. Sentinel trips the existing
+  // guard below. Do NOT delete this key: the || fallback would charge the Professional price.
+  enterprise:   'REPLACE_COURT_VISION_QUOTED_PER_PROJECT'
 };
 
 // Secure proxy — webhook URL lives in Netlify env, never in browser source

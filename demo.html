@@ -1040,10 +1040,10 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <div class="fpc-name" style="font-size:12px;margin-bottom:2px;color:rgba(0,200,232,.75);">FLAGSHIP</div>
         <div style="font-size:8px;letter-spacing:1.5px;color:rgba(255,255,255,.45);margin-bottom:8px;">🏀 COURT VISION</div>
         <div style="font-family:'Orbitron',sans-serif;font-size:9px;font-weight:600;color:rgba(0,200,232,.45);letter-spacing:2px;margin-bottom:3px;">STARTING AT</div>
-        <div class="fpc-price" style="font-size:21px;">$1,649.89<span style="font-size:12px;font-weight:600;">/mo</span></div>
+        <div class="fpc-price" style="font-size:15px;line-height:1.25;">Priced<span style="font-size:12px;font-weight:600;"> per project</span></div>
         <div class="fpc-desc" style="margin-bottom:8px;font-size:9.5px;">Every stage tracked · Sky coordinates every stakeholder · Real-time alerts · LOI to completion</div>
         <div class="fpc-desc" style="color:rgba(255,255,255,.25);font-size:8.5px;line-height:1.45;">Priced per active project, billed monthly until your deadline. Each project gets its own tracker — add-ons discussed on your strategy call.</div>
-        <button onclick="event.stopPropagation();openSignup('enterprise','COURT VISION','$1,649.89')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
+        <button onclick="event.stopPropagation();openSignup('enterprise','COURT VISION','Priced per project')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
       </div>
 
     </div>
@@ -1116,7 +1116,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <div class="vplan-card featured-plan" id="vp-enterprise">
           <div class="vplan-pop">🏀 PER ACTIVE PROJECT</div>
           <div class="vplan-tier">COURT VISION</div>
-          <div class="vplan-price">$1,649.89<span>/month</span></div>
+          <div class="vplan-price" style="font-size:18px;">Priced<span> per project</span></div>
           <div class="vplan-desc">Your full team and every stakeholder on one live court — every handoff tracked and coordinated end to end, plus the cinematic project film. Billed per active project.</div>
           <a href="index.html#pricing" target="_blank" class="vplan-btn">GET STARTED</a>
         </div>
@@ -2422,7 +2422,10 @@ const STRIPE_LINKS = {
   essential:     'https://buy.stripe.com/28EcN7agG56va9A2t84Vy01',
   professional:  'https://buy.stripe.com/cNi9AVcoObuT1D4ebQ4Vy0a',
   elite:         'https://buy.stripe.com/4gM28t4Wm8iH1D46Jo4Vy0c',
-  enterprise:    'https://buy.stripe.com/bJedRbcoOcyX95wd7M4Vy09',
+  // Court Vision is QUOTED PER PROJECT — no public checkout. The sentinel below trips the
+  // existing "no link configured" guard, which routes to the confirmation + booking path
+  // instead of Stripe. Do NOT delete this key: the || fallback would charge the Professional price.
+  enterprise:    'REPLACE_COURT_VISION_QUOTED_PER_PROJECT',
   // Video plans
   cinematic:     'https://buy.stripe.com/REPLACE_CINEMATIC_LINK',
   enterprise_vid:'https://buy.stripe.com/REPLACE_ENTERPRISE_VID_LINK',
@@ -2539,7 +2542,7 @@ document.getElementById('demo-plan-cv')?.addEventListener('click', function(){
   openSignup('professional','PROFESSIONAL','$749.89');
 });
 document.getElementById('demo-plan-court')?.addEventListener('click', function(){
-  openSignup('enterprise','COURT VISION','$1,649.89');
+  openSignup('enterprise','COURT VISION','Priced per project');
 });
 
 // DEPLOY SKY NOW
@@ -2555,7 +2558,7 @@ document.getElementById('vp-elite')?.querySelector('.vplan-btn')?.addEventListen
   e.preventDefault(); openSignup('elite','ELITE','$849.89');
 });
 document.getElementById('vp-enterprise')?.querySelector('.vplan-btn')?.addEventListener('click', function(e){
-  e.preventDefault(); openSignup('enterprise','COURT VISION','$1,649.89');
+  e.preventDefault(); openSignup('enterprise','COURT VISION','Priced per project');
 });
 document.getElementById('vp-standalone')?.querySelector('.vplan-btn')?.addEventListener('click', function(e){
   e.preventDefault(); openSignup('standalone','STANDALONE VIDEO','$1,750');

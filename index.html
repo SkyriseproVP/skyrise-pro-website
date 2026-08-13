@@ -145,7 +145,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-headline .hl-word{white-space:nowrap;}
 .hero-headline .hl-sep{color:var(--cyan);padding:0 .34em;font-weight:700;}
 .hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(12px,1.2vw,16px);font-weight:700;letter-spacing:1.6px;color:#0a1628;margin:0 auto;line-height:1.55;text-align:center;text-transform:uppercase;width:100%;max-width:600px;}
-.hero-sub-2{color:var(--cyan);display:block;} /* payoff half always breaks to its own line, at the em dash */
+.hero-sub-2{color:var(--cyan);display:block;} /* payoff half always breaks to its own line */
 .hero-body-line{font-family:system-ui,sans-serif;font-size:clamp(14px,1.1vw,17px);font-weight:400;letter-spacing:0;color:rgba(10,22,40,0.66);text-align:center;text-transform:none;width:100%;max-width:580px;margin:16px auto 30px;line-height:1.62;}
 .hero-autopilot{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:36px;width:100%;}
 .hero-autopilot-svg{flex:0 0 70px;width:70px;height:3px;overflow:visible;}
@@ -187,7 +187,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
      words run BIGGER than the wrapped version. */
   .hero-headline{flex-direction:column !important;font-size:28px !important;letter-spacing:1.5px !important;line-height:1.22 !important;}
   .hero-headline .hl-sep{display:none !important;}
-  .hero-sub-2{display:block !important;} /* promise line breaks at the em dash */
+  .hero-sub-2{display:block !important;} /* payoff half on its own line */
   /* CTAs stack full-width and equal on phones instead of centering at two different widths */
   .hero-btns{flex-direction:column !important;width:100% !important;max-width:300px !important;}
   .hero-btn-cyan,.hero-btn-book{width:100% !important;min-width:0 !important;}
@@ -1627,7 +1627,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <h1 class="hero-headline">
       <span class="hl-word">ACCELERATE</span><span class="hl-sep">•</span><span class="hl-word">ELEVATE</span><span class="hl-sep">•</span><span class="hl-word">DOMINATE</span>
     </h1>
-    <p class="hero-sub">Your business should be doing more — <span class="hero-sub-2">not requiring more of you.</span></p>
+    <p class="hero-sub">Your business should be doing more<span class="hero-sub-2">not requiring more of you.</span></p>
     <p class="hero-body-line">Skyrise Pro gives growing businesses AI-powered systems that handle the repetitive work, follow-up, communication, and workflows — so you can reclaim your time and focus on growth.</p>
     <div class="hero-btns">
       <a href="#services" class="hero-btn-cyan">SEE HOW SKYRISE WORKS <span>→</span></a>

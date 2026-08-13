@@ -140,18 +140,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 #hero{min-height:auto;padding-top:168px;padding-bottom:96px;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(to right,#c5e8f5 0%,#c5e8f5 20%,#dff2fb 32%,#eef8fd 46%,#ffffff 60%,#ffffff 100%);}
 .hero-circuit{display:none;}
 .hero-circuit-svg{position:absolute;left:0;top:120px;height:100%;width:200px;z-index:0;pointer-events:none;opacity:.18;}
-.hero-content{position:relative;z-index:2;width:100%;max-width:680px;margin:0 auto;padding:16px 40px;display:flex;flex-direction:column;align-items:center;text-align:center;}
-.hero-headline{font-family:'Orbitron',sans-serif;font-size:clamp(26px,3vw,44px);font-weight:900;letter-spacing:3px;line-height:1.15;color:#0a1628;font-style:normal;margin-bottom:12px;text-align:center;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;width:100%;gap:0;}
-.hero-headline .sep{color:#0a1628;}
-.hl-line{display:block;text-align:center;width:100%;}
-.hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(11px,1.15vw,15px);font-weight:700;letter-spacing:2px;color:var(--cyan);margin-bottom:0;line-height:1.5;text-align:center;text-transform:uppercase;width:100%;}
-.hero-body-line{font-family:system-ui,sans-serif;font-size:clamp(14px,1.25vw,19px);font-weight:400;letter-spacing:0;color:rgba(10,22,40,0.65);text-align:center;text-transform:none;width:100%;margin-bottom:10px;}
-.hero-dominate-line{font-family:'Orbitron',sans-serif;font-size:clamp(16px,1.45vw,22px);font-weight:900;letter-spacing:2px;color:#0a1628;text-align:center;width:100%;margin-bottom:24px;}
+.hero-content{position:relative;z-index:2;width:100%;max-width:780px;margin:0 auto;padding:16px 40px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.hero-headline{font-family:'Orbitron',sans-serif;font-size:clamp(21px,2.1vw,30px);font-weight:900;letter-spacing:1.5px;line-height:1.14;color:#0a1628;font-style:normal;margin-bottom:18px;text-align:center;text-transform:uppercase;display:flex;flex-flow:row wrap;align-items:center;justify-content:center;width:100%;gap:0;}
+.hero-headline .hl-word{white-space:nowrap;}
+.hero-headline .hl-sep{color:var(--cyan);padding:0 .34em;font-weight:700;}
+.hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(12px,1.2vw,16px);font-weight:700;letter-spacing:1.6px;color:#0a1628;margin:0 auto;line-height:1.55;text-align:center;text-transform:uppercase;width:100%;max-width:600px;}
+.hero-sub-2{color:var(--cyan);display:block;} /* payoff half always breaks to its own line, at the em dash */
+.hero-body-line{font-family:system-ui,sans-serif;font-size:clamp(14px,1.1vw,17px);font-weight:400;letter-spacing:0;color:rgba(10,22,40,0.66);text-align:center;text-transform:none;width:100%;max-width:580px;margin:16px auto 30px;line-height:1.62;}
 .hero-autopilot{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:36px;width:100%;}
 .hero-autopilot-svg{flex:0 0 70px;width:70px;height:3px;overflow:visible;}
 .hero-autopilot-text{font-family:'Orbitron',sans-serif;font-size:clamp(14px,1.6vw,22px);font-weight:700;letter-spacing:1px;color:var(--cyan);white-space:nowrap;text-transform:uppercase;}
-.hero-btns{display:flex;flex-direction:column;gap:7px;width:clamp(180px,38%,250px);align-items:stretch;}
-.hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:40px;box-sizing:border-box;width:100%;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;text-decoration:none;-webkit-appearance:none;appearance:none;margin:0;padding:0 16px;line-height:1.15;border:1.5px solid transparent;text-align:center;}
+.hero-btns{display:flex;flex-direction:column;gap:12px;width:clamp(250px,34%,300px);align-items:stretch;justify-content:center;}
+.hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:46px;box-sizing:border-box;width:100%;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;text-decoration:none;-webkit-appearance:none;appearance:none;margin:0;padding:0 24px;line-height:1.15;border:1.5px solid transparent;text-align:center;}
 .hero-btn-dark{background:var(--navy2);color:#fff;border-color:var(--navy2);}
 .hero-btn-dark:hover{background:#1a2540;border-color:#1a2540;}
 .hero-btn-cyan{background:var(--cyan);color:#000;border-color:var(--navy2);font-weight:800;box-shadow:0 4px 20px rgba(0,200,232,.35);}
@@ -182,10 +182,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @media(max-width:600px){
   .srv-header-box{flex-direction:column !important;align-items:flex-start !important;gap:8px !important;}
   .srv-header-box > div:nth-child(2){display:none !important;} /* hide the vertical divider when stacked */
-  /* Hero heading: shrink + allow wrap so it never gets cut off on phones */
-  .hero-headline{font-size:22px !important;letter-spacing:1px !important;}
-  .hero-headline .hl-line{white-space:normal !important;}
-  .hero-sub-2{display:block !important;} /* sub-hero: "THE BALL IS ON." drops to its own line on phones */
+  /* Hero heading on phones: stack the three words as a vertical lockup. The bullets are
+     hidden here — at phone width they'd orphan at a line edge, and stacking lets the
+     words run BIGGER than the wrapped version. */
+  .hero-headline{flex-direction:column !important;font-size:28px !important;letter-spacing:1.5px !important;line-height:1.22 !important;}
+  .hero-headline .hl-sep{display:none !important;}
+  .hero-sub-2{display:block !important;} /* promise line breaks at the em dash */
+  /* CTAs stack full-width and equal on phones instead of centering at two different widths */
+  .hero-btns{flex-direction:column !important;width:100% !important;max-width:300px !important;}
+  .hero-btn-cyan,.hero-btn-book{width:100% !important;min-width:0 !important;}
   /* Keep all page content from spilling past the phone's right edge */
   html,body{overflow-x:hidden !important;}
   /* CLR / client automation workflow: stack the columns VERTICALLY on phones (no sideways scroll) */
@@ -959,12 +964,11 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   /* No padding-right — hero stays fully centered at full font size */
   #hero{padding-top:168px;padding-bottom:96px;padding-right:0;}
   .hero-circuit-svg{top:120px;}
-  .hero-headline{font-size:clamp(26px,3vw,44px);letter-spacing:3px;}
-  .hero-sub{font-size:clamp(10px,1vw,14px);}
-  .hero-body-line{font-size:clamp(13px,1.1vw,17px);}
-  .hero-dominate-line{font-size:clamp(15px,1.3vw,20px);}
-  .hero-btns{gap:8px;width:clamp(220px,48%,320px);}
-  .hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:40px;padding:0 16px;font-size:10.5px;}
+  .hero-headline{font-size:clamp(21px,2.1vw,30px);letter-spacing:1.5px;}
+  .hero-sub{font-size:clamp(11px,1.05vw,15px);}
+  .hero-body-line{font-size:clamp(13px,1.05vw,16px);}
+  .hero-btns{gap:12px;width:clamp(250px,34%,300px);}
+  .hero-btn-dark,.hero-btn-cyan,.hero-btn-book{height:46px;padding:0 24px;font-size:11px;}
   /* Image fades in from the right without disturbing the centered text */
   .hero-image{width:clamp(260px,34%,480px);top:130px;opacity:.85;}
 }
@@ -1621,18 +1625,15 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 
   <div class="hero-content">
     <h1 class="hero-headline">
-      <span class="hl-line" style="white-space:nowrap;display:block;">AUTOMATE. ELEVATE.</span>
-      <span class="hl-line">DOMINATE.</span>
+      <span class="hl-word">ACCELERATE</span><span class="hl-sep">•</span><span class="hl-word">ELEVATE</span><span class="hl-sep">•</span><span class="hl-word">DOMINATE</span>
     </h1>
-    <p class="hero-sub" style="margin-bottom:10px;">ALWAYS KNOW WHOSE COURT <span class="hero-sub-2">THE BALL IS ON.</span></p>
-    <p class="hero-body-line">The only platform that → Automates the handoff. Elevates the team.</p>
-    <p class="hero-dominate-line">Dominate the deal.</p>
+    <p class="hero-sub">Your business should be doing more — <span class="hero-sub-2">not requiring more of you.</span></p>
+    <p class="hero-body-line">Skyrise Pro gives growing businesses AI-powered systems that handle the repetitive work, follow-up, communication, and workflows — so you can reclaim your time and focus on growth.</p>
     <div class="hero-btns">
-      <button class="hero-btn-dark" onclick="openModal('cre-iq')">BUILD MY CUSTOM SYSTEM <span>→</span></button>
-      <button class="hero-btn-cyan" onclick="openModal('signup')">START YOUR 30-DAY TRIAL <span>→</span></button>
+      <a href="#services" class="hero-btn-cyan">SEE HOW SKYRISE WORKS <span>→</span></a>
       <a href="#" onclick="openModal('booking');return false;" class="hero-btn-book">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        BOOK A CALL
+        BOOK A DEMO
       </a>
     </div>
   </div>

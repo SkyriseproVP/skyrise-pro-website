@@ -151,7 +151,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(12px,1.2vw,16px);font-weight:700;letter-spacing:1.6px;color:var(--cyan);margin:0 auto;line-height:1.55;text-align:center;text-transform:uppercase;width:100%;max-width:600px;}
 /* Whole line is cyan; REVENUE inherits that colour and adds a static bloom halo,
    so the glow is the only thing setting it apart. No pulse — it reads cleaner. */
-.hero-sub-2{text-shadow:0 0 4px rgba(0,200,232,.85),0 0 12px rgba(0,200,232,.6),0 0 26px rgba(0,200,232,.38),0 0 48px rgba(0,200,232,.2);}
+.hero-sub-2{text-shadow:0 0 1.5px rgba(0,200,232,.42),0 0 5px rgba(0,200,232,.24);}
 .hero-body-line{font-family:system-ui,sans-serif;font-size:clamp(14px,1.1vw,17px);font-weight:400;letter-spacing:0;color:rgba(10,22,40,0.66);text-align:center;text-transform:none;width:100%;max-width:580px;margin:16px auto 30px;line-height:1.62;}
 .hero-autopilot{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:36px;width:100%;}
 .hero-autopilot-svg{flex:0 0 70px;width:70px;height:3px;overflow:visible;}
@@ -984,7 +984,9 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 @media(max-width:1024px){
   .nav-links{display:none;}
   .nav-hamburger{display:flex;}
-  .app-switch-bar{display:flex;position:fixed;left:76px;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:250;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:8px;background:var(--navy2);color:var(--cyan);border:1.5px solid var(--cyan);font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-decoration:none;box-shadow:0 6px 22px rgba(10,22,40,.35);}
+  /* Content-width, and vertically centred on the Sky orb: the orb sits at bottom:24px
+     and is 48px tall, so its centre is 48px up — a 38px button centres at bottom:29px. */
+  .app-switch-bar{display:inline-flex;position:fixed;left:84px;bottom:29px;z-index:250;align-items:center;justify-content:center;gap:6px;height:38px;padding:0 14px;border-radius:8px;background:var(--navy2);color:var(--cyan);border:1.5px solid var(--cyan);font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:.8px;text-decoration:none;white-space:nowrap;box-shadow:0 4px 16px rgba(10,22,40,.32);}
   .app-switch-bar:active{background:#16233d;}
   nav{height:108px;}
   .nav-logo-box img{height:116px;}.nav-cta-group{display:none;}

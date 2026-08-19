@@ -536,8 +536,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pricing-inner{max-width:1320px;margin:0 auto;text-align:center;}
 .pricing-title{font-family:'Orbitron',sans-serif;font-size:clamp(24px,4vw,38px);font-weight:800;color:#0d1526;margin-bottom:6px;letter-spacing:-.5px;text-transform:none;}
 .pricing-sub{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--body-dim);margin-bottom:40px;}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left;max-width:840px;margin-left:auto;margin-right:auto;align-items:stretch;}
-.price-card{border:1.5px solid #e8edf5;border-radius:16px;padding:22px 22px;position:relative;transition:all .3s;display:flex;flex-direction:column;}
+/* minmax(0,…) not 1fr: plain 1fr floors each track at the card's min-content
+   (the $749.89/mo line), which pushed the grid wider than its container. */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;text-align:left;max-width:840px;margin-left:auto;margin-right:auto;align-items:stretch;}
+.price-card{border:1.5px solid #e8edf5;border-radius:16px;padding:22px 22px;position:relative;transition:all .3s;display:flex;flex-direction:column;min-width:0;}
 .price-card:hover{transform:translateY(-4px);}
 .price-card.cyan-outline{border:2px solid var(--cyan);box-shadow:0 0 18px rgba(0,200,232,.18),0 0 40px rgba(0,200,232,.08);}
 .price-card.cyan-outline:hover{box-shadow:0 0 28px rgba(0,200,232,.32),0 0 60px rgba(0,200,232,.12);}
@@ -992,7 +994,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   .pipe-grid{min-width:600px;}
   .vid-grid{grid-template-columns:1fr;}
   /* roi-grid stays 2-column until 700px — stacks at true mobile only */
-  .pricing-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .price-card.gold{margin-top:0;}
   .footer-inner{grid-template-columns:1fr;gap:28px;}
   #services,#dashboard,#video,#roi,#demo-section,#pricing,.pipeline-section,footer{padding-left:24px;padding-right:24px;}
@@ -1000,6 +1002,12 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 }
 @media(max-width:700px){
   .roi-grid{grid-template-columns:1fr;}
+}
+/* Pricing stacks one card per row below 900px. Two columns leaves the third
+   tier orphaned on its own row, and on a phone the cards are too narrow to
+   hold the price line — Elite ended up clipped off the right edge. */
+@media(max-width:900px){
+  .pricing-grid{grid-template-columns:minmax(0,1fr);max-width:440px;}
 }
 @media(max-width:600px){
   .kpi-grid{grid-template-columns:1fr 1fr;}

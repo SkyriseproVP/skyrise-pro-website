@@ -148,10 +148,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-headline{font-family:'Orbitron',sans-serif;font-size:clamp(21px,2.1vw,30px);font-weight:900;letter-spacing:1.5px;line-height:1.14;color:#0a1628;font-style:normal;margin-bottom:18px;text-align:center;text-transform:uppercase;display:flex;flex-flow:row wrap;align-items:center;justify-content:center;width:100%;gap:0;}
 .hero-headline .hl-word{white-space:nowrap;}
 .hero-headline .hl-sep{color:var(--cyan);padding:0 .34em;font-weight:700;}
-.hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(12px,1.2vw,16px);font-weight:700;letter-spacing:1.6px;color:#0a1628;margin:0 auto;line-height:1.55;text-align:center;text-transform:uppercase;width:100%;max-width:600px;}
-/* Bloom sits on REVENUE alone — a static halo, no pulse, so the line reads clean.
-   Deeper glyph colour than #00c8e8, which washes out against the light hero gradient. */
-.hero-sub-2{color:#0aa8c4;text-shadow:0 0 4px rgba(0,200,232,.6),0 0 13px rgba(0,200,232,.42),0 0 28px rgba(0,200,232,.22);}
+.hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(12px,1.2vw,16px);font-weight:700;letter-spacing:1.6px;color:var(--cyan);margin:0 auto;line-height:1.55;text-align:center;text-transform:uppercase;width:100%;max-width:600px;}
+/* Whole line is cyan; REVENUE inherits that colour and adds a static bloom halo,
+   so the glow is the only thing setting it apart. No pulse — it reads cleaner. */
+.hero-sub-2{text-shadow:0 0 4px rgba(0,200,232,.85),0 0 12px rgba(0,200,232,.6),0 0 26px rgba(0,200,232,.38),0 0 48px rgba(0,200,232,.2);}
 .hero-body-line{font-family:system-ui,sans-serif;font-size:clamp(14px,1.1vw,17px);font-weight:400;letter-spacing:0;color:rgba(10,22,40,0.66);text-align:center;text-transform:none;width:100%;max-width:580px;margin:16px auto 30px;line-height:1.62;}
 .hero-autopilot{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:36px;width:100%;}
 .hero-autopilot-svg{flex:0 0 70px;width:70px;height:3px;overflow:visible;}

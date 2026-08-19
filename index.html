@@ -50,6 +50,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-signup:hover{color:var(--cyan);}
 .nav-get-started{background:var(--navy2);color:#fff;border:1.5px solid var(--navy2);border-radius:8px;padding:6px 14px;font-family:'Orbitron',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:1px;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap;}
 .nav-get-started:hover{background:var(--cyan);color:#000;}
+/* Phone-only shortcut over to the app. Floating rather than in the nav — once the logo
+   and hamburger are placed there is no spare width up there on a phone. Sits to the right
+   of the Sky orb, and below it in z-order so the orb always wins. */
+.app-switch-bar{display:none;}
 .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px 20px;background:none;border:none;}
 .nav-hamburger span{display:block;width:22px;height:2px;background:#0d1526;border-radius:2px;}
 .mobile-menu{display:none;position:fixed;top:142px;left:0;right:0;background:#fff;border-bottom:1px solid rgba(0,0,0,0.1);padding:20px 24px;z-index:199;flex-direction:column;gap:16px;}
@@ -145,7 +149,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-headline .hl-word{white-space:nowrap;}
 .hero-headline .hl-sep{color:var(--cyan);padding:0 .34em;font-weight:700;}
 .hero-sub{font-family:'Orbitron',sans-serif;font-size:clamp(12px,1.2vw,16px);font-weight:700;letter-spacing:1.6px;color:#0a1628;margin:0 auto;line-height:1.55;text-align:center;text-transform:uppercase;width:100%;max-width:600px;}
-.hero-sub-2{color:var(--cyan);display:block;} /* payoff half always breaks to its own line */
+/* Bloom sits on REVENUE alone — a static halo, no pulse, so the line reads clean.
+   Deeper glyph colour than #00c8e8, which washes out against the light hero gradient. */
+.hero-sub-2{color:#0aa8c4;text-shadow:0 0 4px rgba(0,200,232,.6),0 0 13px rgba(0,200,232,.42),0 0 28px rgba(0,200,232,.22);}
 .hero-body-line{font-family:system-ui,sans-serif;font-size:clamp(14px,1.1vw,17px);font-weight:400;letter-spacing:0;color:rgba(10,22,40,0.66);text-align:center;text-transform:none;width:100%;max-width:580px;margin:16px auto 30px;line-height:1.62;}
 .hero-autopilot{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:36px;width:100%;}
 .hero-autopilot-svg{flex:0 0 70px;width:70px;height:3px;overflow:visible;}
@@ -187,7 +193,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
      words run BIGGER than the wrapped version. */
   .hero-headline{flex-direction:column !important;font-size:28px !important;letter-spacing:1.5px !important;line-height:1.22 !important;}
   .hero-headline .hl-sep{display:none !important;}
-  .hero-sub-2{display:block !important;} /* payoff half on its own line */
   /* CTAs stack full-width and equal on phones instead of centering at two different widths */
   .hero-btns{flex-direction:column !important;width:100% !important;max-width:300px !important;}
   .hero-btn-cyan,.hero-btn-book{width:100% !important;min-width:0 !important;}
@@ -979,6 +984,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 @media(max-width:1024px){
   .nav-links{display:none;}
   .nav-hamburger{display:flex;}
+  .app-switch-bar{display:flex;position:fixed;left:76px;right:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:250;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:8px;background:var(--navy2);color:var(--cyan);border:1.5px solid var(--cyan);font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-decoration:none;box-shadow:0 6px 22px rgba(10,22,40,.35);}
+  .app-switch-bar:active{background:#16233d;}
   nav{height:108px;}
   .nav-logo-box img{height:116px;}.nav-cta-group{display:none;}
   .mobile-menu{top:108px;}
@@ -1053,7 +1060,14 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   <button onclick="openModal('signin');closeMobile()">SIGN IN</button>
   <button onclick="openModal('signup');closeMobile()">SIGN UP</button>
   <a href="#" onclick="openModal('cre-iq');closeMobile();return false;">GET STARTED →</a>
+  <a href="https://app.skyrisepro.ai" onclick="closeMobile()">SWITCH TO APP →</a>
 </div>
+
+<!-- Phone-only floating shortcut to app.skyrisepro.ai -->
+<a href="https://app.skyrisepro.ai" class="app-switch-bar">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2.5"/><line x1="10.5" y1="18.5" x2="13.5" y2="18.5"/></svg>
+  SWITCH TO APP
+</a>
 
 <!-- ── SIGN IN MODAL ─────────────────────────────────────────── -->
 <div class="modal-overlay" id="modal-signin">
@@ -1635,7 +1649,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <h1 class="hero-headline">
       <span class="hl-word">ACCELERATE</span><span class="hl-sep">•</span><span class="hl-word">ELEVATE</span><span class="hl-sep">•</span><span class="hl-word">DOMINATE</span>
     </h1>
-    <p class="hero-sub">Your business should be doing more<span class="hero-sub-2">not requiring more of you.</span></p>
+    <p class="hero-sub">Shorten your path to <span class="hero-sub-2">revenue</span></p>
     <p class="hero-body-line">Skyrise Pro gives growing businesses AI-powered systems that handle the repetitive work, follow-up, communication, and workflows — so you can reclaim your time and focus on growth.</p>
     <div class="hero-btns">
       <a href="#services" class="hero-btn-cyan">SEE HOW SKYRISE WORKS <span>→</span></a>

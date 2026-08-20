@@ -543,7 +543,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pricing-sub{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--body-dim);margin-bottom:40px;}
 /* minmax(0,…) not 1fr: plain 1fr floors each track at the card's min-content
    (the $749.89/mo line), which pushed the grid wider than its container. */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;text-align:left;max-width:840px;margin-left:auto;margin-right:auto;align-items:stretch;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;text-align:left;max-width:980px;margin-left:auto;margin-right:auto;align-items:stretch;}
 .price-card{border:1.5px solid #e8edf5;border-radius:16px;padding:22px 22px;position:relative;transition:all .3s;display:flex;flex-direction:column;min-width:0;}
 .price-card:hover{transform:translateY(-4px);}
 .price-card.cyan-outline{border:2px solid var(--cyan);box-shadow:0 0 18px rgba(0,200,232,.18),0 0 40px rgba(0,200,232,.08);}
@@ -1170,7 +1170,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div style="font-size:9px;font-weight:700;letter-spacing:3px;color:var(--cyan);">SKYRISE PRO · AGENT AUTOMATION &amp; VIDEO</div>
       <div style="font-size:9px;color:rgba(255,255,255,.4);font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-top:2px;">COMMERCIAL REAL ESTATE &amp; CONSTRUCTION</div>
     </div>
-    <button class="cre-lang-btn" onclick="creAcctToggleLang()" style="display:block;margin:0 0 10px 0;align-self:flex-start;background:#22d3a0;color:#06241c;border:none;border-radius:8px;padding:5px 14px;font-family:'Orbitron',sans-serif;font-weight:800;font-size:10px;letter-spacing:.5px;cursor:pointer;">🌐 ESPAÑOL</button>
 
     <!-- Progress — 4 steps -->
     <div class="intake-progress" id="cre-iq-progress">
@@ -3524,7 +3523,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         <div class="price-amount">$849.89<span>/mo</span></div>
         <div class="price-plan-name">FULL AI AGENCY</div>
         <ul class="price-features">
-          <li class="price-feature"><span class="price-check">✓</span>Everything in Professional</li>
+          <li class="price-feature"><span class="price-check">✓</span>Full workflow automation suite</li>
+          <li class="price-feature"><span class="price-check">✓</span>Proposals, invoices &amp; scheduling automated</li>
+          <li class="price-feature"><span class="price-check">✓</span>Smart routing &amp; instant responses</li>
+          <li class="price-feature"><span class="price-check">✓</span>Dashboard monitoring &amp; status</li>
           <li class="price-feature"><span class="price-check">✓</span>Monthly ROI reports</li>
           <li class="price-feature"><span class="price-check">✓</span>Priority support & strategy calls</li>
           <li class="price-feature"><span class="price-check">✓</span>Cinematic brand video add-on (after 4 mo)</li>
@@ -3540,9 +3542,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <!-- ── ENTERPRISE — navy blue + slight cyan glow, no badge ── -->
       <div class="price-card featured" style="box-shadow:0 0 14px rgba(0,200,232,.14),0 0 32px rgba(0,200,232,.06);border-color:rgba(0,200,232,.4);">
         <div class="price-tier">COURT VISION</div>
-        <div class="price-amount" style="font-size:26px;letter-spacing:0;">Priced per project</div>
+        <div class="price-amount" style="font-size:24px;letter-spacing:0;white-space:nowrap;">Priced per project</div>
         <div class="price-plan-name">FULL PLATFORM + COURT VISION TEAM</div>
-        <div class="price-plan-name" style="font-size:9px;color:rgba(0,200,232,.7);margin-top:3px;letter-spacing:1px;">SCOPED AND QUOTED TO YOUR PROJECT</div>
         <ul class="price-features">
           <li class="price-feature"><span class="price-check">✓</span>Everything in Elite</li>
           <li class="price-feature"><span class="price-check">✓</span>Court Vision for your full team</li>
@@ -3550,7 +3551,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <li class="price-feature"><span class="price-check">✓</span>Sky manages each project from your dashboard</li>
           <li class="price-feature"><span class="price-check">✓</span>Custom automation build-outs</li>
           <li class="price-feature"><span class="price-check">✓</span>Dedicated strategy &amp; onboarding</li>
-          <li class="price-feature"><span class="price-check">✓</span>Scoped and quoted to your project</li>
         </ul>
         <button class="price-cta solid" onclick="openModal('cre-iq')" style="margin-bottom:10px;">REQUEST A QUOTE</button>
         <a href="#" onclick="openModal('booking');return false;" class="price-book">

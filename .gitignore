@@ -15,3 +15,8 @@ New Video Is King/
 *.bak
 *.bak2
 ~$*
+
+# Internal planning docs — never deploy. These carry cost structure,
+# margins and burn rate, and they go stale on pricing. Same treatment as
+# "New Video Is King". Keep them locally, keep them off the public site.
+Skyrise-Pro-Launch-Checklist.html

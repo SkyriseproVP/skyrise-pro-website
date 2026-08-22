@@ -79,7 +79,7 @@
     <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Stripe account approval</b><span class="why">In review now — wait for the approval email before creating live payment links.</span></span></div>
     <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Set MAKE_SIGNUP_WEBHOOK env var in Netlify</b><span class="why">The secure signup proxy will not forward leads until this is set.</span></span></div>
     <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Confirm all Make.com webhook URLs are correct</b><span class="why">Booking flow + signup flow both depend on live, correct endpoints.</span></span></div>
-    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Twilio toll-free / A2P verification</b><span class="why">SMS alerts will not send until your number is verified.</span></span></div>
+    <div class="item"><span class="box">&#9744;</span><span class="item-txt"><b>Quo number + A2P 10DLC registration</b><span class="why">SMS alerts will not send until the campaign is registered.</span></span></div>
   </div>
 
   <!-- 2 PRIORITY TODOS -->
@@ -168,18 +168,17 @@
         <tr><td><b>Taylor Brands</b></td><td class="cost">~$10 – $30/mo</td><td>Branding, logo &amp; business identity / LLC tools</td></tr>
         <tr><td><b>SignWell</b></td><td class="cost">$0 / ~$10–30</td><td>Contracts &amp; e-signature</td></tr>
         <tr><td><b>Stripe</b></td><td class="cost">2.9% + $0.30/txn</td><td>No monthly fee — only pay when you get paid</td></tr>
-        <tr><td><b>Twilio</b></td><td class="cost">~$1–2 + usage</td><td>Pennies per SMS</td></tr>
+        <tr><td><b>Quo</b></td><td class="cost">~$23/user/mo</td><td>Calls, SMS, transcripts &amp; AI summaries</td></tr>
         <tr><td><b>Netlify</b></td><td class="cost">$0 / $19 Pro</td><td>Free tier likely fine</td></tr>
         <tr><td><b>Brevo</b></td><td class="cost">$0 / ~$9+</td><td>300 emails/day free</td></tr>
         <tr><td><b>Zoom</b></td><td class="cost">$0 / ~$13.33 Pro</td><td>Free = 40-min cap on group calls</td></tr>
-        <tr><td><b>Google Voice</b></td><td class="cost">$0 / $10 Workspace</td><td>Business calls</td></tr>
       </tbody>
     </table>
 
     <div class="total-box">
       <div class="tl">Estimated Fixed Monthly Burn — Lean Launch Config</div>
-      <div class="tv">≈ $160 – $200 / month</div>
-      <div class="tn">Sample: ChatGPT $20 + Claude $20 + ElevenLabs $22 + Canva $15 + Make $9 + Zoom $13 + CapCut $10 + Higgsfield $9 + SignWell $10 + Taylor Brands $20 + Twilio ~$3 + Netlify $0 + Brevo $0 + Google Voice $0.<br>
+      <div class="tv">≈ $180 – $220 / month</div>
+      <div class="tn">Sample: ChatGPT $20 + Claude $20 + ElevenLabs $22 + Canva $15 + Make $9 + Zoom $13 + CapCut $10 + Higgsfield $9 + SignWell $10 + Taylor Brands $20 + Quo ~$23 + Netlify $0 + Brevo $0.<br>
       <b>Plus Stripe:</b> 2.9% + $0.30 per transaction (variable). &nbsp; One Essential client ($350/mo) covers fixed costs roughly 2×. One Professional client ($500/mo) and you are profitable on infrastructure from client #1.</div>
     </div>
 

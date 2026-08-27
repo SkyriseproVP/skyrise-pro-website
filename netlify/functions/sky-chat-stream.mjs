@@ -49,7 +49,7 @@ function drainSentences(buf) {
 }
 
 export default async (req) => {
-  if (req.method === 'OPTIONS') return new Response('', { status: 204, headers: CORS });
+  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
   if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers: CORS });
 
   const apiKey = process.env.ANTHROPIC_API_KEY;

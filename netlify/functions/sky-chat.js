@@ -234,3 +234,10 @@ exports.handler = async function (event) {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server error', fallback: true }) };
   }
 };
+
+// Shared with sky-chat-stream.js so the streaming and non-streaming endpoints
+// can never drift into two different Skys. Adding named exports does not
+// affect exports.handler, which Netlify still discovers exactly as before.
+exports.SKY_SYSTEM_PROMPT      = SKY_SYSTEM_PROMPT;
+exports.CV_STAKEHOLDER_ARC     = CV_STAKEHOLDER_ARC;
+exports.CV_PROJECT_CONTROL_MODE = CV_PROJECT_CONTROL_MODE;

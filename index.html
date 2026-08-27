@@ -5012,6 +5012,118 @@ function _skyStripEmoji(t){
     .trim();
 }
 
+/* ── SKY STREAMING VOICE ───────────────────────────────────────────────────
+   Mirrors Jarvis's STREAM_VOICE: /api/sky-stream sends Server-Sent Events, one
+   per sentence, and each is spoken the instant it lands — so Sky starts talking
+   about a sentence in instead of after the whole reply.
+
+   Safety, same shape as Jarvis: ANY problem — an 'error' event, a transport
+   failure, or a stream that produced nothing — falls back to the proven
+   /api/sky path, which is completely untouched. Flip SKY_STREAM to false to
+   return to the classic path instantly. */
+const SKY_STREAM = true;
+let skyStreamPlayer = null;
+
+function SkyStreamPlayer(){
+  this.queue = []; this.playing = false; this.done = false;
+  this.cancelled = false; this.spoke = false;
+}
+SkyStreamPlayer.prototype.enqueue = function(text){
+  if(this.cancelled || !text) return;
+  this.queue.push(text);
+  if(!this.playing) this.playNext();
+};
+SkyStreamPlayer.prototype.playNext = function(){
+  if(this.cancelled) return;
+  const next = this.queue.shift();
+  if(next === undefined){
+    this.playing = false;
+    if(this.done && this.onAllDone) this.onAllDone();
+    return;
+  }
+  this.playing = true; this.spoke = true;
+  const self = this;
+  try {
+    skySpeak(next, function(){ self.playNext(); });
+  } catch(e){
+    // never let a TTS failure strand the queue
+    self.playNext();
+  }
+};
+SkyStreamPlayer.prototype.markDone = function(){
+  this.done = true;
+  if(!this.playing && this.queue.length === 0 && this.onAllDone) this.onAllDone();
+};
+SkyStreamPlayer.prototype.cancel = function(){
+  this.cancelled = true; this.queue = [];
+  if(typeof stopSkyAudio === 'function') stopSkyAudio();
+};
+
+/* Streams Sky's reply. onSentence(text) fires per sentence so the caller can
+   paint the bubble as it fills. Resolves with the full reply, or null to mean
+   "use the classic path". */
+async function skyGetResponseStream(input, onSentence){
+  skyConversation.push({ role:'user', content:String(input||'').slice(0,2000) });
+  if(skyConversation.length > 12) skyConversation = skyConversation.slice(-12);
+
+  let res;
+  try {
+    res = await fetch('/api/sky-stream', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ messages: skyConversation, mode: window.__adminMode ? 'admin' : 'public' })
+    });
+  } catch(e){
+    console.warn('Sky stream unreachable, using classic path:', e);
+    skyConversation.pop();               // let the classic path record the turn
+    return null;
+  }
+  if(!res.ok || !res.body){
+    skyConversation.pop();
+    return null;
+  }
+
+  const reader = res.body.getReader();
+  const dec = new TextDecoder();
+  let raw = '', full = '', failed = false;
+
+  try {
+    while(true){
+      const { done, value } = await reader.read();
+      if(done) break;
+      raw += dec.decode(value, { stream:true });
+      const frames = raw.split('\n\n');
+      raw = frames.pop() || '';
+      for(const frame of frames){
+        const evLine = frame.split('\n').find(l => l.startsWith('event: '));
+        const dtLine = frame.split('\n').find(l => l.startsWith('data: '));
+        if(!evLine || !dtLine) continue;
+        const ev = evLine.slice(7).trim();
+        let data; try { data = JSON.parse(dtLine.slice(6)); } catch { continue; }
+
+        if(ev === 'sentence' && data.text){
+          const s = _skyStripEmoji(data.text);
+          if(s){ full += (full ? ' ' : '') + s; if(onSentence) onSentence(s); }
+        } else if(ev === 'done'){
+          if(data.reply) full = _skyStripEmoji(data.reply);
+        } else if(ev === 'error'){
+          failed = true;
+        }
+      }
+    }
+  } catch(e){
+    console.warn('Sky stream broke mid-flight:', e);
+    failed = true;
+  }
+
+  if(failed || !full.trim()){
+    skyConversation.pop();
+    return null;
+  }
+  skyConversation.push({ role:'assistant', content:full });
+  return full;
+}
+
 async function skyGetResponse(input){
   // Record the user's turn
   skyConversation.push({ role:'user', content:String(input||'').slice(0,2000) });
@@ -5173,11 +5285,38 @@ async function sendSky(){
   typing.textContent='Sky is typing…';typing.style.opacity='0.6';
   msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;
 
-  const resp = await skyGetResponse(txt);
+  let resp = null;
+
+  if(SKY_STREAM){
+    // Paint and speak each sentence the moment it lands.
+    if(skyStreamPlayer) skyStreamPlayer.cancel();
+    const player = skyStreamPlayer = new SkyStreamPlayer();
+    player.onAllDone = function(){ if(skyVoiceMode) startListening(); };
+
+    let sm = null;
+    resp = await skyGetResponseStream(txt, function(sentence){
+      const t=document.getElementById('sky-typing'); if(t) t.remove();
+      if(!sm){ sm=document.createElement('div'); sm.className='sky-msg-bubble'; msgs.appendChild(sm); }
+      sm.textContent = (sm.textContent ? sm.textContent + ' ' : '') + sentence;
+      msgs.scrollTop = msgs.scrollHeight;
+      player.enqueue(sentence);
+    });
+
+    if(resp){
+      player.markDone();
+      const t=document.getElementById('sky-typing'); if(t) t.remove();
+      return;                                   // streamed path spoke it already
+    }
+    player.cancel();                            // stream gave nothing -> classic
+    if(sm) sm.remove();
+    skyStreamPlayer = null;
+  }
+
+  resp = await skyGetResponse(txt);
 
   const t=document.getElementById('sky-typing'); if(t) t.remove();
-  const sm=document.createElement('div');sm.className='sky-msg-bubble';sm.textContent=resp;
-  msgs.appendChild(sm);msgs.scrollTop=msgs.scrollHeight;
+  const sm2=document.createElement('div');sm2.className='sky-msg-bubble';sm2.textContent=resp;
+  msgs.appendChild(sm2);msgs.scrollTop=msgs.scrollHeight;
   if(skyVoiceMode) skySpeak(resp, ()=>{ if(skyVoiceMode) startListening(); });
   else skySpeak(resp, null);
 }

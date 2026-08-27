@@ -22,7 +22,10 @@ const MAX_TOKENS = 160;
 
 // Sky's persona is owned by sky-chat.js. Import it so the two endpoints can
 // never drift apart — one voice, one source of truth.
-const { SKY_SYSTEM_PROMPT, CV_STAKEHOLDER_ARC, CV_PROJECT_CONTROL_MODE } = require('./sky-chat.js');
+// sky-chat.js is CommonJS. In an ESM function `require` is not reliably
+// available, so use the ESM/CJS default-import interop instead.
+import skyChat from './sky-chat.js';
+const { SKY_SYSTEM_PROMPT, CV_STAKEHOLDER_ARC, CV_PROJECT_CONTROL_MODE } = skyChat;
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',

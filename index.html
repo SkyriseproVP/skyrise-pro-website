@@ -5021,7 +5021,7 @@ function _skyStripEmoji(t){
    failure, or a stream that produced nothing — falls back to the proven
    /api/sky path, which is completely untouched. Flip SKY_STREAM to false to
    return to the classic path instantly. */
-const SKY_STREAM = true;
+const SKY_STREAM = false;   // disabled 2026-08-27: platform buffers the whole response (~22s), see notes below
 let skyStreamPlayer = null;
 
 function SkyStreamPlayer(){

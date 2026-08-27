@@ -46,12 +46,10 @@
   to     = "/.netlify/functions/sky-chat"
   status = 200
 
-# ── Sky AI brain, STREAMING (SSE — replies sentence-by-sentence).
-# Separate route so /api/sky stays untouched as the proven fallback.
-[[redirects]]
-  from   = "/api/sky-stream"
-  to     = "/.netlify/functions/sky-chat-stream"
-  status = 200
+# ── Sky AI brain, STREAMING — now an EDGE function (netlify/edge-functions/
+# sky-stream.js), which declares its own path via its config export. Standard
+# Functions buffered the whole response (~22s flat) instead of streaming, so
+# the Node version was retired. No redirect needed here.
 
 # ── Voice transcription (secure Whisper proxy)
 [[redirects]]

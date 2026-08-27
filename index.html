@@ -1044,7 +1044,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <a href="#services" class="nav-link-inline">SERVICES</a>
     <a href="readiness-score.html" class="nav-link-inline">AI SCORE</a>
     <div class="nav-sep"></div>
-    <button class="nav-signin" onclick="window.location.href='https://app.skyrisepro.ai/command-center.html'">SIGN IN</button>
+    <button class="nav-signin" onclick="openModal('signin')">SIGN IN</button>
     <button class="nav-signup" onclick="openModal('signup')">SIGN UP</button>
     <a href="demo.html" class="nav-demo-btn"><span class="play">▶</span> DEMO</a>
     <a href="#" onclick="openModal('cre-iq');return false;" class="nav-get-started">GET STARTED</a>
@@ -1056,10 +1056,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 <div class="mobile-menu" id="mobile-menu">
   <a href="#services" onclick="closeMobile()">SERVICES</a>
   <a href="readiness-score.html" onclick="closeMobile()">AI READINESS SCORE</a>
-  <a href="https://app.skyrisepro.ai/command-center.html" onclick="closeMobile()">CLIENT PORTAL</a>
+  <a href="#" onclick="openModal('signin');closeMobile();return false;">CLIENT PORTAL</a>
   <a href="#pricing" onclick="closeMobile()">PRICING</a>
   <a href="demo.html" onclick="closeMobile()">▶ DEMO</a>
-  <button onclick="window.location.href='https://app.skyrisepro.ai/command-center.html'">SIGN IN</button>
+  <button onclick="openModal('signin');closeMobile()">SIGN IN</button>
   <button onclick="openModal('signup');closeMobile()">SIGN UP</button>
   <a href="#" onclick="openModal('cre-iq');closeMobile();return false;">GET STARTED →</a>
   <a href="https://app.skyrisepro.ai" onclick="closeMobile()">SWITCH TO APP →</a>
@@ -3674,198 +3674,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   </div>
 </footer>
 
-<!-- ── ADMIN PORTAL OVERLAY ──────────────────────────────────── -->
-<div id="admin-overlay">
-  <div class="admin-topbar">
-    <div class="admin-topbar-brand">
-      <img src="skyrise-cyan-transparent.png" alt="Skyrise Pro" class="admin-topbar-logo">
-      <span class="admin-badge">ADMIN PORTAL</span>
-    </div>
-    <div class="admin-topbar-right">
-      <div class="admin-jarvis-orb-wrap" onclick="window._jarvisToggle && window._jarvisToggle()" title="Talk to Jarvis">
-        <div class="admin-jarvis-orb-inner">
-          <div id="jarvis-orb-ring"></div>
-          <canvas id="jarvis-canvas" width="64" height="64"></canvas>
-        </div>
-        <div class="admin-jarvis-label">
-          <div class="admin-jarvis-name">JARVIS</div>
-          <div class="admin-jarvis-status" id="jarvis-status">CONNECTING...</div>
-        </div>
-      </div>
-      <span class="admin-user" id="admin-user-label">victor@skyrisepro.ai</span>
-      <button class="admin-signout" onclick="closeAdminPortal()">SIGN OUT</button>
-    </div>
-  </div>
-  <div class="admin-body">
-
-    <!-- SKY EXECUTIVE BRIEF -->
-    <div class="admin-sky-brief">
-      <div class="admin-sky-orb-sm"></div>
-      <div class="admin-sky-content">
-        <div class="admin-sky-label">SKY — EXECUTIVE BRIEFING</div>
-        <div class="admin-sky-text" id="admin-sky-brief-text">Loading your briefing...</div>
-        <div class="admin-sky-actions">
-          <button class="admin-sky-refresh" onclick="refreshAdminBrief()">↻ NEW BRIEFING</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- KPI STRIP -->
-    <div class="admin-dash-kpi-strip">
-      <div class="admin-dash-kpi">
-        <div class="admin-dash-kpi-num cyan">$0</div>
-        <div class="admin-dash-kpi-label">CURRENT MRR</div>
-      </div>
-      <div class="admin-dash-kpi">
-        <div class="admin-dash-kpi-num green">$1,500</div>
-        <div class="admin-dash-kpi-label">POTENTIAL MRR (3 LEADS)</div>
-      </div>
-      <div class="admin-dash-kpi">
-        <div class="admin-dash-kpi-num orange">3</div>
-        <div class="admin-dash-kpi-label">HOT LEADS IN PIPELINE</div>
-      </div>
-      <div class="admin-dash-kpi">
-        <div class="admin-dash-kpi-num white">0</div>
-        <div class="admin-dash-kpi-label">ACTIVE PAYING CLIENTS</div>
-      </div>
-    </div>
-
-    <!-- CHARTS ROW -->
-    <div class="admin-dash-charts">
-      <div class="admin-dash-chart-card">
-        <div class="admin-dash-chart-title">REVENUE GROWTH</div>
-        <div class="admin-dash-chart-sub">Monthly recurring revenue — last 6 months</div>
-        <div style="position:relative;height:180px;"><canvas id="admin-mrr-chart"></canvas></div>
-      </div>
-      <div class="admin-dash-chart-card">
-        <div class="admin-dash-chart-title">PIPELINE BY CLIENT</div>
-        <div class="admin-dash-chart-sub">Estimated contract value per account</div>
-        <div style="position:relative;height:180px;"><canvas id="admin-pipeline-chart"></canvas></div>
-      </div>
-    </div>
-
-    <!-- ALERTS + WINS ROW -->
-    <div class="admin-dash-alerts-row">
-      <div class="admin-dash-alerts-card">
-        <div class="admin-dash-alerts-title" style="color:#f59e0b;">⚠ NEEDS YOUR ATTENTION</div>
-        <div class="admin-alert-item warn">
-          <span class="admin-alert-icon">🔶</span>
-          <span><strong>CLR Services (Winston)</strong> — Has not provided onboarding documentation. Deal will go cold without follow-up. Contact today.</span>
-        </div>
-        <div class="admin-alert-item warn">
-          <span class="admin-alert-icon">🎯</span>
-          <span><strong>Jago Digital</strong> — Has not viewed the demo yet. Needs a tighter, more compelling pitch before the window closes.</span>
-        </div>
-      </div>
-      <div class="admin-dash-alerts-card">
-        <div class="admin-dash-alerts-title" style="color:#22c55e;">✅ PIPELINE HIGHLIGHTS</div>
-        <div class="admin-alert-item win">
-          <span class="admin-alert-icon">💰</span>
-          <span>Both leads at $749.89/mo = <strong>$1,500 MRR</strong> if closed. That's <strong>$18,000/year</strong>. One close this week changes everything.</span>
-        </div>
-        <div class="admin-alert-item win">
-          <span class="admin-alert-icon">🚀</span>
-          <span>Booking pipeline is live. Sky is ready. Website deployed. You are ready to close — go get it.</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="admin-divider"></div>
-    <div class="admin-section-title">HOT LEADS — PIPELINE IN PROGRESS</div>
-    <div class="admin-clients-grid">
-
-      <!-- CLR SERVICES -->
-      <div class="admin-card" style="border-color:rgba(255,107,53,.2);">
-        <div class="admin-card-header" style="border-color:rgba(255,107,53,.1);">
-          <img src="logo-clr.png" alt="CLR" class="admin-card-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span style="display:none;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#fff;">CLR</span>
-          <span class="admin-status-pill" style="background:rgba(255,107,53,.15);color:#ff6b35;border:1px solid rgba(255,107,53,.3);">⚠ NEEDS DOCS</span>
-        </div>
-        <div class="admin-card-body">
-          <div class="admin-client-name">Winston</div>
-          <div class="admin-client-co" style="color:#ff6b35;">CLR SERVICES</div>
-          <div class="admin-plan-row">
-            <span class="admin-plan-tag" style="background:rgba(255,107,53,.12);color:#ff6b35;border:1px solid rgba(255,107,53,.3);">TARGET: $749.89/MO</span>
-            <span class="admin-join-date">Docs pending ⚠</span>
-          </div>
-          <div class="admin-kpis">
-            <div class="admin-kpi" style="border-color:rgba(255,107,53,.15);"><div class="admin-kpi-num" style="color:#f59e0b;">MED</div><div class="admin-kpi-label">CLOSE PROBABILITY</div></div>
-            <div class="admin-kpi" style="border-color:rgba(255,107,53,.15);"><div class="admin-kpi-num">$500</div><div class="admin-kpi-label">MRR POTENTIAL</div></div>
-            <div class="admin-kpi admin-revenue-kpi" style="background:rgba(255,107,53,.07);border-color:rgba(255,107,53,.2);"><div class="admin-kpi-num" style="color:#ff6b35;">$6,000</div><div class="admin-kpi-label">ANNUAL VALUE</div></div>
-          </div>
-          <div class="admin-section-sub">STATUS</div>
-          <div class="admin-notes">Winston has not yet provided onboarding documentation. Without it, the deal cannot move forward. Every day without follow-up is a risk of losing this lead entirely.</div>
-          <div class="admin-notes" style="margin-top:6px;color:#ff6b35;">📌 NEXT: Follow up immediately. Make it easy — send a checklist of exactly what documentation is needed. Remove all friction.</div>
-        </div>
-        <div class="admin-card-footer" style="border-color:rgba(255,107,53,.08);">
-          <span class="admin-last-activity">Status: Awaiting Docs</span>
-          <button class="admin-view-btn" style="border-color:rgba(255,107,53,.3);color:#ff6b35;">FOLLOW UP →</button>
-        </div>
-      </div>
-
-      <!-- JAGO DIGITAL -->
-      <div class="admin-card">
-        <div class="admin-card-header">
-          <img src="logo-jago.png" alt="Jago" class="admin-card-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <span style="display:none;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#fff;">JAGO</span>
-          <span class="admin-status-pill" style="background:rgba(0,200,232,.12);color:var(--cyan);border:1px solid rgba(0,200,232,.25);">📋 DEMO NEEDED</span>
-        </div>
-        <div class="admin-card-body">
-          <div class="admin-client-name">Joel</div>
-          <div class="admin-client-co">JAGO DIGITAL</div>
-          <div class="admin-plan-row">
-            <span class="admin-plan-tag" style="background:rgba(0,200,232,.15);color:var(--cyan);border:1px solid rgba(0,200,232,.3);">TARGET: $749.89/MO</span>
-            <span class="admin-join-date">Demo pending 📋</span>
-          </div>
-          <div class="admin-kpis">
-            <div class="admin-kpi"><div class="admin-kpi-num" style="color:var(--cyan);">TBD</div><div class="admin-kpi-label">CLOSE PROBABILITY</div></div>
-            <div class="admin-kpi"><div class="admin-kpi-num">$500</div><div class="admin-kpi-label">MRR POTENTIAL</div></div>
-            <div class="admin-kpi admin-revenue-kpi"><div class="admin-kpi-num">$6,000</div><div class="admin-kpi-label">ANNUAL VALUE</div></div>
-          </div>
-          <div class="admin-section-sub">STATUS</div>
-          <div class="admin-notes">Joel has not yet viewed the demo. Needs a tighter, more compelling pitch tailored to his business. The window is open but requires urgency — demos that get delayed go cold.</div>
-          <div class="admin-notes" style="margin-top:6px;color:var(--cyan);">📌 NEXT: Sharpen the pitch for Jago Digital specifically. Book the demo this week. Show exactly what Sky can do for his business in 60 seconds.</div>
-        </div>
-        <div class="admin-card-footer">
-          <span class="admin-last-activity">Status: Pre-Demo</span>
-          <button class="admin-view-btn">BOOK DEMO →</button>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- CALENDAR -->
-    <div class="admin-divider"></div>
-    <div class="admin-section-title">📅 CALENDAR — UPCOMING APPOINTMENTS</div>
-    <div class="admin-cal-wrap">
-      <div class="admin-cal-header">
-        <div class="admin-cal-month" id="admin-cal-month">May 2026</div>
-        <div class="admin-cal-kpis">
-          <div class="admin-cal-kpi"><span class="admin-cal-kpi-num" id="cal-total">3</span><span class="admin-cal-kpi-label">THIS MONTH</span></div>
-          <div class="admin-cal-kpi"><span class="admin-cal-kpi-num" id="cal-this-week">1</span><span class="admin-cal-kpi-label">THIS WEEK</span></div>
-          <div class="admin-cal-kpi"><span class="admin-cal-kpi-num" id="cal-next">2</span><span class="admin-cal-kpi-label">UPCOMING</span></div>
-        </div>
-      </div>
-      <div class="admin-cal-events">
-        <div class="admin-cal-event warn">
-          <div class="admin-cal-event-date">MAY 24 · SAT · 2:00 PM</div>
-          <div class="admin-cal-event-title">Follow-Up Call — Winston (CLR Services)</div>
-          <div class="admin-cal-event-note">⚠ Documentation still pending — bring checklist, remove friction</div>
-        </div>
-        <div class="admin-cal-event">
-          <div class="admin-cal-event-date">MAY 28 · WED · 11:00 AM</div>
-          <div class="admin-cal-event-title">Demo — Joel (Jago Digital)</div>
-          <div class="admin-cal-event-note">📋 Tailor pitch to his specific business — show Sky in 60 seconds</div>
-        </div>
-        <div class="admin-cal-add">
-          <button class="admin-cal-add-btn" onclick="alert('Calendar integration coming — connect Microsoft Outlook to auto-sync')">+ ADD APPOINTMENT</button>
-          <span class="admin-cal-add-note">Microsoft Outlook sync coming soon</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
+<!-- Admin dashboard removed — Skyrise admin now lives at app.skyrisepro.ai/admin-command-center.html -->
 
 <!-- ── CLIENT PORTAL OVERLAY ──────────────────────────────────── -->
 <div id="client-overlay">
@@ -5021,7 +4830,7 @@ function _skyStripEmoji(t){
    failure, or a stream that produced nothing — falls back to the proven
    /api/sky path, which is completely untouched. Flip SKY_STREAM to false to
    return to the classic path instantly. */
-const SKY_STREAM = false;   // disabled 2026-08-27: platform buffers the whole response (~22s), see notes below
+const SKY_STREAM = true;    // edge function streams natively; falls back to /api/sky on any hiccup
 let skyStreamPlayer = null;
 
 function SkyStreamPlayer(){
@@ -5445,81 +5254,13 @@ function togglePwd(id, btn){
   btn.style.color = showing ? 'var(--cyan)' : 'rgba(255,255,255,.3)';
 }
 
-// ── ADMIN CHARTS ──────────────────────────────────────────────
-let adminMrrChart, adminPipelineChart;
-function initAdminCharts(){
-  const mrrCtx = document.getElementById('admin-mrr-chart');
-  const pipeCtx = document.getElementById('admin-pipeline-chart');
-  if(!mrrCtx || !pipeCtx) return;
-  if(adminMrrChart){ adminMrrChart.destroy(); adminMrrChart=null; }
-  if(adminPipelineChart){ adminPipelineChart.destroy(); adminPipelineChart=null; }
-
-  const chartDefaults = { responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{display:false}, tooltip:{
-      backgroundColor:'rgba(10,20,40,.9)', titleFont:{family:'Orbitron',size:10},
-      bodyFont:{family:'Orbitron',size:9}, titleColor:'#00c8e8', bodyColor:'rgba(255,255,255,.7)',
-      padding:10, borderColor:'rgba(0,200,232,.2)', borderWidth:1
-    }}
-  };
-
-  adminMrrChart = new Chart(mrrCtx,{
-    type:'line',
-    data:{
-      labels:['DEC','JAN','FEB','MAR','APR','MAY'],
-      datasets:[{
-        data:[0,0,1200,2100,2800,3200],
-        borderColor:'#00c8e8', backgroundColor:'rgba(0,200,232,.1)',
-        borderWidth:2.5, pointBackgroundColor:'#00c8e8', pointRadius:4,
-        pointHoverRadius:6, fill:true, tension:.4
-      }]
-    },
-    options:{...chartDefaults, scales:{
-      x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'rgba(255,255,255,.3)',font:{family:'Orbitron',size:8}}},
-      y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'rgba(255,255,255,.3)',font:{family:'Orbitron',size:8},callback:v=>'$'+v.toLocaleString()},beginAtZero:true}
-    }}
-  });
-
-  adminPipelineChart = new Chart(pipeCtx,{
-    type:'bar',
-    data:{
-      labels:['CLR','JAGO'],
-      datasets:[{
-        data:[284600,18200],
-        backgroundColor:['rgba(255,107,53,.7)','rgba(0,200,232,.4)'],
-        borderColor:['rgba(255,107,53,1)','rgba(0,200,232,.7)'],
-        borderWidth:1.5, borderRadius:5
-      }]
-    },
-    options:{...chartDefaults, indexAxis:'y', scales:{
-      x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'rgba(255,255,255,.3)',font:{family:'Orbitron',size:8},callback:v=>'$'+(v/1000).toFixed(0)+'k'}},
-      y:{grid:{display:false},ticks:{color:'rgba(255,255,255,.5)',font:{family:'Orbitron',size:8}}}
-    }}
-  });
-}
-
-// ── ADMIN SKY BRIEF ────────────────────────────────────────────
-const ADMIN_BRIEFS = [
-  `<strong>Pipeline needs action.</strong> CLR Services — Winston still hasn't submitted onboarding docs. That deal is at risk. Jago Digital hasn't seen the demo yet. Tighten the pitch and book it this week. <strong>$1,000 MRR is on the table. Go close it.</strong>`,
-  `<strong>Here's what matters right now.</strong> You have zero paying clients and two hot leads sitting in the pipeline. CLR is stalled on docs — call Winston, make it simple, send a checklist. Jago needs urgency — no demo means no deal. <strong>One close this week changes everything.</strong>`,
-  `<strong>Revenue is at $0. Potential is $6,000.</strong> The gap between those two numbers is two conversations you haven't closed yet. CLR Services is blocked by missing documentation — that's a follow-up call, not a lost deal. Jago Digital needs to see what Sky can do for their specific business. <strong>Stop preparing. Start closing.</strong>`,
-  `<strong>Two leads. $6k on the line. No time to waste.</strong> CLR — stalled on onboarding docs. One call to Winston unblocks this. Jago — demo not scheduled. Every day that passes is a colder lead. Your booking system is live, Sky is ready, the website is deployed. <strong>The only thing missing is a signed client. Go get one.</strong>`
-];
-let adminBriefIdx = 0;
-function refreshAdminBrief(){
-  adminBriefIdx = (adminBriefIdx + 1) % ADMIN_BRIEFS.length;
-  const el = document.getElementById('admin-sky-brief-text');
-  if(el){ el.style.opacity=0; setTimeout(()=>{ el.innerHTML=ADMIN_BRIEFS[adminBriefIdx]; el.style.opacity=1; },200); }
-}
-function initAdminBrief(){
-  adminBriefIdx = Math.floor(Math.random()*ADMIN_BRIEFS.length);
-  const el = document.getElementById('admin-sky-brief-text');
-  if(el) el.innerHTML = ADMIN_BRIEFS[adminBriefIdx];
-}
-
 // ── ADMIN AUTH ────────────────────────────────────────────────
-// Interim static-site auth — works on file:// and HTTPS. Supabase migration planned.
-function _ah(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h)^s.charCodeAt(i);return(h>>>0).toString(36);}
-const __adminHash = _ah(['B','u','y','b','a','c','k','m','y','t','i','m','e','2','3','2','4','!','!'].join(''));
+// Admin sign-in happens at app.skyrisepro.ai/admin-command-center.html, which
+// verifies the session against Supabase and checks app_metadata.role server-side.
+// What used to live here was a non-cryptographic hash of the admin password
+// built from a character array in public source: recoverable by anyone who
+// viewed source, and gating nothing, since no server was ever consulted.
+const ADMIN_CENTER_URL = 'https://app.skyrisepro.ai/admin-command-center.html';
 
 // ── CLIENT DATA (defined before auth functions so always available) ──
 const WEBSITE_CLIENTS = {
@@ -5569,10 +5310,10 @@ function doSignIn(){
     return;
   }
 
-  // Admin check
-  if(email === 'victor@skyrisepro.ai' && _ah(pass) === __adminHash){
-    closeModal('signin');
-    setTimeout(openAdminPortal, 200);
+  // Admin — hand off to the Skyrise Command Center, which does the real auth.
+  if(email === 'victor@skyrisepro.ai'){
+    passEl.value = '';
+    window.location.href = ADMIN_CENTER_URL;
     return;
   }
 
@@ -5799,10 +5540,10 @@ function doPortalSignIn(){
     errEl.textContent = 'Please enter your email and password.';
     errEl.style.display = 'block'; return;
   }
-  // Victor admin
-  if(email === 'victor@skyrisepro.ai' && _ah(pass) === __adminHash){
-    closeModal('portal');
-    setTimeout(openAdminPortal, 200);
+  // Admin — hand off to the Skyrise Command Center, which does the real auth.
+  if(email === 'victor@skyrisepro.ai'){
+    document.getElementById('portal-password').value = '';
+    window.location.href = ADMIN_CENTER_URL;
     return;
   }
   // Client logins
@@ -5818,22 +5559,9 @@ function doPortalSignIn(){
   document.getElementById('portal-password').value = '';
 }
 
+// The public site never runs in admin mode; Sky here is always the public
+// persona. Admin (and Jarvis) live at app.skyrisepro.ai/admin-command-center.html.
 window.__adminMode = false;
-function openAdminPortal(){
-  const overlay = document.getElementById('admin-overlay');
-  if(overlay){ overlay.classList.add('open'); document.body.style.overflow='hidden'; }
-  window.__adminMode = true;
-  setTimeout(()=>{ initAdminCharts(); initAdminBrief(); }, 100);
-  // Auto-start Jarvis after a short delay to let the portal render
-  setTimeout(()=>{ if(window._startJarvis) window._startJarvis(); }, 600);
-}
-
-function closeAdminPortal(){
-  const overlay = document.getElementById('admin-overlay');
-  if(overlay){ overlay.classList.remove('open'); document.body.style.overflow=''; }
-  window.__adminMode = false;
-  if(window._stopJarvis) window._stopJarvis();
-}
 </script>
 
 <!-- ── AUTOMATION WORKFLOW: DOT ANIMATION + NODE TOOLTIPS ──────── -->

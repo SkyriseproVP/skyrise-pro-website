@@ -1,31 +1,40 @@
 /**
- * Skyrise Pro — Sky AI Brain, STREAMING (secure proxy to Anthropic Claude)
- * Route: /api/sky-stream  ->  /.netlify/functions/sky-chat-stream
+ * Skyrise Pro — Sky AI Brain, STREAMING (Netlify EDGE function, Deno runtime)
+ * Route: /api/sky-stream   (declared by the `config` export at the bottom)
  *
- * Why this exists as a SEPARATE function from sky-chat.js:
- *   sky-chat.js uses the classic `exports.handler` signature, which buffers the
- *   whole reply and returns one JSON blob — it physically cannot stream. Only
- *   the modern `export default (req, ctx) => Response` signature can.
- *   Keeping them separate means the proven non-streaming path stays untouched
- *   and is always available as a fallback, exactly like Jarvis's STREAM_VOICE.
+ * WHY EDGE, NOT A REGULAR FUNCTION
+ * -------------------------------
+ * The first attempt at this lived in netlify/functions/sky-chat-stream.mjs as a
+ * standard Node function. It returned a correct ReadableStream, and it still
+ * did not stream: measured against production, response HEADERS did not arrive
+ * until ~22s, and that ~22s was identical for "say hi" and for a full question
+ * — a flat platform delay, not generation time. Both SSE events landed together
+ * at the 22s mark. Standard Netlify Functions buffer the whole response unless
+ * they are invoked over the Lambda Function URL path.
+ *
+ * Edge functions run on Deno at the CDN edge and stream natively, which is what
+ * this needs. The old Node version is retired; this replaces it on the same
+ * public route so index.html needs no change to its fetch URL.
  *
  * Emits Server-Sent Events:
  *   event: sentence   data: {"text":"..."}     one complete sentence, as it lands
  *   event: done       data: {"reply":"..."}    the full reply, once
- *   event: error      data: {"fallback":true}  caller should use /api/sky
+ *   event: error      data: {"fallback":true}  caller should fall back to /api/sky
  *
- * The Anthropic key lives ONLY in the Netlify env var ANTHROPIC_API_KEY.
+ * The client treats ANY error event, transport failure, or empty stream as a
+ * signal to use /api/sky instead, so this can never take Sky down.
+ *
+ * ANTHROPIC_API_KEY must be scoped to Functions to be readable here.
  */
+
+import {
+  SKY_SYSTEM_PROMPT,
+  CV_STAKEHOLDER_ARC,
+  CV_PROJECT_CONTROL_MODE,
+} from './sky-prompts.js';
 
 const MODEL = 'claude-haiku-4-5-20251001';
 const MAX_TOKENS = 160;
-
-// Sky's persona is owned by sky-chat.js. Import it so the two endpoints can
-// never drift apart — one voice, one source of truth.
-// sky-chat.js is CommonJS. In an ESM function `require` is not reliably
-// available, so use the ESM/CJS default-import interop instead.
-import skyChat from './sky-chat.js';
-const { SKY_SYSTEM_PROMPT, CV_STAKEHOLDER_ARC, CV_PROJECT_CONTROL_MODE } = skyChat;
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -34,8 +43,8 @@ const CORS = {
 };
 
 /** Split streamed text into speakable sentences. Sky talks out loud, so a
- *  sentence is the smallest unit worth sending to TTS — anything shorter
- *  makes the voice sound chopped. */
+ *  sentence is the smallest unit worth handing to TTS — anything shorter makes
+ *  the voice sound chopped. */
 function drainSentences(buf) {
   const out = [];
   const re = /[^.!?]*[.!?]+["')\]]*\s*/g;
@@ -48,28 +57,34 @@ function drainSentences(buf) {
   return { sentences: out, rest: buf.slice(last) };
 }
 
-export default async (req) => {
-  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
-  if (req.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers: CORS });
+const json = (obj, status) =>
+  new Response(JSON.stringify(obj), {
+    status,
+    headers: { ...CORS, 'Content-Type': 'application/json' },
+  });
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'AI not configured', fallback: true }),
-      { status: 503, headers: { ...CORS, 'Content-Type': 'application/json' } });
-  }
+export default async (request) => {
+  // A null-body status must be constructed with `null`, never '' — an empty
+  // string throws "Invalid response status code 204". That bug 502'd the
+  // previous version of this endpoint on every preflight.
+  if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
+  if (request.method !== 'POST') return new Response('Method Not Allowed', { status: 405, headers: CORS });
+
+  const apiKey =
+    (typeof Netlify !== 'undefined' && Netlify.env && Netlify.env.get('ANTHROPIC_API_KEY')) ||
+    (typeof Deno !== 'undefined' && Deno.env && Deno.env.get('ANTHROPIC_API_KEY'));
+
+  if (!apiKey) return json({ error: 'AI not configured', fallback: true }, 503);
 
   let body;
-  try { body = await req.json(); } catch { body = {}; }
+  try { body = await request.json(); } catch { body = {}; }
 
   const clean = (Array.isArray(body.messages) ? body.messages : [])
     .filter(m => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
     .slice(-12)
     .map(m => ({ role: m.role, content: m.content.slice(0, 2000) }));
 
-  if (!clean.length) {
-    return new Response(JSON.stringify({ error: 'No messages', fallback: true }),
-      { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } });
-  }
+  if (!clean.length) return json({ error: 'No messages', fallback: true }, 400);
 
   const system = body.mode === 'courtvision-active' ? SKY_SYSTEM_PROMPT + CV_PROJECT_CONTROL_MODE
                : body.mode === 'courtvision'        ? SKY_SYSTEM_PROMPT + CV_STAKEHOLDER_ARC
@@ -84,24 +99,16 @@ export default async (req) => {
         'anthropic-version': '2023-06-01',
         'content-type': 'application/json',
       },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: MAX_TOKENS,
-        system,
-        messages: clean,
-        stream: true,
-      }),
+      body: JSON.stringify({ model: MODEL, max_tokens: MAX_TOKENS, system, messages: clean, stream: true }),
     });
   } catch (err) {
-    console.error('Sky stream: upstream unreachable:', err.message);
-    return new Response(JSON.stringify({ error: 'Upstream unreachable', fallback: true }),
-      { status: 502, headers: { ...CORS, 'Content-Type': 'application/json' } });
+    console.error('Sky edge stream: upstream unreachable:', err && err.message);
+    return json({ error: 'Upstream unreachable', fallback: true }, 502);
   }
 
   if (!upstream.ok || !upstream.body) {
-    console.error('Sky stream: upstream error', upstream.status, await upstream.text().catch(() => ''));
-    return new Response(JSON.stringify({ error: 'AI upstream error', fallback: true }),
-      { status: 502, headers: { ...CORS, 'Content-Type': 'application/json' } });
+    console.error('Sky edge stream: upstream error', upstream.status);
+    return json({ error: 'AI upstream error', fallback: true }, 502);
   }
 
   const enc = new TextEncoder();
@@ -118,7 +125,7 @@ export default async (req) => {
 
       try {
         const reader = upstream.body.getReader();
-        while (true) {
+        for (;;) {
           const { done, value } = await reader.read();
           if (done) break;
           raw += dec.decode(value, { stream: true });
@@ -142,19 +149,14 @@ export default async (req) => {
           }
         }
 
-        // whatever is left without terminal punctuation still needs saying
+        // a trailing fragment with no terminal punctuation still needs saying
         const tail = pending.trim();
         if (tail) send('sentence', { text: tail });
 
-        if (!full.trim()) {
-          send('error', { error: 'Empty reply', fallback: true });
-        } else {
-          send('done', { reply: full.trim() });
-        }
+        if (!full.trim()) send('error', { error: 'Empty reply', fallback: true });
+        else send('done', { reply: full.trim() });
       } catch (err) {
-        console.error('Sky stream failed mid-flight:', err.message);
-        // The client falls back to /api/sky on this event, so a mid-stream
-        // failure degrades to the proven path rather than going silent.
+        console.error('Sky edge stream failed mid-flight:', err && err.message);
         send('error', { error: 'Stream failed', fallback: true });
       } finally {
         controller.close();
@@ -168,8 +170,9 @@ export default async (req) => {
       ...CORS,
       'Content-Type': 'text/event-stream; charset=utf-8',
       'Cache-Control': 'no-cache, no-transform',
-      'Connection': 'keep-alive',
       'X-Accel-Buffering': 'no',
     },
   });
 };
+
+export const config = { path: '/api/sky-stream' };

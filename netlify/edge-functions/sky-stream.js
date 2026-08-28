@@ -119,6 +119,12 @@ export default async (request) => {
       const send = (event, data) =>
         controller.enqueue(enc.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
 
+      // Emitted before Anthropic is even called. Two purposes: it lets the
+      // client show a thinking state instantly, and it is a live probe -- if
+      // this lands fast but sentences do not, the delay is upstream, not the
+      // platform buffering our stream.
+      send('open', { t: Date.now() });
+
       let full = '';      // everything Sky has said
       let pending = '';   // text not yet emitted as a complete sentence
       let raw = '';       // partial SSE frame from Anthropic

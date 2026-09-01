@@ -751,7 +751,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 /* ── PROACTIVE POPUP ─────────────────────────────────────────── */
 #proactive-popup-overlay{position:fixed;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;background:rgba(8,13,26,0.82);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .45s ease;}
 #proactive-popup-overlay.show{opacity:1;pointer-events:all;}
-.proactive-popup{background:linear-gradient(180deg,#ffffff 0%,#ffffff 45%,#cce9f5 75%,#b8e0f0 100%);border:2px solid var(--cyan);border-radius:16px;overflow:hidden;max-width:300px;width:88%;position:relative;text-align:center;box-shadow:0 0 0 1px rgba(0,200,232,0.15),0 0 30px rgba(0,200,232,0.3),0 20px 60px rgba(0,0,0,0.35);transform:translateY(24px) scale(0.96);transition:transform .45s cubic-bezier(.175,.885,.32,1.275);}
+.proactive-popup{background:linear-gradient(180deg,#ffffff 0%,#ffffff 45%,#cce9f5 75%,#b8e0f0 100%);border:2px solid var(--cyan);border-radius:16px;overflow:hidden;max-width:360px;width:90%;position:relative;text-align:center;box-shadow:0 0 0 1px rgba(0,200,232,0.15),0 0 30px rgba(0,200,232,0.3),0 20px 60px rgba(0,0,0,0.35);transform:translateY(24px) scale(0.96);transition:transform .45s cubic-bezier(.175,.885,.32,1.275);}
 #proactive-popup-overlay.show .proactive-popup{transform:translateY(0) scale(1);}
 .proactive-popup-header{background:transparent;padding:20px 20px 8px;display:flex;align-items:center;justify-content:center;}
 .proactive-popup-body{padding:4px 20px 22px;text-align:center;}
@@ -760,6 +760,16 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 .proactive-popup-logo{height:132px;width:auto;max-width:100%;display:block;margin:0 auto;}
 .proactive-popup-headline{font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;color:var(--cyan);margin-bottom:5px;line-height:1.4;}
 .proactive-popup-sub{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;letter-spacing:1.5px;color:#0d1526;margin-bottom:16px;line-height:1.3;}
+/* Rotating cost-of-delay lines. Both messages are stacked in the same box and
+   cross-faded, so the CTA underneath never jumps between them. */
+.pp-rot{position:relative;min-height:92px;margin-bottom:12px;}
+.pp-msg{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;font-family:'Orbitron',sans-serif;font-size:11.5px;font-weight:800;letter-spacing:.4px;line-height:1.55;color:#0d1526;opacity:0;transition:opacity .6s ease;pointer-events:none;}
+.pp-msg.is-on{opacity:1;}
+.pp-l{display:block;}
+.pp-dots{display:flex;gap:6px;justify-content:center;margin-bottom:14px;}
+.pp-dots i{width:5px;height:5px;border-radius:50%;background:rgba(13,21,38,.22);transition:background .3s;}
+.pp-dots i.is-on{background:var(--cyan);}
+@media(prefers-reduced-motion:reduce){.pp-msg{transition:none;}}
 .proactive-popup-cta{display:inline-block;width:auto;background:var(--cyan);border:none;border-radius:10px;padding:8px 22px;font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;color:#000;cursor:pointer;transition:all .25s;text-transform:uppercase;}
 .proactive-popup-cta:hover{background:var(--cyan2);box-shadow:0 0 20px rgba(0,200,232,0.45);}
 
@@ -3851,7 +3861,11 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <img src="skyrise-cyan-transparent.png" alt="Skyrise Pro" class="proactive-popup-logo">
     </div>
     <div class="proactive-popup-body">
-      <div class="proactive-popup-sub">ACCELERATE, ELEVATE, DOMINATE.</div>
+      <div class="pp-rot" id="pp-rot" aria-live="polite">
+        <div class="pp-msg is-on"><span class="pp-l">Rent Commencement pushed.</span><span class="pp-l">Delivery obligations at risk.</span><span class="pp-l">Extended general conditions.</span><span class="pp-l">Labor at a rate you didn’t bid.</span></div>
+        <div class="pp-msg">A TI delay isn’t a rescheduling problem. It’s months of rent on space that’s finished and not paying.</div>
+      </div>
+      <div class="pp-dots" id="pp-dots"><i class="is-on"></i><i></i></div>
       <button class="proactive-popup-cta" onclick="proactivePopupCTA()">CLICK HERE TO GET STARTED →</button>
     </div>
   </div>
@@ -5272,12 +5286,40 @@ function showProactivePopup(){
   if(!overlay) return;
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
+  startPopupRotation();
+}
+
+/* Rotate the two cost-of-delay lines while the popup is open. Pauses on hover so a
+   line never disappears mid-read, and stops entirely once the popup closes. */
+var ppRotTimer = null;
+function startPopupRotation(){
+  var wrap = document.getElementById('pp-rot');
+  var dots = document.getElementById('pp-dots');
+  if(!wrap || ppRotTimer) return;
+  var msgs = wrap.querySelectorAll('.pp-msg');
+  var pips = dots ? dots.querySelectorAll('i') : [];
+  if(msgs.length < 2) return;
+  var i = 0, paused = false;
+  wrap.addEventListener('mouseenter', function(){ paused = true; });
+  wrap.addEventListener('mouseleave', function(){ paused = false; });
+  ppRotTimer = setInterval(function(){
+    if(paused) return;
+    msgs[i].classList.remove('is-on');
+    if(pips[i]) pips[i].classList.remove('is-on');
+    i = (i + 1) % msgs.length;
+    msgs[i].classList.add('is-on');
+    if(pips[i]) pips[i].classList.add('is-on');
+  }, 5500);
+}
+function stopPopupRotation(){
+  if(ppRotTimer){ clearInterval(ppRotTimer); ppRotTimer = null; }
 }
 
 function closeProactivePopup(){
   var overlay = document.getElementById('proactive-popup-overlay');
   if(overlay) overlay.classList.remove('show');
   document.body.style.overflow = '';
+  stopPopupRotation();
 }
 
 function proactivePopupCTA(){

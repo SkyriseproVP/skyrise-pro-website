@@ -193,12 +193,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .lb-pen-b{font-size:14px;line-height:1.6;color:rgba(10,22,40,.75);margin:0;}
 .lb-pen-b b{color:#0a1628;font-weight:800;}
 .lb-caught-h{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:#0a1628;margin:0 0 14px;}
-.lb-caught-h b{color:#12b886;font-size:16px;}
+.lb-caught-h b{color:#e8455a;font-size:16px;}
 .lb-list{display:grid;gap:10px;margin-bottom:26px;}
 .lb-item{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid rgba(10,22,40,.09);border-left:3px solid var(--cyan);border-radius:0 9px 9px 0;padding:13px 16px;}
+.lb-item.block{border-left-color:#e8455a;}
 .lb-item.steal{border-left-color:#e8833a;}
 .lb-item.save{border-left-color:#12b886;}
 .lb-badge{font-family:'Orbitron',sans-serif;font-size:8px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;padding:4px 9px;border-radius:5px;flex:0 0 auto;margin-top:1px;background:rgba(0,200,232,.13);color:#0b7f96;border:1px solid rgba(0,200,232,.35);}
+.lb-item.block .lb-badge{background:rgba(232,69,90,.13);color:#c0304a;border-color:rgba(232,69,90,.4);}
 .lb-item.steal .lb-badge{background:rgba(232,131,58,.13);color:#a85c1c;border-color:rgba(232,131,58,.4);}
 .lb-item.save  .lb-badge{background:rgba(18,184,134,.13);color:#0b7a58;border-color:rgba(18,184,134,.4);}
 .lb-txt{font-size:13.5px;line-height:1.55;color:rgba(10,22,40,.8);}
@@ -1751,8 +1753,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <div class="lb-pen"><div class="lb-pen-k">What the clock is worth</div><p class="lb-pen-b">Rent commencement is set for <b>Jan 26, 2027</b>. Every 15 days the landlord is late credits the tenant roughly <b>$37,600</b> in free rent &mdash; the lease's own worked example puts 60 days at about <b>$150,000</b>. That is what a stalled permit costs, and it is why the ball is never allowed to sit.</p></div>
     <p class="lb-caught-h"><b>4</b> &nbsp;dropped balls caught before they hit the schedule</p>
     <div class="lb-list">
-      <div class="lb-item"><span class="lb-badge">Block</span><span class="lb-txt"><b>Electrical.</b> City flagged shared neutral conductor sizing on E1-201 &mdash; harmonics compliance not shown. Ball went straight to the engineer.</span></div>
-      <div class="lb-item"><span class="lb-badge">Block</span><span class="lb-txt"><b>Fire.</b> Review denied on two findings, including fire extinguisher travel distance. Routed the same day.</span></div>
+      <div class="lb-item block"><span class="lb-badge">Block</span><span class="lb-txt"><b>Electrical.</b> City flagged shared neutral conductor sizing on E1-201 &mdash; harmonics compliance not shown. Ball went straight to the engineer.</span></div>
+      <div class="lb-item block"><span class="lb-badge">Block</span><span class="lb-txt"><b>Fire.</b> Review denied on two findings, including fire extinguisher travel distance. Routed the same day.</span></div>
       <div class="lb-item steal"><span class="lb-badge">Steal</span><span class="lb-txt"><b>Plan review.</b> Resubmitted to the city 8/10 answering the plan examiner's review objection comments &mdash; then it sat. Caught and sent back to the examiner for reapproval before the clock ran.</span></div>
       <div class="lb-item save"><span class="lb-badge">Save</span><span class="lb-txt"><b>Eng/Zone and Impact Fees.</b> Both cleared the same week the others were denied &mdash; two lanes closed for good, so neither can block this build again.</span></div>
     </div>

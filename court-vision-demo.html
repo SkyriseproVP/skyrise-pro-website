@@ -911,7 +911,7 @@ var STAGES=[
    steal:false},
   {name:'Permitting',player:'Permit Office',icon:'🏛️',
    detail:'Plans are submitted to the city for review. The most unpredictable stretch of the entire deal.',
-   sky:'Permit portal is monitored every single day. At this stage, the architect is responsible for following up with the permit office and resubmitting any corrected drawings. I track every response window, send reminders to the architect, and flag any delay directly to the PM.',
+   sky:'Permit portal is monitored every single day. At this stage, the architect is responsible for following up with the permit office and resubmitting any corrected drawings. I send the architect a proactive heads-up ahead of each response window — I only loop in the PM if the window closes with no movement.',
    demoSky:'Ball is with the city. The architect owns this follow-up — they are the ones communicating with the permit office and correcting any plan issues. I am tracking every deadline and making sure nothing slips.',
    steal:true,
    stealText:'Permit Office flagged an error and returned the plans for resubmission. I\'ve captured the exact rejection reason, notified the architect with the specific correction needed, updated the project timeline, and sent an impact report to the PM and Landlord. Average deals lose 3 to 6 weeks here. I\'m starting the recovery clock right now.',
@@ -982,7 +982,7 @@ var PLAYER_INFO={
     sky:'Sky creates and distributes the punch list digitally, communicates directly with the Tenant throughout the walkthrough, and documents sign-off with a clean paper trail.'},
   permit:{emoji:'🏛️',name:'Permit Office (Plan Examiner)',phase:'Phase 5 — Permitting & Plan Review',side:'defense',accentColor:'#e53e3e',
     role:'The Plan Examiner reviews submitted construction documents for code compliance. A rejection sends the play back to the Architect.',
-    sky:'The architect is the one who must follow up with the permit office — correcting plans, resubmitting, and responding to review comments. I monitor the portal daily, track every deadline, and keep the architect accountable so the PM never has to chase anyone.'},
+    sky:'The architect is the one who must follow up with the permit office — correcting plans, resubmitting, and responding to review comments. I monitor the portal daily, track every deadline, and send a proactive heads-up ahead of each one so the PM never has to chase anyone.'},
   inspector:{emoji:'🔍',name:'Inspector',phase:'Phase 7 — Final Inspection & C of O',side:'defense',accentColor:'#e53e3e',
     role:'The Inspector performs all inspections — rough-in electrical, mechanical, plumbing, and the final. Every one of these is the General Contractor\'s responsibility to schedule and pass. Sky only tracks pass or fail and relays the status to stakeholders. A failed inspection sends the ball back to the GC for correction.',
     sky:'The GC is the one who must follow up with the inspector — addressing failed items, coordinating corrections, and scheduling re-inspections. I generate the pre-inspection checklist, track every correction, and make sure the GC closes out every open item before the re-inspection window closes.'}
@@ -1193,22 +1193,22 @@ window.revealPhase=revealPhase;
 
 /* ════════ FORM — 15-field auto-fill with animated cursor ════════ */
 var FORM_FIELDS=[
-  {id:'ff-entity',     narr:'First I need the entity. What LLC or company is signing this lease? Every document, notification, and contract I generate will carry this name.',                                                                                          val:'Meridian Group LLC'},
-  {id:'ff-projname',   narr:'Give this project a name. I use this across every report, communication, and timeline entry so every stakeholder always knows exactly which project we are talking about.',                                                              val:'Suite 420 — Tenant Build Out'},
-  {id:'ff-address',    narr:'Full property address. I use this for permit filings, inspection scheduling, contractor coordination, and every city agency communication from day one.',                                                                                  val:'3200 Biscayne Blvd, Suite 420, Miami FL 33137'},
-  {id:'ff-sqft',       narr:'Square footage of the space. This lets me calculate the project timeline, flag complexity thresholds, and cross-reference every bid scope against the actual size of the job.',                                                          val:'12,000 sq ft'},
-  {id:'ff-cost',       narr:'Total job cost. I track budget versus actuals in real time, flag every change order impact, and keep the landlord\'s TI allowance fully reconciled at every stage of construction.',                                                      val:'$3,500,000'},
-  {id:'ff-leasing',    narr:'Leasing agent. They originated this deal — I keep them in the loop on key milestones so there are no surprises at closing.',                                                                                                              val:'Marcus Reid — Colliers International'},
+  {id:'ff-entity',     narr:'First I need the entity. What LLC or company is signing this lease? Every document, notification, and contract I generate will carry this name.',                                                                                          val:'Client build privilege'},
+  {id:'ff-projname',   narr:'Give this project a name. I use this across every report, communication, and timeline entry so every stakeholder always knows exactly which project we are talking about.',                                                              val:'Fulcrum — Suite 200 Build-Out'},
+  {id:'ff-address',    narr:'Full property address. I use this for permit filings, inspection scheduling, contractor coordination, and every city agency communication from day one.',                                                                                  val:'Downtown Orlando, FL'},
+  {id:'ff-sqft',       narr:'Square footage of the space. This lets me calculate the project timeline, flag complexity thresholds, and cross-reference every bid scope against the actual size of the job.',                                                          val:'31,100 sq ft'},
+  {id:'ff-cost',       narr:'Total job cost. I track budget versus actuals in real time, flag every change order impact, and keep the landlord\'s TI allowance fully reconciled at every stage of construction.',                                                      val:'$2.95M'},
+  {id:'ff-leasing',    narr:'Leasing agent. They originated this deal — I keep them in the loop on key milestones so there are no surprises at closing.',                                                                                                              val:'TBD'},
   {id:'ff-contractor', narr:'General contractor. I send them the full project brief, track their milestone schedule, route all change orders through my system, and make sure the PM never has to call them for a status update.',                                     val:'Apex Construction Group'},
   {id:'ff-architect',  narr:'Architect of record. I track the permit office with the city, coordinate plan submissions, and manage every revision cycle so nothing sits waiting.',                                                                                    val:'Studio Form Architects'},
   {id:'ff-engineer',   narr:'MEP engineer. I track every drawing submission, RFI response, and correction deadline. The engineer is one of the most important players during permitting — I make sure they never miss a window.',                                      val:'Meridian MEP Engineering'},
-  {id:'ff-landlord',   narr:'The landlord. I send them project updates on a cadence they approve upfront — always informed, never overwhelmed. Their TI approval and owner reviews are tracked and escalated automatically if they go quiet.',                         val:'Biscayne Properties LLC'},
-  {id:'ff-pm',         narr:'Project manager. I become their right hand on this deal. Daily logs, escalation alerts, timeline reports, and vendor coordination all flow through me so the PM can stay focused on decisions instead of follow-ups.',                    val:'Sandra Torres'},
-  {id:'ff-inspector',  narr:'City inspection agency. Once I have the permit number and job number, I track this project directly on the city website — monitoring submissions, review status, and inspection scheduling every single day.',                            val:'City of Miami Building Department'},
-  {id:'ff-subs',       narr:'Subcontractors. I track every sub\'s scope, schedule, and deliverable independently. Late responses get automated reminders. Missing bids get escalated. Nothing falls through the cracks.',                                              val:'A1 HVAC Systems · Voltage Electric · FlowRight Plumbing · Precision Drywall'},
-  {id:'ff-desc',       narr:'Description of work. This becomes the foundation of every checklist, scope verification, and communication I generate. The more specific this is, the faster I move.',                                                                    val:'Full gut renovation — custom HVAC zoning, specialty electrical for server room, new demising walls, full interior build to tenant spec including raised flooring in IT room.'},
-  {id:'ff-completion', narr:'Anticipated completion date. I reverse-engineer the full project timeline from this date and send early warnings the moment any stage falls behind and puts this target at risk.',                                                         val:'November 13, 2026'},
-  {id:'ff-rcd',        narr:'Rent commencement date. This is the finish line — and everything I do from this moment forward is designed to protect it. Your investment starts generating return on this date. I will not let it slip.',                                val:'December 1, 2026'}
+  {id:'ff-landlord',   narr:'The landlord. I send them project updates on a cadence they approve upfront — always informed, never overwhelmed. Their TI approval and owner reviews are tracked and escalated automatically if they go quiet.',                         val:'Client build privilege'},
+  {id:'ff-pm',         narr:'Project manager. I become their right hand on this deal. Daily logs, escalation alerts, timeline reports, and vendor coordination all flow through me so the PM can stay focused on decisions instead of follow-ups.',                    val:'Victor Polanco'},
+  {id:'ff-inspector',  narr:'City inspection agency. Once I have the permit number and job number, I track this project directly on the city website — monitoring submissions, review status, and inspection scheduling every single day.',                            val:'City of Orlando Building Department'},
+  {id:'ff-subs',       narr:'Subcontractors. I track every sub\'s scope, schedule, and deliverable independently. Late responses get automated reminders. Missing bids get escalated. Nothing falls through the cracks.',                                              val:'TBD'},
+  {id:'ff-desc',       narr:'Description of work. This becomes the foundation of every checklist, scope verification, and communication I generate. The more specific this is, the faster I move.',                                                                    val:'Tenant improvement build-out — Fulcrum, Suite 200.'},
+  {id:'ff-completion', narr:'Anticipated completion date. I reverse-engineer the full project timeline from this date and send early warnings the moment any stage falls behind and puts this target at risk.',                                                         val:'TBD'},
+  {id:'ff-rcd',        narr:'Rent commencement date. This is the finish line — and everything I do from this moment forward is designed to protect it. Your investment starts generating return on this date. I will not let it slip.',                                val:'TBD'}
 ];
 
 function autoType(id,text,done){
@@ -2565,8 +2565,8 @@ var _demoFired=false;
         <div class="cvs-plan-card" id="cvs-plan-enterprise" onclick="selectCVSPlan('enterprise','COURT VISION','Priced per project')">
           <div class="cvs-plan-name" style="color:#00c8e8;">🏀 COURT VISION</div>
           <div class="cvs-plan-price" style="font-size:15px;">Priced per project</div>
-          <div class="cvs-plan-mo">/mo per project</div>
-          <div class="cvs-plan-desc">Per active project, billed until deadline — full team, stakeholder portals</div>
+          <div class="cvs-plan-mo">quoted to the job</div>
+          <div class="cvs-plan-desc">Scoped to the job, through rent commencement — full team, stakeholder portals</div>
         </div>
       </div>
 
@@ -2622,7 +2622,7 @@ var _demoFired=false;
       <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(0,200,232,.04);border:1px solid rgba(0,200,232,.15);border-radius:10px;margin-bottom:22px;">
         <div>
           <div style="font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;color:rgba(0,200,232,.6);" id="cvs-confirm-plan-name">PROFESSIONAL PLAN</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;">Free for 30 days, then billed monthly</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;" id="cvs-confirm-plan-note">Free for 30 days, then billed monthly</div>
         </div>
         <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--cyan);" id="cvs-confirm-plan-price">$749.89<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span></div>
       </div>
@@ -2774,7 +2774,15 @@ window.submitCVSignup=function(){
   var planNameEl=document.getElementById('cvs-confirm-plan-name');
   if(planNameEl)planNameEl.textContent=_cvsSelectedPlan.name+' PLAN';
   var planPriceEl=document.getElementById('cvs-confirm-plan-price');
-  if(planPriceEl)planPriceEl.innerHTML=_cvsSelectedPlan.price+'<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span>';
+  /* Court Vision has no monthly, so it takes no /mo suffix and no billing-cycle
+     note -- appending one produced the literal text "Priced per project/mo". */
+  var _cvQuoted=(_cvsSelectedPlan.key==='enterprise'||_cvsSelectedPlan.key==='courtvision');
+  if(planPriceEl)planPriceEl.innerHTML=_cvsSelectedPlan.price+(_cvQuoted?''
+    :'<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span>');
+  var planNoteEl=document.getElementById('cvs-confirm-plan-note');
+  if(planNoteEl)planNoteEl.textContent=_cvQuoted
+    ?'Free for 30 days — your project fee is quoted on the strategy call'
+    :'Free for 30 days, then billed monthly';
 
   // Show the CC authorization screen
   setTimeout(function(){

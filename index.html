@@ -161,6 +161,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero-img{width:100%;height:100%;object-fit:contain;object-position:right center;}
 .hero-img-placeholder{width:100%;max-width:500px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
 
+
+/* ── LIVE BUILD PROOF ────────────────────────────────────────── */
+#live-build{background:#0a1628;color:#e8f2f8;padding:64px 60px;}
+.lb-inner{max-width:1000px;margin:0 auto;}
+.lb-tag{display:inline-flex;align-items:center;gap:9px;font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;}
+.lb-dot{width:8px;height:8px;border-radius:50%;background:#22d3a0;box-shadow:0 0 0 0 rgba(34,211,160,.7);animation:lbPulse 2s infinite;}
+@keyframes lbPulse{70%{box-shadow:0 0 0 9px rgba(34,211,160,0);}100%{box-shadow:0 0 0 0 rgba(34,211,160,0);}}
+.lb-h{font-family:'Orbitron',sans-serif;font-size:clamp(19px,2vw,27px);font-weight:900;line-height:1.3;margin:0 0 10px;letter-spacing:.3px;}
+.lb-track{font-size:14px;color:rgba(175,205,225,.7);margin:0 0 30px;}
+.lb-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:30px;}
+.lb-stat{background:rgba(0,200,232,.07);border:1px solid rgba(0,200,232,.22);border-radius:10px;padding:15px 17px;}
+.lb-k{font-family:'Orbitron',sans-serif;font-size:8.5px;font-weight:800;letter-spacing:1.7px;color:var(--cyan);text-transform:uppercase;}
+.lb-v{font-size:19px;font-weight:700;margin-top:5px;line-height:1.25;}
+.lb-v small{display:block;font-size:12.5px;font-weight:400;color:rgba(175,205,225,.65);margin-top:3px;}
+.lb-caught{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;background:rgba(34,211,160,.08);border-left:3px solid #22d3a0;border-radius:0 10px 10px 0;padding:17px 20px;margin-bottom:22px;}
+.lb-num{font-family:'Orbitron',sans-serif;font-size:38px;font-weight:900;color:#22d3a0;line-height:1;}
+.lb-caught-txt{font-size:15px;line-height:1.5;flex:1;min-width:230px;}
+.lb-caught-txt b{color:#22d3a0;}
+.lb-sky{font-size:14.5px;line-height:1.65;color:rgba(175,205,225,.82);border-top:1px solid rgba(0,200,232,.16);padding-top:20px;}
+.lb-sky b{color:var(--cyan);}
+@media(max-width:1024px){#live-build{padding:52px 24px;}}
+
 /* ── TICKER ──────────────────────────────────────────────────── */
 .ticker-wrap{background:linear-gradient(90deg,#dff2fb,#f5fcff,#ffffff);border-top:1px solid var(--border-light);border-bottom:1px solid var(--border-light);overflow:hidden;padding:12px 0;}
 .ticker-inner{display:flex;gap:40px;animation:tickerScroll 30s linear infinite;white-space:nowrap;will-change:transform;backface-visibility:hidden;transform:translateZ(0);}
@@ -1681,6 +1703,30 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <span class="ticker-item">SMART AUTOMATION<span class="sep">//</span></span>
   </div>
 </div>
+
+
+<!-- ── LIVE BUILD PROOF ───────────────────────────────────────── -->
+<section id="live-build">
+  <div class="lb-inner">
+    <div class="lb-tag"><span class="lb-dot"></span>Live build in progress</div>
+    <h2 class="lb-h">Base contract executed. Tracked from LOI to Certificate of Occupancy.</h2>
+    <p class="lb-track">Commercial asset building &middot; Orlando</p>
+
+    <div class="lb-stats">
+      <div class="lb-stat"><div class="lb-k">Total build out</div><div class="lb-v">$3,092,419.60</div></div>
+      <div class="lb-stat"><div class="lb-k">Per square foot</div><div class="lb-v">$99.43<small>31,100 sq ft</small></div></div>
+      <div class="lb-stat"><div class="lb-k">Submittals cleared</div><div class="lb-v">7</div></div>
+      <div class="lb-stat"><div class="lb-k">Status</div><div class="lb-v" style="color:#22d3a0;">On track<small>for delivery</small></div></div>
+    </div>
+
+    <div class="lb-caught">
+      <span class="lb-num">4</span>
+      <span class="lb-caught-txt">dropped balls <b>caught before they hit the schedule</b> &mdash; a city plan-review block on conductor sizing, two trade denials held 25 and 15 days, and one save. Still on track for delivery.</span>
+    </div>
+
+    <p class="lb-sky"><b>Sky</b> &mdash; the AI that runs the record &mdash; pings the stakeholder whose court the ball is on, <b>before the delay happens, not after.</b></p>
+  </div>
+</section>
 
 <!-- ── SERVICES ──────────────────────────────────────────────── -->
 <section id="services">

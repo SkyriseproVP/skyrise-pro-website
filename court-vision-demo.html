@@ -1068,9 +1068,32 @@ var _skyAudioEl  = null;
    current value and refuses to speak if it changed - otherwise clearing src fires an
    'error' on the old element and the queued line would speak AFTER a skip. */
 var _skyGen=0;
+/* AUTOPLAY BLESSING
+   skySpeak plays its clip only AFTER an async fetch to the TTS service. By then the
+   browser may no longer credit the click that started the demo, so play() rejects and
+   Sky says nothing. Priming one real element inside the user's first gesture - and
+   then reusing that same element for every line - keeps him audible, because an
+   element that has played once during a gesture may be re-sourced freely afterwards.
+   The clip is 0.05s of silence, so the primer itself is inaudible. */
+var _skyPrimed=false;
+function primeSkyAudio(){
+  if(_skyPrimed)return; _skyPrimed=true;
+  try{
+    if(!_skyAudioEl) _skyAudioEl=new Audio();
+    _skyAudioEl.src='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=';
+    _skyAudioEl.volume=0;
+    var p=_skyAudioEl.play();
+    if(p&&p.catch)p.catch(function(){});
+    setTimeout(function(){ try{ _skyAudioEl.pause(); _skyAudioEl.volume=1; }catch(e){} },60);
+  }catch(e){}
+}
+['pointerdown','touchstart','keydown'].forEach(function(ev){
+  document.addEventListener(ev, primeSkyAudio, {capture:true});
+});
+
 function stopSkyAudio(){
   _skyGen++;
-  if(_skyAudioEl){try{_skyAudioEl.pause();_skyAudioEl.src='';}catch(e){}_skyAudioEl=null;}
+  if(_skyAudioEl){try{_skyAudioEl.pause();_skyAudioEl.src='';}catch(e){}}
   /* the browser-voice fallback is a separate channel and was never being stopped,
      so a skip could leave two Skys talking over each other */
   try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
@@ -1103,20 +1126,22 @@ function skySpeak(text, onEnd){
     .replace(/\buh,?\s*/gi,'').replace(/\bum,?\s*/gi,'')
     .replace(/\s{2,}/g,' ').trim();
 
-  // AbortController: cancel fetch after 8 seconds if it hangs
+  /* A flat 8s abort was too short for Sky's longer narrations - the court intro alone
+     is 138 words - and every abort silently downgraded him to the robot voice. Scale
+     the budget to how much there is to synthesize. */
+  var budget=Math.min(30000,Math.max(8000,ttsText.length*60));
   var controller=window.AbortController?new AbortController():null;
-  var fetchTimer=controller?setTimeout(function(){controller.abort();},8000):null;
+  var fetchTimer=controller?setTimeout(function(){controller.abort();},budget):null;
 
-  // Browser-voice failsafe — Sky is NEVER silent even if the proxy/network fails
+  /* NO browser-voice fallback. speechSynthesis is not Sky - it is a flat robotic
+     system voice, and hearing it in place of him is worse than hearing nothing at
+     all. If ElevenLabs cannot be reached we finish silently; the line is already
+     on screen via the narrator panel and the typewriter, so nothing is lost but
+     the audio. Never reinstate a synth fallback here. */
   var _bTTS=function(){
-    try{
-      if(!window.speechSynthesis){finish();return;}
-      speechSynthesis.cancel();
-      var u=new SpeechSynthesisUtterance(ttsText);
-      u.rate=1.0;u.pitch=0.9;u.onend=finish;u.onerror=finish;
-      speechSynthesis.speak(u);
-      setTimeout(finish,Math.max(4000,ttsText.length*90));
-    }catch(e){finish();}
+    console.warn('Sky TTS unavailable - staying silent rather than using a synth voice');
+    try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+    finish();
   };
   fetch('/api/tts',{
     method:'POST',
@@ -1137,7 +1162,11 @@ function skySpeak(text, onEnd){
   }).then(function(blob){
     if(!blob||_done)return;
     var url=URL.createObjectURL(blob);
-    _skyAudioEl=new Audio(url);
+    /* Reuse the element primed by the first gesture rather than minting a new one -
+       a fresh Audio has no autoplay blessing and play() would reject. */
+    if(!_skyAudioEl) _skyAudioEl=new Audio();
+    _skyAudioEl.volume=1;
+    _skyAudioEl.src=url;
     _skyAudioEl.onended=function(){URL.revokeObjectURL(url);finish();};
     _skyAudioEl.onerror=function(){URL.revokeObjectURL(url);finish();};
     var pp=_skyAudioEl.play();
@@ -1247,8 +1276,8 @@ function autoType(id,text,done){
   var i=0;el.value='';
   var t=setInterval(function(){
     if(i<text.length){el.value+=text[i];i++;}
-    else{clearInterval(t);setTimeout(done||function(){},200);}
-  },28);
+    else{clearInterval(t);setTimeout(done||function(){},110);}
+  },15);
 }
 
 /* ── Cursor animation ── */
@@ -1262,8 +1291,8 @@ function moveCursor(targetId,onArrived){
   cur.style.top=(rect.top+10)+'px';
   setTimeout(function(){
     cur.classList.add('clicking');
-    setTimeout(function(){cur.classList.remove('clicking');if(onArrived)onArrived();},180);
-  },580);
+    setTimeout(function(){cur.classList.remove('clicking');if(onArrived)onArrived();},110);
+  },300);
 }
 function hideCursor(){
   var cur=document.getElementById('demo-cursor');if(cur)cur.style.display='none';
@@ -1312,22 +1341,54 @@ function runField(idx){
   var field=FORM_FIELDS[idx];
   updateFFProgress(idx);
   activateGroup(field.id);
-  var fillIt=function(){
+  var fillOnly=function(done){
     moveCursor(field.id,function(){
-      autoType(field.id,field.val,function(){
-        setTimeout(function(){runField(idx+1);},220);
-      });
+      autoType(field.id,field.val,done);
     });
   };
-  // Sky narrates each of the three sections as it begins, then the fields fill quickly
+  var fillIt=function(){
+    fillOnly(function(){ setTimeout(function(){runField(idx+1);},140); });
+  };
+
+  // A section header sets up what is coming, so it still lands before the fields move.
   if(_ffSections[idx]){
     orbSpeak('form-orb',true);
     formSkyTypewriter(_ffSections[idx], estimateDuration(_ffSections[idx]));
     skySpeakPaced(_ffSections[idx],function(){ orbSpeak('form-orb',false); fillIt(); });
-  } else {
-    fillIt();
+    return;
   }
+
+  // An aside talks OVER its own field filling - no dead air, no waiting to type.
+  if(_ffAsides[idx]){
+    var line=_ffAsides[idx], spoke=false, filled=false;
+    var step=function(){
+      if(!spoke||!filled)return;
+      orbSpeak('form-orb',false);
+      setTimeout(function(){runField(idx+1);},140);
+    };
+    orbSpeak('form-orb',true);
+    formSkyTypewriter(line, estimateDuration(line));
+    skySpeak(line,function(){ spoke=true; step(); });
+    fillOnly(function(){ filled=true; step(); });
+    return;
+  }
+
+  fillIt();
 }
+/* Fields 6-12 are the team roster, and they used to fill in total silence - seven
+   fields, no voice. Sky talks through every one of them now. These play OVER the
+   typing rather than before it, so the form still fills fast; the field advances
+   only once both the line and the fill have landed, which keeps each sentence
+   matched to the field it is about. */
+var _ffAsides={
+  6:'Your general contractor goes on first \u2014 they are who I chase hardest once permits start moving.',
+  7:'Then the architect, because every review comment that comes back lands on their desk.',
+  8:'The M-E-P engineer next. Most denials I see trace straight back to this seat.',
+  9:'The landlord, who carries the delivery obligation and the rent clock behind it.',
+  10:'Project manager \u2014 that is you. You see everything, but you only act when I say it is necessary.',
+  11:'Plan review joins the court too. I count every day a submittal sits with them.',
+  12:'And your subs get added the moment they are awarded \u2014 I pull them in as names land.'
+};
 var _ffSections={
   0:'First — the project itself. The entity, the space, the budget, and the scope of work.',
   5:'Now every player on the court — your GC, architect, MEP engineer, PM, landlord, the city, and your subs. Make sure each one signs up so I can coordinate the whole court.',

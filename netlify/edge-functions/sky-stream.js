@@ -31,7 +31,7 @@ import {
   SKY_SYSTEM_PROMPT,
   CV_STAKEHOLDER_ARC,
   CV_PROJECT_CONTROL_MODE,
-} from './sky-prompts.js';
+} from './lib/sky-prompts.js';
 
 const MODEL = 'claude-haiku-4-5-20251001';
 const MAX_TOKENS = 160;

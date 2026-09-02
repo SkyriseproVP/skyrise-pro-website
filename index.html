@@ -4918,7 +4918,7 @@ function _skyStripEmoji(t){
    failure, or a stream that produced nothing — falls back to the proven
    /api/sky path, which is completely untouched. Flip SKY_STREAM to false to
    return to the classic path instantly. */
-const SKY_STREAM = false;   // edge fn parked while the build failure is diagnosed; /api/sky handles everything
+const SKY_STREAM = true;    // edge function streams natively; falls back to /api/sky on any hiccup
 let skyStreamPlayer = null;
 
 function SkyStreamPlayer(){

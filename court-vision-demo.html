@@ -1064,11 +1064,34 @@ var _fStep=0;
 var SKY_VOICE_ID = 'ePn9OncKq8KyJvrTRqTi';   // ElevenLabs key moved server-side (/api/tts, Netlify env)
 var _skyAudioEl  = null;
 
+/* Bumped by every explicit stop. Anything queued behind a playing line captures the
+   current value and refuses to speak if it changed - otherwise clearing src fires an
+   'error' on the old element and the queued line would speak AFTER a skip. */
+var _skyGen=0;
 function stopSkyAudio(){
-  if(_skyAudioEl){try{_skyAudioEl.pause();_skyAudioEl.src='';}catch(e){}}
+  _skyGen++;
+  if(_skyAudioEl){try{_skyAudioEl.pause();_skyAudioEl.src='';}catch(e){}_skyAudioEl=null;}
+  /* the browser-voice fallback is a separate channel and was never being stopped,
+     so a skip could leave two Skys talking over each other */
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
 }
 
 function skySpeak(text, onEnd){
+  /* Do NOT cut a line that is still playing. The court phase deliberately advances
+     the ball before Sky finishes its intro ("voice keeps playing under it"), and the
+     old unconditional stopSkyAudio() here killed that intro mid-word the instant the
+     LOI stage spoke - 50s of audio discarded. Queue behind it instead; an explicit
+     stopSkyAudio() from a skip button still interrupts, which is what those want. */
+  if(_skyAudioEl && !_skyAudioEl.paused && !_skyAudioEl.ended){
+    var _prev=_skyAudioEl, _gen=_skyGen;
+    var _go=function(){
+      _prev.removeEventListener('ended',_go); _prev.removeEventListener('error',_go);
+      if(_gen!==_skyGen) return;          // a skip happened; this line is stale
+      skySpeak(text,onEnd);
+    };
+    _prev.addEventListener('ended',_go); _prev.addEventListener('error',_go);
+    return;
+  }
   stopSkyAudio();
   var _done=false;
   var finish=function(){if(!_done){_done=true;if(onEnd)onEnd();}};

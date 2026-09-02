@@ -356,13 +356,16 @@ textarea.ff-input{resize:none;line-height:1.6;}
 .snap-ent-badge{font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:3px;color:var(--cyan);background:rgba(0,200,232,.08);border:1px solid rgba(0,200,232,.3);border-radius:10px;display:inline-block;padding:5px 16px;margin-bottom:12px;}
 .snap-ent-title{font-family:'Orbitron',sans-serif;font-size:clamp(16px,2.5vw,24px);font-weight:900;color:#fff;letter-spacing:1.5px;margin-bottom:10px;line-height:1.2;}
 .snap-ent-sub{font-family:system-ui,sans-serif;font-size:13.5px;color:rgba(200,230,240,.7);line-height:1.65;margin-bottom:20px;}
-.snap-ent-price{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:rgba(200,230,240,.6);margin-bottom:6px;}
-.snap-ent-price span{font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--cyan);}
 .snap-ent-note{font-family:system-ui,sans-serif;font-size:12px;color:rgba(200,230,240,.5);margin-bottom:22px;}
 .snap-ent-features{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;}
 @media(max-width:600px){.snap-ent-features{grid-template-columns:1fr;}}
 .snap-ent-features div{font-family:system-ui,sans-serif;font-size:12.5px;color:rgba(200,232,240,.75);display:flex;align-items:flex-start;gap:8px;line-height:1.4;}
 .snap-ent-features div::before{content:'';flex-shrink:0;}
+.snap-book{margin-top:22px;padding:20px 22px;border-radius:14px;background:rgba(0,200,232,.06);border:1px solid rgba(0,200,232,.3);text-align:center;}
+.snap-book-k{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:var(--cyan);margin-bottom:9px;}
+.snap-book-b{font-size:13.5px;line-height:1.65;color:rgba(200,230,240,.8);margin:0 0 16px;max-width:62ch;margin-left:auto;margin-right:auto;}
+.snap-book-btn{background:var(--cyan);border:none;border-radius:8px;padding:13px 26px;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.6px;color:#04121c;cursor:pointer;transition:box-shadow .2s,background .2s;}
+.snap-book-btn:hover{background:#4ee0ff;box-shadow:0 0 20px rgba(0,200,232,.45);}
 .snap-cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:28px;}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -725,7 +728,7 @@ textarea.ff-input{resize:none;line-height:1.6;}
 
     <!-- Enterprise Package -->
     <div class="snap-enterprise">
-      <div class="snap-ent-badge">🏀 COURT VISION</div>
+      <div class="snap-ent-badge">COURT VISION</div>
       <div class="snap-ent-title">WANT THIS REPORTING ON EVERY PROJECT?</div>
       <p class="snap-ent-sub">Everything you just saw — the Court Vision dashboard, Sky coordinating every player in real time, red flag alerts, change order tracking, and this post-project analytics report — is your Court Vision plan, priced per active project and billed monthly until each project's deadline.</p>
       <p class="snap-ent-note">Fully customizable — built around your portfolio, your players, and your process.</p>
@@ -736,6 +739,11 @@ textarea.ff-input{resize:none;line-height:1.6;}
         <div>✓&nbsp; Post-project analytics &amp; lessons learned reports</div>
         <div>✓&nbsp; Portfolio-level monthly reporting</div>
         <div>✓&nbsp; Custom workflows built for your specific deal process</div>
+      </div>
+      <div class="snap-book">
+        <div class="snap-book-k">Priced per project</div>
+        <p class="snap-book-b">Court Vision is quoted per build, not sold as a monthly plan &mdash; the number depends on the size of the project and who is on your court. Bring your next build to a call and we will scope it together.</p>
+        <button class="snap-book-btn" onclick="openBookingCall()">SCHEDULE A CALL &rarr;</button>
       </div>
     </div>
 
@@ -1967,7 +1975,7 @@ function csEngagePostDemo(){
 
   // Act 1 — Enterprise Package
   setTimeout(function(){
-  var pkg='Everything you just saw — LOI to Rent Commencement, every stakeholder managed, every delay caught, every lesson documented — that is Sky Rise Pro. Starting at eight fifty a month. Full automation, Sky as your personal AI, Court Vision deal tracking, and portals for every professional on your court. Larger projects may require custom automations — we scope that together on your strategy call. First thirty days are completely free.';
+  var pkg='Everything you just saw — LOI to Rent Commencement, every stakeholder managed, every delay caught, every lesson documented — that is Sky Rise Pro. Court Vision is quoted per project, not sold as a subscription — the number depends on the size of the build and who is on your court, so we scope it together on a call. Full automation, Sky as your personal AI, Court Vision deal tracking, and portals for every professional on your court. Larger projects may require custom automations — we scope that together on your strategy call. First thirty days are completely free.';
   if(snapNarr)snapNarr.textContent=pkg;
   skySpeakPaced(pkg,function(){
 

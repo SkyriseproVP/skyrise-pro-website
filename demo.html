@@ -1042,7 +1042,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
         <div style="font-family:'Orbitron',sans-serif;font-size:9px;font-weight:600;color:rgba(0,200,232,.45);letter-spacing:2px;margin-bottom:3px;">STARTING AT</div>
         <div class="fpc-price" style="font-size:15px;line-height:1.25;">Priced<span style="font-size:12px;font-weight:600;"> per project</span></div>
         <div class="fpc-desc" style="margin-bottom:8px;font-size:9.5px;">Every stage tracked · Sky coordinates every stakeholder · Real-time alerts · LOI to completion</div>
-        <div class="fpc-desc" style="color:rgba(255,255,255,.25);font-size:8.5px;line-height:1.45;">Priced per active project, billed monthly until your deadline. Each project gets its own tracker — add-ons discussed on your strategy call.</div>
+        <div class="fpc-desc" style="color:rgba(255,255,255,.25);font-size:8.5px;line-height:1.45;">Priced per project and scoped to the job, running through your rent commencement date. Each project gets its own tracker — scope and add-ons are set on your strategy call.</div>
         <button onclick="event.stopPropagation();openSignup('enterprise','COURT VISION','Priced per project')" style="margin-top:auto;width:100%;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;background:var(--cyan);color:#001016;border:none;border-radius:10px;padding:11px 16px;cursor:pointer;">GET STARTED →</button>
       </div>
 
@@ -1117,7 +1117,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
           <div class="vplan-pop">🏀 PER ACTIVE PROJECT</div>
           <div class="vplan-tier">COURT VISION</div>
           <div class="vplan-price" style="font-size:18px;">Priced<span> per project</span></div>
-          <div class="vplan-desc">Your full team and every stakeholder on one live court — every handoff tracked and coordinated end to end, plus the cinematic project film. Billed per active project.</div>
+          <div class="vplan-desc">Your full team and every stakeholder on one live court — every handoff tracked and coordinated end to end, plus the cinematic project film. Quoted per project.</div>
           <a href="index.html#pricing" target="_blank" class="vplan-btn">GET STARTED</a>
         </div>
         <!-- Standalone -->
@@ -1448,7 +1448,7 @@ function demoAutoNext() {
                                 moveCursorTo('demo-plan-court', () => {
                                   document.getElementById('demo-plan-court')?.classList.add('plan-cursor-active');
                                   skySpeak(
-                                    "And Court Vision is where your projects live — sixteen forty nine a month per active project, billed until the project deadline. Every stage from the letter of intent to certificate of occupancy, tracked in real time on a live dashboard. Sky coordinates every player on your court — the GC, architect, permit agent, inspector, landlord. No missed handoffs, no surprises at final inspection. It is priced per active project, so you only pay for the deals you are actually running.",
+                                    "And Court Vision is where your projects live — priced per project and scoped to the job, not a monthly subscription. Every stage from the letter of intent to certificate of occupancy, tracked in real time on a live dashboard. Sky coordinates every player on your court — the GC, architect, permit agent, inspector, landlord. No missed handoffs, no surprises at final inspection. You are quoted once, per project, so you only pay for the deals you are actually running.",
                                     'demo-orb-wrap', () => {
                                       document.getElementById('demo-plan-court')?.classList.remove('plan-cursor-active');
                                       // Witty closing — makes them feel the cost of NOT signing up
@@ -1876,7 +1876,7 @@ function showVdemoEnd() {
 // ── VIDEO PLANS OVERLAY ───────────────────────────────────────
 const VP_SCRIPTS = [
   { id:'vp-elite',      text:"Let's start with Elite, at eight forty nine eighty nine a month. This is the full AI agency. You get everything in Professional, your monthly ROI reports, and priority support and strategy calls included. And here is what makes this even more powerful. Active Elite clients can add a cinematic production video as a one-time add-on at a significantly reduced rate. This is not a monthly video charge. It is a one-time investment to showcase your completed project, and because you are already an Elite client, you get it at a price nobody else can access. The most powerful automation platform on the market, and the ability to showcase your work cinematically. That is Elite." },
-  { id:'vp-enterprise', text:"Court Vision is sixteen forty nine eighty nine a month, per active project. This is your live deal tracker, built for your whole team. Every professional on your court, your architect, GC, landlord, project manager, and every stakeholder, gets their own portal to see exactly where the deal stands. I coordinate every handoff end to end, and it includes the cinematic project film so you can showcase the completed project to everyone who made it happen." },
+  { id:'vp-enterprise', text:"Court Vision is priced per project, quoted to the job rather than billed by the month. This is your live deal tracker, built for your whole team. Every professional on your court, your architect, GC, landlord, project manager, and every stakeholder, gets their own portal to see exactly where the deal stands. I coordinate every handoff end to end, and it includes the cinematic project film so you can showcase the completed project to everyone who made it happen." },
   { id:'vp-standalone', text:"And the Standalone package is a one-time investment of seventeen fifty. One complete cinematic production from vision to final delivery. Your brand, your story, your win, fully produced and ready to deploy. No subscription required." }
 ];
 
@@ -2459,10 +2459,15 @@ window.openSignup = function(planKey, planName, planPrice) {
     if (_trial) _trial.textContent = '🔒 SECURE 50% DEPOSIT — BALANCE DUE ON DELIVERY';
     _btn.textContent = 'PAY $875 DEPOSIT → SECURE CHECKOUT';
   } else {
+    /* Court Vision is quoted per project, so it gets neither the /month suffix
+       nor the monthly-billing note that every other plan carries. */
+    var _quoted = (_signupPlan.key === 'enterprise' || _signupPlan.key === 'courtvision');
     document.getElementById('ssu-plan-name').textContent  = _signupPlan.name + ' PLAN';
     document.getElementById('ssu-plan-price').textContent = _signupPlan.price;
-    if (_sub)   _sub.textContent   = 'Billed monthly after 30-day free trial';
-    if (_per)   _per.textContent   = '/month';
+    if (_sub)   _sub.textContent   = _quoted
+      ? 'Quoted per project on your strategy call'
+      : 'Billed monthly after 30-day free trial';
+    if (_per)   _per.textContent   = _quoted ? '' : '/month';
     if (_trial) _trial.textContent = '🔒 30-DAY FREE TRIAL — NO CHARGE TODAY';
     _btn.textContent = 'START FREE TRIAL → ENTER PAYMENT INFO';
   }

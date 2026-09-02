@@ -1786,7 +1786,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <div class="srv-header-box">
       <div class="srv-box-title" style="font-size:10px;letter-spacing:3px;white-space:nowrap;flex-shrink:0;">OUR SERVICES</div>
       <div style="width:1px;height:18px;background:var(--cyan);opacity:.4;flex-shrink:0;"></div>
-      <p class="srv-box-body" style="font-size:13px;color:#0d1526;margin:0;font-family:system-ui,sans-serif;font-weight:400;letter-spacing:0;">Skyrise Pro is an AI-powered platform that transforms how commercial real estate and construction businesses operate — automating workflows, improving project and team communication across every stakeholder, tracking every stage from first move to final close, and honoring every completed project with cinematic video production that transforms the finished work into a visual legacy — proof of what your team is capable of that your clients will never forget.</p>
+      <p class="srv-box-body" style="font-size:14.5px;line-height:1.7;color:#0d1526;margin:0;font-family:system-ui,sans-serif;font-weight:400;letter-spacing:0;">Every project has a moment where someone asks, <em>“Who was supposed to handle that?”</em> — and four stakeholders go quiet. Most projects don’t fail. They slip, one approval at a time, buried under forty messages that mattered. Skyrise Pro keeps the record while the work happens — so a slip surfaces in hours, not in a walkthrough two weeks later.</p>
     </div>
 
     <div class="services-layout">
@@ -1826,102 +1826,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 </section>
 
 <!-- ── DASHBOARD ─────────────────────────────────────────────── -->
-<section id="dashboard">
-  <div class="dashboard-inner">
-    <div class="dash-badge">REAL-TIME INTELLIGENCE</div>
-    <h2 class="dash-title">YOUR STRATEGIC <span>DASHBOARD</span></h2>
-    <p class="dash-sub">We build automated AI agents that communicate directly with your clients through SMS, email, or your CRM — fully hands-free. Here's the impact.</p>
-
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-num cyan">78+</div>
-        <div class="kpi-label">LEADS GENERATED / MONTH</div>
-        <div class="kpi-compare">vs. 14 before automation</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-num orange">22h</div>
-        <div class="kpi-label">HOURS SAVED / WEEK</div>
-        <div class="kpi-compare">on manual tasks eliminated</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-num cyan">94%</div>
-        <div class="kpi-label">CLIENT RESPONSE TIME</div>
-        <div class="kpi-compare">faster with AI agents</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-num blue">&lt;30min</div>
-        <div class="kpi-label">PROPOSAL TURNAROUND</div>
-        <div class="kpi-compare">down from 6+ hours</div>
-      </div>
-    </div>
-    <div class="charts-grid">
-      <div class="chart-card">
-        <div class="chart-title-txt">OWNER ADMIN HOURS/WEEK — BEFORE VS. AFTER SKY</div>
-        <div style="position:relative;height:160px;"><canvas id="chart-leads"></canvas></div>
-        <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(255,107,53,0.6)"></div>WITHOUT SKY (HRS)</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>WITH SKYRISE PRO (HRS)</div>
-        </div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title-txt">MANUAL TASKS ELIMINATED BY SKY (HRS/WEEK)</div>
-        <div style="position:relative;height:160px;"><canvas id="chart-time"></canvas></div>
-        <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(255,107,53,0.6)"></div>MANUAL (HRS)</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>SKY HANDLES (HRS)</div>
-        </div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title-txt">HOW SKY DISTRIBUTES YOUR WORKLOAD</div>
-        <div style="position:relative;height:160px;"><canvas id="chart-donut"></canvas></div>
-        <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8;border-radius:50%"></div>AI-HANDLED DECISIONS 44%</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#ff6b35;border-radius:50%"></div>STAKEHOLDER UPDATES 26%</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#3182ce;border-radius:50%"></div>OWNER ESCALATIONS 18%</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#805ad5;border-radius:50%"></div>DOCUMENT PROCESSING 12%</div>
-        </div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title-txt">DECISIONS HANDLED: MANUAL VS. AI-ASSISTED</div>
-        <div style="position:relative;height:160px;"><canvas id="chart-line"></canvas></div>
-        <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#ff6b35"></div>OWNER HANDLES MANUALLY</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>SKY HANDLES AUTONOMOUSLY</div>
-        </div>
-      </div>
-    </div>
-    <div class="features-row">
-      <div class="feat-card">
-        <div class="feat-icon-wrap yellow">
-          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
-          </svg>
-        </div>
-        <div class="feat-title">NO DEEP AUTOMATION OVERHEAD</div>
-        <div class="feat-desc">Leverage built-in dashboards for real-time insights without needing a technical team. SkyRise Pro handles the complexity.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon-wrap blue">
-          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#00c8e8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
-          </svg>
-        </div>
-        <div class="feat-title">SEAMLESS PROJECT COMMUNICATION</div>
-        <div class="feat-desc">Better communications throughout the entire project workflow — with subcontractors, coworkers, and clients — all in one place.</div>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon-wrap purple">
-          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/>
-          </svg>
-        </div>
-        <div class="feat-title">CUSTOMIZABLE AI AGENT</div>
-        <div class="feat-desc">Customize your own Sky AI agent that tracks project progress, sends alerts, and keeps every stakeholder informed in real time.</div>
-      </div>
-    </div>
-  </div>
-
-</section>
 
 <!-- ── BASKETBALL COURT DEMO ───────────────────────────────────── -->
 
@@ -3235,6 +3139,102 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   </script>
 
 </div><!-- /pipeline-inner -->
+</section>
+<section id="dashboard">
+  <div class="dashboard-inner">
+    <div class="dash-badge">REAL-TIME INTELLIGENCE</div>
+    <h2 class="dash-title">YOUR STRATEGIC <span>DASHBOARD</span></h2>
+    <p class="dash-sub">We build automated AI agents that communicate directly with your clients through SMS, email, or your CRM — fully hands-free. Here's the impact.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num cyan">78+</div>
+        <div class="kpi-label">LEADS GENERATED / MONTH</div>
+        <div class="kpi-compare">vs. 14 before automation</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num orange">22h</div>
+        <div class="kpi-label">HOURS SAVED / WEEK</div>
+        <div class="kpi-compare">on manual tasks eliminated</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num cyan">94%</div>
+        <div class="kpi-label">CLIENT RESPONSE TIME</div>
+        <div class="kpi-compare">faster with AI agents</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num blue">&lt;30min</div>
+        <div class="kpi-label">PROPOSAL TURNAROUND</div>
+        <div class="kpi-compare">down from 6+ hours</div>
+      </div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title-txt">OWNER ADMIN HOURS/WEEK — BEFORE VS. AFTER SKY</div>
+        <div style="position:relative;height:160px;"><canvas id="chart-leads"></canvas></div>
+        <div class="chart-legend">
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(255,107,53,0.6)"></div>WITHOUT SKY (HRS)</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>WITH SKYRISE PRO (HRS)</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title-txt">MANUAL TASKS ELIMINATED BY SKY (HRS/WEEK)</div>
+        <div style="position:relative;height:160px;"><canvas id="chart-time"></canvas></div>
+        <div class="chart-legend">
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(255,107,53,0.6)"></div>MANUAL (HRS)</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>SKY HANDLES (HRS)</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title-txt">HOW SKY DISTRIBUTES YOUR WORKLOAD</div>
+        <div style="position:relative;height:160px;"><canvas id="chart-donut"></canvas></div>
+        <div class="chart-legend">
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8;border-radius:50%"></div>AI-HANDLED DECISIONS 44%</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#ff6b35;border-radius:50%"></div>STAKEHOLDER UPDATES 26%</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#3182ce;border-radius:50%"></div>OWNER ESCALATIONS 18%</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#805ad5;border-radius:50%"></div>DOCUMENT PROCESSING 12%</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title-txt">DECISIONS HANDLED: MANUAL VS. AI-ASSISTED</div>
+        <div style="position:relative;height:160px;"><canvas id="chart-line"></canvas></div>
+        <div class="chart-legend">
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#ff6b35"></div>OWNER HANDLES MANUALLY</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>SKY HANDLES AUTONOMOUSLY</div>
+        </div>
+      </div>
+    </div>
+    <div class="features-row">
+      <div class="feat-card">
+        <div class="feat-icon-wrap yellow">
+          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+          </svg>
+        </div>
+        <div class="feat-title">NO DEEP AUTOMATION OVERHEAD</div>
+        <div class="feat-desc">Leverage built-in dashboards for real-time insights without needing a technical team. SkyRise Pro handles the complexity.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap blue">
+          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#00c8e8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
+          </svg>
+        </div>
+        <div class="feat-title">SEAMLESS PROJECT COMMUNICATION</div>
+        <div class="feat-desc">Better communications throughout the entire project workflow — with subcontractors, coworkers, and clients — all in one place.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap purple">
+          <svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/>
+          </svg>
+        </div>
+        <div class="feat-title">CUSTOMIZABLE AI AGENT</div>
+        <div class="feat-desc">Customize your own Sky AI agent that tracks project progress, sends alerts, and keeps every stakeholder informed in real time.</div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ── SECTION DIVIDER (right → left) ───────────────────────── -->
@@ -4918,7 +4918,7 @@ function _skyStripEmoji(t){
    failure, or a stream that produced nothing — falls back to the proven
    /api/sky path, which is completely untouched. Flip SKY_STREAM to false to
    return to the classic path instantly. */
-const SKY_STREAM = true;    // edge function streams natively; falls back to /api/sky on any hiccup
+const SKY_STREAM = false;   // edge fn parked while the build failure is diagnosed; /api/sky handles everything
 let skyStreamPlayer = null;
 
 function SkyStreamPlayer(){

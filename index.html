@@ -210,6 +210,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
    not modelled. $37,600 per 15-day block; the lease's own worked example puts
    60 days near $150,000, which the 4-block figure independently agrees with.
    The held-day counts come from the board. Do not round these. */
+/* ── RENT COMMENCEMENT COUNTDOWN ───────────────────────────────
+   Counts to the RENT COMMENCEMENT date, not the delivery date, because that
+   is the date money hangs off: every 15 days past it credits $37,600 of free
+   rent. The board states January 26 2027 in three places. To change the
+   target, edit RCD_TARGET in the script - nothing else. */
+.rcd{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;
+  background:linear-gradient(135deg,#ffffff 0%,#f4fbff 55%,#e9f6fd 100%);
+  border:1px solid rgba(0,200,232,.3);border-radius:22px;padding:24px 28px;margin:0 0 26px;
+  box-shadow:0 1px 3px rgba(10,22,40,.05),0 12px 30px rgba(10,22,40,.06);}
+.rcd-ring{position:relative;width:132px;height:132px;flex-shrink:0;}
+.rcd-ring svg{transform:rotate(-90deg);display:block;}
+.rcd-ring .trk{stroke:rgba(10,22,40,.09);}
+.rcd-ring .arc{stroke:url(#rcdGrad);stroke-linecap:round;transition:stroke-dashoffset 1s linear;}
+.rcd-ring-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.rcd-days{font-family:'Orbitron',sans-serif;font-size:38px;font-weight:900;color:#0a1628;line-height:1;letter-spacing:-.5px;}
+.rcd-days-l{font-family:'Orbitron',sans-serif;font-size:8.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:rgba(10,22,40,.42);margin-top:5px;}
+.rcd-body{min-width:0;}
+.rcd-k{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:1.9px;text-transform:uppercase;color:#0d8fa8;margin-bottom:7px;}
+.rcd-h{font-family:'Orbitron',sans-serif;font-size:clamp(15px,1.5vw,19px);font-weight:900;color:#0a1628;margin:0 0 4px;letter-spacing:.2px;}
+.rcd-sub{font-size:12.5px;color:rgba(10,22,40,.55);margin:0 0 14px;}
+.rcd-units{display:flex;gap:9px;flex-wrap:wrap;}
+.rcd-u{background:#fff;border:1px solid rgba(10,22,40,.1);border-radius:11px;padding:9px 14px;min-width:66px;text-align:center;}
+.rcd-u-n{font-family:'Orbitron',sans-serif;font-size:19px;font-weight:900;color:#0a1628;line-height:1;font-variant-numeric:tabular-nums;}
+.rcd-u-l{font-size:9px;letter-spacing:1.1px;text-transform:uppercase;color:rgba(10,22,40,.42);margin-top:6px;}
+.rcd-flag{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:12px;color:#0b7a58;font-weight:600;}
+.rcd-flag i{width:7px;height:7px;border-radius:50%;background:#12b886;font-style:normal;
+  box-shadow:0 0 0 0 rgba(18,184,134,.5);animation:lbPulse 2s infinite;}
+@media(max-width:640px){.rcd{grid-template-columns:1fr;justify-items:center;text-align:center;gap:18px;padding:22px 20px;}
+  .rcd-units{justify-content:center;}}
 .lb-tabs{display:flex;gap:4px;margin:30px 0 0;border-bottom:1px solid rgba(10,22,40,.12);}
 .lb-tab{appearance:none;background:none;border:none;cursor:pointer;font-family:'Orbitron',sans-serif;
   font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(10,22,40,.42);
@@ -1826,14 +1855,41 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   <div class="lb-inner">
     <div class="lb-tag"><span class="lb-dot"></span>Live Court Vision project</div>
     <h2 class="lb-h">Base contract executed.</h2>
-    <p class="lb-track">Commercial asset &middot; Orlando &middot; Construction start: June 2026 &middot; Expected delivery: Jan 15, 2027</p>
+    <p class="lb-track">Commercial asset &middot; Orlando &middot; Construction start: June 2026</p>
+
+    <div class="rcd" role="group" aria-label="Countdown to rent commencement">
+      <div class="rcd-ring">
+        <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
+          <defs><linearGradient id="rcdGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#00c8e8"/><stop offset="1" stop-color="#0b6fa8"/>
+          </linearGradient></defs>
+          <circle class="trk" cx="66" cy="66" r="58" fill="none" stroke-width="9"/>
+          <circle class="arc" id="rcdArc" cx="66" cy="66" r="58" fill="none" stroke-width="9"
+                  stroke-dasharray="364.4" stroke-dashoffset="364.4"/>
+        </svg>
+        <div class="rcd-ring-mid">
+          <div class="rcd-days" id="rcdDays">&mdash;</div>
+          <div class="rcd-days-l">days left</div>
+        </div>
+      </div>
+      <div class="rcd-body">
+        <div class="rcd-k">Rent commencement</div>
+        <h3 class="rcd-h">January 26, 2027</h3>
+        <p class="rcd-sub">The date the lease starts charging. Every 15 days past it credits <b>$37,600</b> of free rent.</p>
+        <div class="rcd-units">
+          <div class="rcd-u"><div class="rcd-u-n" id="rcdH">&mdash;</div><div class="rcd-u-l">hours</div></div>
+          <div class="rcd-u"><div class="rcd-u-n" id="rcdM">&mdash;</div><div class="rcd-u-l">min</div></div>
+          <div class="rcd-u"><div class="rcd-u-n" id="rcdS">&mdash;</div><div class="rcd-u-l">sec</div></div>
+        </div>
+        <div class="rcd-flag"><i></i>On track for delivery</div>
+      </div>
+    </div>
 
     <div class="lb-stats">
       <div class="lb-stat"><div class="lb-k">Total build out</div><div class="lb-v">$3,069,420.18</div></div>
       <div class="lb-stat"><div class="lb-k">Per square foot</div><div class="lb-v">$98.70<small>31,100 sq ft</small></div></div>
       <div class="lb-stat"><div class="lb-k">Submittals cleared</div><div class="lb-v">8<small>5-day clear time</small></div></div>
       <div class="lb-stat"><div class="lb-k">Possession</div><div class="lb-v">Plan examiner<small>ball in their court</small></div></div>
-      <div class="lb-stat"><div class="lb-k">Status</div><div class="lb-v" style="color:#0b7a58;">On track<small>for delivery</small></div></div>
     </div>
 
     <div class="lb-pen"><div class="lb-pen-k">What the clock is worth</div><p class="lb-pen-b">Rent commencement is set for <b>Jan 26, 2027</b>. Every 15 days the landlord is late credits the tenant roughly <b>$37,600</b> in free rent &mdash; the lease's own worked example puts 60 days at about <b>$150,000</b>. That is what a stalled permit costs, and it is why the ball is never allowed to sit.</p></div>
@@ -4030,6 +4086,34 @@ function crTab(which){
     p.hidden = !on;
   });
 }
+
+/* Countdown to rent commencement. Targets the RCD rather than the delivery
+   date because the RCD is what money hangs off. Change RCD_TARGET only. */
+(function(){
+  var RCD_TARGET = new Date('2027-01-26T00:00:00-05:00');
+  var START      = new Date('2026-06-11T00:00:00-04:00'); // Notice of Commencement, for ring progress
+  var CIRC = 2 * Math.PI * 58;
+  function tick(){
+    var d = document.getElementById('rcdDays');
+    if(!d) return;
+    var now = Date.now(), left = RCD_TARGET - now;
+    if(left < 0) left = 0;
+    var days = Math.floor(left / 86400000);
+    var hrs  = Math.floor(left % 86400000 / 3600000);
+    var mins = Math.floor(left % 3600000 / 60000);
+    var secs = Math.floor(left % 60000 / 1000);
+    d.textContent = days;
+    var set = function(id, v){ var e = document.getElementById(id); if(e) e.textContent = String(v).padStart(2,'0'); };
+    set('rcdH', hrs); set('rcdM', mins); set('rcdS', secs);
+    var arc = document.getElementById('rcdArc');
+    if(arc){
+      var span = RCD_TARGET - START, done = Math.min(1, Math.max(0, (now - START) / span));
+      arc.style.strokeDashoffset = CIRC * (1 - done);
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
 
 function lbTab(which){
   ['upd','clk'].forEach(function(k){

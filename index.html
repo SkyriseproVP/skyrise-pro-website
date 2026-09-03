@@ -205,6 +205,41 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .lb-item.save  .lb-badge{background:rgba(18,184,134,.13);color:#0b7a58;border-color:rgba(18,184,134,.4);}
 .lb-txt{font-size:13.5px;line-height:1.55;color:rgba(10,22,40,.8);}
 .lb-txt b{color:#0a1628;}
+/* ── JOB TABS: Latest updates | Money on the clock ─────────────
+   Every figure in the clock panel is from the executed lease on this build,
+   not modelled. $37,600 per 15-day block; the lease's own worked example puts
+   60 days near $150,000, which the 4-block figure independently agrees with.
+   The held-day counts come from the board. Do not round these. */
+.lb-tabs{display:flex;gap:4px;margin:30px 0 0;border-bottom:1px solid rgba(10,22,40,.12);}
+.lb-tab{appearance:none;background:none;border:none;cursor:pointer;font-family:'Orbitron',sans-serif;
+  font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(10,22,40,.42);
+  padding:11px 15px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;}
+.lb-tab:hover{color:rgba(10,22,40,.7);}
+.lb-tab[aria-selected="true"]{color:#0a1628;border-bottom-color:var(--cyan);}
+.lb-panel[hidden]{display:none;}
+.lb-panel{padding-top:16px;}
+.clk-lead{font-size:13.5px;line-height:1.65;color:rgba(10,22,40,.7);margin:0 0 16px;max-width:78ch;}
+.clk-lead b{color:#0a1628;font-weight:700;}
+.clk-scale{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin-bottom:14px;}
+.clk-step{border:1px solid rgba(10,22,40,.1);border-radius:9px;padding:13px 14px;background:#fff;position:relative;overflow:hidden;}
+.clk-step::after{content:'';position:absolute;left:0;bottom:0;height:3px;background:linear-gradient(90deg,#f2b01d,#e8455a);}
+.clk-step.s1::after{width:25%;}.clk-step.s2::after{width:50%;}
+.clk-step.s3::after{width:75%;}.clk-step.s4::after{width:100%;}
+.clk-d{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:rgba(10,22,40,.45);margin-bottom:7px;}
+.clk-a{font-family:'Orbitron',sans-serif;font-size:19px;font-weight:900;color:#0a1628;line-height:1;}
+.clk-a.hot{color:#c0304a;}
+.clk-src{font-size:12px;line-height:1.6;color:rgba(10,22,40,.55);margin:0 0 20px;padding-left:12px;border-left:2px solid rgba(0,200,232,.35);}
+.clk-src b{color:#0a1628;}
+.clk-swing{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.clk-side{border-radius:10px;padding:15px 17px;}
+.clk-side.bad{background:rgba(232,69,90,.055);border:1px solid rgba(232,69,90,.2);}
+.clk-side.good{background:rgba(18,184,134,.06);border:1px solid rgba(18,184,134,.24);}
+.clk-side-h{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:9px;}
+.clk-side.bad .clk-side-h{color:#c0304a;}
+.clk-side.good .clk-side-h{color:#0b7a58;}
+.clk-side p{font-size:13px;line-height:1.6;color:rgba(10,22,40,.72);margin:0;}
+.clk-side b{color:#0a1628;font-weight:700;}
+@media(max-width:640px){.clk-swing{grid-template-columns:1fr;}}
 .lb-upd-h{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:#0a1628;margin:30px 0 13px;}
 .lb-upd{margin-bottom:26px;}
 .lb-upd-row{display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-top:1px solid rgba(10,22,40,.09);}
@@ -1769,14 +1804,42 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div class="lb-item save"><span class="lb-badge">Save</span><span class="lb-txt"><b>Eng/Zone and Impact Fees.</b> Both cleared the same week the others were denied &mdash; two lanes closed for good, so neither can block this build again.</span></div>
     </div>
 
-    <p class="lb-upd-h">Latest updates</p>
+    <div class="lb-tabs" role="tablist">
+      <button class="lb-tab" role="tab" id="tab-upd" aria-controls="panel-upd" aria-selected="true" onclick="lbTab('upd')">Latest updates</button>
+      <button class="lb-tab" role="tab" id="tab-clk" aria-controls="panel-clk" aria-selected="false" onclick="lbTab('clk')">Money on the clock</button>
+    </div>
+
+    <div class="lb-panel" id="panel-clk" role="tabpanel" aria-labelledby="tab-clk" hidden>
+      <p class="clk-lead">Rent does not start when the work finishes. It starts on the date the lease says the space will be delivered &mdash; and past that date the tenant is credited free rent in fixed blocks. <b>Every block is money the building was supposed to earn and does not.</b></p>
+      <div class="clk-scale">
+        <div class="clk-step s1"><div class="clk-d">15 days late</div><div class="clk-a">$37,600</div></div>
+        <div class="clk-step s2"><div class="clk-d">30 days late</div><div class="clk-a">$75,200</div></div>
+        <div class="clk-step s3"><div class="clk-d">45 days late</div><div class="clk-a">$112,800</div></div>
+        <div class="clk-step s4"><div class="clk-d">60 days late</div><div class="clk-a hot">$150,400</div></div>
+      </div>
+      <p class="clk-src">Not modelled. These are the terms of the executed lease on this build &mdash; <b>$37,600 credited for every 15 days past commencement</b>, which is set for Jan 26, 2027. The lease writes its own worked example at sixty days, roughly $150,000, and the block math independently agrees.</p>
+      <div class="clk-swing">
+        <div class="clk-side bad">
+          <div class="clk-side-h">Which way it was running</div>
+          <p>Two reviews sat denied and unmoving &mdash; <b>25 days held</b> on plumbing, <b>15 on electrical</b>. Held days are what become credited blocks if they are still there at delivery.</p>
+        </div>
+        <div class="clk-side good">
+          <div class="clk-side-h">Which way it runs now</div>
+          <p>Both went back in on Aug 31, so those clocks stopped. The <b>4 catches</b> above are days that never became held days at all &mdash; and every block not slipped is <b>$37,600</b> that stays with the building.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="lb-panel" id="panel-upd" role="tabpanel" aria-labelledby="tab-upd">
     <div class="lb-upd">
       <div class="lb-upd-row"><span class="lb-upd-d">Aug 31</span><span class="lb-upd-t">HVAC controls submittal approved by the engineer. Revised drawings confirmed uploaded and submitted &mdash; the ball is now on the plan examiner.</span></div>
       <div class="lb-upd-row"><span class="lb-upd-d">Aug 10</span><span class="lb-upd-t">Resubmitted answering the plan examiner's review objection comments.</span></div>
     </div>
+    </div>
     <p class="lb-sky"><b>Sky</b> &mdash; the AI that runs the record &mdash; pings the stakeholder whose court the ball is on, <b>before the delay happens, not after.</b></p>
   </div>
 </section>
+
 
 <!-- ── SERVICES ──────────────────────────────────────────────── -->
 <section id="services">
@@ -3873,6 +3936,19 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 
 <!-- ── SCRIPTS ────────────────────────────────────────────────── -->
 <script>
+
+/* Job-block tabs. Uses the hidden property rather than inline display so the
+   panel keeps whatever display the stylesheet gives it when shown. */
+function lbTab(which){
+  ['upd','clk'].forEach(function(k){
+    var t=document.getElementById('tab-'+k), p=document.getElementById('panel-'+k);
+    if(!t||!p) return;
+    var on = (k===which);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+    p.hidden = !on;
+  });
+}
+
 // Modal
 function openModal(id){
   document.getElementById('modal-'+id).classList.add('open');

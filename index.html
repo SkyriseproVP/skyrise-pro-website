@@ -218,6 +218,47 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .lb-tab[aria-selected="true"]{color:#0a1628;border-bottom-color:var(--cyan);}
 .lb-panel[hidden]{display:none;}
 .lb-panel{padding-top:16px;}
+/* "Who runs this" panel. Every figure is Victor's own record, given directly:
+   PM / owner's rep since 2008, 40+ projects, ~4M sq ft, Manhattan and Bronx
+   commercial portfolios. Do NOT embellish - a prospect will probe these on a
+   call. The portfolio owner is deliberately not named. */
+/* ── CREDIBILITY BLOCK: who runs this | the record ─────────────
+   Bio figures are Victor's own, given directly: PM / owner's rep since 2008,
+   40+ projects, ~4M sq ft, Manhattan and Bronx commercial portfolios. Do NOT
+   embellish - a prospect will probe them on a call. The portfolio owner is
+   deliberately NOT named. The record tab describes the vault that actually
+   exists (9 folders reconciled to disk); it does not claim a dispute win,
+   because none has been confirmed. */
+#cred{padding:66px 60px;background:linear-gradient(135deg,#0a1628 0%,#102743 55%,#0a1628 100%);}
+.cr-inner{max-width:1060px;margin:0 auto;}
+.cr-tabs{display:flex;gap:4px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.14);}
+.cr-tab{appearance:none;background:none;border:none;cursor:pointer;font-family:'Orbitron',sans-serif;
+  font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(200,225,240,.45);
+  padding:12px 16px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;}
+.cr-tab:hover{color:rgba(255,255,255,.8);}
+.cr-tab[aria-selected="true"]{color:#fff;border-bottom-color:var(--cyan);}
+.cr-panel{padding-top:26px;}
+.cr-panel[hidden]{display:none;}
+.cr-lead{font-size:15px;line-height:1.78;color:rgba(200,225,240,.75);margin:0 0 24px;max-width:74ch;}
+.cr-lead b{color:#fff;font-weight:700;}
+.cr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px;}
+.cr-stat{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:16px 18px;}
+.cr-n{font-family:'Orbitron',sans-serif;font-size:23px;font-weight:900;color:#fff;line-height:1;letter-spacing:.3px;}
+.cr-l{font-size:11px;line-height:1.5;color:rgba(200,225,240,.5);margin-top:8px;}
+.cr-note{font-size:14px;line-height:1.75;color:rgba(200,225,240,.78);margin:0;padding-left:14px;border-left:3px solid var(--cyan);}
+.cr-note b{color:#fff;font-weight:700;}
+.cr-folders{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px;}
+.cr-folder{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:rgba(200,225,240,.7);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:6px;padding:7px 11px;}
+@media(max-width:900px){#cred{padding:52px 24px;}}
+.who-lead{font-size:13.5px;line-height:1.7;color:rgba(10,22,40,.72);margin:0 0 16px;max-width:80ch;}
+.who-lead b{color:#0a1628;font-weight:700;}
+.who-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;}
+.who-stat{border:1px solid rgba(10,22,40,.1);border-radius:9px;padding:14px 15px;background:#fff;}
+.who-n{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:#0a1628;line-height:1;letter-spacing:.3px;}
+.who-l{font-size:11px;line-height:1.5;color:rgba(10,22,40,.5);margin-top:8px;}
+.who-proof{font-size:13px;line-height:1.7;color:rgba(10,22,40,.7);margin:0;padding-left:12px;border-left:2px solid rgba(0,200,232,.35);}
+.who-proof b{color:#0a1628;font-weight:700;}
 .clk-lead{font-size:13.5px;line-height:1.65;color:rgba(10,22,40,.7);margin:0 0 16px;max-width:78ch;}
 .clk-lead b{color:#0a1628;font-weight:700;}
 .clk-scale{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin-bottom:14px;}
@@ -1961,6 +2002,46 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     </div>
   </div>
 </div>
+
+
+
+
+<!-- ── WHO RUNS THIS / THE RECORD ────────────────────────────── -->
+<section id="cred">
+  <div class="cr-inner">
+    <div class="cr-tabs" role="tablist">
+      <button class="cr-tab" role="tab" id="crtab-who" aria-controls="crpanel-who" aria-selected="true" onclick="crTab('who')">Who runs this</button>
+      <button class="cr-tab" role="tab" id="crtab-rec" aria-controls="crpanel-rec" aria-selected="false" onclick="crTab('rec')">The record you keep</button>
+    </div>
+
+    <div class="cr-panel" id="crpanel-who" role="tabpanel" aria-labelledby="crtab-who">
+      <p class="cr-lead">This was not built by software people studying construction. It was built by the <b>project manager and owner&rsquo;s representative running the build shown above</b> &mdash; delivering tenant improvement projects since 2008, across Manhattan and Bronx commercial portfolios, where a missed delivery date is not a scheduling inconvenience but a line on somebody&rsquo;s rent roll.</p>
+      <div class="cr-stats">
+        <div class="cr-stat"><div class="cr-n">2008</div><div class="cr-l">Running TI build-outs since</div></div>
+        <div class="cr-stat"><div class="cr-n">40+</div><div class="cr-l">Projects delivered</div></div>
+        <div class="cr-stat"><div class="cr-n">4M</div><div class="cr-l">Sq ft of commercial space</div></div>
+        <div class="cr-stat"><div class="cr-n">PM</div><div class="cr-l">and owner&rsquo;s rep &mdash; the seat that carries the date</div></div>
+      </div>
+      <p class="cr-note"><b>Which is why this page shows a real job rather than a case study.</b> The denied electrical review, the days held on plumbing, the credited rent blocks &mdash; that is a live lease on a live project, this week. Every feature here exists because something on a jobsite went wrong first.</p>
+    </div>
+
+    <div class="cr-panel" id="crpanel-rec" role="tabpanel" aria-labelledby="crtab-rec" hidden>
+      <p class="cr-lead">Documented from LOI to Certificate of Occupancy is not a figure of speech. Every project carries a filed record that is built as the work happens, not reconstructed afterwards &mdash; <b>and it is yours, not ours.</b></p>
+      <div class="cr-folders">
+        <div class="cr-folder">Permits</div>
+        <div class="cr-folder">Submittals</div>
+        <div class="cr-folder">Plans</div>
+        <div class="cr-folder">Correspondence</div>
+        <div class="cr-folder">Contracts &amp; agreements</div>
+        <div class="cr-folder">Meetings</div>
+        <div class="cr-folder">Photos</div>
+        <div class="cr-folder">Onboarding</div>
+      </div>
+      <p class="cr-lead">Alongside the files sits the possession history: <b>who held each item, when it moved, what they were sent, what came back, and how long it sat</b> &mdash; every approval, denial and change order timestamped against the stakeholder who owned it.</p>
+      <p class="cr-note">When a change order is contested or a delay claim lands, the argument is settled by whoever can show what happened. Most projects go hunting through inboxes months later to assemble that. <b>On this one it already exists, finished, the day the job closes.</b></p>
+    </div>
+  </div>
+</section>
 
 <section id="court-demo" class="pipeline-section" style="background:#ffffff;padding-top:40px;">
 <div class="pipeline-inner">
@@ -3939,6 +4020,17 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 
 /* Job-block tabs. Uses the hidden property rather than inline display so the
    panel keeps whatever display the stylesheet gives it when shown. */
+/* Credibility block tabs - same hidden-property pattern as the job block. */
+function crTab(which){
+  ['who','rec'].forEach(function(k){
+    var t=document.getElementById('crtab-'+k), p=document.getElementById('crpanel-'+k);
+    if(!t||!p) return;
+    var on = (k===which);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+    p.hidden = !on;
+  });
+}
+
 function lbTab(which){
   ['upd','clk'].forEach(function(k){
     var t=document.getElementById('tab-'+k), p=document.getElementById('panel-'+k);

@@ -1099,6 +1099,23 @@ function stopSkyAudio(){
   try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
 }
 
+/* ── PRE-RENDERED NARRATION ────────────────────────────────────────
+   Sky's fixed lines are rendered to MP3 once and served as files, instead of
+   paying ElevenLabs to synthesise byte-identical audio for every visitor. The
+   filename is an FNV-1a hash of the TRANSFORMED text - the same string skySpeak
+   would have posted - so a line only resolves if it matches exactly.
+
+   skyHash MUST stay byte-identical to the generator (scratchpad/pregen.js). If
+   it drifts, nothing breaks visibly: every lookup simply misses and the demo
+   quietly goes back to paying per play. Regenerate whenever narration changes. */
+var SKY_PREGEN_DIR = 'sky-audio/';
+var SKY_PREGEN = new Set(["01fb2919","06be5e70","0825668c","089f36fd","0ea9882e","0ed4e15b","115b3f89","140fd7fd","144a9e9d","1c4eaeb6","24c390b1","2a3fa587","2c9a1e67","2cd29441","2e2eeed5","40722e0a","48320406","499201bd","4ac1dd37","4db37d11","55a06a7c","57fb8444","5983dc07","62a305ea","65b93f2b","69bba8fd","69be8a94","72eac254","782775f5","7d5bde87","7f791e7e","7fcd9e77","805b01ea","84c5f142","8840e795","8ad3e54c","8c19f43d","9263a693","9bb00bd4","a0c8cc13","a1b2d2c0","a5ee2023","ab377ac4","abbd51fb","ae68a8dd","aede2976","b4f5c5cc","b79c6a6a","b8297c8a","ba452842","bbde6f10","bf4b799d","bfa2ae07","c7479abd","c91040c5","cbcdcc03","d00233ba","d72dc731","d8347b33","d8951989","db61d865","dcd7c0d7","dde7b8ab","df7872b3","e193634f","e1c22a2f","e392e27d","e759f110","e91cd076","e9834aa4","e9da136e","ea48429e","eb72e23b","eea6ef31","f1d29290","fa5c090a","fb960cf9"]);
+function skyHash(str){
+  var b = new TextEncoder().encode(str), h = 0x811c9dc5;
+  for (var i = 0; i < b.length; i++){ h ^= b[i]; h = Math.imul(h, 0x01000193) >>> 0; }
+  return ('0000000' + h.toString(16)).slice(-8);
+}
+
 function skySpeak(text, onEnd){
   /* Do NOT cut a line that is still playing. The court phase deliberately advances
      the ball before Sky finishes its intro ("voice keeps playing under it"), and the
@@ -1143,6 +1160,31 @@ function skySpeak(text, onEnd){
     try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
     finish();
   };
+  /* Play an already-rendered clip when we have one. Same element, same
+     autoplay blessing, same finish() contract as the fetched path - only the
+     source differs, so nothing downstream needs to know which it got. */
+  var _play = function(src, revoke){
+    if(!_skyAudioEl) _skyAudioEl = new Audio();
+    _skyAudioEl.volume = 1;
+    _skyAudioEl.src = src;
+    var done = function(){ if(revoke) URL.revokeObjectURL(src); finish(); };
+    _skyAudioEl.onended = done;
+    _skyAudioEl.onerror = done;
+    var pp = _skyAudioEl.play();
+    if(pp !== undefined){ pp.catch(function(e){
+      console.warn('Autoplay blocked:', e && e.name);
+      if(revoke) URL.revokeObjectURL(src);
+      _bTTS();
+    }); }
+  };
+
+  var _h = skyHash(ttsText);
+  if(SKY_PREGEN.has(_h)){
+    if(fetchTimer) clearTimeout(fetchTimer);
+    _play(SKY_PREGEN_DIR + _h + '.mp3', false);
+    return;
+  }
+
   fetch('/api/tts',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -1161,16 +1203,7 @@ function skySpeak(text, onEnd){
     return res.blob();
   }).then(function(blob){
     if(!blob||_done)return;
-    var url=URL.createObjectURL(blob);
-    /* Reuse the element primed by the first gesture rather than minting a new one -
-       a fresh Audio has no autoplay blessing and play() would reject. */
-    if(!_skyAudioEl) _skyAudioEl=new Audio();
-    _skyAudioEl.volume=1;
-    _skyAudioEl.src=url;
-    _skyAudioEl.onended=function(){URL.revokeObjectURL(url);finish();};
-    _skyAudioEl.onerror=function(){URL.revokeObjectURL(url);finish();};
-    var pp=_skyAudioEl.play();
-    if(pp!==undefined){pp.catch(function(e){console.warn('Autoplay blocked:',e);URL.revokeObjectURL(url);_bTTS();});}
+    _play(URL.createObjectURL(blob), true);
   }).catch(function(e){
     if(fetchTimer)clearTimeout(fetchTimer);
     if(e.name!=='AbortError')console.warn('TTS fetch failed:',e.name);

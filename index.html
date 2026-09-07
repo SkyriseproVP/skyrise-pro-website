@@ -219,13 +219,37 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   background:linear-gradient(135deg,#ffffff 0%,#f4fbff 55%,#e9f6fd 100%);
   border:1px solid rgba(0,200,232,.3);border-radius:22px;padding:24px 28px;margin:0 0 26px;
   box-shadow:0 1px 3px rgba(10,22,40,.05),0 12px 30px rgba(10,22,40,.06);}
-.rcd-ring{position:relative;width:132px;height:132px;flex-shrink:0;}
+/* Holographic countdown clock. A dark instrument plate inset into the light
+   card — the glow language only resolves on a dark ground, the same reason a
+   gauge cluster is dark on a pale dashboard. It stays LIVE (real HH:MM to the
+   RCD) rather than being a static render, because the card claims to be a
+   live project and a frozen clock would make that a lie. */
+.rcd-ring{position:relative;width:132px;height:132px;flex-shrink:0;border-radius:50%;
+  background:radial-gradient(circle at 50% 42%,#0d2233 0%,#071626 55%,#040e18 100%);
+  box-shadow:0 0 0 1px rgba(0,200,232,.35),0 0 22px rgba(0,200,232,.22),
+             inset 0 0 26px rgba(0,200,232,.10),0 8px 20px rgba(10,22,40,.22);}
 .rcd-ring svg{transform:rotate(-90deg);display:block;}
-.rcd-ring .trk{stroke:rgba(10,22,40,.09);}
-.rcd-ring .arc{stroke:url(#rcdGrad);stroke-linecap:round;transition:stroke-dashoffset 1s linear;}
+.rcd-ring .trk{stroke:rgba(0,200,232,.13);}
+.rcd-ring .arc{stroke:url(#rcdGrad);stroke-linecap:round;transition:stroke-dashoffset 1s linear;
+  filter:drop-shadow(0 0 4px rgba(0,200,232,.85));}
+/* Tick rings drawn as dashed circles — 60 minor, 12 major — so the whole
+   dial is two elements instead of 72 hand-placed lines. */
+.rcd-tick-min{stroke:rgba(120,225,255,.42);stroke-width:1.4;stroke-dasharray:1.5 3.945;}
+.rcd-tick-maj{stroke:rgba(150,235,255,.80);stroke-width:3;stroke-dasharray:3 23.18;}
+.rcd-hair{stroke:rgba(0,200,232,.30);stroke-width:1;}
+.rcd-inner{stroke:rgba(0,200,232,.22);stroke-width:1;fill:none;}
 .rcd-ring-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.rcd-days{font-family:'Orbitron',sans-serif;font-size:38px;font-weight:900;color:var(--cyan);line-height:1;letter-spacing:-.5px;}
-.rcd-days-l{font-family:'Orbitron',sans-serif;font-size:8.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:rgba(10,22,40,.42);margin-top:5px;}
+.rcd-clock{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:#7fe9ff;line-height:1;
+  letter-spacing:.5px;font-variant-numeric:tabular-nums;text-shadow:0 0 12px rgba(0,200,232,.9),0 0 26px rgba(0,200,232,.45);}
+.rcd-clock-l{font-family:'Orbitron',sans-serif;font-size:7px;font-weight:800;letter-spacing:1.7px;
+  text-transform:uppercase;color:rgba(140,225,255,.62);margin-top:5px;}
+
+@media(prefers-reduced-motion:no-preference){
+  .rcd-ring::after{content:'';position:absolute;inset:0;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle at 50% 42%,rgba(0,200,232,.16),transparent 62%);
+    animation:rcdBreathe 4s ease-in-out infinite;}
+}
+@keyframes rcdBreathe{0%,100%{opacity:.5;}50%{opacity:1;}}
 .rcd-body{min-width:0;}
 .rcd-k{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:1.9px;text-transform:uppercase;color:#0d8fa8;margin-bottom:7px;}
 .rcd-h{font-family:'Orbitron',sans-serif;font-size:clamp(15px,1.5vw,19px);font-weight:900;color:#0a1628;margin:0 0 4px;letter-spacing:.2px;}
@@ -234,6 +258,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .rcd-u{background:#fff;border:1px solid rgba(10,22,40,.1);border-radius:11px;padding:9px 14px;min-width:66px;text-align:center;}
 .rcd-u-n{font-family:'Orbitron',sans-serif;font-size:19px;font-weight:900;color:#0a1628;line-height:1;font-variant-numeric:tabular-nums;}
 .rcd-u-l{font-size:9px;letter-spacing:1.1px;text-transform:uppercase;color:rgba(10,22,40,.42);margin-top:6px;}
+/* Days sits at the far right of the bar and carries the emphasis the dial
+   used to give it — it is the number a landlord actually reacts to. */
+.rcd-u-days{margin-left:auto;background:linear-gradient(135deg,#eafcff,#f5fdff);
+  border-color:rgba(0,200,232,.42);box-shadow:0 0 0 1px rgba(0,200,232,.06);}
+.rcd-u-days .rcd-u-n{font-size:26px;color:var(--cyan);}
+.rcd-u-days .rcd-u-l{color:#0d8fa8;font-weight:700;}
+@media(max-width:640px){.rcd-u-days{margin-left:0;}}
 .rcd-flag{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-size:12px;color:#0b7a58;font-weight:600;}
 .rcd-flag i{width:7px;height:7px;border-radius:50%;background:#12b886;font-style:normal;
   box-shadow:0 0 0 0 rgba(18,184,134,.5);animation:lbPulse 2s infinite;}
@@ -258,27 +289,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
    deliberately NOT named. The record tab describes the vault that actually
    exists (9 folders reconciled to disk); it does not claim a dispute win,
    because none has been confirmed. */
-#cred{padding:66px 60px;background:linear-gradient(135deg,#0a1628 0%,#102743 55%,#0a1628 100%);}
+/* Sky blue band, matching the hero's left edge (#c5e8f5), with cyan rules
+   top and bottom dividing it from the sections either side. Flipping this
+   section off navy meant re-tuning EVERY colour inside it — the old values
+   were light-on-dark and would have been invisible here. */
+#cred{padding:66px 60px;
+  background:linear-gradient(to right,#c5e8f5 0%,#d6eef8 38%,#e9f6fd 100%);
+  border-top:2px solid var(--cyan);border-bottom:2px solid var(--cyan);}
 .cr-inner{max-width:1060px;margin:0 auto;}
-.cr-tabs{display:flex;gap:4px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.14);}
+.cr-tabs{display:flex;gap:4px;margin-bottom:4px;border-bottom:1px solid rgba(10,22,40,.16);}
 .cr-tab{appearance:none;background:none;border:none;cursor:pointer;font-family:'Orbitron',sans-serif;
-  font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(200,225,240,.45);
+  font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(10,22,40,.45);
   padding:12px 16px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;}
-.cr-tab:hover{color:rgba(255,255,255,.8);}
-.cr-tab[aria-selected="true"]{color:#fff;border-bottom-color:var(--cyan);}
+.cr-tab:hover{color:rgba(10,22,40,.8);}
+.cr-tab[aria-selected="true"]{color:#0a1628;border-bottom-color:var(--cyan);}
 .cr-panel{padding-top:26px;}
 .cr-panel[hidden]{display:none;}
-.cr-lead{font-size:15px;line-height:1.78;color:rgba(200,225,240,.75);margin:0 0 24px;max-width:74ch;}
-.cr-lead b{color:#fff;font-weight:700;}
+.cr-lead{font-size:15px;line-height:1.78;color:rgba(10,22,40,.74);margin:0 0 24px;max-width:74ch;}
+.cr-lead b{color:#0a1628;font-weight:700;}
 .cr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px;}
-.cr-stat{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:16px 18px;}
-.cr-n{font-family:'Orbitron',sans-serif;font-size:23px;font-weight:900;color:#fff;line-height:1;letter-spacing:.3px;}
-.cr-l{font-size:11px;line-height:1.5;color:rgba(200,225,240,.5);margin-top:8px;}
-.cr-note{font-size:14px;line-height:1.75;color:rgba(200,225,240,.78);margin:0;padding-left:14px;border-left:3px solid var(--cyan);}
-.cr-note b{color:#fff;font-weight:700;}
+.cr-stat{background:rgba(255,255,255,.72);border:1px solid rgba(0,168,196,.28);border-radius:10px;padding:16px 18px;}
+.cr-n{font-family:'Orbitron',sans-serif;font-size:23px;font-weight:900;color:#0a1628;line-height:1;letter-spacing:.3px;}
+.cr-l{font-size:11px;line-height:1.5;color:rgba(10,22,40,.55);margin-top:8px;}
+.cr-note{font-size:14px;line-height:1.75;color:rgba(10,22,40,.78);margin:0;padding-left:14px;border-left:3px solid var(--cyan);}
+.cr-note b{color:#0a1628;font-weight:700;}
 .cr-folders{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px;}
 .cr-folder{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
-  color:rgba(200,225,240,.7);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:6px;padding:7px 11px;}
+  color:#0d6f85;background:rgba(255,255,255,.7);border:1px solid rgba(0,168,196,.3);border-radius:6px;padding:7px 11px;}
 @media(max-width:900px){#cred{padding:52px 24px;}}
 .who-lead{font-size:13.5px;line-height:1.7;color:rgba(10,22,40,.72);margin:0 0 16px;max-width:80ch;}
 .who-lead b{color:#0a1628;font-weight:700;}
@@ -385,26 +422,30 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .services-visual-img{width:100%;height:100%;object-fit:contain;object-position:center;background:#fff;border-radius:20px;border:1.5px solid var(--cyan);box-shadow:0 0 18px rgba(0,200,232,0.18),0 2px 12px rgba(10,22,40,0.07);display:block;}
 
 /* ── DASHBOARD ──────────────────────────────────────────────── */
-#dashboard{padding:60px 60px;background:linear-gradient(160deg,#dff2fb 0%,#eaf6fd 40%,#f5fbff 100%);}
+/* Navy because this is the chart section. Its four Chart.js charts already
+   draw white ticks and grid (rgba(255,255,255,.4)/.05) — they were authored
+   for a dark ground, so on the old pale-blue background their axis labels
+   were effectively invisible. */
+#dashboard{padding:60px 60px;background:linear-gradient(160deg,#0a1628 0%,#102743 55%,#0a1628 100%);}
 .dashboard-inner{max-width:1100px;margin:0 auto;}
 .dash-badge{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--cyan);text-align:center;margin-bottom:10px;}
-.dash-title{font-size:clamp(22px,3vw,34px);font-weight:900;text-align:center;color:#0a1628;margin-bottom:10px;letter-spacing:1px;}
+.dash-title{font-size:clamp(22px,3vw,34px);font-weight:900;text-align:center;color:#ffffff;margin-bottom:10px;letter-spacing:1px;}
 .dash-title span{color:var(--cyan);}
-.dash-sub{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--body-dim);text-align:center;max-width:520px;margin:0 auto 10px;line-height:1.6;text-transform:none;letter-spacing:0;}
+.dash-sub{font-family:'Orbitron',sans-serif;font-size:13px;color:rgba(200,225,240,.72);text-align:center;max-width:520px;margin:0 auto 10px;line-height:1.6;text-transform:none;letter-spacing:0;}
 .dash-divider-row{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:28px;}
 .dash-line{width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--cyan));}
 .dash-line.r{background:linear-gradient(90deg,var(--cyan),transparent);}
 .dash-dot-center{width:7px;height:7px;border-radius:50%;background:var(--cyan);}
 /* KPI cards */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
-.kpi-card{background:rgba(255,255,255,0.82);border:1.5px solid var(--cyan);border-radius:20px;padding:24px 14px;min-height:130px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 14px rgba(0,200,232,0.15),0 2px 8px rgba(10,22,40,0.05);transition:transform .2s;min-width:0;overflow:hidden;}
+.kpi-card{background:rgba(255,255,255,0.055);border:1.5px solid rgba(0,200,232,.55);border-radius:20px;padding:24px 14px;min-height:130px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 0 14px rgba(0,200,232,0.18),0 2px 8px rgba(0,0,0,0.25);transition:transform .2s;min-width:0;overflow:hidden;}
 .kpi-card:hover{transform:translateY(-2px);box-shadow:0 0 22px rgba(0,200,232,0.28),0 4px 14px rgba(10,22,40,0.09);}
 .kpi-num{font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:4px;line-height:1;}
 .kpi-num.cyan{color:var(--cyan);}
 .kpi-num.orange{color:#ff6b35;}
-.kpi-num.blue{color:#0077a8;}
-.kpi-label{font-size:8px;font-weight:700;letter-spacing:1.5px;color:#0a1628;margin-bottom:3px;}
-.kpi-compare{font-family:'Orbitron',sans-serif;font-size:10px;color:var(--body-dim);text-transform:none;letter-spacing:0;}
+.kpi-num.blue{color:#5cc6ff;}
+.kpi-label{font-size:8px;font-weight:700;letter-spacing:1.5px;color:rgba(232,244,251,.92);margin-bottom:3px;}
+.kpi-compare{font-family:'Orbitron',sans-serif;font-size:10px;color:rgba(200,225,240,.55);text-transform:none;letter-spacing:0;}
 /* Chart cards */
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 auto 14px;}
 .chart-card{background:var(--navy2);border-radius:20px;padding:16px;border:1.5px solid rgba(0,200,232,0.25);box-shadow:0 0 18px rgba(0,200,232,0.12);overflow:hidden;min-width:0;}
@@ -415,7 +456,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .chart-legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
 /* Feature cards */
 .features-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;}
-.feat-card{background:#fff;border:2px solid rgba(0,200,232,0.45);border-radius:22px;padding:24px 20px;box-shadow:0 0 16px rgba(0,200,232,0.12),0 4px 16px rgba(10,22,40,0.07);min-height:160px;display:flex;flex-direction:column;}
+.feat-card{background:rgba(255,255,255,0.05);border:2px solid rgba(0,200,232,0.42);border-radius:22px;padding:24px 20px;box-shadow:0 0 16px rgba(0,200,232,0.14),0 4px 16px rgba(0,0,0,0.28);min-height:160px;display:flex;flex-direction:column;}
 .feat-icon-box{width:28px;height:3px;border-radius:2px;margin-bottom:14px;}
 .feat-icon-box.yellow{background:rgba(255,193,7,0.8);}
 .feat-icon-box.blue{background:var(--cyan);}
@@ -425,8 +466,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .feat-icon-wrap.blue{background:rgba(0,200,232,0.10);}
 .feat-icon-wrap.purple{background:rgba(139,92,246,0.12);}
 .feat-icon{width:24px;height:24px;}
-.feat-title{font-size:9px;font-weight:800;letter-spacing:1.5px;color:#0a1628;margin-bottom:6px;}
-.feat-desc{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--body-dim);line-height:1.55;text-transform:none;letter-spacing:0;}
+.feat-title{font-size:9px;font-weight:800;letter-spacing:1.5px;color:rgba(232,244,251,.95);margin-bottom:6px;}
+.feat-desc{font-family:'Orbitron',sans-serif;font-size:11px;color:rgba(200,225,240,.62);line-height:1.55;text-transform:none;letter-spacing:0;}
 
 /* ── PIPELINE ───────────────────────────────────────────────── */
 .pipeline-section{padding:80px 60px;background:linear-gradient(160deg,#dff2fb 0%,#eaf6fd 40%,#f5fbff 100%);}
@@ -1861,15 +1902,26 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div class="rcd-ring">
         <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
           <defs><linearGradient id="rcdGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#00c8e8"/><stop offset="1" stop-color="#0b6fa8"/>
+            <stop offset="0" stop-color="#00e5ff"/><stop offset="1" stop-color="#0b6fa8"/>
           </linearGradient></defs>
-          <circle class="trk" cx="66" cy="66" r="58" fill="none" stroke-width="9"/>
-          <circle class="arc" id="rcdArc" cx="66" cy="66" r="58" fill="none" stroke-width="9"
+          <!-- progress to RCD -->
+          <circle class="trk" cx="66" cy="66" r="58" fill="none" stroke-width="5"/>
+          <circle class="arc" id="rcdArc" cx="66" cy="66" r="58" fill="none" stroke-width="5"
                   stroke-dasharray="364.4" stroke-dashoffset="364.4"/>
+          <!-- dial: 60 minor ticks, 12 major -->
+          <circle class="rcd-tick-min" cx="66" cy="66" r="52" fill="none"/>
+          <circle class="rcd-tick-maj" cx="66" cy="66" r="50" fill="none"/>
+          <!-- inner rings + crosshairs -->
+          <circle class="rcd-inner" cx="66" cy="66" r="42"/>
+          <circle class="rcd-inner" cx="66" cy="66" r="30"/>
+          <line class="rcd-hair" x1="66" y1="10" x2="66" y2="22"/>
+          <line class="rcd-hair" x1="66" y1="110" x2="66" y2="122"/>
+          <line class="rcd-hair" x1="10" y1="66" x2="22" y2="66"/>
+          <line class="rcd-hair" x1="110" y1="66" x2="122" y2="66"/>
         </svg>
         <div class="rcd-ring-mid">
-          <div class="rcd-days" id="rcdDays">&mdash;</div>
-          <div class="rcd-days-l">days left</div>
+          <div class="rcd-clock" id="rcdRingDays">&mdash;&mdash;</div>
+          <div class="rcd-clock-l">days to commencement</div>
         </div>
       </div>
       <div class="rcd-body">
@@ -1880,6 +1932,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <div class="rcd-u"><div class="rcd-u-n" id="rcdH">&mdash;</div><div class="rcd-u-l">hours</div></div>
           <div class="rcd-u"><div class="rcd-u-n" id="rcdM">&mdash;</div><div class="rcd-u-l">min</div></div>
           <div class="rcd-u"><div class="rcd-u-n" id="rcdS">&mdash;</div><div class="rcd-u-l">sec</div></div>
+          <!-- Days moved off the dial and onto the right of this bar, where
+               there was dead space. It is the headline number, so it keeps
+               the emphasis treatment the dial used to give it. -->
+          <div class="rcd-u rcd-u-days"><div class="rcd-u-n" id="rcdDays">&mdash;</div><div class="rcd-u-l">days left</div></div>
         </div>
         <div class="rcd-flag"><i></i>On track for delivery</div>
       </div>
@@ -2071,7 +2127,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     </div>
 
     <div class="cr-panel" id="crpanel-who" role="tabpanel" aria-labelledby="crtab-who">
-      <p class="cr-lead">This was not built by software people studying construction. It was built by the <b>project manager and owner&rsquo;s representative running the build shown above</b> &mdash; delivering tenant improvement projects since 2008, across Manhattan and Bronx commercial portfolios, where a missed delivery date is not a scheduling inconvenience but a line on somebody&rsquo;s rent roll.</p>
+      <p class="cr-lead">This was not built by software people studying construction. It was built by the <b>project manager and owner&rsquo;s representative running the build shown above</b> &mdash; delivering tenant improvement projects since 2008, across NYC (Manhattan, Bx, Queens) and Orlando, where a missed delivery date is not a scheduling inconvenience but a line on somebody&rsquo;s rent roll.</p>
       <div class="cr-stats">
         <div class="cr-stat"><div class="cr-n">2008</div><div class="cr-l">Running TI build-outs since</div></div>
         <div class="cr-stat"><div class="cr-n">40+</div><div class="cr-l">Projects delivered</div></div>
@@ -3610,44 +3666,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 </div>
 
 <!-- ── VIDEO IS KING ──────────────────────────────────────────── -->
-<section id="video">
-  <div class="video-inner">
-    <button class="vid-trial-btn" onclick="openModal('cre-iq')">START YOUR FREE 30-DAY TRIAL →</button>
-    <div class="vid-badge">PORTFOLIO & SHOWCASE</div>
-    <h2 class="vid-title">VIDEO IS KING</h2>
-    <p class="vid-sub">Cinematic video production for commercial real estate, product demos, and brand storytelling.</p>
-    <div class="vid-grid">
-      <div class="vid-card">
-        <div class="vid-player">
-          <video id="vid1" preload="none" playsinline><source src="videoisking.mp4" type="video/mp4"></video>
-          <div class="vid-play-overlay" id="vid1-overlay" onclick="playVid('vid1')">
-            <div class="vid-play-circle">▶</div>
-          </div>
-          <button class="vid-expand-btn" onclick="openLightbox('videoisking.mp4','VIDEO IS KING')" title="Fullscreen">⛶</button>
-        </div>
-        <div style="padding:14px 16px;background:#111;">
-          <span class="vid-badge-tag cyan">SKYRISE PRO</span>
-          <div class="vid-card-title">VIDEO IS KING</div>
-          <div class="vid-card-sub">SkyRise Pro — Official Production</div>
-        </div>
-      </div>
-      <div class="vid-card">
-        <div class="vid-player">
-          <video id="vid2" preload="none" playsinline><source src="fulcrum-final.mp4" type="video/mp4"></video>
-          <div class="vid-play-overlay" id="vid2-overlay" onclick="playVid('vid2')">
-            <div class="vid-play-circle">▶</div>
-          </div>
-          <button class="vid-expand-btn" onclick="openLightbox('fulcrum-final.mp4','FULCRUM — PROPERTY SHOWCASE')" title="Fullscreen">⛶</button>
-        </div>
-        <div style="padding:14px 16px;background:#111;">
-          <span class="vid-badge-tag orange">CLIENT CASE STUDY</span>
-          <div class="vid-card-title">FULCRUM — PROPERTY SHOWCASE</div>
-          <div class="vid-card-sub">Cinematic Showcase — Commercial Real Estate · Orlando, FL</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ── VIDEO LIGHTBOX ─────────────────────────────────────────── -->
 <div class="vid-lightbox" id="vid-lightbox" onclick="closeLightboxOutside(event)">
@@ -3733,6 +3751,44 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 </div>
 
 <!-- ── DEMO ───────────────────────────────────────────────────── -->
+<section id="video">
+  <div class="video-inner">
+    <button class="vid-trial-btn" onclick="openModal('cre-iq')">START YOUR FREE 30-DAY TRIAL →</button>
+    <div class="vid-badge">PORTFOLIO & SHOWCASE</div>
+    <h2 class="vid-title">VIDEO IS KING</h2>
+    <p class="vid-sub">Cinematic video production for commercial real estate, product demos, and brand storytelling.</p>
+    <div class="vid-grid">
+      <div class="vid-card">
+        <div class="vid-player">
+          <video id="vid1" preload="none" playsinline><source src="videoisking.mp4" type="video/mp4"></video>
+          <div class="vid-play-overlay" id="vid1-overlay" onclick="playVid('vid1')">
+            <div class="vid-play-circle">▶</div>
+          </div>
+          <button class="vid-expand-btn" onclick="openLightbox('videoisking.mp4','VIDEO IS KING')" title="Fullscreen">⛶</button>
+        </div>
+        <div style="padding:14px 16px;background:#111;">
+          <span class="vid-badge-tag cyan">SKYRISE PRO</span>
+          <div class="vid-card-title">VIDEO IS KING</div>
+          <div class="vid-card-sub">SkyRise Pro — Official Production</div>
+        </div>
+      </div>
+      <div class="vid-card">
+        <div class="vid-player">
+          <video id="vid2" preload="none" playsinline><source src="fulcrum-final.mp4" type="video/mp4"></video>
+          <div class="vid-play-overlay" id="vid2-overlay" onclick="playVid('vid2')">
+            <div class="vid-play-circle">▶</div>
+          </div>
+          <button class="vid-expand-btn" onclick="openLightbox('fulcrum-final.mp4','FULCRUM — PROPERTY SHOWCASE')" title="Fullscreen">⛶</button>
+        </div>
+        <div style="padding:14px 16px;background:#111;">
+          <span class="vid-badge-tag orange">CLIENT CASE STUDY</span>
+          <div class="vid-card-title">FULCRUM — PROPERTY SHOWCASE</div>
+          <div class="vid-card-sub">Cinematic Showcase — Commercial Real Estate · Orlando, FL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <section id="demo-section">
   <div class="demo-inner">
     <h2 class="demo-title">WANT TO SEE IT WORK?<br><span style="color:var(--cyan);font-size:.75em;">RIGHT NOW.</span></h2>
@@ -4106,6 +4162,10 @@ function crTab(which){
     d.textContent = days;
     var set = function(id, v){ var e = document.getElementById(id); if(e) e.textContent = String(v).padStart(2,'0'); };
     set('rcdH', hrs); set('rcdM', mins); set('rcdS', secs);
+    // Dial face leads with DAYS -- the figure the money hangs off. The hh:mm
+    // underneath keeps it ticking without posing as the headline.
+    var rd = document.getElementById('rcdRingDays');
+    if(rd) rd.textContent = days;
     var arc = document.getElementById('rcdArc');
     if(arc){
       var span = RCD_TARGET - START, done = Math.min(1, Math.max(0, (now - START) / span));

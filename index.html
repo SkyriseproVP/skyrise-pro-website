@@ -5691,6 +5691,11 @@ function togglePwd(id, btn){
 // built from a character array in public source: recoverable by anyone who
 // viewed source, and gating nothing, since no server was ever consulted.
 const ADMIN_CENTER_URL = 'https://app.skyrisepro.ai/admin-command-center.html';
+// skyrisepro.ai is the front door only — every real client account is Supabase-backed
+// at the Command Center. The old WEBSITE_CLIENTS/Levelup branch below opened a fake,
+// hardcoded demo dashboard (wrong industry, wrong data) instead of a real client's
+// actual account — removed 2026-09-09, see memory.
+const CLIENT_CENTER_URL = 'https://app.skyrisepro.ai/command-center.html';
 
 // ── CLIENT DATA (defined before auth functions so always available) ──
 const WEBSITE_CLIENTS = {
@@ -5747,19 +5752,10 @@ function doSignIn(){
     return;
   }
 
-  // Client logins (same credentials work on both sign-in modals)
-  const clientData = WEBSITE_CLIENTS[email];
-  if(clientData && pass === 'Levelup'){
-    closeModal('signin');
-    passEl.value = '';
-    setTimeout(()=>openClientPortal(email, clientData), 200);
-    return;
-  }
-
-  // Invalid
-  errEl.textContent = 'INVALID EMAIL OR PASSWORD.';
-  errEl.style.display = 'block';
+  // Every real client account lives in Supabase at the Command Center now —
+  // this site is the front door only. Hand off and let the real gate authenticate.
   passEl.value = '';
+  window.location.href = CLIENT_CENTER_URL;
 }
 
 // (WEBSITE_CLIENTS defined above near auth functions)
@@ -5976,17 +5972,10 @@ function doPortalSignIn(){
     window.location.href = ADMIN_CENTER_URL;
     return;
   }
-  // Client logins
-  const clientData = WEBSITE_CLIENTS[email];
-  if(clientData && pass === 'Levelup'){
-    closeModal('portal');
-    document.getElementById('portal-password').value = '';
-    setTimeout(()=>openClientPortal(email, clientData), 200);
-    return;
-  }
-  errEl.textContent = 'Incorrect email or password. Please try again.';
-  errEl.style.display = 'block';
+  // Every real client account lives in Supabase at the Command Center now —
+  // this site is the front door only. Hand off and let the real gate authenticate.
   document.getElementById('portal-password').value = '';
+  window.location.href = CLIENT_CENTER_URL;
 }
 
 // The public site never runs in admin mode; Sky here is always the public

@@ -207,12 +207,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .lb-txt b{color:#0a1628;}
 /* ── JOB TABS: Latest updates | Money on the clock ─────────────
    Every figure in the clock panel is from the executed lease on this build,
-   not modelled. $37,600 per 15-day block; the lease's own worked example puts
-   60 days near $150,000, which the 4-block figure independently agrees with.
+   not modelled. $38,634.92 per 15-day block; the lease's own worked example puts
+   60 days near $150,733; the 4-block figure at the current rent is $154,540.
    The held-day counts come from the board. Do not round these. */
 /* ── RENT COMMENCEMENT COUNTDOWN ───────────────────────────────
    Counts to the RENT COMMENCEMENT date, not the delivery date, because that
-   is the date money hangs off: every 15 days past it credits $37,600 of free
+   is the date money hangs off: every 15 days past it credits $38,634.92 of free
    rent. The board states January 26 2027 in three places. To change the
    target, edit RCD_TARGET in the script - nothing else. */
 .rcd{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;
@@ -1927,7 +1927,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div class="rcd-body">
         <div class="rcd-k">Rent commencement</div>
         <h3 class="rcd-h">January 26, 2027</h3>
-        <p class="rcd-sub">The date the lease starts charging. Every 15 days past it credits <b>$37,600</b> of free rent.</p>
+        <p class="rcd-sub">The date the lease starts charging. Every 15 days past it credits <b>$38,634.92</b> of free rent.</p>
         <div class="rcd-units">
           <div class="rcd-u"><div class="rcd-u-n" id="rcdH">&mdash;</div><div class="rcd-u-l">hours</div></div>
           <div class="rcd-u"><div class="rcd-u-n" id="rcdM">&mdash;</div><div class="rcd-u-l">min</div></div>
@@ -1948,7 +1948,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div class="lb-stat"><div class="lb-k">Possession</div><div class="lb-v">Plan examiner<small>ball in their court</small></div></div>
     </div>
 
-    <div class="lb-pen"><div class="lb-pen-k">What the clock is worth</div><p class="lb-pen-b">Rent commencement is set for <b>Jan 26, 2027</b>. Every 15 days the landlord is late credits the tenant roughly <b>$37,600</b> in free rent &mdash; the lease's own worked example puts 60 days at about <b>$150,000</b>. That is what a stalled permit costs, and it is why the ball is never allowed to sit.</p></div>
+    <div class="lb-pen"><div class="lb-pen-k">What the clock is worth</div><p class="lb-pen-b">Rent commencement is set for <b>Jan 26, 2027</b>. Every 15 days the landlord is late credits the tenant roughly <b>$38,634.92</b> in free rent &mdash; four of those blocks puts 60 days at <b>$154,540</b>. That is what a stalled permit costs, and it is why the ball is never allowed to sit.</p></div>
     <p class="lb-caught-h"><b>4</b> &nbsp;dropped balls caught before they hit the schedule</p>
     <div class="lb-list">
       <div class="lb-item save"><span class="lb-badge">Save</span><span class="lb-txt"><b>Electrical.</b> Flagged for shared neutral conductor sizing on E1-201 &mdash; harmonics compliance not shown. Corrected and resubmitted; review passed.</span></div>
@@ -1965,12 +1965,12 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <div class="lb-panel" id="panel-clk" role="tabpanel" aria-labelledby="tab-clk" hidden>
       <p class="clk-lead">Rent does not start when the work finishes. It starts on the date the lease says the space will be delivered &mdash; and past that date the tenant is credited free rent in fixed blocks. <b>Every block is money the building was supposed to earn and does not.</b></p>
       <div class="clk-scale">
-        <div class="clk-step s1"><div class="clk-d">15 days late</div><div class="clk-a">$37,600</div></div>
-        <div class="clk-step s2"><div class="clk-d">30 days late</div><div class="clk-a">$75,200</div></div>
-        <div class="clk-step s3"><div class="clk-d">45 days late</div><div class="clk-a">$112,800</div></div>
-        <div class="clk-step s4"><div class="clk-d">60 days late</div><div class="clk-a hot">$150,400</div></div>
+        <div class="clk-step s1"><div class="clk-d">15 days late</div><div class="clk-a">$38,634.92</div></div>
+        <div class="clk-step s2"><div class="clk-d">30 days late</div><div class="clk-a">$77,270</div></div>
+        <div class="clk-step s3"><div class="clk-d">45 days late</div><div class="clk-a">$115,905</div></div>
+        <div class="clk-step s4"><div class="clk-d">60 days late</div><div class="clk-a hot">$154,540</div></div>
       </div>
-      <p class="clk-src">Not modelled. These are the terms of the executed lease on this build &mdash; <b>$37,600 credited for every 15 days past commencement</b>, which is set for Jan 26, 2027. The lease writes its own worked example at sixty days, roughly $150,000, and the block math independently agrees.</p>
+      <p class="clk-src">Not modelled. These are the terms of the executed lease on this build &mdash; <b>$38,634.92 credited for every 15 days past commencement</b>, which is set for Jan 26, 2027. The lease also works its own example at sixty days, near $150,733 &mdash; but on an older, lower base rent. At the rent actually in force the four-block figure is $154,540.</p>
       <div class="clk-swing">
         <div class="clk-side bad">
           <div class="clk-side-h">Which way it was running</div>
@@ -1978,7 +1978,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         </div>
         <div class="clk-side good">
           <div class="clk-side-h">Which way it runs now</div>
-          <p>Both went back in on Aug 31, so those clocks stopped. The <b>4 catches</b> above are days that never became held days at all &mdash; and every block not slipped is <b>$37,600</b> that stays with the building.</p>
+          <p>Both went back in on Aug 31, so those clocks stopped. The <b>4 catches</b> above are days that never became held days at all &mdash; and every block not slipped is <b>$38,634.92</b> that stays with the building.</p>
         </div>
       </div>
     </div>

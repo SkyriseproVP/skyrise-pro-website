@@ -906,16 +906,9 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 .proactive-popup-logo{height:132px;width:auto;max-width:100%;display:block;margin:0 auto;}
 .proactive-popup-headline{font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;color:var(--cyan);margin-bottom:5px;line-height:1.4;}
 .proactive-popup-sub{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;letter-spacing:1.5px;color:#0d1526;margin-bottom:16px;line-height:1.3;}
-/* Rotating cost-of-delay lines. Both messages are stacked in the same box and
-   cross-faded, so the CTA underneath never jumps between them. */
-.pp-rot{position:relative;min-height:92px;margin-bottom:12px;}
-.pp-msg{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;font-family:'Orbitron',sans-serif;font-size:11.5px;font-weight:800;letter-spacing:.4px;line-height:1.55;color:#0d1526;opacity:0;transition:opacity .6s ease;pointer-events:none;}
-.pp-msg.is-on{opacity:1;}
-.pp-l{display:block;}
-.pp-dots{display:flex;gap:6px;justify-content:center;margin-bottom:14px;}
-.pp-dots i{width:5px;height:5px;border-radius:50%;background:rgba(13,21,38,.22);transition:background .3s;}
-.pp-dots i.is-on{background:var(--cyan);}
-@media(prefers-reduced-motion:reduce){.pp-msg{transition:none;}}
+/* One cost-of-delay line per popup, shown 7 minutes apart (see PP_LINES). */
+.pp-rot{position:relative;min-height:72px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;}
+.pp-msg{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:800;letter-spacing:.4px;line-height:1.5;color:#0d1526;}
 .proactive-popup-cta{display:inline-block;width:auto;background:var(--cyan);border:none;border-radius:10px;padding:8px 22px;font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;color:#000;cursor:pointer;transition:all .25s;text-transform:uppercase;}
 .proactive-popup-cta:hover{background:var(--cyan2);box-shadow:0 0 20px rgba(0,200,232,0.45);}
 
@@ -4122,11 +4115,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <img src="skyrise-cyan-transparent.png" alt="Skyrise Pro" class="proactive-popup-logo">
     </div>
     <div class="proactive-popup-body">
-      <div class="pp-rot" id="pp-rot" aria-live="polite">
-        <div class="pp-msg is-on"><span class="pp-l">Rent Commencement pushed.</span><span class="pp-l">Delivery obligations at risk.</span><span class="pp-l">Extended general conditions.</span><span class="pp-l">Labor at a rate you didn’t bid.</span></div>
-        <div class="pp-msg">A TI delay isn’t a rescheduling problem. It’s months of rent on space that’s finished and not paying.</div>
+      <!-- One line per popup; the sequence lives in PP_LINES (script below). -->
+      <div class="pp-rot" aria-live="polite">
+        <div class="pp-msg is-on" id="pp-msg"></div>
       </div>
-      <div class="pp-dots" id="pp-dots"><i class="is-on"></i><i></i></div>
       <button class="proactive-popup-cta" onclick="proactivePopupCTA()">CLICK HERE TO GET STARTED →</button>
     </div>
   </div>
@@ -5587,60 +5579,75 @@ function skyProactiveEngage(){
 // Trigger 2: 7 minutes on page
 setTimeout(skyProactiveEngage, 7 * 60 * 1000);
 
-/* ── PROACTIVE POPUP (fires 7 min after Sky greeting — never before) ── */
-var proactivePopupShown = false;
-var popupReady = false; // only true 7 min after Sky has spoken
+/* ── PROACTIVE POPUPS — one line at a time, 7 minutes apart ──
+   Victor 2026-09-16: each sentence is its OWN popup, every 7 minutes — not all
+   four stacked in one box, and not a carousel. The first shows 7 minutes in.
+   The next is scheduled 7 minutes after the previous one is closed, so a
+   visitor never gets two stacked or a new one while reading the last. Clicking
+   the CTA ends the sequence: they have engaged, stop interrupting them.
+   Progress is kept for the tab session, so a reload continues the sequence
+   rather than replaying line one. */
+var PP_LINES = [
+  'Rent Commencement pushed.',
+  'Delivery obligations at risk.',
+  'Extended general conditions.',
+  'Labor at a rate you didn\u2019t bid.',
+  'A TI delay isn\u2019t a rescheduling problem. It\u2019s months of rent on space that\u2019s finished and not paying.'
+];
+var PP_GAP_MS   = 7 * 60 * 1000;
+var PP_PAGE_T0  = Date.now();
+var ppTimer     = null;
+var ppLastShown = 0;
+var popupReady  = false;   // still set by the Sky nudge; no longer gates popups
+
+function ppGet(k, d){ try { var v = sessionStorage.getItem(k); return v === null ? d : v; } catch(e){ return d; } }
+function ppSet(k, v){ try { sessionStorage.setItem(k, v); } catch(e){} }
+var ppIndex   = parseInt(ppGet('skyrise_pp_index', '0'), 10) || 0;
+var ppStopped = ppGet('skyrise_pp_stopped', '0') === '1';
+
+function ppDone(){ return ppStopped || ppIndex >= PP_LINES.length; }
+
+function scheduleNextPopup(delay){
+  clearTimeout(ppTimer);
+  if(ppDone()) return;
+  ppTimer = setTimeout(showProactivePopup, delay == null ? PP_GAP_MS : delay);
+}
+
+function anyModalOpen(){
+  return !!document.querySelector('.modal-overlay.open, [id^="modal-"].open');
+}
 
 function showProactivePopup(){
-  if(proactivePopupShown || !popupReady) return;
-  // Don't throw a popup over an active Sky conversation — retry in 60s
-  if(typeof skyIsInConversation==='function' && skyIsInConversation()){
-    setTimeout(showProactivePopup, 60 * 1000);
-    return;
-  }
-  proactivePopupShown = true;
+  if(ppDone()) return;
   var overlay = document.getElementById('proactive-popup-overlay');
-  if(!overlay) return;
+  if(!overlay || overlay.classList.contains('show')) return;
+  // Never interrupt: a live Sky conversation, another open modal, or the Sky
+  // nudge label that also appears at the 7-minute mark.
+  if(typeof skyIsInConversation === 'function' && skyIsInConversation()){ scheduleNextPopup(60 * 1000); return; }
+  if(anyModalOpen()){ scheduleNextPopup(60 * 1000); return; }
+  var lbl = document.getElementById('sky-slide-label');
+  if(lbl && lbl.classList.contains('show')){ scheduleNextPopup(10 * 1000); return; }
+
+  document.getElementById('pp-msg').textContent = PP_LINES[ppIndex];
+  ppIndex += 1; ppSet('skyrise_pp_index', String(ppIndex));
+  ppLastShown = Date.now();
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
-  startPopupRotation();
-}
-
-/* Rotate the two cost-of-delay lines while the popup is open. Pauses on hover so a
-   line never disappears mid-read, and stops entirely once the popup closes. */
-var ppRotTimer = null;
-function startPopupRotation(){
-  var wrap = document.getElementById('pp-rot');
-  var dots = document.getElementById('pp-dots');
-  if(!wrap || ppRotTimer) return;
-  var msgs = wrap.querySelectorAll('.pp-msg');
-  var pips = dots ? dots.querySelectorAll('i') : [];
-  if(msgs.length < 2) return;
-  var i = 0, paused = false;
-  wrap.addEventListener('mouseenter', function(){ paused = true; });
-  wrap.addEventListener('mouseleave', function(){ paused = false; });
-  ppRotTimer = setInterval(function(){
-    if(paused) return;
-    msgs[i].classList.remove('is-on');
-    if(pips[i]) pips[i].classList.remove('is-on');
-    i = (i + 1) % msgs.length;
-    msgs[i].classList.add('is-on');
-    if(pips[i]) pips[i].classList.add('is-on');
-  }, 5500);
-}
-function stopPopupRotation(){
-  if(ppRotTimer){ clearInterval(ppRotTimer); ppRotTimer = null; }
 }
 
 function closeProactivePopup(){
   var overlay = document.getElementById('proactive-popup-overlay');
   if(overlay) overlay.classList.remove('show');
   document.body.style.overflow = '';
-  stopPopupRotation();
+  scheduleNextPopup();              // next line, 7 minutes from now
 }
 
 function proactivePopupCTA(){
-  closeProactivePopup();
+  ppStopped = true; ppSet('skyrise_pp_stopped', '1');
+  clearTimeout(ppTimer);
+  var overlay = document.getElementById('proactive-popup-overlay');
+  if(overlay) overlay.classList.remove('show');
+  document.body.style.overflow = '';
   // Small pause so overlay closes cleanly before intake opens
   setTimeout(function(){ openModal('cre-iq'); }, 200);
 }
@@ -5650,19 +5657,19 @@ document.getElementById('proactive-popup-overlay').addEventListener('click', fun
   if(e.target === this) closeProactivePopup();
 });
 
-// Popup fires 7 min after the Sky greeting (14 min total on page)
-setTimeout(showProactivePopup, 14 * 60 * 1000);
+// First line 7 minutes into the visit.
+scheduleNextPopup();
 
-// Popup fires on exit intent ONLY after popupReady (7 min post-Sky greeting)
-(function(){
-  function popupExitHandler(e){
-    if(e.clientY < 5 && popupReady){
-      document.removeEventListener('mouseleave', popupExitHandler);
-      showProactivePopup();
-    }
-  }
-  document.addEventListener('mouseleave', popupExitHandler);
-})();
+// Exit intent may bring the NEXT line forward, but never faster than the 7-minute
+// cadence — measured from the page opening and from the last line shown.
+document.addEventListener('mouseleave', function(e){
+  if(e.clientY >= 5 || ppDone()) return;
+  var now = Date.now();
+  if(now - PP_PAGE_T0 < PP_GAP_MS) return;
+  if(ppLastShown && now - ppLastShown < PP_GAP_MS) return;
+  clearTimeout(ppTimer);
+  showProactivePopup();
+});
 
 // ── BOTTLENECK OTHER REVEAL ───────────────────────────────────
 function toggleBottleneckOther(val){

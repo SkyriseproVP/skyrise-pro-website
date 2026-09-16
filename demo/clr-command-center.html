@@ -1227,7 +1227,7 @@ body.theme-light .section-title, body.theme-light .fact .v, body.theme-light .sk
   <div id="nav-jobs" class="nav-sub" hidden></div>
   <a class="nav-item" role="button" tabindex="0" data-go="job-schedule"><span class="nav-icon">📅</span>Schedule</a>
   <a class="nav-item" role="button" tabindex="0" data-go="job-team"><span class="nav-icon">👷</span>Foreman &amp; Subs</a>
-  <a class="nav-item" role="button" tabindex="0" data-go="job-rfis"><span class="nav-icon">📋</span>RFIs &amp; Submittals <span class="nav-badge" id="nav-rfis">0</span></a>
+  <a class="nav-item" role="button" tabindex="0" data-go="job-rfis"><span class="nav-icon">📋</span>RFIs, Submittals &amp; Approvals <span class="nav-badge" id="nav-rfis">0</span></a>
   <a class="nav-item" role="button" tabindex="0" data-go="job-vault"><span class="nav-icon">🗂️</span>Vault · Files &amp; Photos</a>
   <a class="nav-item" role="button" tabindex="0" data-go="job-billing"><span class="nav-icon">💰</span>Proposal → Invoice</a>
 </nav>
@@ -1512,7 +1512,7 @@ function renderJob(){
   </div>
 
   <div class="section-wrap" id="job-rfis">
-    <div class="section-header"><div class="section-title">${j.openItems ? 'RFIs &amp; Submittals' : 'RFIs &amp; Clarifications'}</div>${pen('rfis')}</div>
+    <div class="section-header"><div class="section-title">RFIs, Submittals, Approvals &amp; Clarifications</div>${pen('rfis')}</div>
     <div class="card">${rfis}</div>${items}
   </div>
 

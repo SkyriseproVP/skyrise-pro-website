@@ -1908,10 +1908,9 @@ function delItem(s, i){ const j = job(current); (j[s] || []).splice(i, 1); saveE
 const vault = {};
 const fileSize = b => b > 1e6 ? (b / 1e6).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
 function renderVault(j){
-  const P = PROPOSALS[j.id], tiles = [];
-  if (P) tiles.push(`<div class="vault-tile" onclick="openProposalFromVault()" title="Open in Proposal → Invoice">
-      <div class="vt-thumb" style="background-image:url('${P.pages[0]}');background-position:top center"></div>
-      <div class="vt-body"><div class="vt-name">CLR proposal — ${esc(j.tab)}.pdf</div><div class="vt-meta">${P.pages.length} pages · accepted</div></div></div>`);
+  // Hosted copy: every vault starts empty (Victor 2026-09-15). The proposals stay in
+  // Proposal → Invoice; the vault only holds what Winston's team files into it.
+  const tiles = [];
   (vault[j.id] || []).forEach((f, i) => {
     const img = f.type.startsWith('image/');
     tiles.push(`<div class="vault-tile" onclick="openVaultFile(${i})" title="${esc(f.name)}">

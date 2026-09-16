@@ -1262,10 +1262,6 @@ body.theme-light .section-title, body.theme-light .fact .v, body.theme-light .sk
       <div id="call-log-body"></div>
       <div class="src">Every call on the Quo line announces recording to all parties, then Sky summarizes it and files it to the job it's about.</div>
     </div>
-    <div class="card">
-      <div class="card-h"><span>Last 7 days — call volume</span></div>
-      <div class="calls-bars" id="call-chart"></div>
-    </div>
   </div>
 
 </div>
@@ -1831,7 +1827,7 @@ function renderCalls(){
       <td><span class="cat-badge ${cat(c.cat)}">${esc(c.cat)}</span></td></tr>`));
   const counts = [3, 5, 2, 6, 4, 1, 2], max = Math.max(...counts);
   const days = counts.map((_, i) => new Date(Date.now() - (6 - i) * 864e5).toLocaleDateString('en-US', {weekday: 'short'}));
-  $('call-chart').innerHTML = counts.map((n, i) => `<div class="col"><span class="n">${n}</span><span class="bar" style="height:${Math.round(n / max * 78)}px"></span><span class="d">${days[i]}</span></div>`).join('');
+  const _cc = $('call-chart'); if (_cc) _cc.innerHTML = counts.map((n, i) => `<div class="col"><span class="n">${n}</span><span class="bar" style="height:${Math.round(n / max * 78)}px"></span><span class="d">${days[i]}</span></div>`).join('');
 }
 
 function openJob(id){

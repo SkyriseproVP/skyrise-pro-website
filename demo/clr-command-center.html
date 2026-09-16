@@ -1100,6 +1100,42 @@ td.nw { white-space:nowrap; }
 .src { font-size:11.5px; color:var(--text-muted); margin-top:10px; }
 .co-note { margin-top:14px; padding:12px 14px; border-radius:10px; background:rgba(0,200,232,.06); border:1px solid rgba(0,200,232,.25); font-size:12.5px; line-height:1.55; color:var(--text); }
 
+/* --- ADD A JOB: his command center, so he can put his own jobs in it --- */
+.jc-add { background:#ffffff; border:1.5px dashed #b9c6d8; border-radius:16px; padding:20px; min-height:152px;
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:7px; cursor:pointer; min-width:0;
+  transition: border-color .2s ease, background .2s ease, transform .2s ease; }
+.jc-add:hover { border-color:#00a8c4; background:#f4fcff; transform:translateY(-2px); }
+.jc-add .plus { font-family:'Orbitron',sans-serif; font-size:23px; font-weight:700; color:#00a8c4; line-height:1; }
+.jc-add .t { font-family:'Orbitron',sans-serif; font-size:12.5px; font-weight:700; color:#0e1626; letter-spacing:.6px; }
+.jc-add .s { font-family:'Inter',sans-serif; font-size:11px; color:#7c88a0; }
+.job-card.added { position:relative; }
+.jc-del { position:absolute; top:10px; right:10px; width:25px; height:25px; border-radius:8px; border:1px solid #dbe3f0;
+  background:#fff; color:#7c88a0; cursor:pointer; font-size:11px; line-height:1; display:none; }
+.job-card.added:hover .jc-del, .job-card.added:focus-within .jc-del { display:block; }
+.jc-del:hover { border-color:#e05010; color:#e05010; }
+.aj-wrap { position:fixed; inset:0; z-index:10000; background:rgba(3,8,16,.72); display:flex; align-items:center; justify-content:center; padding:24px; }
+.aj-wrap[hidden] { display:none; }
+.aj { width:min(580px,100%); max-height:88vh; overflow:auto; background:#fff; border-radius:16px; box-shadow:0 24px 60px rgba(3,8,16,.45); }
+.aj [hidden] { display:none !important; }
+.aj-h { display:flex; justify-content:space-between; align-items:center; gap:14px; padding:17px 22px; border-bottom:1px solid #e6ecf5; }
+.aj-h .ttl { font-family:'Orbitron',sans-serif; font-size:12.5px; font-weight:700; letter-spacing:1.4px; color:#0e1626; }
+.aj-b { padding:18px 22px; display:grid; gap:14px; grid-template-columns:1fr 1fr; }
+.aj-b .full { grid-column:1 / -1; }
+.aj label { display:block; font-family:'Inter',sans-serif; font-size:10px; letter-spacing:1.1px; text-transform:uppercase; color:#7c88a0; margin-bottom:5px; }
+.aj input, .aj textarea { width:100%; font-family:'Inter',sans-serif; font-size:13.5px; color:#0e1626; background:#f7fafd;
+  border:1.5px solid #dbe3f0; border-radius:8px; padding:10px 12px; }
+.aj input:focus, .aj textarea:focus { outline:none; border-color:#00a8c4; background:#fff; }
+.aj textarea { min-height:72px; resize:vertical; }
+.aj-f { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:15px 22px; border-top:1px solid #e6ecf5; flex-wrap:wrap; }
+.aj-note { font-family:'Inter',sans-serif; font-size:11px; color:#7c88a0; }
+.aj-btn { font-family:'Orbitron',sans-serif; font-size:9.5px; letter-spacing:1.2px; border-radius:8px; padding:11px 15px; cursor:pointer;
+  border:1.5px solid #00a8c4; background:none; color:#00a8c4; }
+.aj-btn:hover { background:rgba(0,168,196,.10); }
+.aj-btn.go { background:#00a8c4; color:#04212a; }
+.aj-btn.go:hover { background:#00bcd9; }
+.aj-ok-t { font-family:'Orbitron',sans-serif; font-size:15px; font-weight:700; color:#0e1626; margin-bottom:8px; }
+.aj-ok-p { font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.6; color:#3c485c; margin:0; }
+@media (max-width:640px) { .aj-b { grid-template-columns:1fr; } }
 .toast { position:fixed; right:136px; bottom:30px; z-index:9999; max-width:360px; padding:14px 16px; border-radius:12px;
   background:#0f2b17; border:1px solid #2ca01c; color:#d7f5d0; font-size:13px; line-height:1.5;
   box-shadow:0 14px 34px rgba(0,0,0,.35); transform:translateY(20px); opacity:0; pointer-events:none; transition:.25s; }
@@ -1249,16 +1285,16 @@ body.theme-light .section-title, body.theme-light .fact .v, body.theme-light .sk
     <div class="kpi-card"><div class="kpi-icon">📋</div><div class="kpi-label">Open RFIs</div><div class="kpi-value" id="k-rfis">—</div><div class="kpi-sub" id="k-rfis-sub">—</div></div>
   </div>
 
-<!-- ── CALL INTELLIGENCE (Quo) ── -->
+<!-- ── CALL INTELLIGENCE ── -->
   <div class="section-wrap" id="calls">
     <div class="section-header">
       <div class="section-title">Call Intelligence<span class="live-dot"></span></div>
-      <span class="calls-powered">QUO LINE · SUMMARIZED BY SKY</span>
+      <span class="calls-powered">CALLS SUMMARIZED BY SKY</span>
     </div>
     <div class="card" style="margin-bottom:20px">
-      <div class="card-h"><span>Recent call log</span><span class="badge badge-yellow">Sample · live once CLR's Quo line connects</span></div>
+      <div class="card-h"><span>Recent call log</span><span class="badge badge-yellow">Sample · live once your line is connected</span></div>
       <div id="call-log-body"></div>
-      <div class="src">Every call on the Quo line announces recording to all parties, then Sky summarizes it and files it to the job it's about.</div>
+      <div class="src">Every call on the line announces recording to all parties, then Sky summarizes it and files it to the job it's about.</div>
     </div>
   </div>
 
@@ -1283,13 +1319,57 @@ body.theme-light .section-title, body.theme-light .fact .v, body.theme-light .sk
     <iframe class="bo-frame" id="board-frame" title="Tmrw Sports live Court Vision board" allow="autoplay; fullscreen" referrerpolicy="no-referrer"></iframe></div>
 </div>
 
+<!-- ADD A JOB: the demo is his to use, so the job row takes his jobs too -->
+<div class="aj-wrap" id="addjob" hidden onclick="if(event.target===this)closeAddJob()">
+  <div class="aj" role="dialog" aria-modal="true" aria-label="Add a job">
+    <div class="aj-h">
+      <span class="ttl">ADD A JOB</span>
+      <button type="button" class="aj-btn" onclick="closeAddJob()">CLOSE</button>
+    </div>
+    <div id="aj-form">
+      <div class="aj-b">
+        <div class="full"><label for="aj-name">Job name</label>
+          <input id="aj-name" type="text" maxlength="70" autocomplete="off" placeholder="Southpoint &middot; Suite 300"></div>
+        <div><label for="aj-client">Client or tenant</label>
+          <input id="aj-client" type="text" maxlength="60" placeholder="Southpoint Executive Center"></div>
+        <div><label for="aj-value">Contract value</label>
+          <input id="aj-value" type="text" inputmode="decimal" maxlength="16" placeholder="185,000"></div>
+        <div class="full"><label for="aj-addr">Address</label>
+          <input id="aj-addr" type="text" maxlength="90" placeholder="151 South Hall Ln &middot; Maitland, FL"></div>
+        <div><label for="aj-foreman">Site foreman</label>
+          <input id="aj-foreman" type="text" maxlength="40" placeholder="Chad Keppeler"></div>
+        <div><label for="aj-date">Target completion</label>
+          <input id="aj-date" type="date"></div>
+        <div class="full"><label for="aj-notes">Anything we should know</label>
+          <textarea id="aj-notes" maxlength="400" placeholder="Permit applied 9/2 &middot; millwork and glazing are the long leads"></textarea></div>
+      </div>
+      <div class="aj-f">
+        <span class="aj-note">Stays on this device until you send it over.</span>
+        <span><button type="button" class="aj-btn" onclick="closeAddJob()">CANCEL</button>
+        <button type="button" class="aj-btn go" onclick="saveAddJob()">ADD TO MY COMMAND CENTER</button></span>
+      </div>
+    </div>
+    <div id="aj-ok" hidden>
+      <div class="aj-b"><div class="full">
+        <div class="aj-ok-t" id="aj-ok-t">Added</div>
+        <p class="aj-ok-p">It sits with your other jobs now. When you want the live board behind it &mdash; schedule, subs, RFIs, submittals, files and field photos &mdash; send the details over and I'll set it up.</p>
+      </div></div>
+      <div class="aj-f">
+        <span class="aj-note">Nothing was sent automatically.</span>
+        <span><button type="button" class="aj-btn" onclick="closeAddJob()">DONE</button>
+        <a class="aj-btn go" id="aj-mail" href="#" style="text-decoration:none;display:inline-block">EMAIL THE DETAILS TO SKYRISE</a></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- vault viewer -->
 <div class="lightbox" id="lightbox" hidden onclick="if(event.target===this)closeLightbox()">
   <div class="lb-bar"><span id="lb-name"></span><button type="button" class="lb-close" onclick="closeLightbox()">CLOSE ✕</button></div>
   <div class="lb-body" id="lb-body"></div>
 </div>
 
-<!-- ══ SKY — floating orb, bottom-right, as on Jago's command center ══ -->
+<!-- ══ SKY — floating orb, bottom-right ══ -->
 <div class="sky-caption" id="sky-caption" hidden aria-live="polite"><div class="who">SKY</div><div id="sky-caption-text"></div></div>
 <div id="sky-orb-launcher" onclick="skyOrbClick()" title="Sky — tap to hear your briefing">
   <div class="orb-wrap" id="cc-orb-wrap">
@@ -1704,6 +1784,88 @@ function connectQB(){ /* removed with QuickBooks - proposal converts straight to
 const LIVE_BOARD = 'https://app.skyrisepro.ai/board.html?t=343baf09f9d5158e1d8e457a12b61aa1f0bd488a15afbf15';
 function openLiveBoard(){ window.open(LIVE_BOARD, '_blank', 'noopener'); }
 
+// --- ADD A JOB ---------------------------------------------------------
+// A command center you cannot put your own job into is a slideshow. The tile is
+// real and this browser keeps it; the live board behind it is what Skyrise sets
+// up, so the tile says exactly that rather than inventing a schedule. Nothing
+// leaves the page on its own - the mail button is his to press.
+const AJ_KEY = 'clr_demo_added_jobs';
+let added = [];
+try { added = JSON.parse(localStorage.getItem(AJ_KEY) || '[]'); } catch (e) { added = []; }
+const ajSave = () => { try { localStorage.setItem(AJ_KEY, JSON.stringify(added)); } catch (e) { /* private mode */ } };
+const AJ_FIELDS = ['aj-name','aj-client','aj-addr','aj-value','aj-foreman','aj-date','aj-notes'];
+function openAddJob(){
+  $('aj-form').hidden = false; $('aj-ok').hidden = true;
+  $('addjob').hidden = false; setTimeout(() => $('aj-name').focus(), 40);
+}
+function closeAddJob(){ $('addjob').hidden = true; }
+function ajNum(v){ const n = parseFloat(String(v).replace(/[^0-9.]/g, '')); return isFinite(n) && n > 0 ? n : null; }
+function ajMail(j){
+  const NL = String.fromCharCode(10), L = ['Job: ' + j.name];
+  if (j.client)  L.push('Client or tenant: ' + j.client);
+  if (j.addr)    L.push('Address: ' + j.addr);
+  if (j.value)   L.push('Contract value: ' + money(j.value));
+  if (j.foreman) L.push('Site foreman: ' + j.foreman);
+  if (j.date)    L.push('Target completion: ' + j.date);
+  if (j.notes)   L.push('Notes: ' + j.notes);
+  return 'mailto:victor@skyrisepro.ai?subject=' + encodeURIComponent('CLR - please set up a job: ' + j.name) +
+         '&body=' + encodeURIComponent(L.join(NL) + NL + NL + 'Sent from the CLR command center.');
+}
+function saveAddJob(){
+  const el = $('aj-name'), name = el.value.trim();
+  if (!name) { el.style.borderColor = '#e05010'; el.focus(); return; }
+  el.style.borderColor = '';
+  const j = { name: name, client: $('aj-client').value.trim(), addr: $('aj-addr').value.trim(),
+              value: ajNum($('aj-value').value), foreman: $('aj-foreman').value.trim(),
+              date: $('aj-date').value, notes: $('aj-notes').value.trim(), at: new Date().toISOString() };
+  added.push(j); ajSave();
+  AJ_FIELDS.forEach(id => { $(id).value = ''; });
+  renderTabs();
+  $('aj-ok-t').textContent = j.name + ' is on your board';
+  $('aj-mail').href = ajMail(j);
+  $('aj-form').hidden = true; $('aj-ok').hidden = false;
+}
+function ajRemove(e, i){ e.stopPropagation(); added.splice(i, 1); ajSave(); renderTabs(); }
+function ajOpen(i){
+  const j = added[i];
+  showToast('<b>' + esc(j.name) + '</b><br>Yours, added here. Send it over and it gets the same live board as Tmrw Sports - schedule, subs, RFIs, files and field photos.');
+}
+function ajTiles(){
+  const tabs = $('job-tabs'); if (!tabs) return;
+  const mine = added.map((j, i) => `
+    <div class="job-card added" role="tab" tabindex="0" onclick="ajOpen(${i})" onkeydown="if(event.key==='Enter')ajOpen(${i})">
+      <button type="button" class="jc-del" title="Remove this job" aria-label="Remove this job" onclick="ajRemove(event,${i})">&#10005;</button>
+      <img class="jc-logo" src="${CLR_LOGO}" alt="CLR Construction &amp; Development">
+      <div class="jc-info">
+        <div class="jc-name">${esc(j.name)}</div>
+        <div class="jc-amt">${j.value == null ? 'TBD' : money(j.value)}</div>
+        <div class="jc-tier">Added by you &middot; board to be set up</div>
+        ${j.addr ? `<div class="jc-meta">${esc(j.addr)}</div>` : ''}
+      </div>
+      <button type="button" class="jc-open" onclick="ajOpen(${i})">OPEN &rarr;</button>
+    </div>`).join('');
+  tabs.insertAdjacentHTML('beforeend', mine + `
+    <div class="jc-add" role="button" tabindex="0" onclick="openAddJob()" onkeydown="if(event.key==='Enter')openAddJob()">
+      <span class="plus">+</span>
+      <span class="t">ADD A JOB</span>
+      <span class="s">Your command center &mdash; put your next one in it</span>
+    </div>`);
+}
+// Six tiles on the row and a count that still says five reads as a bug. The
+// money KPIs stay on his signed contracts, so only the job count moves.
+function ajKpi(){
+  const kj = $('k-jobs'), ks = $('k-jobs-sub');
+  if (!kj || !ks) return;
+  const base = ks.textContent.split(' · ').filter(t => !/added by you/.test(t)).join(' · ');
+  kj.textContent = D.jobs.length + added.length;
+  const hw = $('hw-loc'), cut = hw ? hw.textContent.indexOf(' JOBS') : -1;
+  if (cut > 0) hw.textContent = (D.jobs.length + added.length) + hw.textContent.slice(cut);
+  ks.textContent = added.length ? base + ' · ' + added.length + ' added by you' : base;
+}
+const _renderTabsBase = renderTabs;
+renderTabs = function(){ _renderTabsBase(); ajTiles(); ajKpi(); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAddJob(); });
+
 // ── ✎ EDIT: add or delete items in a section (kept for this browser tab) ──
 const editing = {};
 const isEd = s => !!editing[s];
@@ -1784,8 +1946,8 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('lightb
 document.addEventListener('dragover', e => e.preventDefault());
 document.addEventListener('drop', e => e.preventDefault());
 
-// ── 📞 CALL INTELLIGENCE — Quo line, summarized by Sky (same layout as Jago's command center) ──
-// Sample entries until CLR's Quo line is connected; each one is built from a real open item.
+// ── 📞 CALL INTELLIGENCE — the line, summarized by Sky ──
+// Sample entries until the line is connected; each one is built from a real open item.
 const SAMPLE_CALLS = [
   { when: 'Sep 15 · 8:12 AM', caller: 'Chad Keppeler · CLR', dur: '3:42', job: 'Southpoint Suite 405A', cat: 'Scheduling',
     summary: 'Confirmed the wood slats and floor mullions install for Sep 18. Once they are in, 405A goes from 98% to complete.' },
@@ -1802,7 +1964,7 @@ function renderCalls(){
   const cat = c => c === 'Scheduling' ? 'cat-scheduling' : c === 'Follow-up' ? 'cat-follow-up' : c === 'Lead' ? 'cat-lead' : 'cat-other';
   $('call-log-body').innerHTML = table(['Time', 'Caller', 'Line', 'Duration', 'Summary', 'Job', 'Category'], SAMPLE_CALLS.map(c => `<tr>
       <td class="nw" style="color:var(--text-muted);font-size:11.5px">${esc(c.when)}</td><td class="nw">${esc(c.caller)}</td>
-      <td class="nw" style="color:var(--text-muted)">Quo</td><td class="nw">${esc(c.dur)}</td>
+      <td class="nw" style="color:var(--text-muted)">Line</td><td class="nw">${esc(c.dur)}</td>
       <td class="call-sum">${esc(c.summary)}</td><td class="nw">${esc(c.job)}</td>
       <td><span class="cat-badge ${cat(c.cat)}">${esc(c.cat)}</span></td></tr>`));
   const counts = [3, 5, 2, 6, 4, 1, 2], max = Math.max(...counts);
@@ -2071,7 +2233,7 @@ document.getElementById('sidebar').addEventListener('keydown', e => {
   const now = new Date();
   $('hw-date').textContent = now.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'}).toUpperCase();
   const act = D.jobs.filter(j => j.status === 'active').length;
-  $('hw-loc').textContent = D.jobs.length + ' JOBS · ' + act + ' IN PROGRESS';
+  $('hw-loc').textContent = (D.jobs.length + added.length) + ' JOBS · ' + act + ' IN PROGRESS';
   $('sky-msg').innerHTML = `Good ${partOfDay(now)}, Winston. <b>Tmrw Sports' permit is approved</b> — all nine City reviews passed, and the fees are the last step before it issues. TGRC and Southpoint Suite 190 are closed out, and <b>Suite 405A is 98% complete</b> — the wood slats and floor mullions go in 9/18.`;
   let t = 'navy'; try { t = localStorage.getItem('clr_demo_theme') || 'navy'; } catch(e){}
   applyTheme(t);

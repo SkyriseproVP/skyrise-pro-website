@@ -1082,6 +1082,7 @@ body.theme-light .section-title, body.theme-light .fact .v, body.theme-light .sk
 .phase i { font-style:normal; width:18px; height:18px; border-radius:50%; background:#22c55e; color:#06101e; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; }
 
 .assign { color:#ff8a4c; font-style:italic; }
+.job-head-side { display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
 /* jobs nested under Job Overview in the sidebar */
 .nav-sub { margin:0 0 6px 30px; border-left:1.5px solid rgba(242,106,34,.35); }
 .nav-sub .nav-item { padding:7px 14px 7px 12px; font-size:12.5px; }
@@ -1248,10 +1249,7 @@ body.theme-light .section-title, body.theme-light .fact .v, body.theme-light .sk
     <div class="kpi-card"><div class="kpi-icon">📋</div><div class="kpi-label">Open RFIs</div><div class="kpi-value" id="k-rfis">—</div><div class="kpi-sub" id="k-rfis-sub">—</div></div>
   </div>
 
-  <div class="job-tabs" id="job-tabs" role="tablist" aria-label="Jobs"></div>
-  <div id="job-panel"></div>
-
-  <!-- ── CALL INTELLIGENCE (Quo) ── -->
+<!-- ── CALL INTELLIGENCE (Quo) ── -->
   <div class="section-wrap" id="calls">
     <div class="section-header">
       <div class="section-title">Call Intelligence<span class="live-dot"></span></div>
@@ -1263,6 +1261,11 @@ body.theme-light .section-title, body.theme-light .fact .v, body.theme-light .sk
       <div class="src">Every call on the Quo line announces recording to all parties, then Sky summarizes it and files it to the job it's about.</div>
     </div>
   </div>
+
+    <div class="job-tabs" id="job-tabs" role="tablist" aria-label="Jobs"></div>
+  <div id="job-panel"></div>
+
+  
 
 </div>
 </main>
@@ -1493,7 +1496,10 @@ function renderJob(){
         <div class="job-addr">Owner: ${esc(D.owner.name)} · General contractor: ${esc(D.gc.name)}</div>
         <div class="job-facts">${facts.map(f => `<div class="fact"><div class="k">${esc(f[0])}</div><div class="v">${esc(f[1])}<small>${esc(f[2] || '')}</small></div></div>`).join('')}</div>
       </div>
-      <div id="ring-slot">${ring(jobPct(j))}</div>
+      <div class="job-head-side">
+        ${j.id === 'tmrw' ? `<button type="button" class="pen-btn" style="font-size:9.5px" title="Open the live Court Vision board in a new tab" onclick="openLiveBoard()">✎ LIVE BOARD</button>` : ''}
+        <div id="ring-slot">${ring(jobPct(j))}</div>
+      </div>
     </div>
   </div></div>
 
@@ -1524,7 +1530,7 @@ function renderJob(){
   <div class="section-wrap" id="job-billing">
     <div class="section-header">
       <button type="button" class="sec-toggle" id="bill-toggle" aria-expanded="${billOpen}" aria-controls="bill-body" onclick="toggleBill()">
-        <span class="section-title">Proposal → Invoice · QuickBooks</span><span class="sec-caret" aria-hidden="true">▾</span>
+        <span class="section-title">Proposal → Invoice</span><span class="sec-caret" aria-hidden="true">▾</span>
       </button>
     </div>
     <div class="card" id="bill-body" ${billOpen ? '' : 'hidden'}>
@@ -1532,7 +1538,7 @@ function renderJob(){
       <div class="bill-pane" id="bill-1"></div>
       <div class="bill-pane" id="bill-2" hidden></div>
       <div class="bill-pane" id="bill-3" hidden>
-      <div class="flow"><span class="st">Proposal approved</span><span class="ar">→</span><span class="st">Schedule of values</span><span class="ar">→</span><span class="st">% complete from the field</span><span class="ar">→</span><span class="st">Pay application</span><span class="ar">→</span><span class="st qb">QuickBooks invoice</span><span class="ar">→</span><span class="st">Paid by ACH</span></div>
+      <div class="flow"><span class="st">Proposal approved</span><span class="ar">→</span><span class="st">Schedule of values</span><span class="ar">→</span><span class="st">% complete from the field</span><span class="ar">→</span><span class="st">Pay application</span><span class="ar">→</span><span class="st qb">Invoice</span><span class="ar">→</span><span class="st">Paid by ACH</span></div>
       <div id="qb"></div>
       <div class="card-h" style="margin-top:26px"><span>Schedule of values · set % complete</span></div>
       <div class="table-wrap"><table class="sov"><thead><tr><th>Code</th><th>Line item</th><th class="num">Scheduled value</th><th>% complete</th><th class="num">Earned</th></tr></thead>
@@ -1610,13 +1616,13 @@ function renderMoney(j){
       <div class="inv-foot"><span>Pay by ACH bank transfer or check · Net 30</span><span>Built from the accepted proposal · ${billed.length} lines</span></div>
     </div>`;
   $('qb-sync').innerHTML = `
-    <div class="qb-top"><span class="t">QuickBooks Online</span>${qbConnected ? badge('Connected', 'green') : badge('Not connected', 'gray')}</div>
+    <div class="qb-top"><span class="t">Invoice</span>${badge('Built from the proposal', 'green')}</div>
     <div class="qb-body">
       <div class="qb-row"><span class="qb-muted">Invoice</span><span>${invNo}</span></div>
       <div class="qb-row" style="margin-top:6px"><span class="qb-muted">Customer</span><span>${esc(D.owner.name)}</span></div>
       <div class="qb-row" style="margin-top:6px"><span class="qb-muted">Project</span><span>${esc(j.title)}</span></div>
       <div class="qb-total" style="margin-top:12px"><span>Amount due</span><span>${money(m.due)}</span></div>
-      <button class="qb-btn" id="qb-create" onclick="pushQB()">CREATE INVOICE IN QUICKBOOKS</button>
+      <button class="qb-btn" id="qb-create" onclick="pushQB()">CREATE INVOICE</button>
     </div>`;
 }
 
@@ -1643,7 +1649,7 @@ function showToast(html){
 }
 function pushQB(){
   const j = job(current), m = money2(j);
-  showToast(`<b>Invoice staged for QuickBooks</b><br>${esc(j.title)} · ${money(m.due)} to ${esc(D.owner.name)}<br><span style="opacity:.75">Demo — nothing was sent.</span>`);
+  showToast(`<b>Invoice created</b><br>${esc(j.title)} · ${money(m.due)} to ${esc(D.owner.name)}<br><span style="opacity:.75">Demo — nothing was sent.</span>`);
 }
 
 // ── PROPOSAL → CONNECT QUICKBOOKS → CONVERT TO INVOICE ──
@@ -1660,12 +1666,13 @@ let qbConnected = false, qbConnecting = false;
 function renderBilling(j){
   const step = billStep[j.id] || 1;
   const P = PROPOSALS[j.id];
-  const labels = ['Proposal', 'Connect QuickBooks', 'Convert to invoice'];
+  const labels = ['Proposal', 'Convert to invoice'];
+  const stepNos = [1, 3];
   $('bill-steps').innerHTML = labels.map((l, i) => {
-    const n = i + 1;
-    const cls = n === step ? 'on' : ((n === 1 && step > 1) || (n === 2 && qbConnected)) ? 'done' : '';
+    const n = stepNos[i];
+    const cls = n === step ? 'on' : (n === 1 && step > 1) ? 'done' : '';
     return (i ? '<span class="step-ar">→</span>' : '') +
-      `<button type="button" class="step ${cls}" onclick="setBillStep(${n})"><b>${cls === 'done' ? '✓' : n}</b>${l}</button>`;
+      `<button type="button" class="step ${cls}" onclick="setBillStep(${n})"><b>${cls === 'done' ? '✓' : i + 1}</b>${l}</button>`;
   }).join('');
 
   $('bill-1').innerHTML = P ? `
@@ -1675,30 +1682,11 @@ function renderBilling(j){
     </div>
     ${j.id === 'sp405a' ? '<div class="src" style="margin:0 0 10px">Job location on this proposal reads 150 N Orange Ave — the job is at 151 South Hall Ln, Maitland.</div>' : ''}
     <div class="prop-view">${P.pages.map((src, i) => `<img src="${src}" alt="${esc(P.title)} — page ${i + 1}">`).join('')}</div>
-    <div class="pane-actions"><button type="button" class="act-btn" onclick="setBillStep(2)">NEXT: CONNECT QUICKBOOKS →</button></div>`
+    <div class="pane-actions"><button type="button" class="act-btn" onclick="setBillStep(3)">NEXT: CONVERT TO INVOICE →</button></div>`
     : '<div class="src">No proposal on file for this job.</div>';
 
   const lines = j.sov.filter(l => !l.fee).length;
-  $('bill-2').innerHTML = `
-    <div class="qb-conn">
-      <div class="qbc-head"><div class="qbc-ico">🔌</div>
-        <div><div class="qbc-name">QuickBooks Online</div><div class="qbc-sub">Accounting connector · customers, items, invoices and payments</div></div>
-        <div class="qbc-state">${qbConnected ? badge('Connected', 'green') : qbConnecting ? badge('Connecting…', 'yellow') : badge('Not connected', 'gray')}</div>
-      </div>
-      <div class="qbc-map">
-        <div><span>Company file</span><span>${esc(D.gc.name)}</span></div>
-        <div><span>Customer</span><span>${esc(D.owner.name)}</span></div>
-        <div><span>Project</span><span>${esc(j.title)}</span></div>
-        <div><span>Invoice lines</span><span>${lines} proposal lines + insurance and overhead</span></div>
-        <div><span>Terms · payment</span><span>Net 30 · ACH bank transfer or check</span></div>
-      </div>
-      <div class="qbc-foot">
-        ${qbConnected
-          ? '<button type="button" class="act-btn" id="qb-convert" style="width:100%" onclick="setBillStep(3)">CONVERT TO INVOICE →</button>'
-          : `<button type="button" class="qb-btn" id="qb-connect" style="margin:0" onclick="connectQB()" ${qbConnecting ? 'disabled' : ''}>${qbConnecting ? 'CONNECTING…' : 'CONNECT QUICKBOOKS'}</button>`}
-        <div class="src">Demo connection — no QuickBooks account is touched.</div>
-      </div>
-    </div>`;
+  $('bill-2').innerHTML = '';
 
   [1, 2, 3].forEach(n => { $('bill-' + n).hidden = n !== step; });
 }
@@ -1710,19 +1698,11 @@ function setBillStep(n){
   renderBilling(j);
   $('job-billing').scrollIntoView({behavior: 'smooth', block: 'start'});
 }
-function connectQB(){
-  if (qbConnected || qbConnecting) return;
-  qbConnecting = true; renderBilling(job(current));
-  setTimeout(() => {
-    qbConnecting = false; qbConnected = true;
-    // connecting formulates the sample invoice straight away
-    billStep[current] = 3;
-    renderMoney(job(current));
-    renderBilling(job(current));
-    $('job-billing').scrollIntoView({behavior: 'smooth', block: 'start'});
-    showToast('<b>QuickBooks connected</b><br>Sample invoice drafted for CLR Construction &amp; Development<br><span style="opacity:.75">Demo connection — no account touched.</span>');
-  }, 1200);
-}
+function connectQB(){ /* removed with QuickBooks - proposal converts straight to invoice */ }
+
+// Winston's own Court Vision board link — his role, revocable on its own.
+const LIVE_BOARD = 'https://app.skyrisepro.ai/board.html?t=343baf09f9d5158e1d8e457a12b61aa1f0bd488a15afbf15';
+function openLiveBoard(){ window.open(LIVE_BOARD, '_blank', 'noopener'); }
 
 // ── ✎ EDIT: add or delete items in a section (kept for this browser tab) ──
 const editing = {};
@@ -1951,7 +1931,7 @@ const SKY_TOUR = [
   { key: 'walker', focus: 'walker',
     caption: "And Walker Design, Suite A-110, is lined up next, with Chad Keppeler as site foreman — total and permit # TBD. Walker Design, if you'd like to jump on board and see live updates, we'll be more than happy to set your team up so you buy back your time. This is Court Vision at your disposal." },
   { key: 'close', job: 'sp405a', scroll: 'job-billing',
-    caption: "Here's where it saves you time. Set the percent complete on any job, and the pay application builds itself, retainage included, ready to become a QuickBooks invoice. Richard Patino is site foreman on Tmrw Sports, and Chad Keppeler runs TGRC and both Southpoint suites. I'll keep every job moving." },
+    caption: "Here's where it saves you time. Set the percent complete on any job, and the pay application builds itself, retainage included, ready to become an invoice. Richard Patino is site foreman on Tmrw Sports, and Chad Keppeler runs TGRC and both Southpoint suites. I'll keep every job moving." },
 ];
 
 const skyClips = {};                  // key -> { url, env }

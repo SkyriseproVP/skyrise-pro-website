@@ -2208,5 +2208,40 @@ document.getElementById('sidebar').addEventListener('keydown', e => {
   mo.observe(document.body, { childList: true, subtree: true });
 })();
 </script>
+
+<!-- CLR-LINK-EXPIRY-v1 — the link Victor sent is open for one week.
+     After it closes the page shows a notice instead of the command center. -->
+<style>
+  #clr-expired{position:fixed;inset:0;z-index:100000;display:none;place-items:center;background:#0a121e;color:#e7eef6;
+    font:16px/1.6 Arial,system-ui,sans-serif}
+  #clr-expired .box{max-width:42ch;padding:32px;text-align:center}
+  #clr-expired img{width:150px;margin:0 auto 22px;display:block}
+  #clr-expired h1{font-size:21px;margin:0 0 12px}
+  #clr-expired a{color:#3cc6e8}
+  body.clr-expired-on{overflow:hidden}
+</style>
+<div id="clr-expired" role="dialog" aria-modal="true" aria-labelledby="clr-expired-h">
+  <div class="box">
+    <img src="https://app.skyrisepro.ai/skyrise-cyan-transparent.png" alt="Skyrise Pro">
+    <h1 id="clr-expired-h">This link has closed</h1>
+    <p>The CLR command center was open through Monday 22 September.</p>
+    <p style="font-size:14px;color:#98a6b8">Reply to Victor's email, or write to
+      <a href="mailto:victor@skyrisepro.ai">victor@skyrisepro.ai</a>, and he'll send a fresh one.</p>
+  </div>
+</div>
+<script>
+(function(){
+  // 23 Sep 2026, 03:59 UTC = 22 Sep, 11:59pm Eastern.
+  var CLOSES = Date.UTC(2026, 8, 23, 3, 59, 0);
+  function check(){
+    if (Date.now() < CLOSES) return;
+    var el = document.getElementById('clr-expired');
+    if (el) { el.style.display = 'grid'; document.body.classList.add('clr-expired-on'); }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', check);
+  else check();
+  setInterval(check, 60000);   // catches a tab left open past the date
+})();
+</script>
 </body>
 </html>

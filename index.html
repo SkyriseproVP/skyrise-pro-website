@@ -747,6 +747,56 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pricing-sub{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--body-dim);margin-bottom:40px;}
 /* minmax(0,…) not 1fr: plain 1fr floors each track at the card's min-content
    (the $749.89/mo line), which pushed the grid wider than its container. */
+/* Court Vision — single landscape pricing panel */
+.cvp-card{display:grid;grid-template-columns:minmax(260px,300px) 1fr;gap:0;max-width:1180px;margin:0 auto;text-align:left;background:linear-gradient(160deg,#0a1628 0%,#102743 55%,#0a1628 100%);border:1.5px solid rgba(0,200,232,.45);border-radius:22px;overflow:hidden;box-shadow:0 0 18px rgba(0,200,232,.16),0 0 40px rgba(0,200,232,.07),0 10px 30px rgba(10,22,40,.12);}
+.cvp-left{padding:34px 30px;border-right:1px solid rgba(0,200,232,.22);display:flex;flex-direction:column;}
+.cvp-tier{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;color:var(--cyan);margin-bottom:10px;}
+.cvp-price{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px;}
+.cvp-pitch{font-size:13.5px;line-height:1.65;color:rgba(214,234,246,.78);margin:0 0 18px;}
+.cvp-terms{list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:9px;}
+.cvp-terms li{display:flex;gap:8px;font-size:12.5px;line-height:1.45;color:#fff;}
+.cvp-left .price-cta{margin-top:auto;}
+.cvp-right{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;}
+.cvp-col{padding:30px 24px;}
+.cvp-col + .cvp-col{border-left:1px solid rgba(255,255,255,.07);}
+.cvp-col-head{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.cvp-col-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:7px;border:1px solid rgba(0,200,232,.55);color:var(--cyan);font-size:10px;box-shadow:0 0 10px rgba(0,200,232,.2);}
+.cvp-card .price-features{margin:0;}
+.cvp-card .price-feature{color:rgba(232,244,251,.9);}
+@media(max-width:1024px){
+  .cvp-card{grid-template-columns:1fr;}
+  .cvp-left{border-right:none;border-bottom:1px solid rgba(0,200,232,.22);}
+}
+@media(max-width:760px){
+  .cvp-right{grid-template-columns:1fr;}
+  .cvp-col + .cvp-col{border-left:none;border-top:1px solid rgba(255,255,255,.07);}
+  .cvp-left,.cvp-col{padding:24px 20px;}
+}
+/* Video vault: three across */
+.vault-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+.vault-next{display:flex;flex-direction:column;}
+.vault-next-body{flex:1;min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 20px;background:linear-gradient(160deg,#0a1628,#102743);border-bottom:1px solid rgba(0,200,232,.25);}
+.vault-next-icon{font-size:30px;margin-bottom:10px;}
+.vault-next-kicker{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;color:var(--cyan);margin-bottom:6px;}
+.vault-next-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:800;color:#fff;margin-bottom:8px;}
+.vault-next-desc{font-size:12px;line-height:1.55;color:rgba(214,234,246,.7);margin:0;max-width:260px;}
+@media(max-width:1024px){ .vault-grid{grid-template-columns:1fr;} }
+/* Demo: one demo, three parts */
+.demo-parts-wrap{margin-top:52px;}
+.demo-parts-label{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:rgba(0,200,232,.7);letter-spacing:3px;margin-bottom:22px;text-align:center;}
+.demo-parts{display:flex;align-items:stretch;justify-content:center;gap:10px;max-width:1000px;margin:0 auto;}
+.demo-part{flex:1;min-width:0;max-width:300px;text-align:left;}
+.demo-part-num{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--cyan);margin-bottom:8px;line-height:1;}
+.demo-part-name{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:#fff;letter-spacing:1.5px;margin-bottom:8px;}
+.demo-part-desc{font-family:system-ui,sans-serif;font-size:12.5px;color:rgba(175,215,232,.72);margin:0;line-height:1.6;}
+.demo-part-arrow{align-self:center;color:rgba(0,200,232,.6);font-size:20px;flex:0 0 auto;}
+@media(max-width:760px){
+  .demo-parts{flex-direction:column;align-items:center;}
+  .demo-part{max-width:none;width:100%;}
+  .demo-part-arrow{transform:rotate(90deg);}
+}
+.cvp-card .price-book{border-color:var(--cyan2);color:var(--cyan2);}
+.cvp-card .price-book:hover{background:rgba(0,222,255,0.1);}
 .pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;text-align:left;max-width:980px;margin-left:auto;margin-right:auto;align-items:stretch;}
 .price-card{border:1.5px solid #e8edf5;border-radius:16px;padding:22px 22px;position:relative;transition:all .3s;display:flex;flex-direction:column;min-width:0;}
 .price-card:hover{transform:translateY(-4px);}
@@ -2513,13 +2563,14 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       if(type==='court'){
         cvOpenModal();
       }else if(type==='automation'){
-        narrate('Sky here. What you\'re about to see below isn\'t a concept — it\'s live automation that runs for real clients right now. Every lead that comes in gets captured, tagged, and routed without a single manual step. Every follow-up goes out on time, every time. Every handoff between your tools is logged and accounted for. The sections below walk you through exactly how each client\'s workflow is built — from the moment a lead arrives to the moment a deal closes. Scroll down and I\'ll show you what\'s actually running.',false);
+        narrate('Sky here. This is the same build, seen from behind the board. The lease, the plan set, every submittal and the permit portal all come in to one project hub. From there, each item gets an owner and a clock, and I ping whoever holds the ball before it sits. Scroll down and I will walk you through it.',false);
         setTimeout(function(){
-          var next=document.getElementById('court-demo').nextElementSibling;
-          if(next&&next.nextElementSibling)next.nextElementSibling.scrollIntoView({behavior:'smooth',block:'start'});
+          var wf=document.getElementById('ti-workflow');
+          if(wf)wf.scrollIntoView({behavior:'smooth',block:'start'});
         },1800);
       }else if(type==='cinematic'){
-        narrate('Every project Skyrise Pro closes ends with something most companies never think to create — a cinematic production. Not a slideshow. Not a before-and-after photo. A professional video that tells the full story of your deal: the raw demo space, the construction journey, the finished build reveal, and your brand front and center. Skyrise Pro logo at the open, your project at the center, and a QR code at the end that drives every viewer directly to your door. That video becomes a marketing asset that works long after the lease is signed — social media, investor decks, client pitches, sales calls. That\'s the Skyrise Pro flywheel.',false);
+        narrate('Here is the last part. At every phase of work, from demolition to the final walkthrough, photos are taken on site and tagged to that phase. When the job closes, they are cut into one film that showcases the finished construction and the players who built it. That film goes in the video vault and keeps working long after the punch list is done.',false);
+        setTimeout(function(){var v=document.getElementById('video');if(v)v.scrollIntoView({behavior:'smooth',block:'start'});},1800);
       }
     };
 
@@ -3509,7 +3560,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 </div>
 
 <!-- ── TI AUTOMATION WORKFLOW ─────────────────────────────────── -->
-<section class="pipeline-section orange-section" style="background:#f5fbff;">
+<section id="ti-workflow" class="pipeline-section orange-section" style="background:#f5fbff;">
   <div class="pipeline-inner">
     <div class="cs-badge">TENANT IMPROVEMENT</div>
     <h2 class="cs-title">AUTOMATION WORKFLOW</h2>
@@ -3674,7 +3725,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   <div style="height:2px;background:linear-gradient(90deg,var(--cyan) 0%,rgba(0,200,232,0.35) 50%,rgba(255,255,255,0) 100%);border-radius:2px;"></div>
 </div>
 
-<!-- ── VIDEO IS KING ──────────────────────────────────────────── -->
+<!-- ── VIDEO VAULT ────────────────────────────────────────────── -->
 
 <!-- ── VIDEO LIGHTBOX ─────────────────────────────────────────── -->
 <div class="vid-lightbox" id="vid-lightbox" onclick="closeLightboxOutside(event)">
@@ -3772,37 +3823,49 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 <!-- ── DEMO ───────────────────────────────────────────────────── -->
 <section id="video">
   <div class="video-inner">
-    <button class="vid-trial-btn" onclick="openModal('cre-iq')">START YOUR FREE 30-DAY TRIAL →</button>
-    <div class="vid-badge">PORTFOLIO & SHOWCASE</div>
-    <h2 class="vid-title">VIDEO IS KING</h2>
-    <p class="vid-sub">Cinematic video production for commercial real estate, product demos, and brand storytelling.</p>
-    <div class="vid-grid">
-      <div class="vid-card">
-        <div class="vid-player">
-          <video id="vid1" preload="none" playsinline><source src="videoisking.mp4" type="video/mp4"></video>
-          <div class="vid-play-overlay" id="vid1-overlay" onclick="playVid('vid1')">
-            <div class="vid-play-circle">▶</div>
-          </div>
-          <button class="vid-expand-btn" onclick="openLightbox('videoisking.mp4','VIDEO IS KING')" title="Fullscreen">⛶</button>
-        </div>
-        <div style="padding:14px 16px;background:#111;">
-          <span class="vid-badge-tag cyan">SKYRISE PRO</span>
-          <div class="vid-card-title">VIDEO IS KING</div>
-          <div class="vid-card-sub">SkyRise Pro — Official Production</div>
-        </div>
-      </div>
+    <div class="vid-badge">COURT VISION · CLOSEOUT FILMS</div>
+    <h2 class="vid-title">VIDEO VAULT</h2>
+    <p class="vid-sub">Every Court Vision build is photographed phase by phase and closes with a film of the finished space and the players who built it. Finished projects land here.</p>
+    <div class="vid-grid vault-grid">
       <div class="vid-card">
         <div class="vid-player">
           <video id="vid2" preload="none" playsinline><source src="fulcrum-final.mp4" type="video/mp4"></video>
           <div class="vid-play-overlay" id="vid2-overlay" onclick="playVid('vid2')">
             <div class="vid-play-circle">▶</div>
           </div>
-          <button class="vid-expand-btn" onclick="openLightbox('fulcrum-final.mp4','FULCRUM — PROPERTY SHOWCASE')" title="Fullscreen">⛶</button>
+          <button class="vid-expand-btn" onclick="openLightbox('fulcrum-final.mp4','PROPERTY SHOWCASE')" title="Fullscreen">⛶</button>
         </div>
         <div style="padding:14px 16px;background:#111;">
-          <span class="vid-badge-tag orange">CLIENT CASE STUDY</span>
-          <div class="vid-card-title">FULCRUM — PROPERTY SHOWCASE</div>
-          <div class="vid-card-sub">Cinematic Showcase — Commercial Real Estate · Orlando, FL</div>
+          <span class="vid-badge-tag orange">PROPERTY SHOWCASE</span>
+          <div class="vid-card-title">COMMERCIAL PROPERTY SHOWCASE</div>
+          <div class="vid-card-sub">Cinematic showcase — commercial real estate</div>
+        </div>
+      </div>
+      <div class="vid-card">
+        <div class="vid-player">
+          <video id="vid1" preload="none" playsinline><source src="videoisking.mp4" type="video/mp4"></video>
+          <div class="vid-play-overlay" id="vid1-overlay" onclick="playVid('vid1')">
+            <div class="vid-play-circle">▶</div>
+          </div>
+          <button class="vid-expand-btn" onclick="openLightbox('videoisking.mp4','SKYRISE PRO — PRODUCTION REEL')" title="Fullscreen">⛶</button>
+        </div>
+        <div style="padding:14px 16px;background:#111;">
+          <span class="vid-badge-tag cyan">SKYRISE PRO</span>
+          <div class="vid-card-title">PRODUCTION REEL</div>
+          <div class="vid-card-sub">The look every closeout film is cut to</div>
+        </div>
+      </div>
+      <div class="vid-card vault-next">
+        <div class="vault-next-body">
+          <div class="vault-next-icon">🎬</div>
+          <div class="vault-next-kicker">IN PRODUCTION</div>
+          <div class="vault-next-title">LIVE COURT VISION BUILD</div>
+          <p class="vault-next-desc">Photos are being captured at every phase of work on the build at the top of this page. The film opens here at closeout.</p>
+        </div>
+        <div style="padding:14px 16px;background:#111;">
+          <span class="vid-badge-tag cyan">NEXT IN THE VAULT</span>
+          <div class="vid-card-title">TENANT IMPROVEMENT BUILD-OUT</div>
+          <div class="vid-card-sub">Filming phase by phase through Certificate of Occupancy</div>
         </div>
       </div>
     </div>
@@ -3811,7 +3874,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 <section id="demo-section">
   <div class="demo-inner">
     <h2 class="demo-title">WANT TO SEE IT WORK?<br><span style="color:var(--cyan);font-size:.75em;">RIGHT NOW.</span></h2>
-    <p class="demo-sub">Sky pops up, explains what we do, then walks you through the exact automation and<br>cinematic video production workflow we run for every client — live, with voice.</p>
+    <p class="demo-sub">Sky pops up, explains what we do, then walks you through one Court Vision build in three parts —<br>the tracker, the automation behind it, and the film it ends with. Live, with voice.</p>
     <a href="demo.html" class="demo-launch-btn">
       <span class="play-icon">▶</span>
       SEE IT WORK — 60 SECONDS →
@@ -3823,29 +3886,27 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       </a>
     </div>
 
-    <!-- ── CHOOSE YOUR DEMO EXPERIENCE ── -->
-    <div style="margin-top:52px;">
-      <div style="font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:rgba(0,200,232,.6);letter-spacing:3px;margin-bottom:22px;text-align:center;">CHOOSE YOUR DEMO EXPERIENCE</div>
-      <div style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;max-width:900px;margin:0 auto;">
-
-        <div class="cs-demo-card" onclick="csLaunchDemo('automation')" style="flex:1;min-width:220px;max-width:270px;">
-          <div style="font-size:28px;margin-bottom:12px;">⚙️</div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#00c8e8;letter-spacing:1.5px;margin-bottom:8px;">AUTOMATION WORKFLOW</div>
-          <p style="font-family:system-ui,sans-serif;font-size:12.5px;color:rgba(175,215,232,.65);margin:0;line-height:1.6;">See how Sky runs your deal on autopilot — every handoff, every alert, zero dropped balls.</p>
+    <!-- ── ONE DEMO, THREE PARTS ── -->
+    <div class="demo-parts-wrap">
+      <div class="demo-parts-label">ONE COURT VISION DEMO · THREE PARTS</div>
+      <div class="demo-parts">
+        <div class="cs-demo-card demo-part" onclick="document.getElementById('court-demo').scrollIntoView({behavior:'smooth',block:'start'})">
+          <div class="demo-part-num">01</div>
+          <div class="demo-part-name">COURT VISION</div>
+          <p class="demo-part-desc">A tenant build moves from LOI to Certificate of Occupancy — stage by stage, player by player, with Sky calling every steal before it costs a day.</p>
         </div>
-
-        <div class="cs-demo-card" onclick="document.getElementById('court-demo').scrollIntoView({behavior:'smooth',block:'start'})" style="flex:1;min-width:220px;max-width:270px;">
-          <div style="font-size:28px;margin-bottom:12px;">📋</div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#00c8e8;letter-spacing:1.5px;margin-bottom:8px;">COURT VISION — PROJECTS</div>
-          <p style="font-family:system-ui,sans-serif;font-size:12.5px;color:rgba(175,215,232,.65);margin:0;line-height:1.6;">Watch the deal move from LOI to C of O — stage by stage, player by player, with Sky narrating every pass and calling every steal.</p>
+        <div class="demo-part-arrow" aria-hidden="true">→</div>
+        <div class="cs-demo-card demo-part" onclick="csLaunchDemo('automation')">
+          <div class="demo-part-num">02</div>
+          <div class="demo-part-name">AUTOMATION</div>
+          <p class="demo-part-desc">The same build, behind the board. Lease, plans, submittals and permits come in, and Court Vision routes each one to whoever holds the ball.</p>
         </div>
-
-        <div class="cs-demo-card" onclick="csLaunchDemo('cinematic')" style="flex:1;min-width:220px;max-width:270px;">
-          <div style="font-size:28px;margin-bottom:12px;">🎬</div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#00c8e8;letter-spacing:1.5px;margin-bottom:8px;">CINEMATIC PRODUCTION</div>
-          <p style="font-family:system-ui,sans-serif;font-size:12.5px;color:rgba(175,215,232,.65);margin:0;line-height:1.6;">Every completed project becomes a cinematic story — demo to final space, with your brand, your deal, your win.</p>
+        <div class="demo-part-arrow" aria-hidden="true">→</div>
+        <div class="cs-demo-card demo-part" onclick="csLaunchDemo('cinematic')">
+          <div class="demo-part-num">03</div>
+          <div class="demo-part-name">CINEMATIC VIDEO</div>
+          <p class="demo-part-desc">Photos are taken at every phase of work. At closeout they are cut into one film that showcases the finished construction and the players who built it.</p>
         </div>
-
       </div>
     </div>
 
@@ -3855,70 +3916,18 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 <!-- ── PRICING ────────────────────────────────────────────────── -->
 <section id="pricing">
   <div class="pricing-inner">
-    <h2 class="pricing-title">Simple, Transparent Pricing</h2>
-    <p class="pricing-sub">30-DAY FREE TRIAL · NO COMMITMENT TO START</p>
-    <div class="pricing-grid">
+    <h2 class="pricing-title">Priced Per Project</h2>
+    <p class="pricing-sub">EVERYTHING IT TAKES TO SET UP THE JOB AND SEE IT THROUGH TO CERTIFICATE OF OCCUPANCY</p>
 
-      <!-- ── PROFESSIONAL — navy blue ── -->
-      <div class="price-card featured">
-        <div class="price-tier">PROFESSIONAL</div>
-        <div class="price-amount">$749.89<span>/mo</span></div>
-        <div class="price-plan-name">FULL WORKFLOW AUTOMATION</div>
-        <ul class="price-features">
-          <li class="price-feature"><span class="price-check">✓</span>Full workflow automation suite</li>
-          <li class="price-feature"><span class="price-check">✓</span>Proposals, invoices &amp; scheduling automated</li>
-          <li class="price-feature"><span class="price-check">✓</span>Smart routing & instant responses</li>
-          <li class="price-feature"><span class="price-check">✓</span>Dashboard monitoring & status</li>
-          <li class="price-feature"><span class="price-check">✓</span>30-day free trial included</li>
-        </ul>
-        <button class="price-cta solid" onclick="openModal('cre-iq')" style="margin-bottom:10px;">GET STARTED</button>
-        <a href="#" onclick="openModal('booking');return false;" class="price-book">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          BOOK A FREE STRATEGY CALL
-        </a>
-      </div>
-
-      <!-- ── ELITE — white + slight cyan glow, full agency ── -->
-      <div class="price-card cyan-outline">
-        <div class="price-tier">ELITE</div>
-        <div class="price-amount">$849.89<span>/mo</span></div>
-        <div class="price-plan-name">FULL AI AGENCY</div>
-        <ul class="price-features">
-          <li class="price-feature"><span class="price-check">✓</span>Full workflow automation suite</li>
-          <li class="price-feature"><span class="price-check">✓</span>Proposals, invoices &amp; scheduling automated</li>
-          <li class="price-feature"><span class="price-check">✓</span>Smart routing &amp; instant responses</li>
-          <li class="price-feature"><span class="price-check">✓</span>Dashboard monitoring &amp; status</li>
-          <li class="price-feature"><span class="price-check">✓</span>Monthly ROI reports</li>
-          <li class="price-feature"><span class="price-check">✓</span>Priority support & strategy calls</li>
-          <li class="price-feature"><span class="price-check">✓</span>Cinematic brand video add-on (after 4 mo)</li>
-          <li class="price-feature"><span class="price-check">✓</span>30-day free trial included</li>
-        </ul>
-        <button class="price-cta outline" onclick="openModal('cre-iq')" style="margin-bottom:10px;">GET STARTED</button>
-        <a href="#" onclick="openModal('booking');return false;" class="price-book">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          BOOK A FREE STRATEGY CALL
-        </a>
-      </div>
-
-      <!-- ── ENTERPRISE — navy blue + slight cyan glow, no badge ── -->
-      <div class="price-card featured" style="box-shadow:0 0 14px rgba(0,200,232,.14),0 0 32px rgba(0,200,232,.06);border-color:rgba(0,200,232,.4);">
-        <div class="price-tier">COURT VISION</div>
-        <div class="price-amount" style="font-size:24px;letter-spacing:0;white-space:nowrap;">Priced per project</div>
-        <div class="price-plan-name">FULL PLATFORM + COURT VISION TEAM</div>
-        <ul class="price-features">
-          <li class="price-feature"><span class="price-check">✓</span>Full workflow automation suite</li>
-          <li class="price-feature"><span class="price-check">✓</span>Proposals, invoices &amp; scheduling automated</li>
-          <li class="price-feature"><span class="price-check">✓</span>Smart routing &amp; instant responses</li>
-          <li class="price-feature"><span class="price-check">✓</span>Dashboard monitoring &amp; status</li>
-          <li class="price-feature"><span class="price-check">✓</span>Monthly ROI reports</li>
-          <li class="price-feature"><span class="price-check">✓</span>Priority support &amp; strategy calls</li>
-          <li class="price-feature"><span class="price-check">✓</span>Cinematic brand video production</li>
-          <li class="price-feature"><span class="price-check">✓</span>Court Vision for your full team</li>
-          <li class="price-feature"><span class="price-check">✓</span>Stakeholder portals (GC, Architect, Engineer, PM, Landlord)</li>
-          <li class="price-feature"><span class="price-check">✓</span>Every stage tracked from LOI to Certificate of Occupancy</li>
-          <li class="price-feature"><span class="price-check">✓</span>Sky coordinates every handoff and calls out what's late</li>
-          <li class="price-feature"><span class="price-check">✓</span>Custom automation build-outs</li>
-          <li class="price-feature"><span class="price-check">✓</span>Dedicated strategy &amp; onboarding</li>
+    <div class="cvp-card">
+      <div class="cvp-left">
+        <div class="cvp-tier">COURT VISION</div>
+        <div class="cvp-price">Priced per project</div>
+        <p class="cvp-pitch">One tenant build. One fee. Every stakeholder, every approval and every inspection tracked until the doors open.</p>
+        <ul class="cvp-terms">
+          <li><span class="price-check">✓</span>One fee, set at signing — change orders don't move it</li>
+          <li><span class="price-check">✓</span>Runs through your rent commencement date</li>
+          <li><span class="price-check">✓</span>Pay at signing, or monthly across the term</li>
         </ul>
         <button class="price-cta solid" onclick="openModal('cre-iq')" style="margin-bottom:10px;">REQUEST A QUOTE</button>
         <a href="#" onclick="openModal('booking');return false;" class="price-book">
@@ -3927,6 +3936,40 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         </a>
       </div>
 
+      <div class="cvp-right">
+        <div class="cvp-col">
+          <div class="cvp-col-head"><span class="cvp-col-num">01</span>SET UP THE JOB</div>
+          <ul class="price-features">
+            <li class="price-feature"><span class="price-check">✓</span>Project board built from your lease, schedule and plan set</li>
+            <li class="price-feature"><span class="price-check">✓</span>Rent commencement date and lease credit terms loaded as the clock</li>
+            <li class="price-feature"><span class="price-check">✓</span>Stakeholder portals for the GC, architect, engineer, PM and landlord</li>
+            <li class="price-feature"><span class="price-check">✓</span>Every stakeholder signed on by e-signature</li>
+            <li class="price-feature"><span class="price-check">✓</span>Plans, specs and submittals filed in the project vault</li>
+            <li class="price-feature"><span class="price-check">✓</span>Dedicated strategy and onboarding</li>
+          </ul>
+        </div>
+        <div class="cvp-col">
+          <div class="cvp-col-head"><span class="cvp-col-num">02</span>RUN THE BUILD</div>
+          <ul class="price-features">
+            <li class="price-feature"><span class="price-check">✓</span>Every stage tracked from LOI to Certificate of Occupancy</li>
+            <li class="price-feature"><span class="price-check">✓</span>Possession clock on every open item</li>
+            <li class="price-feature"><span class="price-check">✓</span>Daily permit watch — an issued permit moves the ball the same day</li>
+            <li class="price-feature"><span class="price-check">✓</span>Sky alerts whoever holds the ball and calls out what's late</li>
+            <li class="price-feature"><span class="price-check">✓</span>Submittal and RFI log with clear times</li>
+            <li class="price-feature"><span class="price-check">✓</span>Owner and landlord briefings</li>
+          </ul>
+        </div>
+        <div class="cvp-col">
+          <div class="cvp-col-head"><span class="cvp-col-num">03</span>COMPLETE IT</div>
+          <ul class="price-features">
+            <li class="price-feature"><span class="price-check">✓</span>Inspections tracked through to a pass</li>
+            <li class="price-feature"><span class="price-check">✓</span>Punch list through Certificate of Occupancy</li>
+            <li class="price-feature"><span class="price-check">✓</span>Field photos tagged to every phase of work</li>
+            <li class="price-feature"><span class="price-check">✓</span>Full audit trail — who was told what, and when</li>
+            <li class="price-feature"><span class="price-check">✓</span>Cinematic closeout film of the finished build and its players</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -5469,9 +5512,9 @@ function skyGetResponseFallback(input){
   if(/^(hi|hey|hello|yo|sup|howdy|hi there|hey there|good morning|good afternoon|good evening|what'?s up)[\s.,!]*$/i.test(q.trim()))
     return "Hey! Great to have you here. I'm Sky — Skyrise Pro's AI Executive Assistant. I can walk you through how our automation works, explain Court Vision, break down pricing, or get you started. What profession within the commercial real estate industry are you in?";
   if(skyHas(q,['price','cost','how much','pricing','plan','plans','fee','charge','subscription','affordable','cheap','expensive']))
-    return "Our plans are $749.89/month for Professional — the full AI agent and automation package — $849.89/month for Elite, our most popular tier with Sky, monthly ROI reports and priority support, and Court Vision, our full-platform flagship for whole project teams, which is priced per project and quoted to the job. Professional and Elite include a 30-day free trial — no risk at all. Want me to break down what's included in each?";
+    return "Court Vision is priced per project. It's one fee, set when you sign and scoped to the build — change orders don't move it, and it runs through your rent commencement date. Everything it takes to set up the job and see it through to Certificate of Occupancy is included. The pricing section below lists all of it. Want me to set up a quick call to quote your project?";
   if(skyHas(q,['trial','free','try','risk','test','no commitment','cancel','guarantee']))
-    return "Every plan comes with a full 30-day free trial. You get the entire system running for your business before you're charged a single dollar. Cancel anytime during the trial with zero hassle — we're confident you'll see the value.";
+    return "Court Vision is quoted per project, so the best way to try it is the live demo on this page — one build, start to finish, in about a minute. If you'd rather see it on your own job, I can set up a quick call.";
   if(skyHas(q,['construction','contractor','build','bid','procore','clr','estimat','subcontract','project manag']))
     return "Construction is one of our strongest verticals. We automate bid intake, proposal generation, DocuSign contract sending, Procore sync, crew notifications, and invoicing — all triggered the moment a bid comes in. Our CLR Construction client cut their admin time by over 25 hours a week. Want to see their full pipeline?";
   if(skyHas(q,['travel','cruise','vacation','hospitality','booking','itinerary','resort','hotel']))

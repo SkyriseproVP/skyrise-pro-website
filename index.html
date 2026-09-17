@@ -465,6 +465,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 #dashboard .kpi-num.blue{color:#5cc6ff;}
 #dashboard .kpi-label{color:rgba(232,244,251,.92);}
 #dashboard .kpi-compare{color:rgba(200,225,240,.55);}
+#dashboard .dash-kpi-src{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:.5px;color:rgba(200,225,240,.55);text-align:center;margin:-8px 0 22px;text-transform:none;}
 .feat-card{background:rgba(255,255,255,0.05);border:2px solid rgba(0,200,232,0.42);border-radius:22px;padding:24px 20px;box-shadow:0 0 16px rgba(0,200,232,0.14),0 4px 16px rgba(0,0,0,0.28);min-height:160px;display:flex;flex-direction:column;}
 .feat-icon-box{width:28px;height:3px;border-radius:2px;margin-bottom:14px;}
 .feat-icon-box.yellow{background:rgba(255,193,7,0.8);}
@@ -724,6 +725,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .roi-bottom-label{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--cyan);margin-bottom:8px;}
 .roi-bottom-text{font-family:'Orbitron',sans-serif;font-size:12px;color:rgba(255,255,255,.7);line-height:1.7;text-transform:none;letter-spacing:0;}
 .roi-bottom-text strong{color:#ff6b35;}
+.roi-assume{font-family:'Orbitron',sans-serif;font-size:10px;color:rgba(255,255,255,.42);line-height:1.6;margin-top:10px;text-transform:none;letter-spacing:0;}
 .roi-cta-wrap{text-align:center;margin-top:36px;}
 .roi-cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);border:none;border-radius:10px;padding:14px 32px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#000;cursor:pointer;transition:all .2s;}
 .roi-cta-btn:hover{background:var(--cyan2);}
@@ -3406,64 +3408,65 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 <section id="dashboard">
   <div class="dashboard-inner">
     <div class="dash-badge">REAL-TIME INTELLIGENCE</div>
-    <h2 class="dash-title">YOUR STRATEGIC <span>DASHBOARD</span></h2>
-    <p class="dash-sub">We build automated AI agents that communicate directly with your clients through SMS, email, or your CRM — fully hands-free. Here's the impact.</p>
+    <h2 class="dash-title">YOUR TI PROJECT <span>DASHBOARD</span></h2>
+    <p class="dash-sub">Built for one kind of job: the Tenant Improvement build-out. Every approval, submittal and inspection has an owner and a clock — so the days that turn into free-rent credits get caught while they are still just days.</p>
 
     <div class="kpi-grid">
       <div class="kpi-card">
-        <div class="kpi-num cyan">78+</div>
-        <div class="kpi-label">LEADS GENERATED / MONTH</div>
-        <div class="kpi-compare">vs. 14 before automation</div>
+        <div class="kpi-num cyan">4</div>
+        <div class="kpi-label">DROPPED BALLS CAUGHT</div>
+        <div class="kpi-compare">before they hit the schedule</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-num orange">22h</div>
-        <div class="kpi-label">HOURS SAVED / WEEK</div>
-        <div class="kpi-compare">on manual tasks eliminated</div>
+        <div class="kpi-num orange">34</div>
+        <div class="kpi-label">HELD DAYS SURFACED</div>
+        <div class="kpi-compare">plumbing 26 · electrical 8</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-num cyan">94%</div>
-        <div class="kpi-label">CLIENT RESPONSE TIME</div>
-        <div class="kpi-compare">faster with AI agents</div>
+        <div class="kpi-num cyan">5-day</div>
+        <div class="kpi-label">SUBMITTAL CLEAR TIME</div>
+        <div class="kpi-compare">10 submittals cleared</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-num blue">&lt;30min</div>
-        <div class="kpi-label">PROPOSAL TURNAROUND</div>
-        <div class="kpi-compare">down from 6+ hours</div>
+        <div class="kpi-num blue">$38.6k</div>
+        <div class="kpi-label">FREE RENT PER 15 DAYS LATE</div>
+        <div class="kpi-compare">what one slipped block credits</div>
       </div>
     </div>
+    <p class="dash-kpi-src">Figures above are from the live Court Vision build at the top of this page. Charts below model a typical TI build-out.</p>
     <div class="charts-grid">
       <div class="chart-card">
-        <div class="chart-title-txt">OWNER ADMIN HOURS/WEEK — BEFORE VS. AFTER SKY</div>
+        <div class="chart-title-txt">PM HOURS/WEEK CHASING STATUS — BY BUILD PHASE</div>
         <div style="position:relative;height:160px;"><canvas id="chart-leads"></canvas></div>
         <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(255,107,53,0.6)"></div>WITHOUT SKY (HRS)</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>WITH SKYRISE PRO (HRS)</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(255,107,53,0.6)"></div>CHASING BY HAND (HRS)</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>WITH COURT VISION (HRS)</div>
         </div>
       </div>
       <div class="chart-card">
-        <div class="chart-title-txt">MANUAL TASKS ELIMINATED BY SKY (HRS/WEEK)</div>
+        <div class="chart-title-txt">WHERE THE CHASING GOES ON A TI BUILD (HRS/WEEK)</div>
         <div style="position:relative;height:160px;"><canvas id="chart-time"></canvas></div>
         <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(255,107,53,0.6)"></div>MANUAL (HRS)</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>SKY HANDLES (HRS)</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:rgba(255,107,53,0.6)"></div>YOUR TEAM, BY HAND (HRS)</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>SKY TAKES OVER (HRS)</div>
         </div>
       </div>
       <div class="chart-card">
-        <div class="chart-title-txt">HOW SKY DISTRIBUTES YOUR WORKLOAD</div>
+        <div class="chart-title-txt">WHERE TI SCHEDULES SLIP</div>
         <div style="position:relative;height:160px;"><canvas id="chart-donut"></canvas></div>
         <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8;border-radius:50%"></div>AI-HANDLED DECISIONS 44%</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#ff6b35;border-radius:50%"></div>STAKEHOLDER UPDATES 26%</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#3182ce;border-radius:50%"></div>OWNER ESCALATIONS 18%</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#805ad5;border-radius:50%"></div>DOCUMENT PROCESSING 12%</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8;border-radius:50%"></div>PERMITS &amp; PLAN REVIEW 40%</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#ff6b35;border-radius:50%"></div>SUBMITTALS &amp; RFIS 25%</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#3182ce;border-radius:50%"></div>LANDLORD / OWNER APPROVALS 20%</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#805ad5;border-radius:50%"></div>INSPECTIONS 15%</div>
         </div>
       </div>
       <div class="chart-card">
-        <div class="chart-title-txt">DECISIONS HANDLED: MANUAL VS. AI-ASSISTED</div>
+        <div class="chart-title-txt">HELD DAYS PILING UP — UNTRACKED VS. COURT VISION</div>
         <div style="position:relative;height:160px;"><canvas id="chart-line"></canvas></div>
         <div class="chart-legend">
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#ff6b35"></div>OWNER HANDLES MANUALLY</div>
-          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>SKY HANDLES AUTONOMOUSLY</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#ff6b35"></div>UNTRACKED (CUMULATIVE DAYS)</div>
+          <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00c8e8"></div>COURT VISION (CUMULATIVE DAYS)</div>
         </div>
       </div>
     </div>
@@ -3474,8 +3477,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
             <path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
           </svg>
         </div>
-        <div class="feat-title">NO DEEP AUTOMATION OVERHEAD</div>
-        <div class="feat-desc">Leverage built-in dashboards for real-time insights without needing a technical team. SkyRise Pro handles the complexity.</div>
+        <div class="feat-title">BUILT FOR TI, NOT GENERIC PM</div>
+        <div class="feat-desc">LOI to Certificate of Occupancy is already mapped — twelve stages and every stakeholder in place. No setup project before the project.</div>
       </div>
       <div class="feat-card">
         <div class="feat-icon-wrap blue">
@@ -3483,8 +3486,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
             <path d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/>
           </svg>
         </div>
-        <div class="feat-title">SEAMLESS PROJECT COMMUNICATION</div>
-        <div class="feat-desc">Better communications throughout the entire project workflow — with subcontractors, coworkers, and clients — all in one place.</div>
+        <div class="feat-title">ONE THREAD FOR EVERY STAKEHOLDER</div>
+        <div class="feat-desc">GC, architect, engineer, landlord and tenant read the same record. Nobody asks for a status update that is already posted.</div>
       </div>
       <div class="feat-card">
         <div class="feat-icon-wrap purple">
@@ -3492,8 +3495,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
             <path d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25zm.75-12h9v9h-9v-9z"/>
           </svg>
         </div>
-        <div class="feat-title">CUSTOMIZABLE AI AGENT</div>
-        <div class="feat-desc">Customize your own Sky AI agent that tracks project progress, sends alerts, and keeps every stakeholder informed in real time.</div>
+        <div class="feat-title">SKY WATCHES THE CLOCK</div>
+        <div class="feat-desc">Sky knows whose court the ball is in and how long it has sat there — and pings them before a held day becomes a credited one.</div>
       </div>
     </div>
   </div>
@@ -3505,29 +3508,29 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   <div style="height:2px;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(0,200,232,0.35) 50%,var(--cyan) 100%);border-radius:2px;"></div>
 </div>
 
-<!-- ── CLR PIPELINE ───────────────────────────────────────────── -->
+<!-- ── TI AUTOMATION WORKFLOW ─────────────────────────────────── -->
 <section class="pipeline-section orange-section" style="background:#f5fbff;">
   <div class="pipeline-inner">
-    <div class="cs-badge">CLIENT CASE STUDY</div>
+    <div class="cs-badge">TENANT IMPROVEMENT</div>
     <h2 class="cs-title">AUTOMATION WORKFLOW</h2>
-    <p class="cs-sub">Bid intake through delivery and invoicing, connected automation outputs.</p>
+    <p class="cs-sub">From executed lease to Certificate of Occupancy — every document, approval and inspection routed to whoever holds the ball.</p>
     <div class="pipeline-filter-pills">
-      <button class="filter-pill active">LEAD SOURCES</button>
-      <button class="filter-pill">CENTRAL HUB</button>
-      <button class="filter-pill">AUTOMATION TOOLS</button>
+      <button class="filter-pill active">WHAT COMES IN</button>
+      <button class="filter-pill">PROJECT HUB</button>
+      <button class="filter-pill">COURT VISION ENGINE</button>
       <button class="filter-pill">OUTPUTS</button>
     </div>
     <div class="pipeline-diagram-wrap">
     <div class="pipeline-diagram-box orange-theme">
       <div class="pipe-grid clr-grid">
         <div class="pipe-col-wrap">
-          <div class="pipe-col-label">LEAD SOURCES</div>
+          <div class="pipe-col-label">WHAT COMES IN</div>
           <div class="pipe-nodes pipe-nodes-left">
-            <div class="pipe-node" data-tip="Incoming bid requests are captured the moment they arrive — automatically logged, categorized, and routed to your pipeline before you even see them."><div class="pipe-node-icon">📋</div><div class="pipe-node-name">BID REQUESTS</div></div>
-            <div class="pipe-node" data-tip="Construction leads from Google Ads flow directly into your CRM with zero manual entry — every click tracked, tagged, and ready for follow-up."><div class="pipe-node-icon"><svg viewBox="0 0 48 48" width="26" height="26"><path fill="#4285F4" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.7 7.1 29.1 5 24 5 13 5 4 14 4 25s9 20 20 20c11 0 20-9 20-20 0-1.5-.2-3-.4-4.5z"/><path fill="#34A853" d="M6.3 15.7l6.6 4.8C14.6 17 19 14 24 14c2.8 0 5.3 1 7.2 2.7l5.7-5.7C33.7 7.1 29.1 5 24 5c-7.5 0-14 4.3-17.7 10.7z"/><path fill="#FBBC05" d="M24 45c5.1 0 9.7-1.9 13.2-5.1l-6.1-5.2C29.3 36.3 26.8 37 24 37c-5.3 0-9.7-2.6-11.3-7l-6.5 5C9.6 41.1 16.3 45 24 45z"/><path fill="#EA4335" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.3-4.3 5.7l6.1 5.2C36.9 40.3 44 35 44 25c0-1.5-.2-3-.4-4.5z"/></svg></div><div class="pipe-node-name">GOOGLE ADS</div></div>
-            <div class="pipe-node" data-tip="LinkedIn inquiries and connections are captured automatically — contact info pulled, lead scored, and added to your bid pipeline in real time."><div class="pipe-node-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div><div class="pipe-node-name">LINKEDIN</div></div>
-            <div class="pipe-node" data-tip="Partner referrals are tracked with full source attribution — you always know where the lead came from and which partners are driving real business."><div class="pipe-node-icon">🤝</div><div class="pipe-node-name">PARTNER REFS</div></div>
-            <div class="pipe-node" data-tip="Website contact forms trigger instant lead capture and automated follow-up — a response goes out in under 60 seconds, every time, with no staff needed."><div class="pipe-node-icon">🌐</div><div class="pipe-node-name">WEBSITE FORM</div></div>
+            <div class="pipe-node" data-tip="The executed LOI and lease load first — the rent commencement date and the free-rent credit terms become the clock every other item is measured against."><div class="pipe-node-icon">📋</div><div class="pipe-node-name">LEASE &amp; LOI</div></div>
+            <div class="pipe-node" data-tip="Plan sets and specs are filed by discipline and revision, so the architect, engineer and GC are always working from the same sheet."><div class="pipe-node-icon">📐</div><div class="pipe-node-name">PLANS &amp; SPECS</div></div>
+            <div class="pipe-node" data-tip="Every submittal and RFI is logged the moment it is sent — who it went to, when, and how many days it has been waiting on an answer."><div class="pipe-node-icon">📨</div><div class="pipe-node-name">SUBMITTALS &amp; RFIS</div></div>
+            <div class="pipe-node" data-tip="The permit portal is checked every day. A denial, a comment or an issued permit lands on the board the same day it happens."><div class="pipe-node-icon">🏛️</div><div class="pipe-node-name">PERMIT PORTAL</div></div>
+            <div class="pipe-node" data-tip="The field team posts photos from site, each one tagged to its build phase — progress you can see, not just read about."><div class="pipe-node-icon">📷</div><div class="pipe-node-name">FIELD PHOTOS</div></div>
           </div>
         </div>
         <div class="pipe-arrow"><span class="pipe-arrow-bridge"></span></div>
@@ -3542,20 +3545,20 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         </div>
         <div class="pipe-arrow"><span class="pipe-arrow-bridge"></span></div>
         <div class="pipe-col-wrap">
-          <div class="pipe-col-label">AUTOMATION TOOLS</div>
+          <div class="pipe-col-label">COURT VISION ENGINE</div>
           <div class="pipe-nodes pipe-nodes-tools">
-            <div class="pipe-node" data-tip="Make connects every tool in CLR's automation stack — the moment a bid arrives, Make triggers multi-step scenarios across all connected apps with pinpoint precision and zero manual intervention."><div class="pipe-node-icon make-icon">M</div><div class="pipe-node-name">MAKE</div></div>
-            <div class="pipe-node" data-tip="HubSpot tracks every bid, contact, and deal stage automatically — your sales pipeline updates in real time so you always know exactly where each job stands."><div class="pipe-node-icon">📊</div><div class="pipe-node-name">HUBSPOT</div></div>
-            <div class="pipe-node" data-tip="OpenAI drafts custom bid proposals and client communications in seconds — trained on your tone and scope, so every message sounds like it came from your best estimator."><div class="pipe-node-icon">🧠</div><div class="pipe-node-name">OPENAI</div></div>
-            <div class="pipe-node" data-tip="Procore syncs project data, schedules, and subcontractor updates automatically — your field team and office stay aligned without a single phone call or status meeting."><div class="pipe-node-icon">🏗️</div><div class="pipe-node-name">PROCORE</div></div>
-            <div class="pipe-node" data-tip="DocuSign sends contracts and change orders for signature the moment they're ready — fully automated, fully tracked, and legally binding without any manual follow-up."><div class="pipe-node-icon">✍️</div><div class="pipe-node-name">DOCUSIGN</div></div>
+            <div class="pipe-node" data-tip="Every open item has an owner and a running count of days held. The moment the ball moves, the clock moves with it."><div class="pipe-node-icon">⏱️</div><div class="pipe-node-name">POSSESSION CLOCK</div></div>
+            <div class="pipe-node" data-tip="Permit status is watched daily. When the permit issues, the ball passes to the contractor that same day so inspections can be called in."><div class="pipe-node-icon">🔎</div><div class="pipe-node-name">PERMIT WATCH</div></div>
+            <div class="pipe-node" data-tip="Stakeholders are alerted when an item lands in their court and nudged before it sits — only the people who need to act, never the whole list."><div class="pipe-node-icon">🔔</div><div class="pipe-node-name">STAKEHOLDER ALERTS</div></div>
+            <div class="pipe-node" data-tip="Submittals are tracked from sent to cleared, with the clear time recorded, so a slow review shows up as a number instead of a feeling."><div class="pipe-node-icon">🗂️</div><div class="pipe-node-name">SUBMITTAL LOG</div></div>
+            <div class="pipe-node" data-tip="Stakeholders sign on to the project inside the platform, and every approval is captured with a name and a timestamp."><div class="pipe-node-icon">✍️</div><div class="pipe-node-name">E-SIGNATURE</div></div>
           </div>
         </div>
         <div class="pipe-arrow"><span class="pipe-arrow-bridge"></span></div>
         <!-- ── SKY BOT PERSONAL AI ASSISTANT ── -->
         <div class="sky-bot-hub-col">
           <div class="pipe-col-label">SKY BOT</div>
-          <div class="pipe-node sky-bot-hub" data-tip="Sky is CLR's personal AI assistant — always running in the background. Sky drafts proposals, builds project timelines, sends client confirmations, generates invoices, and flags issues before they become problems. Your pipeline never stops moving.">
+          <div class="pipe-node sky-bot-hub" data-tip="Sky runs in the background on every TI build — reading what comes in, knowing whose court each item is in, and pinging the right stakeholder before a held day turns into a credited one. The build never stops moving.">
             <div class="sky-orb" style="--sky-orb-size:54px;" role="img" aria-label="Sky"><div class="so-body"><div class="so-lobe so-l1"></div><div class="so-lobe so-l2"></div><div class="so-core"></div></div><div class="so-ring"></div></div>
             <div class="sky-bot-hub-name">PERSONAL AI</div>
             <div class="sky-bot-hub-sub">ASSISTANT</div>
@@ -3565,11 +3568,11 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         <div class="pipe-col-wrap">
           <div class="pipe-col-label">OUTPUTS</div>
           <div class="pipe-nodes pipe-nodes-right">
-            <div class="pipe-node" data-tip="A polished, branded proposal PDF is generated automatically from the bid details — formatted, priced, and emailed to the client within minutes of the request coming in."><div class="pipe-node-icon">📄</div><div class="pipe-node-name">PROPOSAL PDF</div></div>
-            <div class="pipe-node" data-tip="The full project timeline is built and shared automatically once a bid is accepted — milestones, deadlines, and crew schedules populated without a single manual calendar entry."><div class="pipe-node-icon">📅</div><div class="pipe-node-name">PROJECT TIMELINE</div></div>
-            <div class="pipe-node" data-tip="Clients receive automated confirmation emails and texts at every key milestone — keeping them informed and confident without your team making a single follow-up call."><div class="pipe-node-icon">✅</div><div class="pipe-node-name">CLIENT CONFIRM</div></div>
-            <div class="pipe-node" data-tip="Invoices are generated and sent automatically the moment a job phase is marked complete — no more delayed billing, missed payments, or manual paperwork at project close."><div class="pipe-node-icon">💰</div><div class="pipe-node-name">AUTO INVOICE</div></div>
-            <div class="pipe-node" data-tip="Safety and compliance reports are auto-generated for every job site — filled with the right data, timestamped, and filed automatically so you stay audit-ready at all times."><div class="pipe-node-icon">🦺</div><div class="pipe-node-name">SAFETY REPORTS</div></div>
+            <div class="pipe-node" data-tip="A live countdown to rent commencement, with the free-rent exposure of every slipped 15-day block spelled out in dollars."><div class="pipe-node-icon">📅</div><div class="pipe-node-name">RCD COUNTDOWN</div></div>
+            <div class="pipe-node" data-tip="Owners and landlords get a plain-language briefing — where the build stands, what is in whose court, and what it takes to move it."><div class="pipe-node-icon">📊</div><div class="pipe-node-name">OWNER BRIEFING</div></div>
+            <div class="pipe-node" data-tip="Once the permit issues, inspections are lined up and tracked through to a pass, so the calendar never waits on a phone call."><div class="pipe-node-icon">🦺</div><div class="pipe-node-name">INSPECTIONS</div></div>
+            <div class="pipe-node" data-tip="Who was told what, and when — every exchange is on the record, ready when someone asks who was supposed to handle it."><div class="pipe-node-icon">🧾</div><div class="pipe-node-name">AUDIT TRAIL</div></div>
+            <div class="pipe-node" data-tip="When the job closes, the tagged field photos become the closeout film — a record of the build that keeps working after the punch list."><div class="pipe-node-icon">🎬</div><div class="pipe-node-name">CLOSEOUT FILM</div></div>
           </div>
         </div>
       </div>
@@ -3599,33 +3602,33 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     </style>
     <div class="afl-flow">
       <div class="afl-inner" id="afl-inner">
-        <div class="afl-seclabel">Lead Sources</div>
+        <div class="afl-seclabel">What Comes In</div>
         <div class="afl-row" id="afl-sources">
-          <div class="afl-node" id="afl-0-0"><div class="afl-circle">BID</div><div class="afl-label">Bid Requests</div></div>
-          <div class="afl-node" id="afl-0-1"><div class="afl-circle">ADS</div><div class="afl-label">Google Ads</div></div>
-          <div class="afl-node" id="afl-0-2"><div class="afl-circle">IN</div><div class="afl-label">LinkedIn</div></div>
-          <div class="afl-node" id="afl-0-3"><div class="afl-circle">REF</div><div class="afl-label">Partner Refs</div></div>
-          <div class="afl-node" id="afl-0-4"><div class="afl-circle">WEB</div><div class="afl-label">Website Form</div></div>
+          <div class="afl-node" id="afl-0-0"><div class="afl-circle">LSE</div><div class="afl-label">Lease &amp; LOI</div></div>
+          <div class="afl-node" id="afl-0-1"><div class="afl-circle">PLN</div><div class="afl-label">Plans</div></div>
+          <div class="afl-node" id="afl-0-2"><div class="afl-circle">RFI</div><div class="afl-label">Submittals</div></div>
+          <div class="afl-node" id="afl-0-3"><div class="afl-circle">PMT</div><div class="afl-label">Permit Portal</div></div>
+          <div class="afl-node" id="afl-0-4"><div class="afl-circle">PIC</div><div class="afl-label">Field Photos</div></div>
         </div>
         <div class="afl-row">
           <div class="afl-node" id="afl-hub"><div class="afl-circle afl-hub-circle"><img src="hardhat-nobg.png" alt="Project Hub" style="width:80%;height:80%;object-fit:contain;"></div><div class="afl-label">Project Hub</div></div>
         </div>
         <div class="afl-cols">
           <div class="afl-col">
-            <div class="afl-collabel">Automation Tools</div>
-            <div class="afl-node" id="afl-2-0"><div class="afl-circle">MK</div><div class="afl-label">Make</div></div>
-            <div class="afl-node" id="afl-2-1"><div class="afl-circle">HS</div><div class="afl-label">HubSpot</div></div>
-            <div class="afl-node" id="afl-2-2"><div class="afl-circle">AI</div><div class="afl-label">OpenAI</div></div>
-            <div class="afl-node" id="afl-2-3"><div class="afl-circle">PC</div><div class="afl-label">Procore</div></div>
-            <div class="afl-node" id="afl-2-4"><div class="afl-circle">DS</div><div class="afl-label">DocuSign</div></div>
+            <div class="afl-collabel">Court Vision Engine</div>
+            <div class="afl-node" id="afl-2-0"><div class="afl-circle">CLK</div><div class="afl-label">Possession Clock</div></div>
+            <div class="afl-node" id="afl-2-1"><div class="afl-circle">PW</div><div class="afl-label">Permit Watch</div></div>
+            <div class="afl-node" id="afl-2-2"><div class="afl-circle">!</div><div class="afl-label">Alerts</div></div>
+            <div class="afl-node" id="afl-2-3"><div class="afl-circle">SUB</div><div class="afl-label">Submittal Log</div></div>
+            <div class="afl-node" id="afl-2-4"><div class="afl-circle">SIG</div><div class="afl-label">E-Signature</div></div>
           </div>
           <div class="afl-col">
             <div class="afl-collabel">Outputs</div>
-            <div class="afl-node" id="afl-3-0"><div class="afl-circle">PDF</div><div class="afl-label">Proposal PDF</div></div>
-            <div class="afl-node" id="afl-3-1"><div class="afl-circle">TL</div><div class="afl-label">Project Timeline</div></div>
-            <div class="afl-node" id="afl-3-2"><div class="afl-circle">&#10003;</div><div class="afl-label">Client Confirm</div></div>
-            <div class="afl-node" id="afl-3-3"><div class="afl-circle">INV</div><div class="afl-label">Auto Invoice</div></div>
-            <div class="afl-node" id="afl-3-4"><div class="afl-circle">RPT</div><div class="afl-label">Safety Reports</div></div>
+            <div class="afl-node" id="afl-3-0"><div class="afl-circle">RCD</div><div class="afl-label">RCD Countdown</div></div>
+            <div class="afl-node" id="afl-3-1"><div class="afl-circle">BRF</div><div class="afl-label">Owner Briefing</div></div>
+            <div class="afl-node" id="afl-3-2"><div class="afl-circle">&#10003;</div><div class="afl-label">Inspections</div></div>
+            <div class="afl-node" id="afl-3-3"><div class="afl-circle">LOG</div><div class="afl-label">Audit Trail</div></div>
+            <div class="afl-node" id="afl-3-4"><div class="afl-circle">FLM</div><div class="afl-label">Closeout Film</div></div>
           </div>
         </div>
         <svg id="afl-svg" class="afl-svg" width="0" height="0"></svg>
@@ -3683,68 +3686,78 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 <!-- ── ROI CALCULATOR ─────────────────────────────────────────── -->
 <section id="roi">
   <div class="roi-inner">
-    <div class="roi-badge-pill"><span class="roi-badge-dollar">$</span> ROI CALCULATOR</div>
-    <h2 class="roi-title">HOW MUCH IS MANUAL WORK<br><span>TAKING FROM YOUR BUSINESS?</span></h2>
-    <p class="roi-sub">Adjust the inputs below to see your real-time ROI with SkyRise Pro.</p>
+    <div class="roi-badge-pill"><span class="roi-badge-dollar">$</span> TI ROI CALCULATOR</div>
+    <h2 class="roi-title">WHAT IS A SLIPPED TI BUILD<br><span>COSTING YOUR PROJECT?</span></h2>
+    <p class="roi-sub">Set it to your own tenant build-outs. Two costs come out: the hours your team spends chasing status, and the free rent a late delivery credits.</p>
     <div class="roi-grid">
       <div class="roi-left">
         <div>
-          <div class="roi-team-label">HOW MANY TEAM MEMBERS DO YOU HAVE?</div>
+          <div class="roi-team-label">TI PROJECTS RUNNING AT ONCE</div>
           <div class="roi-team-grid">
-            <button class="roi-team-btn active" onclick="setTeam(this,1)">1 – 5 MEMBERS</button>
-            <button class="roi-team-btn" onclick="setTeam(this,2)">6 – 15 MEMBERS</button>
-            <button class="roi-team-btn" onclick="setTeam(this,3)">16 – 50 MEMBERS</button>
-            <button class="roi-team-btn" onclick="setTeam(this,4)">50+ MEMBERS</button>
+            <button class="roi-team-btn active" onclick="setTeam(this,1)">1 PROJECT</button>
+            <button class="roi-team-btn" onclick="setTeam(this,2)">2 – 3 PROJECTS</button>
+            <button class="roi-team-btn" onclick="setTeam(this,3)">4 – 6 PROJECTS</button>
+            <button class="roi-team-btn" onclick="setTeam(this,4)">7+ PROJECTS</button>
           </div>
         </div>
         <div class="roi-slider-group">
-          <div class="roi-slider-label">HOURS/WEEK ON MANUAL TASKS <span class="roi-slider-val" id="hours-lbl">10 HRS</span></div>
-
-          <input type="range" class="roi-range" id="roi-hours" min="1" max="40" value="10">
-          <div class="roi-range-minmax"><span>1 HRS</span><span>40 HRS</span></div>
+          <div class="roi-slider-label">HOURS/WEEK CHASING STATUS, PER PROJECT <span class="roi-slider-val" id="hours-lbl">8 HRS</span></div>
+          <input type="range" class="roi-range" id="roi-hours" min="1" max="30" value="8">
+          <div class="roi-range-minmax"><span>1 HRS</span><span>30 HRS</span></div>
         </div>
         <div class="roi-slider-group">
-          <div class="roi-slider-label">YOUR AVERAGE HOURLY RATE <span class="roi-slider-val" id="rate-lbl">$75/HR</span></div>
+          <div class="roi-slider-label">TEAM HOURLY RATE <span class="roi-slider-val" id="rate-lbl">$75/HR</span></div>
           <input type="range" class="roi-range" id="roi-rate" min="25" max="250" value="75">
           <div class="roi-range-minmax"><span>$25/HR</span><span>$250/HR</span></div>
+        </div>
+        <div class="roi-slider-group">
+          <div class="roi-slider-label">FREE RENT CREDITED PER 15 DAYS LATE <span class="roi-slider-val" id="credit-lbl">$15K</span></div>
+          <input type="range" class="roi-range" id="roi-credit" min="2500" max="60000" step="500" value="15000">
+          <div class="roi-range-minmax"><span>$2.5K</span><span>$60K</span></div>
+        </div>
+        <div class="roi-slider-group">
+          <div class="roi-slider-label">DAYS A BUILD SLIPS PAST COMMENCEMENT <span class="roi-slider-val" id="slip-lbl">30 DAYS</span></div>
+          <input type="range" class="roi-range" id="roi-slip" min="0" max="90" step="15" value="30">
+          <div class="roi-range-minmax"><span>0 DAYS</span><span>90 DAYS</span></div>
         </div>
         <div class="roi-results-card">
           <div class="roi-results-title">YOUR REAL-TIME RESULTS</div>
           <div class="roi-result-row">
-            <div class="roi-result-label-txt">You are losing to manual tasks per week:</div>
-            <div class="roi-result-val" id="roi-weekly">$750<small>/week</small></div>
+            <div class="roi-result-label-txt">Status chasing costs you per month:</div>
+            <div class="roi-result-val" id="roi-weekly">$2.6k<small>/month</small></div>
           </div>
           <div class="roi-result-row">
-            <div class="roi-result-label-txt">SkyRise Pro saves approximately:</div>
-            <div class="roi-result-val" id="roi-saved">7 HRS<small>/week</small></div>
+            <div class="roi-result-label-txt">Court Vision gives your team back:</div>
+            <div class="roi-result-val" id="roi-saved">6 HRS<small>/week</small></div>
           </div>
           <div class="roi-result-row">
-            <div class="roi-result-label-txt">Your ROI in Month 1:</div>
-            <div class="roi-result-val orange" id="roi-month1">-16%</div>
+            <div class="roi-result-label-txt">Free rent that slip credits, per project:</div>
+            <div class="roi-result-val orange" id="roi-month1">$30.0k</div>
           </div>
         </div>
       </div>
       <div class="roi-right">
         <div class="roi-chart-card">
-          <div class="roi-chart-title-txt">MONTHLY IMPACT BREAKDOWN</div>
-          <div class="roi-chart-subtitle">See the financial gap between what you're losing vs. what you save.</div>
+          <div class="roi-chart-title-txt">WHAT'S ON THE LINE</div>
+          <div class="roi-chart-subtitle">What chasing costs each month, what the hours Court Vision gives back are worth, and the free rent one slip credits across your active builds.</div>
           <div id="roi-chart-wrap" style="flex:1;min-height:260px;overflow:hidden;width:100%;position:relative;box-sizing:border-box;">
             <canvas id="roi-chart" style="position:absolute;top:0;left:0;width:100%;height:100%;"></canvas>
           </div>
           <div class="roi-legend">
-            <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#e53e3e;"></div>Money lost per month to manual tasks</div>
-            <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#00c8e8;"></div>Estimated savings with SkyRise Pro</div>
-            <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#3182ce;"></div>Net gain after SkyRise Pro investment</div>
+            <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#e53e3e;"></div>Monthly cost of chasing status by hand</div>
+            <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#00c8e8;"></div>Monthly value of the hours Court Vision gives back</div>
+            <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#ff6b35;"></div>Free rent credited by that slip, all active builds</div>
           </div>
         </div>
       </div>
     </div>
     <div class="roi-bottom-line" style="margin-top:16px;">
       <div class="roi-bottom-label">BOTTOM LINE</div>
-      <div class="roi-bottom-text" id="roi-bottom">At your current inputs, your team is losing <strong>$3.2k per month</strong> to tasks SkyRise Pro can automate — that's <strong>$39.0k per year</strong> left on the table.</div>
+      <div class="roi-bottom-text" id="roi-bottom"></div>
+      <div class="roi-assume">Assumes Sky takes over about 70% of status chasing. Free rent is credited in whole 15-day blocks, so only full blocks are counted. Use the credit written in your own lease.</div>
     </div>
     <div class="roi-cta-wrap">
-      <button class="roi-cta-btn" onclick="openModal('booking')">START SAVING TIME — BOOK A FREE CALL →</button>
+      <button class="roi-cta-btn" onclick="openModal('booking')">PROTECT YOUR COMMENCEMENT DATE — BOOK A CALL →</button>
     </div>
   </div>
 </section>
@@ -4483,12 +4496,11 @@ function closeLightboxOutside(e){
 }
 document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeLightbox(); });
 
-// ROI Calculator
+// ROI Calculator — Tenant Improvement builds
 let roiChart;
-// teamMult: average headcount multiplier per tier
-// Tier 1 = 1–5 members (avg 3), Tier 2 = 6–15 (avg 10), Tier 3 = 16–50 (avg 25), Tier 4 = 50+ (avg 60)
-const TEAM_MULT = [null, 3, 10, 25, 60];
-let teamMult = TEAM_MULT[1]; // default: 1–5 members
+// Active TI projects per tier: 1, 2–3 (avg 2.5), 4–6 (avg 5), 7+ (avg 8)
+const TEAM_MULT = [null, 1, 2.5, 5, 8];
+let teamMult = TEAM_MULT[1];
 
 function setTeam(btn, n){
   btn.closest('.roi-team-grid').querySelectorAll('.roi-team-btn').forEach(b=>b.classList.remove('active'));
@@ -4500,67 +4512,75 @@ function setTeam(btn, n){
 function fmt(n){
   if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M';
   if(n>=1000)    return '$'+(n/1000).toFixed(1)+'k';
-  return '$'+n;
+  return '$'+Math.round(n);
 }
 
 function calcROI(){
-  const h = parseInt(document.getElementById('roi-hours').value);
-  const r = parseInt(document.getElementById('roi-rate').value);
-  document.getElementById('hours-lbl').textContent = h + ' HRS';
-  document.getElementById('rate-lbl').textContent  = '$' + r + '/HR';
+  const h      = parseInt(document.getElementById('roi-hours').value);
+  const r      = parseInt(document.getElementById('roi-rate').value);
+  const credit = parseInt(document.getElementById('roi-credit').value);
+  const slip   = parseInt(document.getElementById('roi-slip').value);
+  document.getElementById('hours-lbl').textContent  = h + ' HRS';
+  document.getElementById('rate-lbl').textContent   = '$' + r + '/HR';
+  document.getElementById('credit-lbl').textContent = '$' + (credit % 1000 ? (credit/1000).toFixed(1) : credit/1000) + 'K';
+  document.getElementById('slip-lbl').textContent   = slip + ' DAYS';
 
-  // Cost of manual tasks across the whole team
-  const weeklyLost  = h * r * teamMult;
-  const monthlyLost = Math.round(weeklyLost * 4.33);
-  const annualLost  = monthlyLost * 12;
+  // Hours spent chasing status across every active build
+  const monthlyChase = Math.round(h * r * teamMult * 4.33);
+  const annualChase  = monthlyChase * 12;
 
-  // SkyRise Pro automates ~70% of manual hours
-  const savedHrs      = Math.round(h * 0.7);
-  const savedMonthly  = Math.round(savedHrs * r * teamMult * 4.33);
-  const planCost      = 749.89; // Professional plan
-  const netGain       = Math.max(0, savedMonthly - planCost);
-  const roi1          = Math.round((savedMonthly - planCost) / planCost * 100);
+  // Sky takes over ~70% of status chasing
+  const savedHrs     = Math.round(h * 0.7 * teamMult);
+  const savedMonthly = Math.round(h * 0.7 * teamMult * r * 4.33);
 
-  document.getElementById('roi-weekly').innerHTML   = fmt(weeklyLost) + '<small>/week</small>';
+  // Free rent is credited in whole 15-day blocks
+  const blocks      = Math.floor(slip / 15);
+  const rentPerProj = blocks * credit;
+  const rentAll     = Math.round(rentPerProj * teamMult);
+
+  document.getElementById('roi-weekly').innerHTML   = fmt(monthlyChase) + '<small>/month</small>';
   document.getElementById('roi-saved').innerHTML    = savedHrs + ' HRS<small>/week</small>';
-  document.getElementById('roi-month1').textContent = (roi1 >= 0 ? '+' : '') + roi1 + '%';
-  document.getElementById('roi-month1').style.color = roi1 >= 0 ? 'var(--cyan)' : '#ff6b35';
+  document.getElementById('roi-month1').textContent = fmt(rentPerProj);
+  document.getElementById('roi-month1').style.color = rentPerProj > 0 ? '#ff6b35' : 'var(--cyan)';
 
+  const single = teamMult === 1;
   document.getElementById('roi-bottom').innerHTML =
-    'At your current inputs, your team is losing <strong>' + fmt(monthlyLost) +
-    ' per month</strong> to tasks SkyRise Pro can automate — that\'s <strong>' +
-    fmt(annualLost) + ' per year</strong> left on the table.';
+    'Across ' + (single ? 'your TI build' : 'your active TI builds') + ', chasing status costs about <strong>' +
+    fmt(monthlyChase) + ' a month</strong> — <strong>' + fmt(annualChase) + ' a year</strong>. ' +
+    (blocks > 0
+      ? 'A ' + slip + '-day slip credits <strong>' + fmt(rentPerProj) + ' of free rent</strong> on ' +
+        (single ? 'that build' : 'each build (' + fmt(rentAll) + ' across all of them)') +
+        ' — and one approval left sitting is all it takes to start it.'
+      : 'Under 15 days late, no block of free rent is credited yet — that margin is exactly what the possession clock protects.');
 
   if(roiChart){
-    roiChart.data.datasets[0].data = [monthlyLost, savedMonthly, netGain];
+    roiChart.data.datasets[0].data = [monthlyChase, savedMonthly, rentAll];
     roiChart.update();
   }
 }
 
 // Charts
 window.addEventListener('load',()=>{
-  // Chart 1 — Owner admin hours/week before vs after Sky
-  new Chart(document.getElementById('chart-leads'),{type:'bar',data:{labels:['Month 1','Month 2','Month 3','Month 4','Month 5','Month 6'],datasets:[{label:'Without Sky',data:[34,33,35,32,34,33],backgroundColor:'rgba(255,107,53,.6)',borderRadius:4},{label:'With Sky',data:[34,22,14,8,5,4],backgroundColor:'rgba(0,200,232,.7)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'},title:{display:true,text:'Hrs/Wk',color:'rgba(255,255,255,.3)',font:{size:9}}}}}});
-  // Chart 2 — Manual tasks eliminated by Sky (hrs/week by task type)
-  new Chart(document.getElementById('chart-time'),{type:'bar',data:{labels:['Status Calls','Vendor Follow-ups','Approvals','Documentation','Team Check-ins'],datasets:[{label:'Owner Does Manually',data:[9,7,6,7,5],backgroundColor:'rgba(255,107,53,.6)',borderRadius:4},{label:'Sky Handles',data:[0.4,0.3,0.5,0.2,0.3],backgroundColor:'rgba(0,200,232,.7)',borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{display:false}}}}});
-  // Chart 3 — How Sky distributes workload (donut)
-  new Chart(document.getElementById('chart-donut'),{type:'doughnut',data:{labels:['AI-Handled Decisions','Stakeholder Updates','Owner Escalations','Document Processing'],datasets:[{data:[44,26,18,12],backgroundColor:['rgba(0,200,232,.85)','rgba(255,107,53,.8)','rgba(100,160,255,.8)','rgba(150,130,200,.65)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
-  // Chart 4 — Decisions handled: owner manually vs Sky autonomously
-  new Chart(document.getElementById('chart-line'),{type:'line',data:{labels:['Week 1','Week 2','Week 4','Week 6','Week 8','Week 12'],datasets:[{label:'Owner Manually',data:[52,46,38,26,16,8],borderColor:'rgba(255,107,53,.85)',backgroundColor:'rgba(255,107,53,.05)',tension:.4,fill:true,pointRadius:3},{label:'Sky Autonomous',data:[4,12,24,38,50,60],borderColor:'rgba(0,200,232,.85)',backgroundColor:'rgba(0,200,232,.06)',tension:.4,fill:true,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'},min:0,title:{display:true,text:'Decisions/Wk',color:'rgba(255,255,255,.3)',font:{size:9}}}}}});
+  // Chart 1 — PM hours/week chasing status, by TI build phase (modelled)
+  new Chart(document.getElementById('chart-leads'),{type:'bar',data:{labels:['Design','Permitting','Construction','Inspections','Punch List','C of O'],datasets:[{label:'Chasing by hand',data:[6,12,9,8,5,4],backgroundColor:'rgba(255,107,53,.6)',borderRadius:4},{label:'With Court Vision',data:[2,3,3,2,1.5,1],backgroundColor:'rgba(0,200,232,.7)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'},title:{display:true,text:'Hrs/Wk',color:'rgba(255,255,255,.3)',font:{size:9}}}}}});
+  // Chart 2 — Where the chasing goes on a TI build (modelled)
+  new Chart(document.getElementById('chart-time'),{type:'bar',data:{labels:['Permit Status','Submittals','RFIs','Inspections','Owner Updates'],datasets:[{label:'Your team, by hand',data:[5,4,3,3,4],backgroundColor:'rgba(255,107,53,.6)',borderRadius:4},{label:'Sky takes over',data:[4.5,3,2,2.5,3.5],backgroundColor:'rgba(0,200,232,.7)',borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{display:false}}}}});
+  // Chart 3 — Where TI schedules slip (modelled)
+  new Chart(document.getElementById('chart-donut'),{type:'doughnut',data:{labels:['Permits & Plan Review','Submittals & RFIs','Landlord / Owner Approvals','Inspections'],datasets:[{data:[40,25,20,15],backgroundColor:['rgba(0,200,232,.85)','rgba(255,107,53,.8)','rgba(100,160,255,.8)','rgba(150,130,200,.65)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+  // Chart 4 — Cumulative held days, untracked vs Court Vision (modelled)
+  new Chart(document.getElementById('chart-line'),{type:'line',data:{labels:['Wk 4','Wk 8','Wk 12','Wk 16','Wk 20','Wk 24'],datasets:[{label:'Untracked',data:[3,9,17,26,34,41],borderColor:'rgba(255,107,53,.85)',backgroundColor:'rgba(255,107,53,.05)',tension:.4,fill:true,pointRadius:3},{label:'Court Vision',data:[1,2,4,5,6,7],borderColor:'rgba(0,200,232,.85)',backgroundColor:'rgba(0,200,232,.06)',tension:.4,fill:true,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'},min:0,title:{display:true,text:'Held Days',color:'rgba(255,255,255,.3)',font:{size:9}}}}}});
   // ROI chart
   // ── ROI Chart ──────────────────────────────────────────────────
-  roiChart=new Chart(document.getElementById('roi-chart'),{type:'bar',data:{labels:['Lost /Mo','Saved /Mo','Net Gain /Mo'],datasets:[{data:[3200,350,2850],backgroundColor:['#e53e3e','#00c8e8','#3182ce'],borderRadius:8,barPercentage:.6,categoryPercentage:.7}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{left:10,right:20,top:8,bottom:4}},plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.5)',font:{size:11},maxRotation:0},grid:{display:false}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10},callback:function(v){return '$'+v.toLocaleString();}},grid:{color:'rgba(255,255,255,.05)'}}}}});
+  roiChart=new Chart(document.getElementById('roi-chart'),{type:'bar',data:{labels:['Chasing /Mo','Given Back /Mo','Rent at Risk'],datasets:[{data:[2600,1800,30000],backgroundColor:['#e53e3e','#00c8e8','#ff6b35'],borderRadius:8,barPercentage:.6,categoryPercentage:.7}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{left:10,right:20,top:8,bottom:4}},plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.5)',font:{size:11},maxRotation:0},grid:{display:false}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10},callback:function(v){return '$'+v.toLocaleString();}},grid:{color:'rgba(255,255,255,.05)'}}}}});
   // Force repaint after zoom:1.1 settles
   setTimeout(function(){ if(roiChart) roiChart.resize(); },200);
   setTimeout(function(){ if(roiChart) roiChart.resize(); },600);
   window.addEventListener('resize',function(){ if(roiChart) roiChart.resize(); });
 
   // Wire sliders via JS so CSS zoom doesn't break oninput hit areas
-  const hoursSlider = document.getElementById('roi-hours');
-  const rateSlider  = document.getElementById('roi-rate');
+  const roiSliders = ['roi-hours','roi-rate','roi-credit','roi-slip'].map(function(id){ return document.getElementById(id); });
   ['input','change','mousedown','mousemove','touchmove'].forEach(function(evt){
-    hoursSlider.addEventListener(evt, calcROI, {passive:true});
-    rateSlider.addEventListener(evt, calcROI, {passive:true});
+    roiSliders.forEach(function(el){ el.addEventListener(evt, calcROI, {passive:true}); });
   });
 
   calcROI();
@@ -5465,7 +5485,7 @@ function skyGetResponseFallback(input){
   if(skyHas(q,['how does it work','what do you do','what is skyrise','explain','tell me about','how it works','what exactly']))
     return "Skyrise Pro connects all your lead sources to a central AI hub, then automates the follow-up, CRM updates, contract sending, scheduling, and invoicing — all without your team touching it. Think of it as a full back-office team that runs 24/7. What profession within the commercial real estate industry are you in? I'll show you the exact pipeline for your business.";
   if(skyHas(q,['time','hours','save','roi','return','value','worth it','payback','benefit']))
-    return "Our clients save an average of 30 or more hours per week in Month 1. The ROI calculator on this page lets you enter your team size and hourly rate to see exactly how much you're losing to manual tasks right now. Scroll down and plug in your numbers — most people are shocked by the result.";
+    return "On a Tenant Improvement build, the time goes to chasing status — permits, submittals, RFIs and inspections. The TI ROI calculator on this page takes your number of active builds, the hours spent chasing, and the free-rent credit in your lease, and shows what a slipped commencement date would cost. Scroll down and plug in your own numbers.";
   if(skyHas(q,['crm','hubspot','salesforce','zapier','integrate','connect','tools','software','stack','openai']))
     return "We integrate with HubSpot, Salesforce, Zapier, Procore, DocuSign, QuickBooks, Stripe, OpenAI, and 5,000-plus other apps through Zapier. Your existing tools stay exactly as they are — we just connect them so they work together automatically with zero manual effort.";
   if(skyHas(q,['start','get started','sign up','join','ready','begin','setup','onboard','deploy']))

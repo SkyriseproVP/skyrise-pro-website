@@ -313,6 +313,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .cr-l{font-size:11px;line-height:1.5;color:rgba(10,22,40,.55);margin-top:8px;}
 .cr-note{font-size:14px;line-height:1.75;color:rgba(10,22,40,.78);margin:0;padding-left:14px;border-left:3px solid var(--cyan);}
 .cr-note b{color:#0a1628;font-weight:700;}
+.fact-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.fact{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.72);border:1px solid rgba(0,168,196,.28);border-left:4px solid var(--cyan);border-radius:10px;padding:15px 18px;}
+.fact-n{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:#0d8fa8;line-height:1.1;min-width:84px;}
+.fact-b b{display:block;font-size:14.5px;line-height:1.55;color:#0a1628;margin-bottom:5px;}
+.fact-b span{font-size:12px;line-height:1.6;color:rgba(10,22,40,.6);}
+.fact-b a{color:#0d8fa8;}
+@media(max-width:620px){.fact{flex-direction:column;gap:6px;}.fact-n{min-width:0;}}
 .cr-folders{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px;}
 .cr-folder{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
   color:#0d6f85;background:rgba(255,255,255,.7);border:1px solid rgba(0,168,196,.3);border-radius:6px;padding:7px 11px;}
@@ -2186,6 +2193,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <div class="cr-tabs" role="tablist">
       <button class="cr-tab" role="tab" id="crtab-who" aria-controls="crpanel-who" aria-selected="true" onclick="crTab('who')">Who runs this</button>
       <button class="cr-tab" role="tab" id="crtab-rec" aria-controls="crpanel-rec" aria-selected="false" onclick="crTab('rec')">The record you keep</button>
+      <button class="cr-tab" role="tab" id="crtab-facts" aria-controls="crpanel-facts" aria-selected="false" onclick="crTab('facts')">Industry facts</button>
     </div>
 
     <div class="cr-panel" id="crpanel-who" role="tabpanel" aria-labelledby="crtab-who">
@@ -2196,6 +2204,33 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         <div class="cr-stat"><div class="cr-n">4M</div><div class="cr-l">Sq ft of commercial space</div></div>
         <div class="cr-stat"><div class="cr-n">PM</div><div class="cr-l">and owner&rsquo;s rep &mdash; the seat that carries the date</div></div>
       </div>
+      <div class="cr-panel" id="crpanel-facts" role="tabpanel" aria-labelledby="crtab-facts" hidden>
+        <p class="cr-lead">None of this is our data. It is what the industry measures about itself &mdash; the reason a build-out needs a record in the first place. Every figure is sourced; follow the link and read it yourself.</p>
+        <div class="fact-list">
+          <div class="fact">
+            <div class="fact-n">20%</div>
+            <div class="fact-b"><b>Large projects run about 20% longer than scheduled, and up to 80% over budget.</b>
+              <span>McKinsey &amp; Company, <em>Imagining construction&rsquo;s digital future</em> (2016) &middot; <a href="https://www.mckinsey.com/~/media/McKinsey/Industries/Capital%20Projects%20and%20Infrastructure/Our%20Insights/Imagining%20constructions%20digital%20future/Imagining-constructions-digital-future.pdf" target="_blank" rel="noopener">Read the report</a></span></div>
+          </div>
+          <div class="fact">
+            <div class="fact-n">48%</div>
+            <div class="fact-b"><b>Nearly half of all rework on U.S. jobsites traces back to miscommunication and poor project data &mdash; not to bad workmanship.</b>
+              <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018) &middot; 26% poor communication, 22% bad or inaccessible information &middot; <a href="https://www.autodesk.com/blogs/construction/construction-disconnected-fmi-report/" target="_blank" rel="noopener">Read the findings</a></span></div>
+          </div>
+          <div class="fact">
+            <div class="fact-n">2 days</div>
+            <div class="fact-b"><b>Crews lose close to two full days a week to avoidable issues and hunting for project information.</b>
+              <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018) &middot; <a href="https://www.constructionspecifier.com/survey-estimates-time-and-money-lost-to-rework-and-miscommunication/" target="_blank" rel="noopener">Read the summary</a></span></div>
+          </div>
+          <div class="fact">
+            <div class="fact-n">$177B</div>
+            <div class="fact-b"><b>Rework, chasing information and resolving conflict cost U.S. construction about $177.5 billion a year in labor.</b>
+              <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018), ~600 industry leaders surveyed &middot; <a href="https://www.prnewswire.com/news-releases/new-research-from-plangrid-and-fmi-identifies-factors-costing-the-construction-industry-more-than-177-billion-annually-300689826.html" target="_blank" rel="noopener">Read the release</a></span></div>
+          </div>
+        </div>
+        <p class="cr-lead" style="margin-bottom:0;">Read them together and they say one thing: the schedule rarely dies from bad building. It dies from information sitting with the wrong person. That is the gap this platform closes.</p>
+      </div>
+
       <p class="cr-note"><b>Which is why this page shows a real job rather than a case study.</b> The denied electrical review, the <b>34 days two permit reviews sat unmoving</b> &mdash; 26 on plumbing, 8 on electrical &mdash; the credited rent blocks: that is a live lease on a live project, this week. Every feature here exists because something on a jobsite went wrong first, and because someone with the scar tissue to recognise it stayed on the phone until it moved. <b>That is what built this &mdash; the experience to see the slip coming, and the grit to chase it down.</b></p>
     </div>
 
@@ -4149,7 +4184,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
    panel keeps whatever display the stylesheet gives it when shown. */
 /* Credibility block tabs - same hidden-property pattern as the job block. */
 function crTab(which){
-  ['who','rec'].forEach(function(k){
+  ['who','rec','facts'].forEach(function(k){
     var t=document.getElementById('crtab-'+k), p=document.getElementById('crpanel-'+k);
     if(!t||!p) return;
     var on = (k===which);

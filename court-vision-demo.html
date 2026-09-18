@@ -2664,38 +2664,26 @@ var _demoFired=false;
       </div>
       <div class="cvs-btn-row">
         <button class="cvs-back" onclick="cvsBack(2)">← BACK</button>
-        <button class="cvs-next" onclick="cvsNext(2)">NEXT — CHOOSE YOUR PLAN →</button>
+        <button class="cvs-next" onclick="cvsNext(2)">NEXT — REVIEW →</button>
       </div>
     </div>
 
     <!-- ── STEP 3: YOUR PLAN ── -->
     <div id="cvs-step-3" style="display:none;">
       <div class="cvs-eyebrow">STEP 3 OF 3</div>
-      <div class="cvs-heading">Choose your plan.</div>
-      <div class="cvs-sub">Your first 30 days are completely free. No charge until your trial ends.</div>
+      <div class="cvs-heading">Your project.</div>
+      <div class="cvs-sub">Court Vision is quoted per project. We scope your build on a quick call — no charge today.</div>
 
-      <div class="cvs-plans" style="grid-template-columns:repeat(3,1fr);">
-        <div class="cvs-plan-card selected" id="cvs-plan-professional" onclick="selectCVSPlan('professional','PROFESSIONAL','$749.89')">
-          <div class="cvs-plan-name" style="color:var(--cyan);">★ PROFESSIONAL</div>
-          <div class="cvs-plan-price">$749.89</div>
-          <div class="cvs-plan-mo">/month</div>
-          <div class="cvs-plan-desc">Full automation suite + Sky AI Executive Assistant</div>
-        </div>
-        <div class="cvs-plan-card" id="cvs-plan-elite" onclick="selectCVSPlan('elite','ELITE','$849.89')">
-          <div class="cvs-plan-name">ELITE</div>
-          <div class="cvs-plan-price">$849.89</div>
-          <div class="cvs-plan-mo">/month</div>
-          <div class="cvs-plan-desc">Full agency — ROI reports, priority support, strategy calls</div>
-        </div>
-        <div class="cvs-plan-card" id="cvs-plan-enterprise" onclick="selectCVSPlan('enterprise','COURT VISION','Priced per project')">
-          <div class="cvs-plan-name" style="color:#00c8e8;">🏀 COURT VISION</div>
+      <div class="cvs-plans" style="grid-template-columns:1fr;">
+        <div class="cvs-plan-card selected" id="cvs-plan-enterprise" onclick="selectCVSPlan('enterprise','COURT VISION','Priced per project')">
+          <div class="cvs-plan-name" style="color:#00c8e8;">COURT VISION</div>
           <div class="cvs-plan-price" style="font-size:15px;">Priced per project</div>
           <div class="cvs-plan-mo">quoted to the job</div>
-          <div class="cvs-plan-desc">Scoped to the job, through rent commencement — full team, stakeholder portals</div>
+          <div class="cvs-plan-desc">Scoped to the build and running through rent commencement — every stakeholder, every approval, every inspection, plus the cinematic closeout film</div>
         </div>
       </div>
 
-      <div class="cvs-trial-note">🔒 30-DAY FREE TRIAL — YOUR CARD IS NOT CHARGED TODAY</div>
+      <div class="cvs-trial-note">🔒 QUOTED PER PROJECT — YOUR CARD IS NOT CHARGED TODAY</div>
 
       <div class="cvs-btn-row">
         <button class="cvs-back" onclick="cvsBack(3)">← BACK</button>
@@ -2730,15 +2718,15 @@ var _demoFired=false;
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:rgba(200,230,240,.6);">
             <span style="color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px;">✓</span>
-            <span>Your card is <strong style="color:rgba(255,255,255,.8);">not charged today.</strong> The 30-day free trial begins the moment your system goes live.</span>
+            <span>Your card is <strong style="color:rgba(255,255,255,.8);">not charged today.</strong> Your project fee is scoped and quoted on the call before anything is billed.</span>
           </div>
           <div style="display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:rgba(200,230,240,.6);">
             <span style="color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px;">✓</span>
-            <span>This ensures we allocate a <strong style="color:rgba(255,255,255,.8);">dedicated build team</strong> and get your automation live within your trial window — not on a waitlist.</span>
+            <span>This ensures we allocate a <strong style="color:rgba(255,255,255,.8);">dedicated build team</strong> and stand your board up for the job — not a waitlist.</span>
           </div>
           <div style="display:flex;align-items:flex-start;gap:10px;font-size:12.5px;color:rgba(200,230,240,.6);">
             <span style="color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px;">✓</span>
-            <span>Cancel before Day 31 — <strong style="color:rgba(255,255,255,.8);">no questions, no fees,</strong> no friction.</span>
+            <span>Walk away after the call — <strong style="color:rgba(255,255,255,.8);">no questions, no fees,</strong> no friction.</span>
           </div>
         </div>
       </div>
@@ -2746,10 +2734,10 @@ var _demoFired=false;
       <!-- Plan summary line -->
       <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(0,200,232,.04);border:1px solid rgba(0,200,232,.15);border-radius:10px;margin-bottom:22px;">
         <div>
-          <div style="font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;color:rgba(0,200,232,.6);" id="cvs-confirm-plan-name">PROFESSIONAL PLAN</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;" id="cvs-confirm-plan-note">Free for 30 days, then billed monthly</div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;color:rgba(0,200,232,.6);" id="cvs-confirm-plan-name">COURT VISION</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;" id="cvs-confirm-plan-note">Quoted per project on the strategy call</div>
         </div>
-        <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--cyan);" id="cvs-confirm-plan-price">$749.89<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span></div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--cyan);" id="cvs-confirm-plan-price" style="font-size:15px;">Priced per project<span style="display:none;"></div>
       </div>
 
       <!-- CTAs -->
@@ -2787,7 +2775,7 @@ var CV_STRIPE_LINKS={
 // Secure proxy — webhook URL lives in Netlify env, never in browser source
 var CV_WEBHOOK='/api/signup';
 
-var _cvsSelectedPlan={key:'professional',name:'PROFESSIONAL',price:'$749.89'};
+var _cvsSelectedPlan={key:'enterprise',name:'COURT VISION',price:'Priced per project'};
 
 window.openCVSignup=function(){
   // Reset to step 1
@@ -2897,7 +2885,7 @@ window.submitCVSignup=function(){
   var nameEl=document.getElementById('cvs-welcome-name');
   if(nameEl)nameEl.textContent='YOU\'RE IN'+(fname?', '+fname.toUpperCase():'')+'!';
   var planNameEl=document.getElementById('cvs-confirm-plan-name');
-  if(planNameEl)planNameEl.textContent=_cvsSelectedPlan.name+' PLAN';
+  if(planNameEl)planNameEl.textContent=_cvsSelectedPlan.name;
   var planPriceEl=document.getElementById('cvs-confirm-plan-price');
   /* Court Vision has no monthly, so it takes no /mo suffix and no billing-cycle
      note -- appending one produced the literal text "Priced per project/mo". */
@@ -2906,8 +2894,8 @@ window.submitCVSignup=function(){
     :'<span style="font-size:11px;font-weight:400;color:rgba(255,255,255,.3);">/mo</span>');
   var planNoteEl=document.getElementById('cvs-confirm-plan-note');
   if(planNoteEl)planNoteEl.textContent=_cvQuoted
-    ?'Free for 30 days — your project fee is quoted on the strategy call'
-    :'Free for 30 days, then billed monthly';
+    ?'Quoted per project on the strategy call'
+    :'Quoted on the strategy call';
 
   // Show the CC authorization screen
   setTimeout(function(){
@@ -2923,7 +2911,7 @@ window.proceedToStripe=function(){
 
   /* Guard: don't redirect to a placeholder URL */
   if(!link||link.indexOf('REPLACE')!==-1){
-    alert("You're all set! Your 30-day free trial is reserved — no charge today. Our team will email your secure activation link to finish setup.");
+    alert("You're all set! No charge today. Our team will email you to book the call where we scope and quote your build.");
     return;
   }
 

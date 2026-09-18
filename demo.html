@@ -2240,7 +2240,7 @@ window.addEventListener('DOMContentLoaded', () => {
       <span class="ssu-plan-badge" id="ssu-plan-badge">SKYRISE PRO</span>
     </div>
     <div class="ssu-title">Let's get you started.</div>
-    <div class="ssu-sub">Your first 30 days are completely free. No charge until your trial ends — cancel anytime.</div>
+    <div class="ssu-sub">Court Vision is quoted per project. No charge today — we scope your build on a quick call.</div>
 
     <!-- Form -->
     <form id="ssu-form" onsubmit="submitSignup(event)">
@@ -2289,7 +2289,7 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="ssu-price-row">
         <div>
           <div class="ssu-price-label" id="ssu-plan-name">SELECTED PLAN</div>
-          <div class="ssu-price-note" id="ssu-price-sub">Billed monthly after 30-day free trial</div>
+          <div class="ssu-price-note" id="ssu-price-sub">Quoted per project on the strategy call</div>
         </div>
         <div style="text-align:right;">
           <div class="ssu-price-amount" id="ssu-plan-price">—</div>
@@ -2297,10 +2297,10 @@ window.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <div class="ssu-trial-note" id="ssu-trial-note">🔒 30-DAY FREE TRIAL — NO CHARGE TODAY</div>
+      <div class="ssu-trial-note" id="ssu-trial-note">🔒 QUOTED PER PROJECT — NO CHARGE TODAY</div>
 
       <button type="submit" class="ssu-submit" id="ssu-submit-btn">
-        START FREE TRIAL → ENTER PAYMENT INFO
+        CONTINUE → BOOK THE CALL
       </button>
 
       <!-- Trust / security signals -->
@@ -2321,7 +2321,7 @@ window.addEventListener('DOMContentLoaded', () => {
       <div style="font-size:42px;line-height:1;margin-bottom:10px;">✓</div>
       <div class="ssu-title" id="ssu-confirm-title" style="margin-bottom:8px;">You're all set!</div>
       <p id="ssu-confirm-msg" style="font-size:13px;color:rgba(255,255,255,.72);line-height:1.6;margin:0 0 18px;">
-        Your 30-day free trial is reserved — no charge today. Our team will email your secure activation link to finish setup. Want to fast-track it? Book your strategy call below.
+        No charge today. Our team will email you to book the call where we scope and quote your build. Want to fast-track it? Book your strategy call below.
       </p>
       <a href="#" id="ssu-confirm-book" target="_blank" rel="noopener" style="display:inline-block;background:var(--cyan);color:#001016;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;text-decoration:none;border-radius:10px;padding:13px 26px;">📅 BOOK YOUR STRATEGY CALL</a>
       <div style="margin-top:16px;"><button type="button" onclick="closeSignup()" style="background:none;border:none;color:rgba(255,255,255,.45);font-size:11px;cursor:pointer;text-decoration:underline;">Close</button></div>
@@ -2389,10 +2389,10 @@ window.openSignup = function(planKey, planName, planPrice) {
     document.getElementById('ssu-plan-price').textContent = _signupPlan.price;
     if (_sub)   _sub.textContent   = _quoted
       ? 'Quoted per project on your strategy call'
-      : 'Billed monthly after 30-day free trial';
+      : 'Quoted per project on the strategy call';
     if (_per)   _per.textContent   = _quoted ? '' : '/month';
-    if (_trial) _trial.textContent = '🔒 30-DAY FREE TRIAL — NO CHARGE TODAY';
-    _btn.textContent = 'START FREE TRIAL → ENTER PAYMENT INFO';
+    if (_trial) _trial.textContent = '🔒 QUOTED PER PROJECT — NO CHARGE TODAY';
+    _btn.textContent = 'CONTINUE → BOOK THE CALL';
   }
   document.getElementById('ssu-form').reset();
   document.getElementById('ssu-form').style.display = '';

@@ -178,10 +178,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
    part of the page rather than a slab dropped into it. */
 #live-build{padding:64px 60px;background:linear-gradient(135deg,#e8f4fb 0%,#f5fbff 50%,#ffffff 100%);}
 .lb-inner{max-width:1000px;margin:0 auto;}
-.lb-tag{display:inline-flex;align-items:center;gap:9px;font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:#0d8fa8;margin-bottom:14px;}
+.lb-tag{display:inline-flex;align-items:center;gap:11px;font-family:'Orbitron',sans-serif;font-size:clamp(18px,1.95vw,26px);font-weight:900;letter-spacing:.6px;text-transform:uppercase;color:#0d8fa8;margin-bottom:10px;line-height:1.25;}
 .lb-dot{width:8px;height:8px;border-radius:50%;background:#12b886;box-shadow:0 0 0 0 rgba(18,184,134,.55);animation:lbPulse 2s infinite;}
 @keyframes lbPulse{70%{box-shadow:0 0 0 9px rgba(18,184,134,0);}100%{box-shadow:0 0 0 0 rgba(18,184,134,0);}}
-.lb-h{font-family:'Orbitron',sans-serif;font-size:clamp(18px,1.95vw,26px);font-weight:900;line-height:1.3;margin:0 0 8px;letter-spacing:.3px;color:#0a1628;}
+.lb-h{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:800;line-height:1.5;margin:0 0 8px;letter-spacing:2.4px;text-transform:uppercase;color:#0a1628;}
 .lb-track{font-size:13.5px;color:rgba(10,22,40,.55);margin:0 0 28px;}
 .lb-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:13px;margin-bottom:28px;}
 .lb-stat{background:#fff;border:1.5px solid rgba(0,200,232,.28);border-radius:10px;padding:14px 16px;}
@@ -492,7 +492,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .pipeline-filter-pills{display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;}
 .filter-pill{border:1.5px solid var(--border-light);border-radius:20px;padding:7px 18px;font-size:10px;font-weight:700;letter-spacing:1.5px;color:#0d1526;background:transparent;cursor:pointer;transition:all .2s;font-family:'Orbitron',sans-serif;}
 .filter-pill:hover,.filter-pill.active{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-dim);}
-.orange-section .filter-pill:hover,.orange-section .filter-pill.active{border-color:var(--orange);color:var(--orange);background:rgba(255,107,53,.08);}
+/* Court Vision workflow labels stay cyan even in the orange-themed diagram. */
+.orange-section .filter-pill:hover,.orange-section .filter-pill.active{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-dim);}
+.orange-theme .pipe-col-label{color:rgba(0,200,232,.85);}
 .pipeline-diagram-box{
   background:linear-gradient(145deg,#060c1a 0%,#0a1020 55%,#071018 100%);
   border:2px solid rgba(0,200,232,.75);
@@ -1383,7 +1385,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     <button class="modal-close" onclick="closeModal('signup')">×</button>
     <img src="skyrise-cyan-transparent.png" alt="Skyrise Pro" class="modal-logo">
     <div class="modal-title">CREATE ACCOUNT</div>
-    <div class="modal-sub">START YOUR 30-DAY FREE TRIAL — NO CREDIT CARD REQUIRED.</div>
+    <div class="modal-sub">CREATE YOUR ACCOUNT — NO CREDIT CARD REQUIRED.</div>
     <button class="cre-lang-btn" onclick="creAcctToggleLang()" style="display:block;margin:0 0 14px 0;align-self:flex-start;background:#22d3a0;color:#06241c;border:none;border-radius:8px;padding:6px 16px;font-family:'Orbitron',sans-serif;font-weight:800;font-size:10px;letter-spacing:.5px;cursor:pointer;">🌐 ESPAÑOL</button>
     <label class="modal-label">FULL NAME</label>
     <input class="modal-input" id="signup-name" type="text" placeholder="Your full name">
@@ -1606,15 +1608,15 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <label class="modal-label">HOW WILL YOU KNOW THIS WAS WORTH THE INVESTMENT?</label>
       <textarea class="modal-input" id="cre-success" placeholder="e.g. 'I get back 10 hrs/week', 'I close 2 more projects per quarter', 'I stop missing leads'" style="height:60px;resize:vertical;font-family:'Orbitron',sans-serif;font-size:11px;line-height:1.6;margin-bottom:16px;"></textarea>
 
-      <label class="modal-label">ANY SPECIFIC OUTCOME TO TARGET IN THE FIRST 30-DAY TRIAL?</label>
+      <label class="modal-label">WHAT WOULD MAKE THE FIRST MONTH A WIN?</label>
       <textarea class="modal-input" id="cre-trial-goal" placeholder="e.g. 'Get the follow-up sequence live and capture 10 more leads'" style="height:60px;resize:vertical;font-family:'Orbitron',sans-serif;font-size:11px;line-height:1.6;margin-bottom:16px;"></textarea>
 
       <label class="modal-label" style="margin-bottom:8px;">PLAN INTEREST (NOT A COMMITMENT — WE'LL CONFIRM ON THE CALL)</label>
       <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-pro" value="Professional $749.89/mo"><label for="p-pro">PROFESSIONAL — $749.89/mo — Full AI Agent + Automation</label></div>
-        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-elite" value="Elite $849.89/mo"><label for="p-elite">ELITE — $849.89/mo — Full AI Agency (includes Sky)</label></div>
-        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-cv" value="Court Vision - quoted per project"><label for="p-cv">COURT VISION — Priced per project — Full Platform + Court Vision Team</label></div>
-        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-video" value="Cinematic Video Only $1750"><label for="p-video">CINEMATIC VIDEO ONLY — $1,750 one-time</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-cv" value="Court Vision - quoted per project" checked><label for="p-cv">COURT VISION — Priced per project — the TI project tracker, LOI to Certificate of Occupancy</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-video" value="Cinematic Video Only $1750"><label for="p-video">CINEMATIC VIDEO ONLY — one production</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-pro" value="Professional $749.89/mo"><label for="p-pro">MONTHLY AUTOMATION PLAN — quoted on the call</label></div>
+        <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-elite" value="Elite $849.89/mo"><label for="p-elite">MONTHLY AUTOMATION PLAN + AGENCY SUPPORT — quoted on the call</label></div>
         <div class="intake-check-item"><input type="radio" name="cre-plan" id="p-unsure" value="Not sure yet"><label for="p-unsure">NOT SURE YET — recommend the right fit on the call</label></div>
       </div>
 
@@ -1645,9 +1647,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <img src="skyrise-cyan-transparent.png" alt="Skyrise Pro" style="height:132px;width:auto;max-width:100%;filter:drop-shadow(0 0 10px rgba(0,200,232,0.75)) drop-shadow(0 0 3px rgba(0,200,232,0.5));">
         </div>
         <div class="intake-success-title">YOU'RE ALL SET, <span id="cre-iq-fname"></span>!</div>
-        <div class="intake-success-sub">Your intake has been received. A Skyrise Pro rep will email you to request the documents we need to launch. After we receive everything, your build takes about two weeks, then about a one-week test run — and your 30-day free trial begins after that. Lock in your spot with the one-time $500 setup fee below, or book a call and we'll walk you through it first.</div>
-        <button class="intake-success-btn" onclick="creIqSignup()" style="background:#22d3a0;color:#06241c;margin-bottom:10px;">▶ GET STARTED — $500 SETUP FEE</button>
-        <button class="intake-success-btn" onclick="creIqBookCall()" style="background:transparent;border:1px solid rgba(0,200,232,.5);">BOOK MY FREE STRATEGY CALL →</button>
+        <div class="intake-success-sub">Your intake has been received. A Skyrise Pro rep will email you to request the documents we need to launch. After we receive everything, your build takes about two weeks, then about a one-week test run. Book the call below and we'll scope your build and quote it.</div>
+        <button class="intake-success-btn" onclick="creIqBookCall()" style="background:#22d3a0;color:#06241c;margin-bottom:10px;">BOOK MY FREE STRATEGY CALL →</button>
+        <!-- Monthly-plan checkout only. Court Vision is quoted per project and never uses this setup fee. -->
+        <button class="intake-success-btn" id="cre-iq-setup-btn" onclick="creIqSignup()" style="display:none;background:transparent;border:1px solid rgba(0,200,232,.5);">▶ GET STARTED — $500 SETUP FEE</button>
       </div>
     </div>
 
@@ -1921,22 +1924,22 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   <div class="ticker-inner">
     <span class="ticker-item">AI AGENT SOLUTIONS<span class="sep">//</span></span>
     <span class="ticker-item">EVERY PROJECT MAKES A DIFFERENCE<span class="sep">//</span></span>
-    <span class="ticker-item" style="color:var(--cyan);">30-DAY FREE TRIAL<span class="sep">//</span></span>
+    <span class="ticker-item" style="color:var(--cyan);">PRICED PER PROJECT<span class="sep">//</span></span>
     <span class="ticker-item">CINEMATIC STORYTELLING<span class="sep">//</span></span>
     <span class="ticker-item">SMART AUTOMATION<span class="sep">//</span></span>
     <span class="ticker-item">AI AGENT SOLUTIONS<span class="sep">//</span></span>
     <span class="ticker-item">EVERY PROJECT MAKES A DIFFERENCE<span class="sep">//</span></span>
-    <span class="ticker-item" style="color:var(--cyan);">30-DAY FREE TRIAL<span class="sep">//</span></span>
+    <span class="ticker-item" style="color:var(--cyan);">PRICED PER PROJECT<span class="sep">//</span></span>
     <span class="ticker-item">CINEMATIC STORYTELLING<span class="sep">//</span></span>
     <span class="ticker-item">SMART AUTOMATION<span class="sep">//</span></span>
     <span class="ticker-item">AI AGENT SOLUTIONS<span class="sep">//</span></span>
     <span class="ticker-item">EVERY PROJECT MAKES A DIFFERENCE<span class="sep">//</span></span>
-    <span class="ticker-item" style="color:var(--cyan);">30-DAY FREE TRIAL<span class="sep">//</span></span>
+    <span class="ticker-item" style="color:var(--cyan);">PRICED PER PROJECT<span class="sep">//</span></span>
     <span class="ticker-item">CINEMATIC STORYTELLING<span class="sep">//</span></span>
     <span class="ticker-item">SMART AUTOMATION<span class="sep">//</span></span>
     <span class="ticker-item">AI AGENT SOLUTIONS<span class="sep">//</span></span>
     <span class="ticker-item">EVERY PROJECT MAKES A DIFFERENCE<span class="sep">//</span></span>
-    <span class="ticker-item" style="color:var(--cyan);">30-DAY FREE TRIAL<span class="sep">//</span></span>
+    <span class="ticker-item" style="color:var(--cyan);">PRICED PER PROJECT<span class="sep">//</span></span>
     <span class="ticker-item">CINEMATIC STORYTELLING<span class="sep">//</span></span>
     <span class="ticker-item">SMART AUTOMATION<span class="sep">//</span></span>
   </div>
@@ -2012,11 +2015,11 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     </div>
 
     <div class="lb-tabs" role="tablist">
-      <button class="lb-tab" role="tab" id="tab-upd" aria-controls="panel-upd" aria-selected="true" onclick="lbTab('upd')">Latest updates</button>
-      <button class="lb-tab" role="tab" id="tab-clk" aria-controls="panel-clk" aria-selected="false" onclick="lbTab('clk')">Money on the clock</button>
+      <button class="lb-tab" role="tab" id="tab-clk" aria-controls="panel-clk" aria-selected="true" onclick="lbTab('clk')">Money on the clock</button>
+      <button class="lb-tab" role="tab" id="tab-upd" aria-controls="panel-upd" aria-selected="false" onclick="lbTab('upd')">Latest updates</button>
     </div>
 
-    <div class="lb-panel" id="panel-clk" role="tabpanel" aria-labelledby="tab-clk" hidden>
+    <div class="lb-panel" id="panel-clk" role="tabpanel" aria-labelledby="tab-clk">
       <p class="clk-lead">Rent does not start when the work finishes. It starts on the date the lease says the space will be delivered &mdash; and past that date the tenant is credited free rent in fixed blocks. <b>Every block is money the building was supposed to earn and does not.</b></p>
       <div class="clk-scale">
         <div class="clk-step s1"><div class="clk-d">15 days late</div><div class="clk-a">$38,634.92</div></div>
@@ -2037,7 +2040,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       </div>
     </div>
 
-    <div class="lb-panel" id="panel-upd" role="tabpanel" aria-labelledby="tab-upd">
+    <div class="lb-panel" id="panel-upd" role="tabpanel" aria-labelledby="tab-upd" hidden>
     <div class="lb-upd">
       <div class="lb-upd-row"><span class="lb-upd-d">Sep 16</span><span class="lb-upd-t">Permit issued &mdash; building, mechanical and electrical. The ball passes straight to the contractor, and the Sep 23 inspections can now be called in.</span></div>
       <div class="lb-upd-row"><span class="lb-upd-d">Sep 15</span><span class="lb-upd-t">First City inspections booked for Sep 23 &mdash; electrical and plumbing rough-in, and framing. They cannot be called in until the permit issues, so the ball stays with the plan examiner.</span></div>
@@ -3640,7 +3643,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       .afl-flow{display:block;background:linear-gradient(160deg,#0a1628,#0d1b30);border:2px solid rgba(255,107,53,.5);border-radius:22px;padding:26px 12px 30px;box-shadow:0 0 0 1px rgba(255,107,53,.12),0 0 24px rgba(255,107,53,.1);}
     }
     .afl-inner{position:relative;max-width:340px;margin:0 auto;}
-    .afl-seclabel{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,107,53,.78);text-align:center;margin-bottom:12px;font-weight:700;font-family:'Orbitron',sans-serif;}
+    .afl-seclabel{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(0,200,232,.85);text-align:center;margin-bottom:12px;font-weight:700;font-family:'Orbitron',sans-serif;}
     .afl-row{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:36px;position:relative;z-index:2;}
     .afl-node{display:flex;flex-direction:column;align-items:center;gap:5px;width:58px;}
     .afl-circle{width:50px;height:50px;border-radius:50%;border:1.5px solid rgba(255,107,53,.55);background:#0a1628;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#ffae84;font-family:'Orbitron',sans-serif;box-shadow:0 0 10px rgba(255,107,53,.18);position:relative;z-index:2;}
@@ -3648,7 +3651,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
     .afl-label{font-size:8px;font-weight:700;color:rgba(255,255,255,.6);text-align:center;text-transform:uppercase;line-height:1.2;font-family:'Orbitron',sans-serif;}
     .afl-cols{display:flex;gap:14px;position:relative;z-index:2;}
     .afl-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:26px;}
-    .afl-collabel{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.4);text-align:center;font-weight:700;font-family:'Orbitron',sans-serif;margin-bottom:2px;}
+    .afl-collabel{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,200,232,.85);text-align:center;font-weight:700;font-family:'Orbitron',sans-serif;margin-bottom:2px;}
     .afl-svg{position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:0;}
     </style>
     <div class="afl-flow">
@@ -4796,6 +4799,13 @@ function creIqSubmit(){
   document.querySelectorAll('#modal-cre-iq .intake-step').forEach(function(s){ s.classList.remove('active'); });
   var success = document.getElementById('cre-iq-success');
   if(success) success.classList.add('active');
+  // The $500 setup checkout applies to the monthly plans only — never to Court Vision.
+  try{
+    var _pick=document.querySelector('input[name="cre-plan"]:checked');
+    var _pv=_pick?(_pick.value||''):'';
+    var _setupBtn=document.getElementById('cre-iq-setup-btn');
+    if(_setupBtn) _setupBtn.style.display=(_pv.indexOf('Professional')===0||_pv.indexOf('Elite')===0)?'':'none';
+  }catch(e){}
   try{var _f=(document.getElementById('cre-fname').value||'').trim().split(' ')[0];if(_f)_signupFirstName=_f;}catch(e){} var fnameEl = document.getElementById('cre-iq-fname');
   if(fnameEl) fnameEl.textContent = _signupFirstName.toUpperCase();
 
@@ -5507,46 +5517,46 @@ function skyGetResponseFallback(input){
   // ── PUBLIC / VISITOR MODE ──────────────────────────────────
   // Court Vision — answer FIRST so it never gets swallowed by a greeting match
   if(skyHas(q,['court vision','court-vision','deal tracker','project tracker','track my deal','track the deal','track projects','stage tracker']))
-    return "Court Vision is your live deal and project tracker. It follows every job from first contact all the way to completion — and coordinates every player on the court: the GC, architect, project manager, landlord, and inspector. Sky flags delays before they cost you, fires alerts the moment something goes off-script, and keeps one clean thread of communication across everyone. No dropped balls, no surprises at final inspection. It's our Court Vision plan — priced per project, because a two-million build-out and a twenty-million one aren't the same job. Want me to show you how it'd run on one of your projects?";
+    return "Court Vision is the project tracker for tenant improvement builds. It follows the job from the letter of intent to the certificate of occupancy, with the GC, architect, engineer, project manager, landlord and tenant on one live board. Every open item shows whose court it's in and how many days it has sat there, and I ping whoever holds the ball before it costs you a day. Want to see it run on a real build?";
   // Pure greeting ONLY — must be the entire short message, so it never hijacks a real question
   if(/^(hi|hey|hello|yo|sup|howdy|hi there|hey there|good morning|good afternoon|good evening|what'?s up)[\s.,!]*$/i.test(q.trim()))
-    return "Hey! Great to have you here. I'm Sky — Skyrise Pro's AI Executive Assistant. I can walk you through how our automation works, explain Court Vision, break down pricing, or get you started. What profession within the commercial real estate industry are you in?";
+    return "Hey! Great to have you here. I'm Sky — the AI that runs Court Vision, our tracker for tenant improvement build-outs. I can show you how a build moves from LOI to certificate of occupancy, or how we protect your rent commencement date. What's your role on commercial build-outs?";
   if(skyHas(q,['price','cost','how much','pricing','plan','plans','fee','charge','subscription','affordable','cheap','expensive']))
-    return "Court Vision is priced per project. It's one fee, set when you sign and scoped to the build — change orders don't move it, and it runs through your rent commencement date. Everything it takes to set up the job and see it through to Certificate of Occupancy is included. The pricing section below lists all of it. Want me to set up a quick call to quote your project?";
+    return "Court Vision is priced per project. It's one fee, set when you sign and scoped to the build — change orders don't move it, and it runs through your rent commencement date. Everything it takes to set up the job and see it through to certificate of occupancy is included, and the pricing section below lists all of it. Want me to set up a quick call to quote your project?";
   if(skyHas(q,['trial','free','try','risk','test','no commitment','cancel','guarantee']))
     return "Court Vision is quoted per project, so the best way to try it is the live demo on this page — one build, start to finish, in about a minute. If you'd rather see it on your own job, I can set up a quick call.";
-  if(skyHas(q,['construction','contractor','build','bid','procore','clr','estimat','subcontract','project manag']))
-    return "Construction is one of our strongest verticals. We automate bid intake, proposal generation, DocuSign contract sending, Procore sync, crew notifications, and invoicing — all triggered the moment a bid comes in. Our CLR Construction client cut their admin time by over 25 hours a week. Want to see their full pipeline?";
-  if(skyHas(q,['travel','cruise','vacation','hospitality','booking','itinerary','resort','hotel']))
-    return "For travel businesses, we automate lead follow-up, booking confirmations, itinerary delivery, payment reminders, and post-trip review requests. Every client feels like a VIP without extra staff hours.";
-  if(skyHas(q,['real estate','realtor','property','listing','agent','zillow','mls','closing','buyer','seller']))
-    return "For real estate, we capture leads from Zillow, Realtor.com, and your website, follow up in under 60 seconds, automate showing scheduling, track offers in your CRM, and trigger post-close review requests. Your team only talks to leads that are ready to move. What's your biggest pain point right now?";
-  if(skyHas(q,['lead','inquiry','prospect','capture','follow up','follow-up','response time','missed calls']))
-    return "The moment a lead hits any channel — your website, email, Google Ads, referral — Sky captures it, scores it, and sends a personalized response in under 60 seconds. Studies show responding within 5 minutes increases close rates by 9x. Your team only steps in once the lead is warm and qualified.";
-  if(skyHas(q,['invoice','billing','payment','collect','accounts receivable','quickbooks','stripe']))
-    return "Invoices go out automatically the moment a job phase is marked complete — no chasing, no delays. We integrate with QuickBooks, Stripe, and most major payment systems. One of our clients recovered over $12,000 in delayed invoices in their first 30 days just from the auto-billing alone.";
+  if(skyHas(q,['construction','contractor','build','bid','clr','estimat','subcontract','project manag','gc','general contractor']))
+    return "Then you already know where builds slip: a submittal waiting on an answer, a permit sitting in review, an inspection nobody scheduled. Court Vision puts every one of those on a board with an owner and a running clock, and I chase the ball so your team doesn't have to. On the build running right now, four dropped balls got caught before they hit the schedule. What have you got coming up?";
+  if(skyHas(q,['travel','cruise','vacation','hospitality','booking','itinerary','resort','hotel','restaurant','retail','medical','dental']))
+    return "Court Vision is built for the build-out itself — so if you're opening or renovating a commercial space, that's exactly the job it runs. If that's you, tell me about the space. If you're after something else entirely, a quick call with the team is the fastest way to find out whether we're the right fit.";
+  if(skyHas(q,['real estate','realtor','property','listing','landlord','owner','zillow','mls','closing','buyer','seller','lease','tenant']))
+    return "Then the rent commencement date is your number. Late delivery credits the tenant free rent in fixed fifteen-day blocks, and that money comes straight off what the building earns. Court Vision tracks every approval and inspection between now and that date, so a slip shows up while it's still days instead of dollars. Want to see it on a live build?";
+  if(skyHas(q,['permit','inspection','plan review','examiner','submittal','rfi','approval','code']))
+    return "That's the heart of it. The permit portal gets checked every day, so a comment, a denial or an issued permit lands on the board the same day it happens — and when the permit issues, the ball passes to the contractor immediately so inspections can be called in. Submittals and RFIs are logged from sent to cleared, with the clear time recorded. Want to see how that ran on a real build?";
+  if(skyHas(q,['delay','late','slip','behind schedule','dropped','stall','chasing','status update','who has']))
+    return "Every project has the moment where someone asks who was supposed to handle that, and four stakeholders go quiet. Court Vision keeps the record while the work happens, so a slip surfaces in hours instead of at a walkthrough two weeks later. On the live build, two reviews sat unmoving — twenty-six days on plumbing, eight on electrical — and both got caught and pushed back in. Where is your build stalling?";
   if(skyHas(q,['how does it work','what do you do','what is skyrise','explain','tell me about','how it works','what exactly']))
-    return "Skyrise Pro connects all your lead sources to a central AI hub, then automates the follow-up, CRM updates, contract sending, scheduling, and invoicing — all without your team touching it. Think of it as a full back-office team that runs 24/7. What profession within the commercial real estate industry are you in? I'll show you the exact pipeline for your business.";
+    return "Your lease, plans, submittals, permit status and field photos all land on one project board. Every item gets an owner and a clock, I alert whoever holds the ball before it sits, and owners and landlords get a plain-language briefing instead of chasing you for status. At closeout, the phase photos become a film of the finished build. Want to watch the demo?";
   if(skyHas(q,['time','hours','save','roi','return','value','worth it','payback','benefit']))
-    return "On a Tenant Improvement build, the time goes to chasing status — permits, submittals, RFIs and inspections. The TI ROI calculator on this page takes your number of active builds, the hours spent chasing, and the free-rent credit in your lease, and shows what a slipped commencement date would cost. Scroll down and plug in your own numbers.";
-  if(skyHas(q,['crm','hubspot','salesforce','zapier','integrate','connect','tools','software','stack','openai']))
-    return "We integrate with HubSpot, Salesforce, Zapier, Procore, DocuSign, QuickBooks, Stripe, OpenAI, and 5,000-plus other apps through Zapier. Your existing tools stay exactly as they are — we just connect them so they work together automatically with zero manual effort.";
+    return "On a tenant improvement build, the time goes to chasing status — permits, submittals, RFIs and inspections. The TI ROI calculator on this page takes your number of active builds, the hours spent chasing, and the free-rent credit in your lease, and shows what a slipped commencement date would cost. Scroll down and plug in your own numbers.";
+  if(skyHas(q,['crm','integrate','connect','tools','software','stack','email','text','sms','alerts']))
+    return "Stakeholders don't have to learn anything new — they get an email or a text when something lands in their court, and the board holds the record. Your plans, specs and submittals live in the project vault, and every exchange is logged. Want me to walk you through it on a call?";
   if(skyHas(q,['start','get started','sign up','join','ready','begin','setup','onboard','deploy']))
-    return "Head to app.skyrisepro.ai to start building your custom system, or book a free strategy call and we'll map out your entire pipeline together — usually takes about 30 minutes. Your 30-day free trial starts the moment your system goes live.";
+    return "Easiest first step is the demo on this page — one build, start to finish. When you're ready for your own, book a strategy call and we'll scope your build and quote it. Want me to point you to the booking button?";
   if(skyHas(q,['call','talk to someone','speak','contact','human','person','rep','sales','book']))
-    return "Absolutely — click 'Book a Call' at the top of this page. A Skyrise Pro specialist will map out your complete automation pipeline with you in about 30 minutes, no pressure at all. They'll show you exactly what your pipeline would look like before you commit to anything.";
+    return "Absolutely — click 'Book a Call' at the top of this page. You'll get about thirty minutes to walk through your build with the team, no pressure at all. Have a project coming up you want scoped?";
   if(skyHas(q,['ai','artificial intelligence','bot','agent','smart','gpt','chatgpt','machine learning']))
-    return "I'm Sky — a custom AI agent built on top of leading AI models, trained specifically for Skyrise Pro workflows. Every client gets their own version of me, customized to their tone, industry, and business processes. Think of it as hiring a 24/7 rep who never misses a lead, never forgets a follow-up, and never takes a sick day.";
+    return "I'm Sky — the AI running Court Vision. I watch every clock on the board, know whose court each item is in, and reach the right person before a held day turns into a credited one. I'm the referee, not a chatbot bolted onto a spreadsheet.";
   if(skyHas(q,['who are you','what are you','are you a bot','are you real','are you human']))
-    return "I'm Sky — an AI agent built by Skyrise Pro. I'm not human, but I'm trained to answer your questions about the platform as accurately as possible. If you'd rather speak with a real person, just say 'book a call' and I'll point you in the right direction!";
+    return "I'm Sky — an AI built by Skyrise Pro. I'm not human, but I'm trained to answer your questions about Court Vision as accurately as possible. If you'd rather speak with a real person, I can point you to the booking button.";
   if(skyHas(q,['industry','industries','what industries','who do you work with','what businesses']))
-    return "Skyrise Pro was built for the commercial real estate industry — brokers, developers, GCs, architects, property managers, landlords, and investors. That said, although we were created for commercial real estate, we absolutely assist other businesses and tailor the platform to fit your brand and workflow. What kind of business do you run? I'll walk you through exactly how your system would look.";
+    return "We work on commercial tenant improvement build-outs — general contractors, developers, landlords, architects, engineers, project managers and the tenants taking the space. If you're building out commercial space, you're who this was made for.";
   if(skyHas(q,['demo','show me','see it','example','showcase','video','watch']))
-    return "There's a live demo on this page — scroll down to the 'See It Work Right Now' section and drop your name and email. Sky will send you a real automated email within 60 seconds, exactly like what your future clients would receive. It's the fastest way to feel the system in action.";
+    return "There's a live demo on this page — one Court Vision build in three parts: the tracker, the automation behind it, and the film the job ends with. Scroll to 'Want To See It Work' and press start. I'll narrate it.";
   if(skyHas(q,['thank','thanks','appreciate','awesome','great','perfect','sounds good']))
-    return "My pleasure! If you have any other questions or you're ready to get your pipeline built, I'm right here. You can also book a call or start your free 30-day trial anytime — just click the buttons at the top of the page.";
-  // Default
-  return "Great question. Skyrise Pro builds a fully custom automation pipeline for your business — from lead capture to invoicing — so your team focuses on closing deals instead of admin. What profession within the commercial real estate industry are you in? And if you're in another field — although we were created for commercial real estate, we absolutely tailor the platform to other businesses and brands too. Tell me what you do and I'll map out exactly how the system would work for you.";
+    return "My pleasure. If you've got a build coming up, the demo on this page is the fastest way to see how it runs — or book a call and we'll scope yours. I'm right here either way.";
+  // Public default
+  return "Great question. Court Vision tracks a tenant improvement build from the letter of intent to the certificate of occupancy, so every approval has an owner and your rent commencement date stops being a guess. What's your role on commercial build-outs?";
 }
 
 // ── TEXT CHAT SEND ────────────────────────────────────────────
@@ -6569,7 +6579,7 @@ var CRE_ES={
  "JOIN SKYRISE PRO":"ÚNETE A SKYRISE PRO",
  "CREATE ACCOUNT":"CREAR CUENTA",
  "CREATE ACCOUNT →":"CREAR CUENTA →",
- "START YOUR 30-DAY FREE TRIAL — NO CREDIT CARD REQUIRED.":"COMIENZA TU PRUEBA GRATIS DE 30 DÍAS — SIN TARJETA DE CRÉDITO.",
+ "CREATE YOUR ACCOUNT — NO CREDIT CARD REQUIRED.":"CREA TU CUENTA — SIN TARJETA DE CRÉDITO.",
  "FULL NAME":"NOMBRE COMPLETO",
  "EMAIL":"CORREO ELECTRÓNICO",
  "PASSWORD":"CONTRASEÑA",
@@ -6651,12 +6661,12 @@ var CRE_ES={
  "We'll review your responses within 2 business days and reach out to schedule your discovery call.":"Revisaremos tus respuestas en un plazo de 2 días hábiles y te contactaremos para agendar tu llamada de descubrimiento.",
  "IF EVERYTHING WENT RIGHT, WHAT DOES SKYRISE PRO FREE YOU UP TO DO IN THE NEXT 90 DAYS?":"SI TODO SALIERA BIEN, ¿QUÉ TE PERMITIRÍA HACER SKYRISE PRO EN LOS PRÓXIMOS 90 DÍAS?",
  "HOW WILL YOU KNOW THIS WAS WORTH THE INVESTMENT?":"¿CÓMO SABRÁS QUE VALIÓ LA INVERSIÓN?",
- "ANY SPECIFIC OUTCOME TO TARGET IN THE FIRST 30-DAY TRIAL?":"¿ALGÚN RESULTADO ESPECÍFICO A LOGRAR EN LA PRUEBA DE 30 DÍAS?",
+ "WHAT WOULD MAKE THE FIRST MONTH A WIN?":"¿QUÉ HARÍA DEL PRIMER MES UN ÉXITO?",
  "PLAN INTEREST (NOT A COMMITMENT — WE'LL CONFIRM ON THE CALL)":"PLAN DE INTERÉS (NO ES UN COMPROMISO — LO CONFIRMAMOS EN LA LLAMADA)",
- "PROFESSIONAL — $749.89/mo — Full AI Agent + Automation":"PROFESSIONAL — $749.89/mes — Agente IA Completo + Automatización",
- "ELITE — $849.89/mo — Full AI Agency (includes Sky)":"ELITE — $849.89/mes — Agencia IA Completa (incluye Sky)",
- "COURT VISION — Priced per project — Full Platform + Court Vision Team":"COURT VISION — Precio por proyecto — Plataforma Completa + Equipo Court Vision",
- "CINEMATIC VIDEO ONLY — $1,750 one-time":"SOLO VIDEO CINEMATOGRÁFICO — $1,750 pago único",
+ "MONTHLY AUTOMATION PLAN — quoted on the call":"PLAN MENSUAL DE AUTOMATIZACIÓN — cotizado en la llamada",
+ "MONTHLY AUTOMATION PLAN + AGENCY SUPPORT — quoted on the call":"PLAN MENSUAL + SOPORTE DE AGENCIA — cotizado en la llamada",
+ "COURT VISION — Priced per project — the TI project tracker, LOI to Certificate of Occupancy":"COURT VISION — Precio por proyecto — Plataforma Completa + Equipo Court Vision",
+ "CINEMATIC VIDEO ONLY — one production":"SOLO VIDEO CINEMATOGRÁFICO — $1,750 pago único",
  "NOT SURE YET — recommend the right fit on the call":"AÚN NO ESTOY SEGURO — recomienden la mejor opción en la llamada",
  "DOCUMENTS YOU CAN SHARE NOW (SPEEDS UP THE BUILD — OPTIONAL)":"DOCUMENTOS QUE PUEDES COMPARTIR AHORA (ACELERA LA CONSTRUCCIÓN — OPCIONAL)",
  "LEAD INTAKE FORM":"FORMULARIO DE CAPTURA DE CLIENTES",
@@ -6669,7 +6679,7 @@ var CRE_ES={
  "SUBMIT & BOOK MY CALL →":"ENVIAR Y AGENDAR MI LLAMADA →",
  /* success */
  "YOU'RE ALL SET,":"¡TODO LISTO,",
- "Your intake has been received. A Skyrise Pro rep will email you to request the documents we need to launch. After we receive everything, your build takes about two weeks, then about a one-week test run — and your 30-day free trial begins after that. Lock in your spot with the one-time $500 setup fee below, or book a call and we'll walk you through it first.":"Hemos recibido tu información. Un representante de Skyrise Pro te enviará un correo para solicitar los documentos que necesitamos para lanzar. Una vez que recibamos todo, tu construcción toma alrededor de dos semanas, luego una prueba de aproximadamente una semana — y tu prueba gratis de 30 días comienza después de eso. Asegura tu lugar con la tarifa única de configuración de $500 abajo, o agenda una llamada y te lo explicamos primero.",
+ "Your intake has been received. A Skyrise Pro rep will email you to request the documents we need to launch. After we receive everything, your build takes about two weeks, then about a one-week test run. Book the call below and we'll scope your build and quote it.":"Hemos recibido tu información. Un representante de Skyrise Pro te enviará un correo para solicitar los documentos que necesitamos para lanzar. Una vez que recibamos todo, tu construcción toma alrededor de dos semanas, luego una prueba de aproximadamente una semana — y tu prueba gratis de 30 días comienza después de eso. Asegura tu lugar con la tarifa única de configuración de $500 abajo, o agenda una llamada y te lo explicamos primero.",
  "▶ GET STARTED — $500 SETUP FEE":"▶ COMENZAR — TARIFA DE CONFIGURACIÓN $500",
  "BOOK MY FREE STRATEGY CALL →":"AGENDA MI LLAMADA ESTRATÉGICA GRATIS →",
  /* placeholders */

@@ -289,40 +289,39 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
    deliberately NOT named. The record tab describes the vault that actually
    exists (9 folders reconciled to disk); it does not claim a dispute win,
    because none has been confirmed. */
-/* Sky blue band, matching the hero's left edge (#c5e8f5), with cyan rules
-   top and bottom dividing it from the sections either side. Flipping this
-   section off navy meant re-tuning EVERY colour inside it — the old values
-   were light-on-dark and would have been invisible here. */
+/* Navy band (Victor 2026-09-18 — the sky blue moved up to #services). Every
+   colour inside this section is light-on-dark; if it ever flips back to a light
+   background, ALL of them have to be re-tuned together or the text disappears. */
 #cred{padding:66px 60px;
-  background:linear-gradient(to right,#c5e8f5 0%,#d6eef8 38%,#e9f6fd 100%);
+  background:linear-gradient(135deg,#0a1628 0%,#102743 55%,#0a1628 100%);
   border-top:2px solid var(--cyan);border-bottom:2px solid var(--cyan);}
 .cr-inner{max-width:1060px;margin:0 auto;}
-.cr-tabs{display:flex;gap:4px;margin-bottom:4px;border-bottom:1px solid rgba(10,22,40,.16);}
+.cr-tabs{display:flex;gap:4px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,.14);}
 .cr-tab{appearance:none;background:none;border:none;cursor:pointer;font-family:'Orbitron',sans-serif;
-  font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(10,22,40,.45);
+  font-size:10.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(200,225,240,.45);
   padding:12px 16px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s;}
-.cr-tab:hover{color:rgba(10,22,40,.8);}
-.cr-tab[aria-selected="true"]{color:#0a1628;border-bottom-color:var(--cyan);}
+.cr-tab:hover{color:rgba(255,255,255,.8);}
+.cr-tab[aria-selected="true"]{color:#fff;border-bottom-color:var(--cyan);}
 .cr-panel{padding-top:26px;}
 .cr-panel[hidden]{display:none;}
-.cr-lead{font-size:15px;line-height:1.78;color:rgba(10,22,40,.74);margin:0 0 24px;max-width:74ch;}
-.cr-lead b{color:#0a1628;font-weight:700;}
+.cr-lead{font-size:15px;line-height:1.78;color:rgba(200,225,240,.75);margin:0 0 24px;max-width:74ch;}
+.cr-lead b{color:#fff;font-weight:700;}
 .cr-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px;}
-.cr-stat{background:rgba(255,255,255,.72);border:1px solid rgba(0,168,196,.28);border-radius:10px;padding:16px 18px;}
-.cr-n{font-family:'Orbitron',sans-serif;font-size:23px;font-weight:900;color:#0a1628;line-height:1;letter-spacing:.3px;}
-.cr-l{font-size:11px;line-height:1.5;color:rgba(10,22,40,.55);margin-top:8px;}
-.cr-note{font-size:14px;line-height:1.75;color:rgba(10,22,40,.78);margin:0;padding-left:14px;border-left:3px solid var(--cyan);}
-.cr-note b{color:#0a1628;font-weight:700;}
+.cr-stat{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:16px 18px;}
+.cr-n{font-family:'Orbitron',sans-serif;font-size:23px;font-weight:900;color:#fff;line-height:1;letter-spacing:.3px;}
+.cr-l{font-size:11px;line-height:1.5;color:rgba(200,225,240,.5);margin-top:8px;}
+.cr-note{font-size:14px;line-height:1.75;color:rgba(200,225,240,.78);margin:0;padding-left:14px;border-left:3px solid var(--cyan);}
+.cr-note b{color:#fff;font-weight:700;}
 .fact-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
-.fact{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.72);border:1px solid rgba(0,168,196,.28);border-left:4px solid var(--cyan);border-radius:10px;padding:15px 18px;}
-.fact-n{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:#0d8fa8;line-height:1.1;min-width:84px;}
-.fact-b b{display:block;font-size:14.5px;line-height:1.55;color:#0a1628;margin-bottom:5px;}
-.fact-b span{font-size:12px;line-height:1.6;color:rgba(10,22,40,.6);}
-.fact-b a{color:#0d8fa8;}
+.fact{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-left:4px solid var(--cyan);border-radius:10px;padding:15px 18px;}
+.fact-n{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--cyan);line-height:1.1;min-width:84px;}
+.fact-b b{display:block;font-size:14.5px;line-height:1.55;color:#fff;margin-bottom:5px;}
+.fact-b span{font-size:12px;line-height:1.6;color:rgba(200,225,240,.6);}
+.fact-b a{color:var(--cyan);}
 @media(max-width:620px){.fact{flex-direction:column;gap:6px;}.fact-n{min-width:0;}}
 .cr-folders{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px;}
 .cr-folder{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
-  color:#0d6f85;background:rgba(255,255,255,.7);border:1px solid rgba(0,168,196,.3);border-radius:6px;padding:7px 11px;}
+  color:rgba(200,225,240,.7);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:6px;padding:7px 11px;}
 @media(max-width:900px){#cred{padding:52px 24px;}}
 .who-lead{font-size:13.5px;line-height:1.7;color:rgba(10,22,40,.72);margin:0 0 16px;max-width:80ch;}
 .who-lead b{color:#0a1628;font-weight:700;}
@@ -372,7 +371,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @keyframes tickerScroll{0%{transform:translate3d(0,0,0);}100%{transform:translate3d(-25%,0,0);}}
 
 /* ── SERVICES ───────────────────────────────────────────────── */
-#services{padding:50px 60px 70px;background:linear-gradient(135deg,#e8f4fb 0%,#f5fbff 50%,#ffffff 100%);scroll-margin-top:160px;}
+/* The sky-blue band moved here from #cred (Victor 2026-09-18); cred went back to navy. */
+#services{padding:50px 60px 70px;background:linear-gradient(to right,#c5e8f5 0%,#d6eef8 38%,#e9f6fd 100%);scroll-margin-top:160px;}
 .services-new-inner{max-width:1100px;margin:0 auto;}
 .srv-header-box{background:#fff;border:1.5px solid var(--cyan);border-radius:20px;padding:10px 24px;margin-bottom:12px;box-shadow:0 0 14px rgba(0,200,232,0.1),0 2px 8px rgba(10,22,40,0.05);display:flex;flex-direction:row;align-items:center;gap:16px;}
 .services-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;}

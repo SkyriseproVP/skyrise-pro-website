@@ -733,10 +733,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .roi-cta-btn:hover{background:var(--cyan2);}
 
 /* ── DEMO ────────────────────────────────────────────────────── */
-#demo-section{background:var(--navy);padding:80px 60px;}
+/* Sky blue, matching the cred band. Text flips to navy; the three part cards stay dark. */
+#demo-section{background:linear-gradient(to right,#c5e8f5 0%,#d6eef8 38%,#e9f6fd 100%);border-top:2px solid var(--cyan);border-bottom:2px solid var(--cyan);padding:80px 60px;}
 .demo-inner{max-width:900px;margin:0 auto;text-align:center;}
-.demo-title{font-size:clamp(24px,4vw,38px);font-weight:900;letter-spacing:1px;color:#fff;margin-bottom:14px;line-height:1.1;}
-.demo-sub{font-family:'Orbitron',sans-serif;font-size:14px;color:var(--text-mid);margin-bottom:36px;line-height:1.7;text-transform:none;letter-spacing:0;}
+.demo-title{font-size:clamp(24px,4vw,38px);font-weight:900;letter-spacing:1px;color:#0a1628;margin-bottom:14px;line-height:1.1;}
+.demo-sub{font-family:'Orbitron',sans-serif;font-size:14px;color:rgba(13,21,38,.72);margin-bottom:36px;line-height:1.7;text-transform:none;letter-spacing:0;}
 .demo-launch-btn{display:inline-flex;align-items:center;gap:10px;background:var(--cyan);border:none;border-radius:10px;padding:18px 48px;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#000;cursor:pointer;transition:all .2s;text-decoration:none;box-shadow:0 0 28px rgba(0,200,232,.35);}
 .demo-launch-btn:hover{background:var(--cyan2);box-shadow:0 0 40px rgba(0,200,232,.55);transform:translateY(-2px);}
 .demo-launch-btn .play-icon{width:18px;height:18px;border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;flex-shrink:0;}
@@ -785,13 +786,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @media(max-width:1024px){ .vault-grid{grid-template-columns:1fr;} }
 /* Demo: one demo, three parts */
 .demo-parts-wrap{margin-top:52px;}
-.demo-parts-label{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:rgba(0,200,232,.7);letter-spacing:3px;margin-bottom:22px;text-align:center;}
+.demo-parts-label{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;color:#0d8fa8;letter-spacing:3px;margin-bottom:22px;text-align:center;}
 .demo-parts{display:flex;align-items:stretch;justify-content:center;gap:10px;max-width:1000px;margin:0 auto;}
 .demo-part{flex:1;min-width:0;max-width:300px;text-align:left;}
 .demo-part-num{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--cyan);margin-bottom:8px;line-height:1;}
 .demo-part-name{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:#fff;letter-spacing:1.5px;margin-bottom:8px;}
 .demo-part-desc{font-family:system-ui,sans-serif;font-size:12.5px;color:rgba(175,215,232,.72);margin:0;line-height:1.6;}
-.demo-part-arrow{align-self:center;color:rgba(0,200,232,.6);font-size:20px;flex:0 0 auto;}
+.demo-part-arrow{align-self:center;color:#0d8fa8;font-size:20px;flex:0 0 auto;}
 @media(max-width:760px){
   .demo-parts{flex-direction:column;align-items:center;}
   .demo-part{max-width:none;width:100%;}
@@ -857,7 +858,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .price-card.featured .price-book:hover{background:rgba(0,222,255,0.1);}
 /* Demo section Book a Call wrap */
 .demo-book-wrap{margin-top:24px;display:flex;justify-content:center;}
-.demo-book-btn{display:inline-flex;align-items:center;gap:9px;border:1.5px solid var(--cyan);border-radius:10px;padding:13px 30px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:var(--cyan);background:transparent;cursor:pointer;text-decoration:none;transition:all .2s;}
+.demo-book-btn{display:inline-flex;align-items:center;gap:9px;border:1.5px solid #0d8fa8;border-radius:10px;padding:13px 30px;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#0d8fa8;background:transparent;cursor:pointer;text-decoration:none;transition:all .2s;}
 .demo-book-btn:hover{background:rgba(0,200,232,0.1);box-shadow:0 0 18px rgba(0,200,232,.2);}
 .pricing-fine{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--body-dim);margin-top:24px;text-transform:none;letter-spacing:0;}
 
@@ -2195,7 +2196,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         <div class="cr-stat"><div class="cr-n">4M</div><div class="cr-l">Sq ft of commercial space</div></div>
         <div class="cr-stat"><div class="cr-n">PM</div><div class="cr-l">and owner&rsquo;s rep &mdash; the seat that carries the date</div></div>
       </div>
-      <p class="cr-note"><b>Which is why this page shows a real job rather than a case study.</b> The denied electrical review, the days held on plumbing, the credited rent blocks &mdash; that is a live lease on a live project, this week. Every feature here exists because something on a jobsite went wrong first.</p>
+      <p class="cr-note"><b>Which is why this page shows a real job rather than a case study.</b> The denied electrical review, the <b>34 days two permit reviews sat unmoving</b> &mdash; 26 on plumbing, 8 on electrical &mdash; the credited rent blocks: that is a live lease on a live project, this week. Every feature here exists because something on a jobsite went wrong first, and because someone with the scar tissue to recognise it stayed on the phone until it moved. <b>That is what built this &mdash; the experience to see the slip coming, and the grit to chase it down.</b></p>
     </div>
 
     <div class="cr-panel" id="crpanel-rec" role="tabpanel" aria-labelledby="crtab-rec" hidden>
@@ -2573,7 +2574,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         },1800);
       }else if(type==='cinematic'){
         narrate('Here is the last part. At every phase of work, from demolition to the final walkthrough, photos are taken on site and tagged to that phase. When the job closes, they are cut into one film that showcases the finished construction and the players who built it. That film goes in the video vault and keeps working long after the punch list is done.',false);
-        setTimeout(function(){var v=document.getElementById('video');if(v)v.scrollIntoView({behavior:'smooth',block:'start'});},1800);
       }
     };
 
@@ -3728,8 +3728,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
   <div style="height:2px;background:linear-gradient(90deg,var(--cyan) 0%,rgba(0,200,232,0.35) 50%,rgba(255,255,255,0) 100%);border-radius:2px;"></div>
 </div>
 
-<!-- ── VIDEO VAULT ────────────────────────────────────────────── -->
-
 <!-- ── VIDEO LIGHTBOX ─────────────────────────────────────────── -->
 <div class="vid-lightbox" id="vid-lightbox" onclick="closeLightboxOutside(event)">
   <button class="vid-lightbox-close" onclick="closeLightbox()">✕</button>
@@ -3824,56 +3822,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 </div>
 
 <!-- ── DEMO ───────────────────────────────────────────────────── -->
-<section id="video">
-  <div class="video-inner">
-    <div class="vid-badge">COURT VISION · CLOSEOUT FILMS</div>
-    <h2 class="vid-title">VIDEO VAULT</h2>
-    <p class="vid-sub">Every Court Vision build is photographed phase by phase and closes with a film of the finished space and the players who built it. Finished projects land here.</p>
-    <div class="vid-grid vault-grid">
-      <div class="vid-card">
-        <div class="vid-player">
-          <video id="vid2" preload="none" playsinline><source src="fulcrum-final.mp4" type="video/mp4"></video>
-          <div class="vid-play-overlay" id="vid2-overlay" onclick="playVid('vid2')">
-            <div class="vid-play-circle">▶</div>
-          </div>
-          <button class="vid-expand-btn" onclick="openLightbox('fulcrum-final.mp4','PROPERTY SHOWCASE')" title="Fullscreen">⛶</button>
-        </div>
-        <div style="padding:14px 16px;background:#111;">
-          <span class="vid-badge-tag orange">PROPERTY SHOWCASE</span>
-          <div class="vid-card-title">COMMERCIAL PROPERTY SHOWCASE</div>
-          <div class="vid-card-sub">Cinematic showcase — commercial real estate</div>
-        </div>
-      </div>
-      <div class="vid-card">
-        <div class="vid-player">
-          <video id="vid1" preload="none" playsinline><source src="videoisking.mp4" type="video/mp4"></video>
-          <div class="vid-play-overlay" id="vid1-overlay" onclick="playVid('vid1')">
-            <div class="vid-play-circle">▶</div>
-          </div>
-          <button class="vid-expand-btn" onclick="openLightbox('videoisking.mp4','SKYRISE PRO — PRODUCTION REEL')" title="Fullscreen">⛶</button>
-        </div>
-        <div style="padding:14px 16px;background:#111;">
-          <span class="vid-badge-tag cyan">SKYRISE PRO</span>
-          <div class="vid-card-title">PRODUCTION REEL</div>
-          <div class="vid-card-sub">The look every closeout film is cut to</div>
-        </div>
-      </div>
-      <div class="vid-card vault-next">
-        <div class="vault-next-body">
-          <div class="vault-next-icon">🎬</div>
-          <div class="vault-next-kicker">IN PRODUCTION</div>
-          <div class="vault-next-title">LIVE COURT VISION BUILD</div>
-          <p class="vault-next-desc">Photos are being captured at every phase of work on the build at the top of this page. The film opens here at closeout.</p>
-        </div>
-        <div style="padding:14px 16px;background:#111;">
-          <span class="vid-badge-tag cyan">NEXT IN THE VAULT</span>
-          <div class="vid-card-title">TENANT IMPROVEMENT BUILD-OUT</div>
-          <div class="vid-card-sub">Filming phase by phase through Certificate of Occupancy</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Video Vault moved behind sign-in — it lives on the Skyrise Pro admin dashboard only. -->
 <section id="demo-section">
   <div class="demo-inner">
     <h2 class="demo-title">WANT TO SEE IT WORK?<br><span style="color:var(--cyan);font-size:.75em;">RIGHT NOW.</span></h2>

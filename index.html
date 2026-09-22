@@ -13,6 +13,34 @@
 </script>
 <meta name="description" content="Skyrise Pro — Tenant Improvement Intelligence. Every TI build documented from LOI to Certificate of Occupancy: a live record of every stage, approval, and change order, so schedule slips and budget overruns surface while you can still fix them.">
 <title>Skyrise Pro — Tenant Improvement Intelligence</title>
+<link rel="canonical" href="https://skyrisepro.ai/">
+<!-- Social share card: a link forwarded to a landlord/PM/architect/engineer without
+     these renders with no title, no image, no reason to click. -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://skyrisepro.ai/">
+<meta property="og:site_name" content="Skyrise Pro">
+<meta property="og:title" content="Skyrise Pro — Tenant Improvement Intelligence">
+<meta property="og:description" content="Every TI build, documented from LOI to Certificate of Occupancy. A live record of every stage, approval, and change order — so schedule slips and budget overruns surface while you can still fix them.">
+<meta property="og:image" content="https://skyrisepro.ai/cyan-logo.png?v=2">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Skyrise Pro",
+  "url": "https://skyrisepro.ai/",
+  "logo": "https://skyrisepro.ai/cyan-logo.png?v=2",
+  "description": "Tenant improvement project intelligence — Court Vision tracks a commercial build from letter of intent to Certificate of Occupancy, with every stakeholder, approval and inspection on one live board.",
+  "makesOffer": {
+    "@type": "Offer",
+    "itemOffered": {
+      "@type": "Service",
+      "name": "Court Vision",
+      "serviceType": "Tenant improvement project tracking and automation",
+      "description": "A live project tracker for commercial tenant improvement build-outs, from letter of intent to Certificate of Occupancy, with automated stakeholder alerts and a closeout film."
+    }
+  }
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
@@ -312,6 +340,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .cr-l{font-size:11px;line-height:1.5;color:rgba(200,225,240,.5);margin-top:8px;}
 .cr-note{font-size:14px;line-height:1.75;color:rgba(200,225,240,.78);margin:0;padding-left:14px;border-left:3px solid var(--cyan);}
 .cr-note b{color:#fff;font-weight:700;}
+/* Q&A pairs inside #crpanel-faq — same 8/24 rhythm as the rest of #cred, tight
+   question-to-answer, full 24px before the next question. */
+.cr-q{margin:0 0 8px;}
+.cr-a{margin:0 0 24px;}
+.cr-a:last-child{margin-bottom:0;}
 .fact-list{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
 .fact{display:flex;gap:16px;align-items:flex-start;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);border-left:4px solid var(--cyan);border-radius:10px;padding:15px 18px;}
 .fact-n{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--cyan);line-height:1.1;min-width:84px;}
@@ -321,7 +354,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 @media(max-width:620px){.fact{flex-direction:column;gap:6px;}.fact-n{min-width:0;}}
 .cr-folders{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px;}
 .cr-folder{font-family:'Orbitron',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
-  color:rgba(200,225,240,.7);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:6px;padding:7px 11px;}
+  color:var(--cyan);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);border-radius:6px;padding:7px 11px;}
 @media(max-width:900px){#cred{padding:52px 24px;}}
 .who-lead{font-size:13.5px;line-height:1.7;color:rgba(10,22,40,.72);margin:0 0 16px;max-width:80ch;}
 .who-lead b{color:#0a1628;font-weight:700;}
@@ -955,12 +988,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 .social-btn svg{width:13px;height:13px;fill:currentColor;flex-shrink:0;}
 .social-btn.si-linkedin{color:#0A66C2;border:1.5px solid rgba(10,102,194,.35);background:rgba(10,102,194,.06);}
 .social-btn.si-instagram{border:1.5px solid rgba(214,36,159,.35);background:rgba(214,36,159,.06);}
-.social-btn.si-youtube{color:#FF0000;border:1.5px solid rgba(255,0,0,.35);background:rgba(255,0,0,.06);}
-.social-btn.si-facebook{color:#1877F2;border:1.5px solid rgba(24,119,242,.35);background:rgba(24,119,242,.06);}
 .social-btn.si-linkedin:hover{background:rgba(10,102,194,.14);border-color:#0A66C2;}
 .social-btn.si-instagram:hover{background:rgba(225,48,108,.14);border-color:#E1306C;}
-.social-btn.si-youtube:hover{background:rgba(255,0,0,.14);border-color:#FF0000;}
-.social-btn.si-facebook:hover{background:rgba(24,119,242,.14);border-color:#1877F2;}
 .footer-bottom{max-width:1200px;margin:0 auto;padding:12px 0;border-top:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;font-family:'Orbitron',sans-serif;font-size:9px;color:var(--body-dim);text-transform:none;letter-spacing:0;}
 .footer-bottom a{color:var(--body-dim);text-decoration:none;}
 .footer-bottom a:hover{color:var(--cyan);}
@@ -2194,6 +2223,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <button class="cr-tab" role="tab" id="crtab-who" aria-controls="crpanel-who" aria-selected="true" onclick="crTab('who')">Who runs this</button>
       <button class="cr-tab" role="tab" id="crtab-rec" aria-controls="crpanel-rec" aria-selected="false" onclick="crTab('rec')">The record you keep</button>
       <button class="cr-tab" role="tab" id="crtab-facts" aria-controls="crpanel-facts" aria-selected="false" onclick="crTab('facts')">Industry facts</button>
+      <button class="cr-tab" role="tab" id="crtab-faq" aria-controls="crpanel-faq" aria-selected="false" onclick="crTab('faq')">Questions</button>
     </div>
 
     <div class="cr-panel" id="crpanel-who" role="tabpanel" aria-labelledby="crtab-who">
@@ -2204,33 +2234,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         <div class="cr-stat"><div class="cr-n">13M</div><div class="cr-l">Sq ft of commercial space</div></div>
         <div class="cr-stat"><div class="cr-n">PM</div><div class="cr-l">and owner&rsquo;s rep &mdash; the seat that carries the date</div></div>
       </div>
-      <div class="cr-panel" id="crpanel-facts" role="tabpanel" aria-labelledby="crtab-facts" hidden>
-        <p class="cr-lead">None of this is our data. It is what the industry measures about itself &mdash; the reason a build-out needs a record in the first place. Every figure is sourced; follow the link and read it yourself.</p>
-        <div class="fact-list">
-          <div class="fact">
-            <div class="fact-n">20%</div>
-            <div class="fact-b"><b>Large projects run about 20% longer than scheduled, and up to 80% over budget.</b>
-              <span>McKinsey &amp; Company, <em>Imagining construction&rsquo;s digital future</em> (2016) &middot; <a href="https://www.mckinsey.com/~/media/McKinsey/Industries/Capital%20Projects%20and%20Infrastructure/Our%20Insights/Imagining%20constructions%20digital%20future/Imagining-constructions-digital-future.pdf" target="_blank" rel="noopener">Read the report</a></span></div>
-          </div>
-          <div class="fact">
-            <div class="fact-n">48%</div>
-            <div class="fact-b"><b>Nearly half of all rework on U.S. jobsites traces back to miscommunication and poor project data &mdash; not to bad workmanship.</b>
-              <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018) &middot; 26% poor communication, 22% bad or inaccessible information &middot; <a href="https://www.autodesk.com/blogs/construction/construction-disconnected-fmi-report/" target="_blank" rel="noopener">Read the findings</a></span></div>
-          </div>
-          <div class="fact">
-            <div class="fact-n">2 days</div>
-            <div class="fact-b"><b>Crews lose close to two full days a week to avoidable issues and hunting for project information.</b>
-              <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018) &middot; <a href="https://www.constructionspecifier.com/survey-estimates-time-and-money-lost-to-rework-and-miscommunication/" target="_blank" rel="noopener">Read the summary</a></span></div>
-          </div>
-          <div class="fact">
-            <div class="fact-n">$177B</div>
-            <div class="fact-b"><b>Rework, chasing information and resolving conflict cost U.S. construction about $177.5 billion a year in labor.</b>
-              <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018), ~600 industry leaders surveyed &middot; <a href="https://www.prnewswire.com/news-releases/new-research-from-plangrid-and-fmi-identifies-factors-costing-the-construction-industry-more-than-177-billion-annually-300689826.html" target="_blank" rel="noopener">Read the release</a></span></div>
-          </div>
-        </div>
-        <p class="cr-lead" style="margin-bottom:0;">Read them together and they say one thing: the schedule rarely dies from bad building. It dies from information sitting with the wrong person. That is the gap this platform closes.</p>
-      </div>
-
       <p class="cr-note"><b>Which is why this page shows a real job rather than a case study.</b> The denied electrical review, the <b>34 days two permit reviews sat unmoving</b> &mdash; 26 on plumbing, 8 on electrical &mdash; the credited rent blocks: that is a live lease on a live project, this week. Every feature here exists because something on a jobsite went wrong first, and because someone with the scar tissue to recognise it stayed on the phone until it moved. <b>That is what built this &mdash; the experience to see the slip coming, and the grit to chase it down.</b></p>
     </div>
 
@@ -2249,6 +2252,53 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <p class="cr-lead">Alongside the files sits the possession history: <b>who held each item, when it moved, what they were sent, what came back, and how long it sat</b> &mdash; every approval, denial and change order timestamped against the stakeholder who owned it.</p>
       <p class="cr-lead">Sooner or later somebody says the sentence: <b>&ldquo;I&rsquo;m waiting on the engineer.&rdquo;</b> Or the architect. Usually it is true &mdash; and that is exactly the problem, because without a record it is unanswerable either way. The week goes by and nobody can say whose week it was.</p>
       <p class="cr-note">The record answers it in seconds &mdash; who holds the item, since when, and how many days it has sat. <b>&ldquo;Waiting on approvals&rdquo; stops being a position and becomes a checkable fact</b> &mdash; which clears the contractor who genuinely is waiting just as fast as it surfaces the item nobody picked up. And when a change order is contested or a delay claim lands, the argument is settled the same way: most projects go hunting through inboxes months later to assemble that. On this one it already exists, finished, the day the job closes.</p>
+    </div>
+
+    <div class="cr-panel" id="crpanel-facts" role="tabpanel" aria-labelledby="crtab-facts" hidden>
+      <p class="cr-lead">None of this is our data. It is what the industry measures about itself &mdash; the reason a build-out needs a record in the first place. Every figure is sourced; follow the link and read it yourself.</p>
+      <div class="fact-list">
+        <div class="fact">
+          <div class="fact-n">20%</div>
+          <div class="fact-b"><b>Large projects run about 20% longer than scheduled, and up to 80% over budget.</b>
+            <span>McKinsey &amp; Company, <em>Imagining construction&rsquo;s digital future</em> (2016) &middot; <a href="https://www.mckinsey.com/~/media/McKinsey/Industries/Capital%20Projects%20and%20Infrastructure/Our%20Insights/Imagining%20constructions%20digital%20future/Imagining-constructions-digital-future.pdf" target="_blank" rel="noopener">Read the report</a></span></div>
+        </div>
+        <div class="fact">
+          <div class="fact-n">48%</div>
+          <div class="fact-b"><b>Nearly half of all rework on U.S. jobsites traces back to miscommunication and poor project data &mdash; not to bad workmanship.</b>
+            <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018) &middot; 26% poor communication, 22% bad or inaccessible information &middot; <a href="https://www.autodesk.com/blogs/construction/construction-disconnected-fmi-report/" target="_blank" rel="noopener">Read the findings</a></span></div>
+        </div>
+        <div class="fact">
+          <div class="fact-n">2 days</div>
+          <div class="fact-b"><b>Crews lose close to two full days a week to avoidable issues and hunting for project information.</b>
+            <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018) &middot; <a href="https://www.constructionspecifier.com/survey-estimates-time-and-money-lost-to-rework-and-miscommunication/" target="_blank" rel="noopener">Read the summary</a></span></div>
+        </div>
+        <div class="fact">
+          <div class="fact-n">$177B</div>
+          <div class="fact-b"><b>Rework, chasing information and resolving conflict cost U.S. construction about $177.5 billion a year in labor.</b>
+            <span>FMI + PlanGrid, <em>Construction Disconnected</em> (2018), ~600 industry leaders surveyed &middot; <a href="https://www.prnewswire.com/news-releases/new-research-from-plangrid-and-fmi-identifies-factors-costing-the-construction-industry-more-than-177-billion-annually-300689826.html" target="_blank" rel="noopener">Read the release</a></span></div>
+        </div>
+      </div>
+      <p class="cr-lead" style="margin-bottom:0;">Read them together and they say one thing: the schedule rarely dies from bad building. It dies from information sitting with the wrong person. That is the gap this platform closes.</p>
+    </div>
+
+    <div class="cr-panel" id="crpanel-faq" role="tabpanel" aria-labelledby="crtab-faq" hidden>
+      <p class="cr-lead cr-q"><b>Does my GC, architect or engineer have to log in and use this too?</b></p>
+      <p class="cr-note cr-a">Each stakeholder is invited individually when the job is set up, and whether their participation is required or optional is the project lead&rsquo;s call. Either way, Court Vision fits how your team already works &mdash; it doesn&rsquo;t ask anyone to change how they operate.</p>
+
+      <p class="cr-lead cr-q"><b>How long does setup take on a new project?</b></p>
+      <p class="cr-note cr-a">Typically two to three weeks, depending on the size and complexity of the build. The lease, plan set and schedule get loaded, every stakeholder signs on, and the board is live and tracking before your first major milestone.</p>
+
+      <p class="cr-lead cr-q"><b>What happens to our project data if we ever stop using Court Vision?</b></p>
+      <p class="cr-note cr-a">It&rsquo;s yours. At closeout you get the full record &mdash; every approval, submittal, permit and inspection, plus the closeout film &mdash; exported and handed to you directly. If you&rsquo;d rather it came off our systems after that, we do it on request. Most owners keep the export: construction-defect claims can surface for years after a Certificate of Occupancy, and this record is usually the best evidence either side has.</p>
+
+      <p class="cr-lead cr-q"><b>Does this replace my project manager?</b></p>
+      <p class="cr-note cr-a">No. Court Vision runs alongside your PM, not instead of them &mdash; it&rsquo;s the record and the alerting that keeps nothing sitting on a desk. Your PM still runs the job.</p>
+
+      <p class="cr-lead cr-q"><b>What if the project&rsquo;s scope or timeline changes mid-build?</b></p>
+      <p class="cr-note cr-a">The board gets updated to match the new signed agreement, so the tracker always reflects the real deal, not the one you started with. A significant scope change is scoped and quoted separately at that point.</p>
+
+      <p class="cr-lead cr-q"><b>Will Sky&rsquo;s alerts spam my whole team?</b></p>
+      <p class="cr-note cr-a">No. Sky alerts whoever is actually holding the ball, by email, the moment something&rsquo;s waiting on them &mdash; it&rsquo;s their item on the dashboard and their responsibility to move it. Everyone else stays out of the noise.</p>
     </div>
   </div>
 </section>
@@ -3861,7 +3911,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 <section id="demo-section">
   <div class="demo-inner">
     <h2 class="demo-title">WANT TO SEE IT WORK?<br><span style="color:var(--cyan);font-size:.75em;">RIGHT NOW.</span></h2>
-    <p class="demo-sub">Sky pops up, explains what we do, then walks you through one Court Vision build in three parts —<br>the tracker, the automation behind it, and the film it ends with. Live, with voice.</p>
+    <p class="demo-sub">Let's walk you through one Court Vision build in three parts —<br>the tracker, the automation behind it, and the film it ends with. Live.</p>
     <a href="demo.html" class="demo-launch-btn">
       <span class="play-icon">▶</span>
       SEE IT WORK — 60 SECONDS →
@@ -4048,12 +4098,6 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
             <path fill="url(#ig-grad)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
           </svg>
         </a>
-        <a href="#" class="social-btn si-youtube" aria-label="YouTube">
-          <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
-        </a>
-        <a href="#" class="social-btn si-facebook" aria-label="Facebook">
-          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
       </div>
     </div>
   </div>
@@ -4184,7 +4228,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
    panel keeps whatever display the stylesheet gives it when shown. */
 /* Credibility block tabs - same hidden-property pattern as the job block. */
 function crTab(which){
-  ['who','rec','facts'].forEach(function(k){
+  ['who','rec','facts','faq'].forEach(function(k){
     var t=document.getElementById('crtab-'+k), p=document.getElementById('crpanel-'+k);
     if(!t||!p) return;
     var on = (k===which);

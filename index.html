@@ -2286,10 +2286,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <p class="cr-note cr-a">Each stakeholder is invited individually when the job is set up, and whether their participation is required or optional is the project lead&rsquo;s call. Either way, Court Vision fits how your team already works &mdash; it doesn&rsquo;t ask anyone to change how they operate.</p>
 
       <p class="cr-lead cr-q"><b>How long does setup take on a new project?</b></p>
-      <p class="cr-note cr-a">Typically two to three weeks, depending on the size and complexity of the build. The lease, plan set and schedule get loaded, every stakeholder signs on, and the board is live and tracking before your first major milestone.</p>
+      <p class="cr-note cr-a">Typically two to three weeks, depending on the size and complexity of the build. The lease details &mdash; rent commencement date, credit terms, key dates &mdash; get loaded along with the plan set and schedule, every stakeholder signs on, and the board is live and tracking before your first major milestone.</p>
 
       <p class="cr-lead cr-q"><b>What happens to our project data if we ever stop using Court Vision?</b></p>
-      <p class="cr-note cr-a">It&rsquo;s yours. At closeout you get the full record &mdash; every approval, submittal, permit and inspection, plus the closeout film &mdash; exported and handed to you directly. If you&rsquo;d rather it came off our systems after that, we do it on request. Most owners keep the export: construction-defect claims can surface for years after a Certificate of Occupancy, and this record is usually the best evidence either side has.</p>
+      <p class="cr-note cr-a">It&rsquo;s yours. At closeout you get the full record &mdash; every approval, submittal, permit and inspection, plus the closeout film &mdash; exported and handed to you directly. If you&rsquo;d rather it came off our systems after that, we do it on request. Most owners keep the export: construction-defect claims can surface for years after a Certificate of Occupancy, and this record is usually the best evidence either side has. We just ask for a quick video testimonial in return, verified with your title and company.</p>
 
       <p class="cr-lead cr-q"><b>Does this replace my project manager?</b></p>
       <p class="cr-note cr-a">No. Court Vision runs alongside your PM, not instead of them &mdash; it&rsquo;s the record and the alerting that keeps nothing sitting on a desk. Your PM still runs the job.</p>
@@ -2652,7 +2652,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       if(type==='court'){
         cvOpenModal();
       }else if(type==='automation'){
-        narrate('Sky here. This is the same build, seen from behind the board. The lease, the plan set, every submittal and the permit portal all come in to one project hub. From there, each item gets an owner and a clock, and I ping whoever holds the ball before it sits. Scroll down and I will walk you through it.',false);
+        narrate('Sky here. This is the same build, seen from behind the board. The lease terms, the plan set, every submittal and the permit portal all come in to one project hub. From there, each item gets an owner and a clock, and I ping whoever holds the ball before it sits. Scroll down and I will walk you through it.',false);
         setTimeout(function(){
           var wf=document.getElementById('ti-workflow');
           if(wf)wf.scrollIntoView({behavior:'smooth',block:'start'});
@@ -3936,7 +3936,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         <div class="cs-demo-card demo-part" onclick="csLaunchDemo('automation')">
           <div class="demo-part-num">02</div>
           <div class="demo-part-name">AUTOMATION</div>
-          <p class="demo-part-desc">The same build, behind the board. Lease, plans, submittals and permits come in, and Court Vision routes each one to whoever holds the ball.</p>
+          <p class="demo-part-desc">The same build, behind the board. Lease terms, plans, submittals and permits come in, and Court Vision routes each one to whoever holds the ball.</p>
         </div>
         <div class="demo-part-arrow" aria-hidden="true">→</div>
         <div class="cs-demo-card demo-part" onclick="csLaunchDemo('cinematic')">
@@ -3977,7 +3977,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
         <div class="cvp-col">
           <div class="cvp-col-head"><span class="cvp-col-num">01</span>SET UP THE JOB</div>
           <ul class="price-features">
-            <li class="price-feature"><span class="price-check">✓</span>Project board built from your lease, schedule and plan set</li>
+            <li class="price-feature"><span class="price-check">✓</span>Project board built from your lease terms, schedule and plan set</li>
             <li class="price-feature"><span class="price-check">✓</span>Rent commencement date and lease credit terms loaded as the clock</li>
             <li class="price-feature"><span class="price-check">✓</span>Stakeholder portals for the GC, architect, engineer, PM and landlord</li>
             <li class="price-feature"><span class="price-check">✓</span>Every stakeholder signed on by e-signature</li>
@@ -5564,7 +5564,7 @@ function skyGetResponseFallback(input){
   if(skyHas(q,['delay','late','slip','behind schedule','dropped','stall','chasing','status update','who has']))
     return "Every project has the moment where someone asks who was supposed to handle that, and four stakeholders go quiet. Court Vision keeps the record while the work happens, so a slip surfaces in hours instead of at a walkthrough two weeks later. On the live build, two reviews sat unmoving — twenty-six days on plumbing, eight on electrical — and both got caught and pushed back in. Where is your build stalling?";
   if(skyHas(q,['how does it work','what do you do','what is skyrise','explain','tell me about','how it works','what exactly']))
-    return "Your lease, plans, submittals, permit status and field photos all land on one project board. Every item gets an owner and a clock, I alert whoever holds the ball before it sits, and owners and landlords get a plain-language briefing instead of chasing you for status. At closeout, the phase photos become a film of the finished build. Want to watch the demo?";
+    return "Your lease terms, plans, submittals, permit status and field photos all land on one project board. Every item gets an owner and a clock, I alert whoever holds the ball before it sits, and owners and landlords get a plain-language briefing instead of chasing you for status. At closeout, the phase photos become a film of the finished build. Want to watch the demo?";
   if(skyHas(q,['time','hours','save','roi','return','value','worth it','payback','benefit']))
     return "On a tenant improvement build, the time goes to chasing status — permits, submittals, RFIs and inspections. The TI ROI calculator on this page takes your number of active builds, the hours spent chasing, and the free-rent credit in your lease, and shows what a slipped commencement date would cost. Scroll down and plug in your own numbers.";
   if(skyHas(q,['crm','integrate','connect','tools','software','stack','email','text','sms','alerts']))

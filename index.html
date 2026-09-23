@@ -3872,6 +3872,11 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
           <input type="range" class="roi-range" id="roi-slip" min="0" max="90" step="15" value="30">
           <div class="roi-range-minmax"><span>0 DAYS</span><span>90 DAYS</span></div>
         </div>
+        <div class="roi-slider-group">
+          <div class="roi-slider-label">COST AVOIDED PER YEAR FROM ONE CAUGHT RISK <span class="roi-slider-val" id="risk-lbl">$12K</span></div>
+          <input type="range" class="roi-range" id="roi-risk" min="0" max="40000" step="500" value="12000">
+          <div class="roi-range-minmax"><span>$0</span><span>$40K</span></div>
+        </div>
         <div class="roi-results-card">
           <div class="roi-results-title">YOUR REAL-TIME RESULTS</div>
           <div class="roi-result-row">
@@ -3886,6 +3891,10 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
             <div class="roi-result-label-txt">Free rent that slip credits, per project:</div>
             <div class="roi-result-val orange" id="roi-month1">$30.0k</div>
           </div>
+          <div class="roi-result-row">
+            <div class="roi-result-label-txt">Risk avoided per year, caught before it became a delay:</div>
+            <div class="roi-result-val" id="roi-riskval" style="color:#22c55e;">$1.0k<small>/month</small></div>
+          </div>
         </div>
       </div>
       <div class="roi-right">
@@ -3899,6 +3908,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
             <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#e53e3e;"></div>Monthly cost of chasing status by hand</div>
             <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#00c8e8;"></div>Monthly value of the hours Court Vision gives back</div>
             <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#ff6b35;"></div>Free rent credited by that slip, all active builds</div>
+            <div class="roi-legend-item"><div class="roi-legend-dot" style="background:#22c55e;"></div>Risk avoided per year, caught before it hit the schedule</div>
           </div>
         </div>
       </div>
@@ -4609,10 +4619,12 @@ function calcROI(){
   const r      = parseInt(document.getElementById('roi-rate').value);
   const credit = parseInt(document.getElementById('roi-credit').value);
   const slip   = parseInt(document.getElementById('roi-slip').value);
+  const riskYear = parseInt(document.getElementById('roi-risk').value);
   document.getElementById('hours-lbl').textContent  = h + ' HRS';
   document.getElementById('rate-lbl').textContent   = '$' + r + '/HR';
   document.getElementById('credit-lbl').textContent = '$' + (credit % 1000 ? (credit/1000).toFixed(1) : credit/1000) + 'K';
   document.getElementById('slip-lbl').textContent   = slip + ' DAYS';
+  document.getElementById('risk-lbl').textContent   = '$' + (riskYear % 1000 ? (riskYear/1000).toFixed(1) : riskYear/1000) + 'K';
 
   // Hours spent chasing status across every active build
   const monthlyChase = Math.round(h * r * teamMult * 4.33);
@@ -4627,10 +4639,14 @@ function calcROI(){
   const rentPerProj = blocks * credit;
   const rentAll     = Math.round(rentPerProj * teamMult);
 
+  // One caught risk a year — a flat org-wide figure, not scaled per project
+  const riskMonthly = Math.round(riskYear / 12);
+
   document.getElementById('roi-weekly').innerHTML   = fmt(monthlyChase) + '<small>/month</small>';
   document.getElementById('roi-saved').innerHTML    = savedHrs + ' HRS<small>/week</small>';
   document.getElementById('roi-month1').textContent = fmt(rentPerProj);
   document.getElementById('roi-month1').style.color = rentPerProj > 0 ? '#ff6b35' : 'var(--cyan)';
+  document.getElementById('roi-riskval').innerHTML  = fmt(riskMonthly) + '<small>/month</small>';
 
   const single = teamMult === 1;
   document.getElementById('roi-bottom').innerHTML =
@@ -4640,10 +4656,11 @@ function calcROI(){
       ? 'A ' + slip + '-day slip credits <strong>' + fmt(rentPerProj) + ' of free rent</strong> on ' +
         (single ? 'that build' : 'each build (' + fmt(rentAll) + ' across all of them)') +
         ' — and one approval left sitting is all it takes to start it.'
-      : 'Under 15 days late, no block of free rent is credited yet — that margin is exactly what the possession clock protects.');
+      : 'Under 15 days late, no block of free rent is credited yet — that margin is exactly what the possession clock protects.') +
+    (riskYear > 0 ? ' Catching one risk like that a year — a missed RFI, a dropped follow-up, a slip flagged before it became a delay — is worth another <strong>' + fmt(riskYear) + '</strong>.' : '');
 
   if(roiChart){
-    roiChart.data.datasets[0].data = [monthlyChase, savedMonthly, rentAll];
+    roiChart.data.datasets[0].data = [monthlyChase, savedMonthly, rentAll, riskMonthly];
     roiChart.update();
   }
 }
@@ -4660,14 +4677,14 @@ window.addEventListener('load',()=>{
   new Chart(document.getElementById('chart-line'),{type:'line',data:{labels:['Wk 4','Wk 8','Wk 12','Wk 16','Wk 20','Wk 24'],datasets:[{label:'Untracked',data:[3,9,17,26,34,41],borderColor:'rgba(255,107,53,.85)',backgroundColor:'rgba(255,107,53,.05)',tension:.4,fill:true,pointRadius:3},{label:'Court Vision',data:[1,2,4,5,6,7],borderColor:'rgba(0,200,232,.85)',backgroundColor:'rgba(0,200,232,.06)',tension:.4,fill:true,pointRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'},min:0,title:{display:true,text:'Held Days',color:'rgba(255,255,255,.3)',font:{size:9}}}}}});
   // ROI chart
   // ── ROI Chart ──────────────────────────────────────────────────
-  roiChart=new Chart(document.getElementById('roi-chart'),{type:'bar',data:{labels:['Chasing /Mo','Given Back /Mo','Rent at Risk'],datasets:[{data:[2600,1800,30000],backgroundColor:['#e53e3e','#00c8e8','#ff6b35'],borderRadius:8,barPercentage:.6,categoryPercentage:.7}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{left:10,right:20,top:8,bottom:4}},plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.5)',font:{size:11},maxRotation:0},grid:{display:false}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10},callback:function(v){return '$'+v.toLocaleString();}},grid:{color:'rgba(255,255,255,.05)'}}}}});
+  roiChart=new Chart(document.getElementById('roi-chart'),{type:'bar',data:{labels:['Chasing /Mo','Given Back /Mo','Rent at Risk','Risk Avoided /Mo'],datasets:[{data:[2600,1800,30000,1000],backgroundColor:['#e53e3e','#00c8e8','#ff6b35','#22c55e'],borderRadius:8,barPercentage:.6,categoryPercentage:.7}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{left:10,right:20,top:8,bottom:4}},plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,.5)',font:{size:11},maxRotation:0},grid:{display:false}},y:{ticks:{color:'rgba(255,255,255,.4)',font:{size:10},callback:function(v){return '$'+v.toLocaleString();}},grid:{color:'rgba(255,255,255,.05)'}}}}});
   // Force repaint after zoom:1.1 settles
   setTimeout(function(){ if(roiChart) roiChart.resize(); },200);
   setTimeout(function(){ if(roiChart) roiChart.resize(); },600);
   window.addEventListener('resize',function(){ if(roiChart) roiChart.resize(); });
 
   // Wire sliders via JS so CSS zoom doesn't break oninput hit areas
-  const roiSliders = ['roi-hours','roi-rate','roi-credit','roi-slip'].map(function(id){ return document.getElementById(id); });
+  const roiSliders = ['roi-hours','roi-rate','roi-credit','roi-slip','roi-risk'].map(function(id){ return document.getElementById(id); });
   ['input','change','mousedown','mousemove','touchmove'].forEach(function(evt){
     roiSliders.forEach(function(el){ el.addEventListener(evt, calcROI, {passive:true}); });
   });

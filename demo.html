@@ -186,9 +186,11 @@ canvas.orb-canvas{border-radius:50%;display:block;}
 @media(max-width:900px){
   .dc-main-row{flex-direction:column;}
   .dc-narration-col{flex:0 0 auto;max-width:100%;width:100%;order:2;}
-  .dc-court-frame{order:1;max-width:100%;}
+  .dc-court-frame{order:1;max-width:100%;margin-top:0;}
 }
-.dc-court-frame{flex:1;min-width:0;max-width:1160px;flex-shrink:0;padding:10px 14px 0;}
+/* Nudged down by the orb bar's own height (91px) so the court starts level
+   with the narration list on the left, not with the orb sitting above it. */
+.dc-court-frame{flex:1;min-width:0;max-width:1160px;flex-shrink:0;padding:10px 14px 0;margin-top:91px;}
 .dc-court-inner{position:relative;container-type:inline-size;line-height:0;
   border-radius:12px;overflow:hidden;border:1px solid rgba(0,200,232,.25);
   box-shadow:0 10px 28px -14px rgba(0,0,0,.6);}

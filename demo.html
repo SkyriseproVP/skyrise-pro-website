@@ -167,6 +167,48 @@ canvas.orb-canvas{border-radius:50%;display:block;}
   border-bottom:1px solid rgba(0,200,232,.1);
   background:rgba(4,10,22,.6);
 }
+/* Live court visual -- same image + pin mechanics as the real Tmrw Sports
+   board (tmrw-sports-court-vision-*.html #view-a), reused so the demo shows
+   the actual product's own possession view, not a stand-in. Role labels
+   only, never real people's names -- this is public-facing. */
+.dc-court-frame{width:100%;flex-shrink:0;padding:10px 14px 0;}
+.dc-court-inner{position:relative;container-type:inline-size;line-height:0;
+  border-radius:12px;overflow:hidden;border:1px solid rgba(0,200,232,.25);
+  box-shadow:0 10px 28px -14px rgba(0,0,0,.6);}
+.dc-court-img{display:block;width:100%;height:auto;}
+.dc-ap{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);
+  width:6.4cqw;height:2.6cqw;pointer-events:none;border-radius:50%;
+  opacity:0;transition:opacity .5s ease,left 1s cubic-bezier(.25,.1,.25,1),top 1s cubic-bezier(.25,.1,.25,1);
+  background:radial-gradient(ellipse at center,
+    color-mix(in srgb,var(--c) 92%,transparent) 0%,
+    color-mix(in srgb,var(--c) 52%,transparent) 34%,
+    color-mix(in srgb,var(--c) 0%,transparent) 72%);}
+.dc-ap.active{opacity:1;}
+.dc-ap-l{position:absolute;left:50%;bottom:calc(100% + 2.4cqw);transform:translateX(-50%);
+  background:rgba(8,18,32,.92);border:1px solid var(--c);border-radius:8px;
+  padding:.5cqw .78cqw;white-space:nowrap;line-height:1.25;
+  backdrop-filter:blur(3px);box-shadow:0 .25cqw .8cqw rgba(0,0,0,.4);}
+.dc-ap-l::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:2.4cqw;
+  background:linear-gradient(var(--c),color-mix(in srgb,var(--c) 10%,transparent));
+  transform:translateX(-50%);}
+.dc-ap-r{display:block;font-size:9px;font-weight:700;letter-spacing:.09em;color:var(--c);
+  font-family:'Orbitron',sans-serif;}
+.dc-ap-s{display:block;font-size:10px;color:#fff;margin-top:2px;font-family:'Orbitron',sans-serif;}
+.dc-ap.ball .dc-ap-s{background:var(--c);color:#181200;font-weight:700;border-radius:3px;
+  padding:1px 6px;display:inline-block;letter-spacing:.05em;}
+.dc-ap.ball .dc-ap-l{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 40%,transparent),
+  0 .25cqw .8cqw rgba(0,0,0,.4);}
+.dc-ap-ball{position:absolute;left:50%;top:1.7cqw;font-size:clamp(12px,1.8cqw,22px);
+  transform:translateX(-50%);animation:dcBallhop 1.15s cubic-bezier(.32,0,.66,1) infinite;
+  filter:drop-shadow(0 .35em .3em rgba(0,0,0,.6));}
+@keyframes dcBallhop{0%,100%{transform:translateX(-50%) translateY(-1.5em)}50%{transform:translateX(-50%) translateY(0)}}
+@keyframes dcStealFlash{0%,100%{opacity:0}30%,70%{opacity:1}}
+.dc-steal-overlay{display:none;position:absolute;inset:0;background:rgba(229,62,62,.22);
+  pointer-events:none;z-index:3;}
+.dc-steal-overlay.flash{display:block;animation:dcStealFlash .45s ease-in-out 3;}
+@media (prefers-reduced-motion: reduce){ .dc-ap-ball{animation:none;} }
+@media(max-width:640px){ .dc-ap-r{font-size:8px;} .dc-ap-s{font-size:9px;} }
+
 .vdemo-orb-bar{
   width:100%;display:flex;flex-direction:column;align-items:center;
   padding:14px 20px 10px;flex-shrink:0;
@@ -897,6 +939,13 @@ canvas.orb-canvas{border-radius:50%;display:block;}
     <div class="vdemo-topbar-title">PART 1 OF 3 · COURT VISION</div>
     <button class="skip-btn" id="court-skip-btn" onclick="courtSkip()">Skip →</button>
   </div>
+  <div class="dc-court-frame">
+    <div class="dc-court-inner">
+      <img class="dc-court-img" src="tmrw-court-live.jpg" alt="Court Vision — the live Tmrw Sports board">
+      <div id="dc-pins"></div>
+      <div class="dc-steal-overlay" id="dc-steal-overlay"></div>
+    </div>
+  </div>
   <div class="vdemo-orb-bar">
     <div class="orb-wrap" id="court-orb-wrap" onclick="toggleCourtMic()">
       <canvas class="orb-canvas" id="court-canvas" width="100" height="100" style="width:50px;height:50px;"></canvas>
@@ -1280,7 +1329,7 @@ const COURT_NODES = [
   { icon:'📐', name:'Design & Plan Review', sub:'Every comment has an owner.',
     script:"The architect and engineer draw it, the Landlord and PM review it, and every comment from either side gets a name and a due date. Nothing sits unowned in an inbox — the board always shows whose court a comment is in." },
   { icon:'🏛️', name:'Permitting', sub:'Where builds slip.',
-    script:"Permitting is where builds slip. On Tmrw Sports, the building review was denied twice across two cycles, and the ball sat with the plan examiner for nine days after a resubmittal went quiet. I caught it, pushed it back for reapproval before the clock ran, and the permit was issued." },
+    script:"Permitting is where builds slip. On our live Court Vision build, the building review was denied twice across two cycles, and the ball sat with the plan examiner for nine days after a resubmittal went quiet. I caught it, pushed it back for reapproval before the clock ran, and the permit was issued." },
   { icon:'🦺', name:'Construction & Inspections', sub:'Permit in hand, ball to the contractor.',
     script:"Once the permit issues, the ball passes to the contractor the same day — nobody has to notice and hand it off. Every inspection gets called in and tracked: a pass moves the job forward, a fail goes back to the GC as a correction with the exact fix needed, not just a rejection." },
   { icon:'📋', name:'Punch List', sub:'The last few percent, tracked.',
@@ -1288,6 +1337,46 @@ const COURT_NODES = [
   { icon:'🏆', name:'Certificate of Occupancy', sub:'Rent starts on time.',
     script:"The certificate of occupancy is issued, rent starts on the date the lease set on day one, and every approval, submittal and inspection along the way is already archived — a documented record, not a folder someone has to reconstruct after the fact." },
 ];
+
+// Same positions/colors as the real Tmrw Sports board's own Live Court view
+// (tmrw-sports-court-vision-*.html #view-a .ap pins) for Permitting, GC and
+// Landlord -- those exact three are the roles the real board currently pins,
+// so the numbers and the visual agree. Leasing Agent and PM+Tenant aren't
+// pinned on the live board (their moments have passed / haven't come up),
+// so those two spots are placed, not pulled from the real record.
+const COURT_POS = [
+  { c:'#5b7cfa', x:'15%', y:'75%', role:'LEASING AGENT',       s:'Lease signed · clock started' },
+  { c:'#f2c11d', x:'55%', y:'72%', role:'ARCHITECT / ENGINEER', s:'Every comment owned' },
+  { c:'#5b7cfa', x:'38.5%', y:'42%', role:'PLAN EXAMINER',      s:'Denied twice · held 9 days', ball:true },
+  { c:'#ff8a4c', x:'47.7%', y:'28.8%', role:'GENERAL CONTRACTOR', s:'Permit in hand', ball:true },
+  { c:'#00c8e8', x:'65%', y:'20%', role:'PM + TENANT',          s:'Final walkthrough' },
+  { c:'#00c8e8', x:'82%', y:'44.2%', role:'LANDLORD',           s:'Rent starts on time', ball:true },
+];
+
+function buildCourtPins() {
+  const el = document.getElementById('dc-pins');
+  if (!el) return;
+  el.innerHTML = COURT_POS.map((p, i) => `
+    <div class="dc-ap" id="dc-ap-${i}" style="--c:${p.c};--x:${p.x};--y:${p.y};">
+      ${p.ball ? '<span class="dc-ap-ball">🏀</span>' : ''}
+      <span class="dc-ap-l">
+        <span class="dc-ap-r">${p.role}</span>
+        <span class="dc-ap-s">${p.s}</span>
+      </span>
+    </div>`).join('');
+}
+
+function moveBallTo(i) {
+  COURT_POS.forEach((_, j) => {
+    const pin = document.getElementById('dc-ap-' + j);
+    if (pin) { pin.classList.toggle('active', j === i); pin.classList.toggle('ball', j === i && COURT_POS[j].ball); }
+  });
+  const overlay = document.getElementById('dc-steal-overlay');
+  if (overlay) {
+    overlay.classList.remove('flash');
+    if (i === 2) { void overlay.offsetWidth; overlay.classList.add('flash'); } // Permitting = the steal moment
+  }
+}
 
 let courtRunning = false;
 let courtPaused  = false;
@@ -1335,6 +1424,7 @@ function goCourtDemo() {
   showScreen('screen-court');
   startOrb('court-canvas', 'court-orb-wrap');
   buildCourtNodes();
+  buildCourtPins();
   courtRunning = true; courtPaused = false; courtIdx = 0;
   document.getElementById('court-progress').style.width = '0%';
   document.getElementById('court-skip-btn').style.display = '';
@@ -1347,6 +1437,7 @@ function courtActivate(i) {
   if (i >= COURT_NODES.length) { courtRunning = false; toPart2(false); return; }
   courtIdx = i;
   updateCourtUI(i);
+  moveBallTo(i);
   courtStatus(`Stage ${i+1} of ${COURT_NODES.length}`, true);
   skySpeak(COURT_NODES[i].script, 'court-orb-wrap', () => {
     if (!courtRunning) return;
@@ -1365,6 +1456,7 @@ window.courtNodeTap = (i) => {
   courtRunning = false; courtPaused = true; courtIdx = i;
   stopSkyAudio(); skySpeakToken++;
   updateCourtUI(i);
+  moveBallTo(i);
   courtStatus('Paused — tap the orb to continue', false);
   skySpeak(COURT_NODES[i].script, 'court-orb-wrap', () => courtStatus('Paused — tap the orb to continue', false));
 };

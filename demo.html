@@ -209,6 +209,33 @@ canvas.orb-canvas{border-radius:50%;display:block;}
 @media (prefers-reduced-motion: reduce){ .dc-ap-ball{animation:none;} }
 @media(max-width:640px){ .dc-ap-r{font-size:8px;} .dc-ap-s{font-size:9px;} }
 
+/* Box #3 -- lessons learned + stats, shown once the 6-stage walkthrough
+   finishes. Real SAVE items + real stat tiles + real charts, all reused
+   verbatim from index.html's live-build-proof section -- nothing invented. */
+.dc-lessons{padding:18px 20px 8px;}
+.dc-lessons-head{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:800;
+  letter-spacing:1.5px;color:var(--cyan);text-align:center;margin-bottom:14px;}
+.dc-save-list{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.dc-save-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;
+  border-radius:8px;background:rgba(255,255,255,.03);border-left:3px solid #12b886;}
+.dc-save-badge{flex:0 0 auto;font-family:'Orbitron',sans-serif;font-size:8px;font-weight:800;
+  letter-spacing:1px;background:rgba(18,184,134,.15);color:#12b886;border:1px solid rgba(18,184,134,.4);
+  border-radius:5px;padding:3px 8px;margin-top:1px;}
+.dc-save-txt{font-size:12px;line-height:1.55;color:rgba(200,225,240,.85);}
+.dc-save-txt b{color:#fff;}
+.dc-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.dc-stat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;padding:12px 10px;text-align:center;}
+.dc-stat-n{font-family:'Orbitron',sans-serif;font-size:19px;font-weight:900;color:#fff;}
+.dc-stat-l{font-size:9px;color:rgba(200,225,240,.55);margin-top:3px;line-height:1.4;}
+.dc-chart-wrap{margin-bottom:20px;}
+.dc-chart-label{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:1px;color:rgba(200,225,240,.6);text-align:center;margin-bottom:8px;}
+.dc-chart-box{position:relative;height:150px;}
+.dc-lessons-continue{display:block;width:100%;margin-top:6px;padding:12px;
+  background:var(--cyan);color:#031018;border:none;border-radius:8px;cursor:pointer;
+  font-family:'Orbitron',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;}
+
 .vdemo-orb-bar{
   width:100%;display:flex;flex-direction:column;align-items:center;
   padding:14px 20px 10px;flex-shrink:0;
@@ -880,6 +907,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
   .chooser-card{min-width:unset;max-width:100%;width:100%;}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -954,6 +982,29 @@ canvas.orb-canvas{border-radius:50%;display:block;}
   </div>
   <div class="vdemo-scroll">
     <div class="vdemo-stages" id="court-stages"></div>
+    <div class="dc-lessons" id="dc-lessons" style="display:none;">
+      <div class="dc-lessons-head">4 DROPPED BALLS CAUGHT BEFORE THEY HIT THE SCHEDULE</div>
+      <div class="dc-save-list">
+        <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Electrical.</b> Flagged for shared neutral conductor sizing &mdash; harmonics compliance not shown. Corrected and resubmitted; review passed.</span></div>
+        <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Fire.</b> Denied on two findings, including fire extinguisher travel distance. Corrected and resubmitted; review passed.</span></div>
+        <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Eng/Zone and Impact Fees.</b> Both cleared the same week the others were denied &mdash; two lanes closed for good, so neither can block this build again.</span></div>
+      </div>
+      <div class="dc-stat-grid">
+        <div class="dc-stat"><div class="dc-stat-n">34</div><div class="dc-stat-l">Held days surfaced<br>plumbing 26 &middot; electrical 8</div></div>
+        <div class="dc-stat"><div class="dc-stat-n">5-day</div><div class="dc-stat-l">Submittal clear time<br>10 submittals cleared</div></div>
+        <div class="dc-stat"><div class="dc-stat-n">$38.6k</div><div class="dc-stat-l">Free rent per 15 days late<br>what one slipped block credits</div></div>
+        <div class="dc-stat"><div class="dc-stat-n">4</div><div class="dc-stat-l">Dropped balls caught<br>before they hit the schedule</div></div>
+      </div>
+      <div class="dc-chart-wrap">
+        <div class="dc-chart-label">PM HOURS/WEEK CHASING STATUS &mdash; BY BUILD PHASE</div>
+        <div class="dc-chart-box"><canvas id="dc-chart-phase"></canvas></div>
+      </div>
+      <div class="dc-chart-wrap">
+        <div class="dc-chart-label">HELD DAYS PILING UP &mdash; UNTRACKED VS. COURT VISION</div>
+        <div class="dc-chart-box"><canvas id="dc-chart-days"></canvas></div>
+      </div>
+      <button class="dc-lessons-continue" onclick="dcLessonsContinue()">CONTINUE &rarr;</button>
+    </div>
   </div>
   <div class="vdemo-bottom" style="position:relative;">
     <div class="demo-progress-track" style="margin-bottom:8px;">
@@ -1432,9 +1483,69 @@ function goCourtDemo() {
   setTimeout(() => courtActivate(0), 600);
 }
 
+let dcLessonsShown = false;
+let dcChartsBuilt = false;
+
+function buildDcCharts() {
+  if (dcChartsBuilt || typeof Chart === 'undefined') return;
+  dcChartsBuilt = true;
+  new Chart(document.getElementById('dc-chart-phase'), {
+    type: 'bar',
+    data: {
+      labels: ['Design', 'Permitting', 'Construction', 'Inspections', 'Punch List', 'C of O'],
+      datasets: [
+        { label: 'Chasing by hand', data: [6, 12, 9, 8, 5, 4], backgroundColor: 'rgba(255,107,53,.6)', borderRadius: 4 },
+        { label: 'With Court Vision', data: [2, 3, 3, 2, 1.5, 1], backgroundColor: 'rgba(0,200,232,.7)', borderRadius: 4 },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, labels: { color: 'rgba(255,255,255,.6)', font: { size: 9 }, boxWidth: 10 } } },
+      scales: {
+        x: { ticks: { color: 'rgba(255,255,255,.4)', font: { size: 8 } }, grid: { color: 'rgba(255,255,255,.05)' } },
+        y: { ticks: { color: 'rgba(255,255,255,.4)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,.05)' } },
+      },
+    },
+  });
+  new Chart(document.getElementById('dc-chart-days'), {
+    type: 'line',
+    data: {
+      labels: ['Wk 4', 'Wk 8', 'Wk 12', 'Wk 16', 'Wk 20', 'Wk 24'],
+      datasets: [
+        { label: 'Untracked', data: [3, 9, 17, 26, 34, 41], borderColor: 'rgba(255,107,53,.85)', backgroundColor: 'rgba(255,107,53,.05)', tension: .4, fill: true, pointRadius: 3 },
+        { label: 'Court Vision', data: [1, 2, 4, 5, 6, 7], borderColor: 'rgba(0,200,232,.85)', backgroundColor: 'rgba(0,200,232,.06)', tension: .4, fill: true, pointRadius: 3 },
+      ],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: true, labels: { color: 'rgba(255,255,255,.6)', font: { size: 9 }, boxWidth: 10 } } },
+      scales: {
+        x: { ticks: { color: 'rgba(255,255,255,.4)', font: { size: 8 } }, grid: { color: 'rgba(255,255,255,.05)' } },
+        y: { min: 0, ticks: { color: 'rgba(255,255,255,.4)', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,.05)' } },
+      },
+    },
+  });
+}
+
+function showLessonsBox() {
+  if (dcLessonsShown) { toPart2(false); return; }
+  dcLessonsShown = true;
+  const box = document.getElementById('dc-lessons');
+  if (box) { box.style.display = 'block'; box.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  buildDcCharts();
+  courtStatus('Sky is speaking', true);
+  skySpeak(
+    "Four dropped balls caught before they ever hit the schedule, thirty-four held days surfaced, and a five-day submittal clear time -- that's what the record looks like when someone's chasing every ball, every day.",
+    'court-orb-wrap',
+    () => courtStatus('Paused — tap continue', false)
+  );
+}
+
+window.dcLessonsContinue = () => toPart2(false);
+
 function courtActivate(i) {
   if (!courtRunning) return;
-  if (i >= COURT_NODES.length) { courtRunning = false; toPart2(false); return; }
+  if (i >= COURT_NODES.length) { courtRunning = false; showLessonsBox(); return; }
   courtIdx = i;
   updateCourtUI(i);
   moveBallTo(i);

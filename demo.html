@@ -171,7 +171,23 @@ canvas.orb-canvas{border-radius:50%;display:block;}
    board (tmrw-sports-court-vision-*.html #view-a), reused so the demo shows
    the actual product's own possession view, not a stand-in. Role labels
    only, never real people's names -- this is public-facing. */
-.dc-court-frame{width:100%;max-width:1160px;margin:0 auto;flex-shrink:0;padding:10px 14px 0;}
+/* Court screen — narration timeline on the left, the court + moving ball on
+   the right, so the two are visible side by side instead of stacked. */
+.dc-main-row{
+  width:100%;max-width:1500px;margin:0 auto;
+  display:flex;gap:20px;align-items:flex-start;
+  padding:0 14px;flex:1;min-height:0;
+}
+.dc-narration-col{
+  flex:0 0 340px;max-width:340px;align-self:stretch;
+  display:flex;flex-direction:column;min-height:0;
+}
+@media(max-width:900px){
+  .dc-main-row{flex-direction:column;}
+  .dc-narration-col{flex:0 0 auto;max-width:100%;width:100%;order:2;}
+  .dc-court-frame{order:1;max-width:100%;}
+}
+.dc-court-frame{flex:1;min-width:0;max-width:1160px;flex-shrink:0;padding:10px 14px 0;}
 .dc-court-inner{position:relative;container-type:inline-size;line-height:0;
   border-radius:12px;overflow:hidden;border:1px solid rgba(0,200,232,.25);
   box-shadow:0 10px 28px -14px rgba(0,0,0,.6);}
@@ -967,43 +983,47 @@ canvas.orb-canvas{border-radius:50%;display:block;}
     <div class="vdemo-topbar-title">PART 1 OF 3 · COURT VISION</div>
     <button class="skip-btn" id="court-skip-btn" onclick="courtSkip()">Skip →</button>
   </div>
-  <div class="dc-court-frame">
-    <div class="dc-court-inner">
-      <img class="dc-court-img" src="tmrw-court-live.jpg" alt="Court Vision — the live Tmrw Sports board">
-      <div id="dc-pins"></div>
-      <div class="dc-steal-overlay" id="dc-steal-overlay"></div>
+  <div class="dc-main-row">
+    <div class="dc-narration-col">
+      <div class="vdemo-orb-bar">
+        <div class="orb-wrap" id="court-orb-wrap" onclick="toggleCourtMic()">
+          <canvas class="orb-canvas" id="court-canvas" width="100" height="100" style="width:50px;height:50px;"></canvas>
+        </div>
+        <div id="court-status">Sky is ready</div>
+      </div>
+      <div class="vdemo-scroll">
+        <div class="vdemo-stages" id="court-stages"></div>
+        <div class="dc-lessons" id="dc-lessons" style="display:none;">
+          <div class="dc-lessons-head">4 DROPPED BALLS CAUGHT BEFORE THEY HIT THE SCHEDULE</div>
+          <div class="dc-save-list">
+            <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Electrical.</b> Flagged for shared neutral conductor sizing &mdash; harmonics compliance not shown. Corrected and resubmitted; review passed.</span></div>
+            <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Fire.</b> Denied on two findings, including fire extinguisher travel distance. Corrected and resubmitted; review passed.</span></div>
+            <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Eng/Zone and Impact Fees.</b> Both cleared the same week the others were denied &mdash; two lanes closed for good, so neither can block this build again.</span></div>
+          </div>
+          <div class="dc-stat-grid">
+            <div class="dc-stat"><div class="dc-stat-n">34</div><div class="dc-stat-l">Held days surfaced<br>plumbing 26 &middot; electrical 8</div></div>
+            <div class="dc-stat"><div class="dc-stat-n">5-day</div><div class="dc-stat-l">Submittal clear time<br>10 submittals cleared</div></div>
+            <div class="dc-stat"><div class="dc-stat-n">$38.6k</div><div class="dc-stat-l">Free rent per 15 days late<br>what one slipped block credits</div></div>
+            <div class="dc-stat"><div class="dc-stat-n">4</div><div class="dc-stat-l">Dropped balls caught<br>before they hit the schedule</div></div>
+          </div>
+          <div class="dc-chart-wrap">
+            <div class="dc-chart-label">PM HOURS/WEEK CHASING STATUS &mdash; BY BUILD PHASE</div>
+            <div class="dc-chart-box"><canvas id="dc-chart-phase"></canvas></div>
+          </div>
+          <div class="dc-chart-wrap">
+            <div class="dc-chart-label">HELD DAYS PILING UP &mdash; UNTRACKED VS. COURT VISION</div>
+            <div class="dc-chart-box"><canvas id="dc-chart-days"></canvas></div>
+          </div>
+          <button class="dc-lessons-continue" onclick="dcLessonsContinue()">CONTINUE &rarr;</button>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="vdemo-orb-bar">
-    <div class="orb-wrap" id="court-orb-wrap" onclick="toggleCourtMic()">
-      <canvas class="orb-canvas" id="court-canvas" width="100" height="100" style="width:50px;height:50px;"></canvas>
-    </div>
-    <div id="court-status">Sky is ready</div>
-  </div>
-  <div class="vdemo-scroll">
-    <div class="vdemo-stages" id="court-stages"></div>
-    <div class="dc-lessons" id="dc-lessons" style="display:none;">
-      <div class="dc-lessons-head">4 DROPPED BALLS CAUGHT BEFORE THEY HIT THE SCHEDULE</div>
-      <div class="dc-save-list">
-        <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Electrical.</b> Flagged for shared neutral conductor sizing &mdash; harmonics compliance not shown. Corrected and resubmitted; review passed.</span></div>
-        <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Fire.</b> Denied on two findings, including fire extinguisher travel distance. Corrected and resubmitted; review passed.</span></div>
-        <div class="dc-save-item"><span class="dc-save-badge">SAVE</span><span class="dc-save-txt"><b>Eng/Zone and Impact Fees.</b> Both cleared the same week the others were denied &mdash; two lanes closed for good, so neither can block this build again.</span></div>
+    <div class="dc-court-frame">
+      <div class="dc-court-inner">
+        <img class="dc-court-img" src="tmrw-court-live.jpg" alt="Court Vision — the live Tmrw Sports board">
+        <div id="dc-pins"></div>
+        <div class="dc-steal-overlay" id="dc-steal-overlay"></div>
       </div>
-      <div class="dc-stat-grid">
-        <div class="dc-stat"><div class="dc-stat-n">34</div><div class="dc-stat-l">Held days surfaced<br>plumbing 26 &middot; electrical 8</div></div>
-        <div class="dc-stat"><div class="dc-stat-n">5-day</div><div class="dc-stat-l">Submittal clear time<br>10 submittals cleared</div></div>
-        <div class="dc-stat"><div class="dc-stat-n">$38.6k</div><div class="dc-stat-l">Free rent per 15 days late<br>what one slipped block credits</div></div>
-        <div class="dc-stat"><div class="dc-stat-n">4</div><div class="dc-stat-l">Dropped balls caught<br>before they hit the schedule</div></div>
-      </div>
-      <div class="dc-chart-wrap">
-        <div class="dc-chart-label">PM HOURS/WEEK CHASING STATUS &mdash; BY BUILD PHASE</div>
-        <div class="dc-chart-box"><canvas id="dc-chart-phase"></canvas></div>
-      </div>
-      <div class="dc-chart-wrap">
-        <div class="dc-chart-label">HELD DAYS PILING UP &mdash; UNTRACKED VS. COURT VISION</div>
-        <div class="dc-chart-box"><canvas id="dc-chart-days"></canvas></div>
-      </div>
-      <button class="dc-lessons-continue" onclick="dcLessonsContinue()">CONTINUE &rarr;</button>
     </div>
   </div>
   <div class="vdemo-bottom" style="position:relative;">

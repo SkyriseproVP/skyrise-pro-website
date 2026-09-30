@@ -2603,11 +2603,11 @@ window.openSignup = function(planKey, planName, planPrice) {
   var _btn   = document.getElementById('ssu-submit-btn');
   if (_isVideo) {
     document.getElementById('ssu-plan-name').textContent  = _signupPlan.name;
-    document.getElementById('ssu-plan-price').textContent = '$875';
-    if (_sub)   _sub.textContent   = '50% deposit · $1,750 total';
+    document.getElementById('ssu-plan-price').textContent = '$1,750';
+    if (_sub)   _sub.textContent   = '50% deposit · $3,500 total';
     if (_per)   _per.textContent   = 'due today';
     if (_trial) _trial.textContent = '🔒 SECURE 50% DEPOSIT — BALANCE DUE ON DELIVERY';
-    _btn.textContent = 'PAY $875 DEPOSIT → SECURE CHECKOUT';
+    _btn.textContent = 'PAY $1,750 DEPOSIT → SECURE CHECKOUT';
   } else {
     /* Court Vision is quoted per project, so it gets neither the /month suffix
        nor the monthly-billing note that every other plan carries. */

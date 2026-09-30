@@ -427,7 +427,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
   .hero-btn-cyan,.hero-btn-book{width:100% !important;min-width:0 !important;}
   /* Keep all page content from spilling past the phone's right edge */
   html,body{overflow-x:hidden !important;}
-  /* CLR / client automation workflow: stack the columns VERTICALLY on phones (no sideways scroll) */
+  /* Client automation workflow: stack the columns VERTICALLY on phones (no sideways scroll) */
   .pipe-grid, .clr-grid{display:flex !important;flex-direction:column !important;min-width:0 !important;width:100% !important;gap:18px !important;align-items:stretch !important;}
   .pipeline-diagram-box{min-width:0 !important;}
   .pipeline-diagram-wrap{overflow-x:hidden !important;}
@@ -572,7 +572,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .sky-bot-icon{background:radial-gradient(circle at 41% 37%,rgba(255,255,255,.98),rgba(215,252,255,.9) 8%,rgba(110,228,255,.4) 18%,transparent 26%),radial-gradient(60% 7% at 41% 37%,rgba(255,255,255,.9),transparent 70%),radial-gradient(7% 48% at 41% 37%,rgba(255,255,255,.85),transparent 70%),radial-gradient(closest-side at 42% 44%,rgba(150,240,255,.5),rgba(45,185,240,.35) 55%,transparent 85%),radial-gradient(closest-side at 62% 60%,rgba(90,210,255,.42),rgba(20,150,225,.28) 58%,transparent 88%),radial-gradient(circle at 50% 55%,rgba(0,80,135,.95),#060e1c 78%)!important;border-color:rgba(0,240,255,.6)!important;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:900;color:#eafcff;letter-spacing:.5px;box-shadow:0 0 14px rgba(0,200,232,.6);}
 /* Make.com node icon */
 .make-icon{background:rgba(110,0,255,.15)!important;border-color:rgba(140,60,255,.7)!important;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:900;color:#c084fc;letter-spacing:0;}
-/* CLR: 9-column grid — adds Sky Bot hub between Tools and Outputs */
+/* Client workflow: 9-column grid — adds Sky Bot hub between Tools and Outputs */
 .clr-grid{grid-template-columns:1fr 50px 110px 50px 1fr 50px 72px 50px 1fr;}
 /* Sky Bot mini-hub column */
 .sky-bot-hub-col{display:flex;flex-direction:column;align-items:center;justify-content:center;}
@@ -2121,7 +2121,7 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 
         <div class="srv-box">
           <div class="srv-box-title">SKY — THE AI BEHIND THE PLATFORM</div>
-          <p class="srv-box-body">Sky knows whose court the ball is on and pings them before it drops. Every inbound call answered and recorded, every request routed, every stalled approval surfaced.</p>
+          <p class="srv-box-body">Sky knows whose court the ball is on and pings them before it drops. Every inbound call answered and recorded, every request routed, every permit tracked from submission to issue, every stalled approval surfaced.</p>
         </div>
 
         <div class="srv-box">
@@ -5520,58 +5520,58 @@ function skyGetResponseFallback(input){
   // ── VICTOR / OWNER MODE ────────────────────────────────────
   if(window.__adminMode){
     if(skyHas(q,['hello','hi','hey','morning','afternoon','what\'s up','sup','yo','howdy','good to see']))
-      return "Hey Victor — I've got the full picture. 2 active clients, $3,200 MRR, $430k combined pipeline, 13 automations running. One paused at CLR — Review Request is waiting on Winston's copy approval. Jago onboarding is the priority to protect Month 1 retention. One new close gets you to $3,700. What do you want to dig into first?";
+      return "Hey Victor — I've got the full picture. 2 active clients, $3,200 MRR, $430k combined pipeline, 13 automations running. One paused at the GC client — Review Request is waiting on their contact's copy approval. The founding client's onboarding is the priority to protect Month 1 retention. One new close gets you to $3,700. What do you want to dig into first?";
 
     if(skyHas(q,['status','update','overview','summary','briefing','report','where are we','how are we doing','snapshot','big picture']))
-      return "Here's your full snapshot, Victor. MRR: $3,200 — up 167% since February. CLR is your top performer: $284k pipeline, 35% close rate, Elite plan. Jago is in onboarding: 2 of 4 automations live, CRM Sync in build. System-side: email confirmations working, SMS still being tuned, Netlify deployment and Supabase auth pending. No critical client fires. Your biggest lever is one new close.";
+      return "Here's your full snapshot, Victor. MRR: $3,200 — up 167% since February. The GC client is your top performer: $284k pipeline, 35% close rate, Elite plan. The founding client is in onboarding: 2 of 4 automations live, CRM Sync in build. System-side: email confirmations working, SMS still being tuned, Netlify deployment and Supabase auth pending. No critical client fires. Your biggest lever is one new close.";
 
     if(skyHas(q,['hot lead','hot prospect','who\'s close','close to closing','near close','warm lead','best prospect','ready to close','convert']))
-      return "Your hottest leads are anyone who submitted the booking form. Those are people who saw your ROI calculator, felt the pain, and raised their hand. Every submission is a qualified prospect. Jago isn't upsell-ready yet — they need to see Month 1 wins first.";
+      return "Your hottest leads are anyone who submitted the booking form. Those are people who saw your ROI calculator, felt the pain, and raised their hand. Every submission is a qualified prospect. The founding client isn't upsell-ready yet — they need to see Month 1 wins first.";
 
     if(skyHas(q,['follow up','follow-up','who to call','reach out','check in','contact','touchpoint']))
-      return "Two follow-ups needed right now, Victor. One — Winston at CLR: Review Request automation is paused waiting on his copy approval. That's your only broken automation across all accounts. Two — Joel at Jago: he's 3 days quiet during active onboarding. First 30 days are critical — don't let momentum die.";
+      return "Two follow-ups needed right now, Victor. One — the GC client: Review Request automation is paused waiting on their contact's copy approval. That's your only broken automation across all accounts. Two — the founding client: their lead has been 3 days quiet during active onboarding. First 30 days are critical — don't let momentum die.";
 
     if(skyHas(q,['gap','missing','what\'s missing','what\'s broken','not working','fix','behind','behind schedule','problem','issue','hiccup','stuck','delay','slow']))
-      return "Honest gap report, Victor. Client-side: CLR's Review Request is paused (Winston's approval needed). Jago's CRM Sync and advanced automation are still in build — that's the retention risk. Tech-side: SMS to your phone isn't confirmed working yet. Calendar .ics invites aren't in the confirmation email yet. Supabase auth migration is pending — clients are still on access codes. Netlify production deployment hasn't been pushed. Attio CRM integration was removed from the pipeline and needs a clean reconnect. Those are your open loops.";
+      return "Honest gap report, Victor. Client-side: the GC client's Review Request is paused (their contact's approval needed). The founding client's CRM Sync and advanced automation are still in build — that's the retention risk. Tech-side: SMS to your phone isn't confirmed working yet. Calendar .ics invites aren't in the confirmation email yet. Supabase auth migration is pending — clients are still on access codes. Netlify production deployment hasn't been pushed. Attio CRM integration was removed from the pipeline and needs a clean reconnect. Those are your open loops.";
 
     if(skyHas(q,['system','automation','make','netlify','supabase','deploy','pipeline','technical','tech','infrastructure','setup']))
       return "System status: Your Make booking pipeline is live — email confirmations are firing. SMS to your phone is in progress. Netlify has the site deployed but latest code hasn't been pushed yet. Supabase auth is planned but not configured — clients use access codes for now. The booking calendar shows your availability rules (no Sunday, no 4–7pm weekdays, Tue/Wed mornings blocked, Saturday 10am+). Sky voice is live via ElevenLabs in the app. What needs your attention most right now?";
 
     if(skyHas(q,['win','success','good news','highlight','best','top','performing','strong','working','nailing','crushing']))
-      return "Here's what's winning, Victor. CLR went from 12% to 35% close rate on a fully automated pipeline — that's a direct result of your system. Your MRR is 167% higher than it was in February. The booking system is live. Sky is deployed and talking to prospects 24/7. The infrastructure is working — now it's about stacking more clients on top of it.";
+      return "Here's what's winning, Victor. The GC client went from 12% to 35% close rate on a fully automated pipeline — that's a direct result of your system. Your MRR is 167% higher than it was in February. The booking system is live. Sky is deployed and talking to prospects 24/7. The infrastructure is working — now it's about stacking more clients on top of it.";
 
-    if(skyHas(q,['clr','winston','construction','clr construction']))
-      return "CLR is your highest-value account — $284k pipeline, 35% close rate, Elite plan at $849.89/month. 6 of 7 automations are live: Bid Intake, Proposal Gen (under 12 minutes), DocuSign, HubSpot Sync, Crew Notifications, and Invoice on Completion. The one paused: Review Request — waiting on Winston's copy approval. That's been sitting. Ball is in the client's court on that one. GC confirmation on crew workflow and sub onboarding to bid routing are also open. Strong account overall — just needs that one push.";
+    if(skyHas(q,['gc client','gc account','construction','construction client']))
+      return "The GC client is your highest-value account — $284k pipeline, 35% close rate, Elite plan at $849.89/month. 6 of 7 automations are live: Bid Intake, Proposal Gen (under 12 minutes), DocuSign, HubSpot Sync, Crew Notifications, and Invoice on Completion. The one paused: Review Request — waiting on their contact's copy approval. That's been sitting. Ball is in the client's court on that one. GC confirmation on crew workflow and sub onboarding to bid routing are also open. Strong account overall — just needs that one push.";
 
-    if(skyHas(q,['jago','joel','jago pro','jago group']))
-      return "Jago Pro Solutions just onboarded in May — Professional plan at $749.89/month, $18k early-stage pipeline. 2 of 4 automations live: Lead Capture and Follow-Up Sequence are running, pulling 19 leads/month with 83% faster response time. CRM Sync and advanced proposal automation are in build. Joel has been quiet for 3 days — that's a flag during Month 1 onboarding. A quick check-in now prevents churn later. Once the full stack deploys, pipeline should climb significantly.";
+    if(skyHas(q,['founding client','founding account','first client','onboarding client']))
+      return "The founding client just onboarded in May — Professional plan at $749.89/month, $18k early-stage pipeline. 2 of 4 automations live: Lead Capture and Follow-Up Sequence are running, pulling 19 leads/month with 83% faster response time. CRM Sync and advanced proposal automation are in build. Their lead has been quiet for 3 days — that's a flag during Month 1 onboarding. A quick check-in now prevents churn later. Once the full stack deploys, pipeline should climb significantly.";
 
     if(skyHas(q,['revenue','mrr','money','income','billing','how much','earning','recurring','arr','financials']))
-      return "Revenue breakdown: CLR $849.89/month Elite, Jago $749.89/month Professional. Total MRR: $3,200 — up 167% since February. Q3 target is $5,000 MRR. To get there: one Professional close ($749.89) puts you at $3,700. One Elite close ($849.89) puts you at $4,050. Your booking system is the engine — every form submission is a shot at the next close.";
+      return "Revenue breakdown: the GC client $849.89/month Elite, the founding client $749.89/month Professional. Total MRR: $3,200 — up 167% since February. Q3 target is $5,000 MRR. To get there: one Professional close ($749.89) puts you at $3,700. One Elite close ($849.89) puts you at $4,050. Your booking system is the engine — every form submission is a shot at the next close.";
 
     if(skyHas(q,['upsell','upgrade','grow account','expand','tier','elite','professional']))
-      return "Best upsell opportunity right now: CLR is happy on Elite, but there may be add-on opportunities once Review Request launches. Jago is too early — let Month 1 land first.";
+      return "Best upsell opportunity right now: The GC client is happy on Elite, but there may be add-on opportunities once Review Request launches. The founding client is too early — let Month 1 land first.";
 
     if(skyHas(q,['new client','prospect','acquire','close new','next client','who to target','lead gen']))
-      return "For new clients: your booking form is live and qualified prospects are submitting. Every ROI calculator session where someone sees their monthly loss number is a warm lead. Your strongest verticals right now are construction (CLR proof) and real estate/property management (Jago proof). Ideal profile: 5+ person company, high lead volume, manual follow-up process, no CRM or broken CRM. One new Professional plan client fills the biggest gap in your Q3 target.";
+      return "For new clients: your booking form is live and qualified prospects are submitting. Every ROI calculator session where someone sees their monthly loss number is a warm lead. Your strongest verticals right now are construction (proven by the GC client) and real estate/property management (proven by the founding client). Ideal profile: 5+ person company, high lead volume, manual follow-up process, no CRM or broken CRM. One new Professional plan client fills the biggest gap in your Q3 target.";
 
     if(skyHas(q,['calendar','booking','schedule','availability','book a call','sms','text','email','notification']))
       return "Booking system status: the form is live and collecting submissions. Email confirmations to you and prospects are firing via Make. SMS to your phone is still being set up — T-Mobile gateway is configured but delivery isn't confirmed yet. Calendar .ics attachment in the confirmation email is being built. Availability rules are live in the booking calendar: no Sundays, no weekday 4–7pm, Tuesday and Wednesday mornings blocked, Saturdays 10am and later only.";
 
     if(skyHas(q,['what should i do','priority','focus','next','action','today','plan','order','where to start']))
-      return "Priority order right now, Victor: One — call Winston on CLR Review Request copy approval. That's been sitting and it's the only paused automation in your stack. Two — check in with Joel at Jago. Three days quiet during onboarding is a yellow flag. Three — review your latest booking form submissions. Four — push the updated code to Netlify so the live site has all the new features. That's your list.";
+      return "Priority order right now, Victor: One — call the GC client's contact about the Review Request copy approval. That's been sitting and it's the only paused automation in your stack. Two — check in with the founding client's lead. Three days quiet during onboarding is a yellow flag. Three — review your latest booking form submissions. Four — push the updated code to Netlify so the live site has all the new features. That's your list.";
 
     if(skyHas(q,['graph','chart','number','metric','kpi','data','stats','analytics','performance']))
-      return "Key metrics across the board: MRR $3,200 (+167% since February). CLR: 35% close rate, $284k pipeline, 25+ hours saved/week. Jago: 19 leads/month, 83% faster response time, 16 hours saved/week. Combined pipeline: $430,200. Active automations: 13 live, 1 paused (CLR Review Request), 2 in build (Jago CRM Sync + proposal). Q3 target: $5,000 MRR.";
+      return "Key metrics across the board: MRR $3,200 (+167% since February). GC client: 35% close rate, $284k pipeline, 25+ hours saved/week. Founding client: 19 leads/month, 83% faster response time, 16 hours saved/week. Combined pipeline: $430,200. Active automations: 13 live, 1 paused (GC client Review Request), 2 in build (founding client CRM Sync + proposal). Q3 target: $5,000 MRR.";
 
     if(skyHas(q,['risk','churn','lose','losing','danger','warning','red flag','concern']))
-      return "Two risk flags right now. First: Jago onboarding — Joel is quiet at Day 30 and the CRM Sync build deadline could slip. If Jago doesn't see clear results in Month 1, retention risk goes up. Second: CLR Review Request has been paused too long. Winston isn't going to bring it up — you need to. Those are your two pressure points. Everything else is stable.";
+      return "Two risk flags right now. First: the founding client's onboarding — their lead is quiet at Day 30 and the CRM Sync build deadline could slip. If they don't see clear results in Month 1, retention risk goes up. Second: the GC client's Review Request has been paused too long. Their contact isn't going to bring it up — you need to. Those are your two pressure points. Everything else is stable.";
 
     if(skyHas(q,['video','production','cinematic','content','social media','film']))
-      return "Video side: the standalone cinematic package is $3,500 (or $849.89/month on Elite which includes one video per month). CLR would benefit from project showcase videos for bid presentations. That's a real differentiator in construction.";
+      return "Video side: the standalone cinematic package is $3,500 (or $849.89/month on Elite which includes one video per month). The GC client would benefit from project showcase videos for bid presentations. That's a real differentiator in construction.";
 
     // Default admin fallback
-    return "I've got full visibility across both accounts and your systems, Victor. Ask me about any client — CLR or Jago. Or ask about revenue, gaps, hot leads, system status, follow-ups, upsell opportunities, or your priority list. I'm here.";
+    return "I've got full visibility across both accounts and your systems, Victor. Ask me about any client — the GC client or the founding client. Or ask about revenue, gaps, hot leads, system status, follow-ups, upsell opportunities, or your priority list. I'm here.";
   }
 
   // ── PUBLIC / VISITOR MODE ──────────────────────────────────
@@ -5585,7 +5585,7 @@ function skyGetResponseFallback(input){
     return "Court Vision is priced per project. It's one fee, set when you sign and scoped to the build — change orders don't move it, and it runs through your rent commencement date. Everything it takes to set up the job and see it through to certificate of occupancy is included, and the pricing section below lists all of it. Want me to set up a quick call to quote your project?";
   if(skyHas(q,['trial','free','try','risk','test','no commitment','cancel','guarantee']))
     return "Court Vision is quoted per project, so the best way to try it is the live demo on this page — one build, start to finish, in about a minute. If you'd rather see it on your own job, I can set up a quick call.";
-  if(skyHas(q,['construction','contractor','build','bid','clr','estimat','subcontract','project manag','gc','general contractor']))
+  if(skyHas(q,['construction','contractor','build','bid','estimat','subcontract','project manag','gc','general contractor']))
     return "Then you already know where builds slip: a submittal waiting on an answer, a permit sitting in review, an inspection nobody scheduled. Court Vision puts every one of those on a board with an owner and a running clock, and I chase the ball so your team doesn't have to. On the build running right now, four dropped balls got caught before they hit the schedule. What have you got coming up?";
   if(skyHas(q,['travel','cruise','vacation','hospitality','booking','itinerary','resort','hotel','restaurant','retail','medical','dental']))
     return "Court Vision is built for the build-out itself — so if you're opening or renovating a commercial space, that's exactly the job it runs. If that's you, tell me about the space. If you're after something else entirely, a quick call with the team is the fastest way to find out whether we're the right fit.";
@@ -5852,9 +5852,9 @@ const CLIENT_CENTER_URL = 'https://app.skyrisepro.ai/command-center.html';
 
 // ── CLIENT DATA (defined before auth functions so always available) ──
 const WEBSITE_CLIENTS = {
-  'estimating@clrbuilds.com': {
-    company:'CLR Construction', short:'CLR', logo:'logo-clr.png', firstName:'Winston', brandColor:'#E07B2A',
-    greeting:"Sky here. Good to see you, Winston. Your automations are running and your pipeline is moving. Here's where things stand today.",
+  'gc-client@example.com': {
+    company:'GC Client', short:'GC', logo:'', firstName:'Owner', brandColor:'#E07B2A',
+    greeting:"Sky here. Good to see you. Your automations are running and your pipeline is moving. Here's where things stand today.",
     kpi:[
       {num:'14',label:'Active Jobs',compare:'+2 this month'},
       {num:'$284K',label:'Pipeline Value',compare:'+18% vs last month'},
@@ -5867,9 +5867,9 @@ const WEBSITE_CLIENTS = {
     activity:[{text:'New lead captured from Google Ads — Downtown Remodel',time:'2 min ago'},{text:'Follow-up sent to Martinez estimate (Day 3)',time:'14 min ago'},{text:'Review request delivered — Hernandez project complete',time:'1 hr ago'}],
     jobs:[{status:'active',label:'IN PROGRESS',title:'Downtown Office Remodel',tech:'J. Rivera',date:'Est. Jun 12',workOrder:'WO-2241'},{status:'pending',label:'PENDING APPROVAL',title:'Westside Residential Addition',tech:'M. Torres',date:'Est. Jul 3',workOrder:'WO-2242'},{status:'complete',label:'COMPLETE',title:'Hernandez Kitchen Renovation',tech:'J. Rivera',date:'Completed May 9',workOrder:'WO-2238'}]
   },
-  'jguzman@jagosolutions.com': {
-    company:'Jago Group', short:'JAGO', logo:'logo-jago.png', firstName:'Joel', brandColor:'#2D7D9A',
-    greeting:"Sky here. Hey Joel — your lead pipeline is up 31% this month. Showings are booking, offers are moving. Here's your full picture.",
+  'founding-client@example.com': {
+    company:'Founding Client', short:'FOUNDING', logo:'', firstName:'Owner', brandColor:'#2D7D9A',
+    greeting:"Sky here. Hey there — your lead pipeline is up 31% this month. Showings are booking, offers are moving. Here's your full picture.",
     kpi:[
       {num:'9',label:'Active Properties',compare:'+1 this month'},
       {num:'$1.2M',label:'Pipeline Value',compare:'+31% vs last month'},
@@ -5974,8 +5974,8 @@ function _buildClientDash(c){
     </div>`).join('');
 
   const statusClass = {active:'active',pending:'pending',complete:'complete'};
-  const techLabel = c.short==='JAGO'?'Agent':'Tech';
-  const sectionLabel = c.short==='JAGO'?'PROPERTIES':'JOBS';
+  const techLabel = c.short==='FOUNDING'?'Agent':'Tech';
+  const sectionLabel = c.short==='FOUNDING'?'PROPERTIES':'JOBS';
   const jobHtml = c.jobs.map(j=>`
     <div class="client-job-row">
       <span class="client-job-status ${statusClass[j.status]||'pending'}">${j.label}</span>
@@ -6533,7 +6533,7 @@ ${kpiLines}
 AUTOMATIONS RUNNING:
 ${autoLines}
 
-ACTIVE ${c.short === 'JAGO' ? 'PROPERTIES' : 'JOBS'} & STATUS:
+ACTIVE ${c.short === 'FOUNDING' ? 'PROPERTIES' : 'JOBS'} & STATUS:
 ${jobLines}
 
 RECENT ACTIVITY:

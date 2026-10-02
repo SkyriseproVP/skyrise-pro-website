@@ -57,11 +57,9 @@
   to     = "/.netlify/functions/transcribe"
   status = 200
 
-# ── Jarvis live brief (reads Attio brain so admin Jarvis advises on real data)
-[[redirects]]
-  from   = "/api/jarvis-brief"
-  to     = "/.netlify/functions/jarvis-brief"
-  status = 200
+# (Removed 2026-10-01: /api/jarvis-brief. It returned the Attio pipeline and
+# contact details to anyone, and nothing on this site uses it any more — admin
+# Jarvis lives at app.skyrisepro.ai behind a Supabase admin login.)
 
 [[redirects]]
   from   = "/api/tts"

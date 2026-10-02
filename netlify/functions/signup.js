@@ -107,7 +107,8 @@ exports.handler = async function (event) {
   try {
     const resp = await fetch(webhookUrl, {
       method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
+      // Sent when configured so this keeps working if the Make hook is ever locked to require a key.
+      headers: Object.assign({ 'Content-Type': 'application/json' }, process.env.MAKE_WEBHOOK_APIKEY ? { 'x-make-apikey': process.env.MAKE_WEBHOOK_APIKEY } : {}),
       body:    JSON.stringify(payload),
     });
 

@@ -71,6 +71,19 @@
   to     = "/.netlify/functions/weather"
   status = 200
 
+# ── Form proxies to Make (2026-10-01). The browser posts here instead of to the
+# public hook.us2.make.com URLs; these validate, rate-limit and forward with the
+# Make API key. See netlify/functions/lib/make-forward.js.
+[[redirects]]
+  from   = "/api/booking-submit"
+  to     = "/.netlify/functions/booking-submit"
+  status = 200
+
+[[redirects]]
+  from   = "/api/lead-submit"
+  to     = "/.netlify/functions/lead-submit"
+  status = 200
+
 # NOTE: No catch-all SPA rewrite — this is a multi-page static site.
 # Netlify serves index.html, demo.html, court-vision-demo.html directly.
 # A "/* -> /index.html" rule would shadow the function routes and break POSTs.

@@ -249,7 +249,7 @@ function rsTopTag(){
 }
 
 async function rsPostLead(payload){
-  const res = await fetch('https://hook.us2.make.com/4qm0ixlmg7puirg8li4ct7n8tzwcln4f',{
+  const res = await fetch('/api/lead-submit',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify(payload)

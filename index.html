@@ -4519,7 +4519,7 @@ async function confirmBooking(){
 
   // ── POST to Make booking pipeline (fire-and-forget, CORS-safe) ──
   // Qualifying questions only — Zoom handles the actual date/time (no redundancy).
-  const MAKE_WEBHOOK='https://hook.us2.make.com/mhn5jws4b44t7qli3tqp5oe07dmjlfk3';
+  const MAKE_WEBHOOK='/api/booking-submit';
   try{
     fetch(MAKE_WEBHOOK,{
       method:'POST',
@@ -4852,7 +4852,7 @@ function creIqSubmit(){
       '\n\nGOALS (90 days): '+q.vision+'\nWorth it when: '+q.successMetric+'\nTrial target: '+q.trialGoal+
       '\nPLAN INTEREST: '+q.planInterest+
       '\nDocuments ready: '+q.documents.join(', ')+'\nNotes: '+q.notes;
-    fetch('https://hook.us2.make.com/mhn5jws4b44t7qli3tqp5oe07dmjlfk3',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(q)});
+    fetch('/api/booking-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(q)});
   }catch(e){ console.warn('Questionnaire send error:',e); }
 
   // Show success screen
@@ -4951,7 +4951,7 @@ async function submitSupport(){
 
   if(!delivered){
     try{
-      const res = await fetch('https://hook.us2.make.com/4qm0ixlmg7puirg8li4ct7n8tzwcln4f',{
+      const res = await fetch('/api/lead-submit',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({source:'support_request',first_name:name,email:email,company:'',message:`[${type}] ${subject}\n\n${message}`})

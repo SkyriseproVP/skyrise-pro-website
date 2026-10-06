@@ -2116,7 +2116,7 @@ let ccOrbHandle = null;
 
 function startCCOrb(){
   if (ccOrbHandle) ccOrbHandle.stop();
-  ccOrbHandle = SkyOrb.mount('cc-orb-canvas', {
+  ccOrbHandle = window.SkyOrb && window.SkyOrb.mount('cc-orb-canvas', {
     getMode: () => (orbMode === 'speaking' ? 'speaking' : 'idle'),
     getVolume: () => {
       if (orbMode !== 'speaking' || !skyAudio || skyAudio.paused) return 0;

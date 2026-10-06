@@ -1324,7 +1324,7 @@ let orbHandle = null;
 function startOrb(canvasId, wrapId) {
   if (orbHandle) orbHandle.stop();
   currentOrb = { canvasId, wrapId };
-  orbHandle = SkyOrb.mount(canvasId, {
+  orbHandle = window.SkyOrb && window.SkyOrb.mount(canvasId, {
     getMode:   () => orbMode,
     getVolume: () => orbVolume,
   });

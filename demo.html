@@ -168,8 +168,8 @@ canvas.orb-canvas{border-radius:50%;display:block;}
   border-bottom:1px solid rgba(0,200,232,.1);
   background:rgba(4,10,22,.6);
 }
-/* Live court visual -- same image + pin mechanics as the real Tmrw Sports
-   board (tmrw-sports-court-vision-*.html #view-a), reused so the demo shows
+/* Live court visual -- same image + pin mechanics as the real client
+   board (the live Court Vision board's #view-a), reused so the demo shows
    the actual product's own possession view, not a stand-in. Role labels
    only, never real people's names -- this is public-facing. */
 /* Court screen — narration timeline on the left, the court + moving ball on
@@ -1023,7 +1023,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
     </div>
     <div class="dc-court-frame">
       <div class="dc-court-inner">
-        <img class="dc-court-img" src="tmrw-court-live.jpg" alt="Court Vision — the live Tmrw Sports board">
+        <img class="dc-court-img" src="tmrw-court-live.jpg" alt="Court Vision — the live client board">
         <div id="dc-pins"></div>
         <div class="dc-steal-overlay" id="dc-steal-overlay"></div>
       </div>
@@ -1236,6 +1236,9 @@ canvas.orb-canvas{border-radius:50%;display:block;}
   </div>
 </div>
 
+<!-- The Sky orb: one shared implementation for every surface.
+     Classic script, so window.SkyOrb exists before the code below runs. -->
+<script src="/sky-orb.js"></script>
 <script type="module">
 // ── CONFIG ────────────────────────────────────────────────────
 // ElevenLabs key lives server-side (Netlify env) — the page calls /api/tts.
@@ -1309,87 +1312,26 @@ async function skySpeak(text, wrapId, onDone) {
 }
 
 // ── ORB ANIMATION ─────────────────────────────────────────────
+// Sky's orb lives in /sky-orb.js -- ONE implementation shared by every
+// dashboard, so he looks and behaves the same everywhere. Never inline a copy
+// here again; change the module instead.
+//
+// This page had been running an OLDER orb than every other surface: no star
+// flares, clipped to the full radius so there was no gap inside the ring, and a
+// faster speaking motion. It now shows the same Sky as the app and the boards.
+let orbHandle = null;
+
 function startOrb(canvasId, wrapId) {
-  if (animFrame) cancelAnimationFrame(animFrame);
+  if (orbHandle) orbHandle.stop();
   currentOrb = { canvasId, wrapId };
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  t = 0;
-  function loop() {
-    t += 0.015;
-    drawOrb(canvas, ctx, t, orbMode, orbVolume);
-    animFrame = requestAnimationFrame(loop);
-  }
-  loop();
+  orbHandle = SkyOrb.mount(canvasId, {
+    getMode:   () => orbMode,
+    getVolume: () => orbVolume,
+  });
 }
 
-function drawOrb(canvas, ctx, t, mode, vol) {
-  const w = canvas.width, h = canvas.height;
-  const cx = w/2, cy = h/2, r = w/2;
-  ctx.clearRect(0,0,w,h);
-  ctx.save();
-  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.clip();
-
-  const speaking  = mode === 'speaking';
-  const listening = mode === 'listening';
-  const spd   = speaking ? 1.8 + vol*2.2 : listening ? 0.85 : 0.35;
-  const scale = speaking ? 1 + vol*0.18 : 1;
-
-  // Deep navy body (matches .so-body)
-  const body = ctx.createRadialGradient(cx, cy+r*0.05, r*0.08, cx, cy, r);
-  body.addColorStop(0,'rgba(0,70,120,0.55)');
-  body.addColorStop(0.75,'rgba(4,12,28,0.94)');
-  body.addColorStop(1,'rgba(2,7,18,1)');
-  ctx.fillStyle = body; ctx.fillRect(0,0,w,h);
-
-  // Two drifting cyan lobes (matches .so-l1 / .so-l2)
-  ctx.globalCompositeOperation = 'screen';
-  ctx.filter = 'blur(' + (r*0.13).toFixed(1) + 'px)';
-  const lobe = (x,y,rad,c0,c1) => {
-    const g = ctx.createRadialGradient(x,y,0,x,y,rad);
-    g.addColorStop(0,c0); g.addColorStop(0.55,c1); g.addColorStop(1,'rgba(0,40,80,0)');
-    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x,y,rad,0,Math.PI*2); ctx.fill();
-  };
-  lobe(cx - r*0.14 + Math.sin(t*spd*0.7)*r*0.12*scale, cy - r*0.10 + Math.cos(t*spd*0.5)*r*0.10*scale,
-       r*0.60*scale, 'rgba(150,240,255,0.85)', 'rgba(45,185,240,0.55)');
-  lobe(cx + r*0.16 + Math.cos(t*spd*0.6)*r*0.12*scale, cy + r*0.13 + Math.sin(t*spd*0.8)*r*0.10*scale,
-       r*0.56*scale, 'rgba(90,210,255,0.70)', 'rgba(20,150,225,0.45)');
-  ctx.filter = 'none';
-
-  // White nova core (matches .so-core) — slightly up-left, breathing, brightens when speaking
-  const glow    = speaking ? 0.85 + vol*0.7 : listening ? 0.7 : 0.55;
-  const breathe = 1 + Math.sin(t*(speaking?4:2))*0.06;
-  const coreR   = r*0.30*breathe*(0.92 + glow*0.2);
-  const coreX   = cx - r*0.05, coreY = cy - r*0.09;
-  const core = ctx.createRadialGradient(coreX,coreY,0,coreX,coreY,coreR);
-  core.addColorStop(0,'rgba(255,255,255,'+Math.min(1,glow+0.3).toFixed(2)+')');
-  core.addColorStop(0.26,'rgba(215,252,255,0.95)');
-  core.addColorStop(0.58,'rgba(110,228,255,0.55)');
-  core.addColorStop(1,'rgba(110,228,255,0)');
-  ctx.fillStyle = core; ctx.beginPath(); ctx.arc(coreX,coreY,coreR,0,Math.PI*2); ctx.fill();
-
-  // Cross glint through the core (matches .so-core::before / ::after)
-  ctx.globalCompositeOperation = 'screen';
-  const gh = ctx.createLinearGradient(coreX-coreR*2, coreY, coreX+coreR*2, coreY);
-  gh.addColorStop(0,'rgba(255,255,255,0)'); gh.addColorStop(0.5,'rgba(255,255,255,0.9)'); gh.addColorStop(1,'rgba(255,255,255,0)');
-  ctx.fillStyle = gh; ctx.fillRect(coreX-coreR*2, coreY-coreR*0.08, coreR*4, coreR*0.16);
-  const gv = ctx.createLinearGradient(coreX, coreY-coreR*1.6, coreX, coreY+coreR*1.6);
-  gv.addColorStop(0,'rgba(255,255,255,0)'); gv.addColorStop(0.5,'rgba(255,255,255,0.8)'); gv.addColorStop(1,'rgba(255,255,255,0)');
-  ctx.fillStyle = gv; ctx.fillRect(coreX-coreR*0.08, coreY-coreR*1.6, coreR*0.16, coreR*3.2);
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.restore();
-
-  // Neon cyan ring (matches .so-ring)
-  ctx.save();
-  const lw = Math.max(1.5, r*0.035);
-  ctx.strokeStyle = 'rgba(190,248,255,0.95)';
-  ctx.lineWidth = lw;
-  ctx.shadowColor = 'rgba(0,200,232,'+(speaking?0.9:0.65)+')';
-  ctx.shadowBlur = r*(speaking?0.28:0.18);
-  ctx.beginPath(); ctx.arc(cx, cy, r-lw, 0, Math.PI*2); ctx.stroke();
-  ctx.restore();
-}
+// drawOrb() now lives in /sky-orb.js (SkyOrb.draw) -- one orb for every
+// dashboard. Do not paste a copy back in here.
 
 // ── SCREEN SWITCH ─────────────────────────────────────────────
 function showScreen(id) {
@@ -1413,8 +1355,8 @@ const COURT_NODES = [
     script:"The certificate of occupancy is issued, rent starts on the date the lease set on day one, and every approval, submittal and inspection along the way is already archived — a documented record, not a folder someone has to reconstruct after the fact." },
 ];
 
-// Same positions/colors as the real Tmrw Sports board's own Live Court view
-// (tmrw-sports-court-vision-*.html #view-a .ap pins) for Permitting, GC and
+// Same positions/colors as the real client board's own Live Court view
+// (the live Court Vision board's #view-a .ap pins) for Permitting, GC and
 // Landlord -- those exact three are the roles the real board currently pins,
 // so the numbers and the visual agree. Leasing Agent and PM+Tenant aren't
 // pinned on the live board (their moments have passed / haven't come up),

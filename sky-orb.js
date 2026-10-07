@@ -201,7 +201,15 @@
    * measured, the buffer is changed, and the size is re-measured -- the inline
    * pin is applied ONLY if the layout actually moved.
    */
-  var DPR_CAP = 2;   // past 2x the extra pixels are not perceptible, just cost
+  // Always render at 2x the on-screen size, regardless of devicePixelRatio.
+  //
+  // Not simply `min(dpr, 2)`: on a 1x display that would drop the buffer to 1:1,
+  // and the orb's thin neon ring and star flares antialias visibly better when a
+  // larger buffer is downsampled into place. The authored pages had been
+  // supersampling 2.0-2.44x for exactly that reason and it looked right. 2x is
+  // also exactly native on a retina screen, so one number serves both: smooth at
+  // 1x, sharp at 2x. Past 2x the extra pixels are not perceptible, just cost.
+  var SUPERSAMPLE = 2;
 
   function sizeBackingStore(canvas) {
     try {
@@ -210,9 +218,8 @@
       var cssH = before.height || canvas.clientHeight || 0;
       if (!cssW || !cssH) return;              // hidden or detached; leave it alone
 
-      var dpr = Math.min(global.devicePixelRatio || 1, DPR_CAP);
-      var w = Math.max(1, Math.round(cssW * dpr));
-      var h = Math.max(1, Math.round(cssH * dpr));
+      var w = Math.max(1, Math.round(cssW * SUPERSAMPLE));
+      var h = Math.max(1, Math.round(cssH * SUPERSAMPLE));
       if (canvas.width === w && canvas.height === h) return;
 
       canvas.width = w;

@@ -185,6 +185,49 @@
   }
 
   /**
+   * Give the canvas a backing store that matches how big it is actually drawn,
+   * so Sky is equally crisp on every surface.
+   *
+   * 2026-10-06: the pages had each guessed their own buffer size, and the
+   * ratios ranged from 1.0x to 2.44x. The app's full-screen explore orb
+   * (220 buffer at 220 CSS px) and the website demo's orb (128 at 128) were
+   * rendering 1:1, so they looked soft next to the 2.44x ones -- same shape,
+   * different sharpness, which reads as "that is not the same Sky".
+   *
+   * The on-screen size never changes. Some pages size the canvas from CSS
+   * (the app uses a responsive clamp) and some relied on the width/height
+   * ATTRIBUTES for layout (the website demo did). Pinning an inline px size
+   * unconditionally would freeze the responsive ones, so instead the size is
+   * measured, the buffer is changed, and the size is re-measured -- the inline
+   * pin is applied ONLY if the layout actually moved.
+   */
+  var DPR_CAP = 2;   // past 2x the extra pixels are not perceptible, just cost
+
+  function sizeBackingStore(canvas) {
+    try {
+      var before = canvas.getBoundingClientRect();
+      var cssW = before.width || canvas.clientWidth || 0;
+      var cssH = before.height || canvas.clientHeight || 0;
+      if (!cssW || !cssH) return;              // hidden or detached; leave it alone
+
+      var dpr = Math.min(global.devicePixelRatio || 1, DPR_CAP);
+      var w = Math.max(1, Math.round(cssW * dpr));
+      var h = Math.max(1, Math.round(cssH * dpr));
+      if (canvas.width === w && canvas.height === h) return;
+
+      canvas.width = w;
+      canvas.height = h;                       // also clears it; next frame repaints
+
+      // Did changing the attributes move the layout? Only then pin the size.
+      var after = canvas.getBoundingClientRect();
+      if (Math.abs(after.width - cssW) > 0.5 || Math.abs(after.height - cssH) > 0.5) {
+        canvas.style.width = cssW + 'px';
+        canvas.style.height = cssH + 'px';
+      }
+    } catch (e) { /* never let sizing stop the orb */ }
+  }
+
+  /**
    * Start an orb on a canvas and keep it alive no matter what.
    *
    * Four ways the old inline loops died permanently, all silently:
@@ -219,6 +262,10 @@
       if (global.console) console.warn('SkyOrb: no 2d context on ' + canvasId);
       return null;
     }
+
+    sizeBackingStore(canvas);
+    var onResize = function () { sizeBackingStore(canvas); };
+    if (global.addEventListener) global.addEventListener('resize', onResize);
 
     var frame = null, t = 0, last = 0, vol = 0, stopped = false;
     var localMode = 'idle';
@@ -285,6 +332,9 @@
         stopped = true;
         if (frame) global.cancelAnimationFrame(frame);
         frame = null;
+        // Drop the resize handler too, or remounting across screens stacks
+        // one listener per mount for the life of the page.
+        if (global.removeEventListener) global.removeEventListener('resize', onResize);
       },
       setMode: function (m) { localMode = m; },
       getMode: function () { return getMode(); }

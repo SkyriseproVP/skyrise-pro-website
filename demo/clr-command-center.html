@@ -2298,8 +2298,8 @@ document.getElementById('sidebar').addEventListener('keydown', e => {
 })();
 </script>
 
-<!-- CLR-LINK-EXPIRY-v1 — the link Victor sent is open for one week.
-     After it closes the page shows a notice instead of the command center. -->
+<!-- CLR-LINK-EXPIRY-v1 — first open for one week (to 22 Sep); reopened 10/8
+     through 31 Jan 2027. After it closes the page shows a notice instead. -->
 <style>
   #clr-expired{position:fixed;inset:0;z-index:100000;display:none;place-items:center;background:#0a121e;color:#e7eef6;
     font:16px/1.6 Arial,system-ui,sans-serif}
@@ -2313,15 +2313,18 @@ document.getElementById('sidebar').addEventListener('keydown', e => {
   <div class="box">
     <img src="https://app.skyrisepro.ai/skyrise-cyan-transparent.png" alt="Skyrise Pro">
     <h1 id="clr-expired-h">This link has closed</h1>
-    <p>The CLR command center was open through Monday 22 September.</p>
+    <p>The CLR command center was open through Sunday 31 January 2027.</p>
     <p style="font-size:14px;color:#98a6b8">Reply to Victor's email, or write to
       <a href="mailto:victor@skyrisepro.ai">victor@skyrisepro.ai</a>, and he'll send a fresh one.</p>
   </div>
 </div>
 <script>
 (function(){
-  // 23 Sep 2026, 03:59 UTC = 22 Sep, 11:59pm Eastern.
-  var CLOSES = Date.UTC(2026, 8, 23, 3, 59, 0);
+  // Reopened 2026-10-08 (Victor: "make sure he has access through his dashboard
+  // Tmrw Sports") -- it had closed on 22 Sep, which took Winston's LIVE BOARD
+  // button with it. Now open through the Tmrw Sports delivery date:
+  // 1 Feb 2027, 04:59 UTC = 31 Jan, 11:59pm Eastern (EST).
+  var CLOSES = Date.UTC(2027, 1, 1, 4, 59, 0);
   function check(){
     if (Date.now() < CLOSES) return;
     var el = document.getElementById('clr-expired');

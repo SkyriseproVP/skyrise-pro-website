@@ -1207,6 +1207,12 @@ td.nw { white-space:nowrap; }
 .bo-body { position:relative; flex:1; background:#f4f7fb; }
 .bo-wait { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'Orbitron',sans-serif; font-size:11px; letter-spacing:1.6px; color:#7c88a0; }
 .bo-frame { position:absolute; inset:0; width:100%; height:100%; border:0; background:transparent; }
+/* phones: the two buttons only (the board carries its own header), full-size tap targets */
+@media (max-width: 640px) {
+  .bo-bar { justify-content:space-between; gap:8px; padding:8px 10px; }
+  .bo-title { display:none; }
+  .bo-btn { min-height:44px; padding:0 12px; }
+}
 
 /* call intelligence */
 .calls-powered { font-family:'Orbitron',sans-serif; font-size:10px; letter-spacing:1px; color:#f26a22; }
@@ -1461,9 +1467,8 @@ function renderTabs(){
     : `<a class="nav-item${j.id === current ? ' active' : ''}" role="button" tabindex="0" data-go="job-overview" onclick="openJob('${j.id}')"><span class="nav-icon">${j.status === 'complete' ? '✅' : '🟠'}</span>${esc(j.tab)}</a>`).join('');
 }
 
-// OPEN → : Tmrw Sports goes straight to the live board, in the same tab, the way the
-// admin dashboard's card does (location.href). The other jobs open here in the portal.
-// The live board opens full screen INSIDE the portal. A link that leaves the page is
+// OPEN → : Tmrw Sports goes straight to the live board; the other jobs open here in
+// the portal. The live board opens full screen INSIDE the portal. A link that leaves the page is
 // blocked silently by some viewers (and prompts in others), so the board is framed here.
 function loadBoard(frame, url){ frame.src = url; }
 function goToBoard(){
@@ -1474,10 +1479,11 @@ function goToBoard(){
   if (!fr.getAttribute('src')) loadBoard(fr, j.boardUrl);   // load once; reopening keeps its place
   $('board-overlay').hidden = false;
   document.body.style.overflow = 'hidden';
+  document.body.classList.add('board-open');   // the page's Edit bar steps aside so it never covers the board's boxes
 }
 function closeBoard(){
   const o = $('board-overlay');
-  if (o && !o.hidden) { o.hidden = true; document.body.style.overflow = ''; }
+  if (o && !o.hidden) { o.hidden = true; document.body.style.overflow = ''; document.body.classList.remove('board-open'); }
 }
 function openBoardTab(){ const j = D.jobs.find(x => x.boardUrl); if (j) window.open(j.boardUrl, '_blank', 'noopener'); }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBoard(); });
@@ -1586,7 +1592,7 @@ function renderJob(){
         <div class="job-facts">${facts.map(f => `<div class="fact"><div class="k">${esc(f[0])}</div><div class="v">${esc(f[1])}<small>${esc(f[2] || '')}</small></div></div>`).join('')}</div>
       </div>
       <div class="job-head-side">
-        ${j.id === 'tmrw' ? `<button type="button" class="pen-btn" style="font-size:9.5px" title="Open the live Court Vision board in a new tab" onclick="openLiveBoard()">✎ LIVE BOARD</button>` : ''}
+        ${j.id === 'tmrw' ? `<button type="button" class="pen-btn" style="font-size:9.5px" title="Open the live Court Vision board" onclick="openLiveBoard()">✎ LIVE BOARD</button>` : ''}
         <div id="ring-slot">${ring(jobPct(j))}</div>
       </div>
     </div>
@@ -2201,6 +2207,7 @@ document.getElementById('sidebar').addEventListener('keydown', e => {
   body.clr-editing [data-clr-edit]{outline:1px dashed rgba(224,80,16,.55);outline-offset:2px;border-radius:4px}
   body.clr-editing [data-clr-edit]:focus{outline:2px solid #E05010;background:rgba(224,80,16,.06)}
   @media print{#clr-edit-bar{display:none}}
+  body.board-open #clr-edit-bar{display:none}
 </style>
 <script>
 (function(){

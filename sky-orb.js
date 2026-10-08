@@ -282,8 +282,25 @@
     }
 
     sizeBackingStore(canvas);
-    var onResize = function () { sizeBackingStore(canvas); };
-    if (global.addEventListener) global.addEventListener('resize', onResize);
+
+    // An orb can be mounted while its container is still display:none -- the
+    // website homepage does exactly that with the pipeline diagram. It then
+    // measures 0x0, sizing correctly leaves it alone, and the canvas keeps its
+    // 300x150 default; without this it would appear as a squashed 2:1 ellipse
+    // the moment the section is revealed. A ResizeObserver catches the 0 -> real
+    // transition (and ordinary window resizes), and sizeBackingStore is
+    // idempotent, so being called again costs nothing.
+    var ro = null, onResize = null;
+    if (typeof global.ResizeObserver === 'function') {
+      try {
+        ro = new global.ResizeObserver(function () { sizeBackingStore(canvas); });
+        ro.observe(canvas);
+      } catch (e) { ro = null; }
+    }
+    if (!ro && global.addEventListener) {        // fallback where RO is missing
+      onResize = function () { sizeBackingStore(canvas); };
+      global.addEventListener('resize', onResize);
+    }
 
     var frame = null, t = 0, last = 0, vol = 0, stopped = false;
     var localMode = 'idle';
@@ -350,9 +367,13 @@
         stopped = true;
         if (frame) global.cancelAnimationFrame(frame);
         frame = null;
-        // Drop the resize handler too, or remounting across screens stacks
-        // one listener per mount for the life of the page.
-        if (global.removeEventListener) global.removeEventListener('resize', onResize);
+        // Drop the size watcher too, or remounting across screens stacks one
+        // observer/listener per mount for the life of the page.
+        if (ro) { try { ro.disconnect(); } catch (e) {} ro = null; }
+        if (onResize && global.removeEventListener) {
+          global.removeEventListener('resize', onResize);
+          onResize = null;
+        }
       },
       setMode: function (m) { localMode = m; },
       getMode: function () { return getMode(); }

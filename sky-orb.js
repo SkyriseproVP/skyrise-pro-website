@@ -160,12 +160,23 @@
     var pulse = listening ? (0.5 + 0.5 * Math.sin(t * 3.2))
               : error ? (0.5 + 0.5 * Math.sin(t * 1.15)) * 0.5
               : 0;
+    // Ring weight and glow are proportional to R, which is right for a full-size
+    // orb and too thin for a 34-54px inline avatar: the old 1.4 floor is in
+    // BUFFER pixels, so at the fixed 2x supersample it came out at 0.7 CSS px --
+    // sub-pixel, and it read faint beside the CSS avatar's flat 1.5px border.
+    //
+    // At 2x supersample R equals the orb's CSS size, so AVATAR is literally
+    // "smaller than 60px on screen". Only those get the heavier floor; every
+    // orb at 60px or above keeps the exact proportional values it always had,
+    // which is what keeps the app's 90px and 220px orbs unchanged.
+    var AVATAR = R < 60;
     ctx.save();
     ctx.strokeStyle = 'rgba(' + P.ring + ',' + (0.95 * dim) + ')';
-    ctx.lineWidth = Math.max(1.4, R * 0.024);
+    ctx.lineWidth = Math.max(AVATAR ? 3 : 1.4, R * 0.024);
     ctx.shadowColor = 'rgba(' + P.glow + ',' +
       Math.min(1, (0.65 + amp * 0.35 + pulse * 0.2 + high * 0.25) * dim) + ')';
-    ctx.shadowBlur = R * (0.10 + amp * 0.14 + pulse * 0.07 + high * 0.06);
+    var blur = R * (0.10 + amp * 0.14 + pulse * 0.07 + high * 0.06);
+    ctx.shadowBlur = AVATAR ? Math.max(6, blur) : blur;
     ctx.beginPath(); ctx.arc(cx, cy, ringR * (1 + amp * 0.02), 0, Math.PI * 2); ctx.stroke();
     ctx.restore();
 

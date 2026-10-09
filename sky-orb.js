@@ -6,7 +6,7 @@
  *  Sky looks and behaves the same on every dashboard. Before 2026-10-06 the
  *  orb was pasted into 8 pages with 3 different loop functions (startOrb,
  *  startBoardOrb, startCCOrb) and had already drifted: the app smoothed the
- *  voice, the Tmrw Sports board did not, Jago's command center was frozen on
+ *  voice, the live client board did not, the founding client's command center was frozen on
  *  idle, and the public website demo was running an older orb entirely.
  *  Everything now loads THIS file.
  *

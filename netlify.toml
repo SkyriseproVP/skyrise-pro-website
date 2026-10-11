@@ -89,3 +89,9 @@
 # NOTE: No catch-all SPA rewrite — this is a multi-page static site.
 # Netlify serves index.html, demo.html, court-vision-demo.html directly.
 # A "/* -> /index.html" rule would shadow the function routes and break POSTs.
+
+# Retired public CLR demo page. The client signs in at the client app instead.
+[[redirects]]
+  from   = "/demo/clr-command-center.html"
+  to     = "https://app.skyrisepro.ai/clr"
+  status = 301

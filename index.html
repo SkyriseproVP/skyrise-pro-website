@@ -200,6 +200,8 @@
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<!-- The TI cost chart shown in Book-a-call, Get Started and /cost.html (same math as the TI ROI calculator). -->
+<script src="/cost-calc.js"></script>
 <!-- The Sky orb: one shared implementation for every surface.
      Classic script, so window.SkyOrb exists before the code below runs. -->
 <script src="/sky-orb.js"></script>
@@ -1830,6 +1832,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
       <div class="intake-step-label">STEP 4 OF 4 — GOALS &amp; PLAN</div>
       <div class="intake-step-title">WHAT DOES SUCCESS LOOK LIKE?</div>
       <div class="intake-step-sub">We'll review your responses within 2 business days and reach out to schedule your discovery call.</div>
+      <label class="modal-label">WHAT CHASING STATUS COSTS YOU TODAY</label>
+      <div id="cre-cost" style="margin-bottom:16px;"></div>
 
       <label class="modal-label">IF EVERYTHING WENT RIGHT, WHAT DOES SKYRISE PRO FREE YOU UP TO DO IN THE NEXT 90 DAYS?</label>
       <textarea class="modal-input" id="cre-vision" placeholder="e.g. 'Focus on sales instead of admin', 'Take on 4 more projects without hiring'" style="height:70px;resize:vertical;font-family:'Orbitron',sans-serif;font-size:11px;line-height:1.6;margin-bottom:16px;"></textarea>
@@ -1898,6 +1902,8 @@ footer{background:#f5fbff;border-top:1px solid var(--border-light);padding:14px 
 
     <!-- ── Calendar form ── -->
     <div id="cal-form-wrap">
+      <div class="cal-section-lbl">WHAT IT'S COSTING YOU</div>
+      <div id="cal-cost" style="margin-bottom:16px;"></div>
       <div class="cal-section-lbl">YOUR DETAILS</div>
       <div class="cal-inputs-row">
         <input class="modal-input" type="text" id="cal-name" placeholder="Your Full Name">
@@ -4554,10 +4560,20 @@ function lbTab(which){
 }
 
 // Modal
+// TI cost chart instances, keyed by slot id. Mounted on first open, resized on every open.
+var _costCalcs={};
+function costMount(slot,projects){
+  if(!window.SkyCost) return null;
+  var el=document.getElementById(slot); if(!el) return null;
+  if(!_costCalcs[slot]) _costCalcs[slot]=SkyCost.mount(el,{compact:true,projects:projects||1});
+  setTimeout(function(){ if(_costCalcs[slot]) _costCalcs[slot].resize(); },60);
+  return _costCalcs[slot];
+}
+function costValues(slot){ return _costCalcs[slot] ? _costCalcs[slot].values() : {}; }
 function openModal(id){
   document.getElementById('modal-'+id).classList.add('open');
   document.body.style.overflow='hidden';
-  if(id==='booking'){initCal();} if(id==='cre-iq'&&typeof creIqReset==='function'){creIqReset();}
+  if(id==='booking'){initCal();costMount('cal-cost');} if(id==='cre-iq'&&typeof creIqReset==='function'){creIqReset();}
 }
 function closeModal(id){
   document.getElementById('modal-'+id).classList.remove('open');
@@ -4779,8 +4795,10 @@ async function confirmBooking(){
         service: calSelectedService,
         business,
         bottleneck,
-        summary: `New strategy-call request from ${name} — ${calSelectedService} — ${business}`,
-        victor_phone: '+16892046006'
+        summary: `New strategy-call request from ${name} — ${calSelectedService} — ${business}` + (costValues('cal-cost').intel_line ? ' · ' + costValues('cal-cost').intel_line : ''),
+        victor_phone: '+16892046006',
+        source: 'book-a-call',
+        ...costValues('cal-cost')
       })
     });
   }catch(e){console.warn('Booking webhook error:',e);}
@@ -5055,6 +5073,8 @@ function creIqNext(fromStep){
   if(current) current.classList.remove('active');
   next.classList.add('active');
   _creIqStep = fromStep + 1;
+  // Step 4 shows the cost chart, started from the project count they gave in step 2.
+  if(_creIqStep===4){ var _pc=parseInt((document.getElementById('cre-projects')||{}).value,10); costMount('cre-cost', _pc>0?_pc:1); }
   _creIqUpdateProgress(_creIqStep);
 }
 
@@ -5100,6 +5120,9 @@ function creIqSubmit(){
       '\n\nGOALS (90 days): '+q.vision+'\nWorth it when: '+q.successMetric+'\nTrial target: '+q.trialGoal+
       '\nPLAN INTEREST: '+q.planInterest+
       '\nDocuments ready: '+q.documents.join(', ')+'\nNotes: '+q.notes;
+    var _cv=costValues('cre-cost');
+    if(_cv.intel_line){ q.summary+='\n\nCOST OF CHASING STATUS: '+_cv.intel_line+'\nChart: '+_cv.chart_url; }
+    Object.keys(_cv).forEach(function(k){ q[k]=_cv[k]; }); q.source='get-started';
     fetch('/api/booking-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(q)});
   }catch(e){ console.warn('Questionnaire send error:',e); }
 

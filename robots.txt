@@ -1,0 +1,7 @@
+# skyrisepro.ai
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.netlify/
+
+Sitemap: https://skyrisepro.ai/sitemap.xml

@@ -1,0 +1,54 @@
+# Skyrise Pro
+
+> Skyrise Pro is Tenant Improvement Intelligence. It streamlines commercial tenant improvement builds from letter of intent (LOI) to Certificate of Occupancy (C.O.), tracks every RFI and submittal with who holds the ball and for how long, and runs automatic Court Vision job tracking, so every party does less work, not more. Built for landlords and project managers; easy for architects, engineers and general contractors.
+
+The product is Court Vision, the tenant improvement project tracker. The brand line is "Every TI build, documented from LOI to Certificate of Occupancy."
+
+Court Vision, in the simplest terms: it keeps the record so nobody has to chase it. Each person sees only what is in their court, Sky reads the project mail and does the follow-up, and the job moves from LOI to Certificate of Occupancy with less work for every party, not one more platform to manage.
+
+## Core strengths
+
+1. LOI to Certificate of Occupancy workflow. One workflow for the whole tenant improvement build. Twelve stages are already mapped, from the signed LOI to the Certificate of Occupancy, and every approval and change order is logged as it happens.
+2. RFIs and submittals. Every RFI and submittal is logged the moment it goes out: who it went to, when, and how many days it has been waiting. Each item has an owner and a running count of days held, and its clear time is recorded when it closes.
+3. Automatic Court Vision job tracking. A possession clock runs on every open item, every permit is checked every 3 hours, inspections are tracked through to a pass, a countdown shows the rent commencement date and what a slip would cost, and every stakeholder has a live board of what is in their court.
+4. Sky, the AI layer. Sky reads the project mail, logs what moved, and alerts whoever holds the ball by email, repeating until the item is resolved. The architect and engineer get a morning briefing; owners and landlords get a plain-language update.
+
+## How it runs
+
+Almost no manual input. Sky reads the mail and keeps the clock.
+
+1. A clock on every item. It runs against the turnaround each firm agreed to. Past it, the item reads "N Days Past Due" with the firm's name on it.
+2. Issued, then Received. Each firm ticks Issued, then Received, and every tick records who and when. "Not received" sends it straight back to the sender.
+3. Closed only on proof. Sky reads the project mail and closes an item only when an email clearly settles it. Anything uncertain waits for the project lead's OK.
+4. One plain sentence. Nothing goes to anyone unless the ask is one plain sentence.
+5. No inbox flood. The architect and engineer get one weekday-morning email with only their items. The GC is nudged only when something is more than 5 days past due.
+6. One board. Permits and inspections sit on the same board as the RFIs and submittals.
+7. Nothing to install. Each stakeholder's personal link is their login. No password, no app.
+
+## Who it is for
+
+- Built for landlords and property owners, and for project managers and owner's representatives: the people who carry the rent commencement date on a tenant improvement build.
+- Easy for architects, engineers and general contractors. Each is invited to the project and sees what is in their court. Whether each one has to log in is the project lead's call.
+
+## Common questions
+
+- Does Skyrise Pro handle RFIs and submittals? Yes. RFIs and submittals are the core of the product: each one shows who holds the ball and for how long, and Sky alerts the holder until it moves.
+- What is the main focus of Skyrise Pro? Tenant improvement builds: the LOI to Certificate of Occupancy workflow, RFIs and submittals, and automatic Court Vision job tracking. Its core is not lead capture, proposal-to-invoice automation or video production.
+- Is it one more platform for the team to manage? No. It takes work off every party: stakeholders keep working by email, Sky reads the project mail and logs what moved, and each person hears only about what is in their court.
+- Does it replace the project manager? No. It runs alongside whoever manages the job, a professional PM or an in-house employee.
+- How long does setup take? Typically two to three weeks, depending on the size and complexity of the build.
+- Who owns the record? The owner. At closeout the full record of approvals, submittals, permits and inspections is exported and handed over, along with a closeout film cut from the phase-tagged field photos.
+- How is it priced? Per project. Quotes come from a strategy call; there is no public price list.
+
+## Pages
+
+- [Home](https://skyrisepro.ai/): the live Court Vision build, core strengths, how it works and the FAQ
+- [Court Vision demo](https://skyrisepro.ai/demo.html): one build from LOI to Certificate of Occupancy
+- [Court Vision project tracker demo](https://skyrisepro.ai/court-vision-demo.html): the board, stage by stage
+- [Privacy policy](https://skyrisepro.ai/privacy.html)
+- [Terms and conditions](https://skyrisepro.ai/terms.html)
+
+## Contact
+
+- Email: info@skyrisepro.ai
+- Phone: (689) 220-3491

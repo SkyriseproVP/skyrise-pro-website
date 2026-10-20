@@ -214,11 +214,6 @@ canvas.orb-canvas{border-radius:50%;display:block;}
 .dc-ap-r{display:block;font-size:9px;font-weight:700;letter-spacing:.09em;color:var(--c);
   font-family:'Orbitron',sans-serif;}
 .dc-ap-s{display:block;font-size:10px;color:#fff;margin-top:2px;font-family:'Orbitron',sans-serif;}
-.dc-ap:not(.below) .dc-ap-l{bottom:calc(100% + 1.1cqw);}
-.dc-ap:not(.below) .dc-ap-l::after{height:1.1cqw;}
-.dc-ap.below .dc-ap-l{bottom:auto;top:calc(100% + 2.4cqw);}
-.dc-ap.below .dc-ap-l::after{top:auto;bottom:100%;
-  background:linear-gradient(color-mix(in srgb,var(--c) 10%,transparent),var(--c));}
 .dc-ap.ball .dc-ap-s{background:var(--c);color:#181200;font-weight:700;border-radius:3px;
   padding:1px 6px;display:inline-block;letter-spacing:.05em;}
 .dc-ap.ball .dc-ap-l{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 40%,transparent),
@@ -1022,7 +1017,7 @@ canvas.orb-canvas{border-radius:50%;display:block;}
     </div>
     <div class="dc-court-frame">
       <div class="dc-court-inner">
-        <img class="dc-court-img" src="Skyrise Pro Basketball court.jpg" alt="Court Vision — every player on a tenant improvement build, in their spot on the court">
+        <img class="dc-court-img" src="court-vision-arena.jpg" alt="Court Vision — the live client board">
         <div id="dc-pins"></div>
         <div class="dc-steal-overlay" id="dc-steal-overlay"></div>
       </div>
@@ -1362,24 +1357,26 @@ const COURT_NODES = [
     script:"The certificate of occupancy is issued, rent starts on the date the lease set on day one, and every approval, submittal and inspection along the way is already archived — a documented record, not a folder someone has to reconstruct after the fact." },
 ];
 
-// Each pin sits on the glowing spot printed on the court image for that role
-// (measured from "Skyrise Pro Basketball court.jpg", 2026-10-19). The image
-// prints the role's name above its spot, so the low spots (below:true) hang
-// their status card underneath instead of covering it.
+// Same positions/colors as the real client board's own Live Court view
+// (the live Court Vision board's #view-a .ap pins) for Permitting, GC and
+// Landlord -- those exact three are the roles the real board currently pins,
+// so the numbers and the visual agree. Leasing Agent and PM+Tenant aren't
+// pinned on the live board (their moments have passed / haven't come up),
+// so those two spots are placed, not pulled from the real record.
 const COURT_POS = [
-  { c:'#5b7cfa', x:'29.8%', y:'77.5%', role:'LEASING AGENT',       s:'Lease signed · clock started', below:true },
-  { c:'#f2c11d', x:'86.7%', y:'52.3%', role:'ARCHITECT / ENGINEER', s:'Every comment owned' },
-  { c:'#5b7cfa', x:'10.2%', y:'69.0%', role:'PLAN EXAMINER',        s:'Denied twice · held 9 days', ball:true, below:true },
-  { c:'#ff8a4c', x:'43.9%', y:'36.0%', role:'GENERAL CONTRACTOR',   s:'Permit in hand', ball:true },
-  { c:'#00c8e8', x:'57.4%', y:'85.1%', role:'PM + TENANT',          s:'Final walkthrough', below:true },
-  { c:'#00c8e8', x:'66.1%', y:'36.5%', role:'LANDLORD',             s:'Rent starts on time', ball:true },
+  { c:'#5b7cfa', x:'15%', y:'75%', role:'LEASING AGENT',       s:'Lease signed · clock started' },
+  { c:'#f2c11d', x:'55%', y:'72%', role:'ARCHITECT / ENGINEER', s:'Every comment owned' },
+  { c:'#5b7cfa', x:'38.5%', y:'42%', role:'PLAN EXAMINER',      s:'Denied twice · held 9 days', ball:true },
+  { c:'#ff8a4c', x:'47.7%', y:'28.8%', role:'GENERAL CONTRACTOR', s:'Permit in hand', ball:true },
+  { c:'#00c8e8', x:'65%', y:'20%', role:'PM + TENANT',          s:'Final walkthrough' },
+  { c:'#00c8e8', x:'82%', y:'44.2%', role:'LANDLORD',           s:'Rent starts on time', ball:true },
 ];
 
 function buildCourtPins() {
   const el = document.getElementById('dc-pins');
   if (!el) return;
   el.innerHTML = COURT_POS.map((p, i) => `
-    <div class="dc-ap${p.below ? ' below' : ''}" id="dc-ap-${i}" style="--c:${p.c};--x:${p.x};--y:${p.y};">
+    <div class="dc-ap" id="dc-ap-${i}" style="--c:${p.c};--x:${p.x};--y:${p.y};">
       ${p.ball ? '<span class="dc-ap-ball">🏀</span>' : ''}
       <span class="dc-ap-l">
         <span class="dc-ap-r">${p.role}</span>
